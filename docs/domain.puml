@@ -1,0 +1,71 @@
+@startuml
+!pragma layout smetana
+
+class Kunde {
+  - kontaktoplysninger
+}
+
+class Sælger {
+}
+
+class Forespørgsel {
+}
+
+class Ordre {
+}
+
+class Tilbud {
+  - rabat
+  - dækningsgrad
+}
+
+class Carport {
+  - mål
+  - pris
+  - tagtype
+}
+
+class Skur {
+  - mål
+  - beklædning
+}
+
+class Produkt {
+  - Produktgruppe
+  - Varenummer
+  - Pris
+  - MeterPris
+  - Antal
+  - Enhed
+  - Længde
+  - Beskrivelse
+}
+
+class Stykliste {
+}
+
+class Plantegning {
+}
+
+class Instruktion {
+}
+
+
+' Inheritance
+Kunde "1"----"0..*" Forespørgsel
+Kunde "1"--"0..*" Tilbud
+Kunde "1"--"0..*" Ordre
+Forespørgsel "1"------"1" Carport
+Forespørgsel "0..*"----"1" Sælger
+Carport "1"--"0..1" Skur
+Carport "1"--"1" Instruktion
+Carport "1"--"0..1" Ordre
+Instruktion "0..1"--"1" Plantegning
+Instruktion "0..1"--"1" Stykliste
+Stykliste "0..1"--"*" Produkt
+Sælger "1"--"0..*" Tilbud
+Sælger "1"--"0..*" Ordre
+
+
+
+@enduml
