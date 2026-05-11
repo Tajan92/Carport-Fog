@@ -16,15 +16,4 @@ public class Carport {
     private PartsList partsList;
     private Shed shed;
     private Roof roof;
-    private Inquiry inquiry;
-    private Quote quote;
-    private Order order;
-
-    public void setQuote(Quote quote) {
-        this.quote = quote;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 }
