@@ -7,6 +7,7 @@ import lombok.Getter;
 
 public class Order {
     private int orderId;
+    private double orderPrice;
     private Customer customer;
     private Carport carport;
     private SalesRep salesRep;
