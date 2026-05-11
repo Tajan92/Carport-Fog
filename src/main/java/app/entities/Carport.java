@@ -8,6 +8,7 @@ import lombok.Getter;
 public class Carport {
     private int carportId;
     private double width;
+    private double height;
     private double length;
     private double price;
     private PartsList partsList;
