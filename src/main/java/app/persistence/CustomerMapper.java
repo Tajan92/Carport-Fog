@@ -29,7 +29,6 @@ public class CustomerMapper {
             preparedStatement.setString(6, zipCode);
             preparedStatement.setString(7, phoneNumber);
 
-
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("An error occurred trying to insert values in the customers table");
@@ -73,7 +72,5 @@ public class CustomerMapper {
             throw new DatabaseException(message, e.getMessage());
         }
     }
-
-
 }
 
