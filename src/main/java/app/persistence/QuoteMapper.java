@@ -17,16 +17,16 @@ public class QuoteMapper {
     public QuoteMapper() {
         this.connectionPool = ConnectionPool.getInstance();
     }
-    public void createQuote(int quotePrice, int carportId, int customerId, int salesRepId ) throws DatabaseException {
+    public void createQuote(Quote quote) throws DatabaseException {
 
         String sql = "insert into quotes (quote_price, carport_id, customer_id, sales_rep_id) values (?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setInt(1, quotePrice);
-            preparedStatement.setInt(2, carportId);
-            preparedStatement.setInt(3, customerId);
-            preparedStatement.setInt(4, salesRepId);
+            preparedStatement.setDouble(1, quote.getQuotePrice());
+            preparedStatement.setInt(2, quote.getCarportId());
+            preparedStatement.setInt(3, quote.getCustomerId());
+            preparedStatement.setInt(4, quote.getSalesRepId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
