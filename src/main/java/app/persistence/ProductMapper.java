@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.entities.*;
+import app.entities.Product;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProductMapper {
-
     private ConnectionPool connectionPool;
 
     public ProductMapper() {
