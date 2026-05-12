@@ -18,7 +18,7 @@ public class CarportMapper {
 
     public void createCarport(Carport carport, int addonId, int partsListId) throws DatabaseException {
 
-        String sql = "insert into carports (carport_width, carport_height, carport_length, addon_id, price, parts_list_id) values (?,?,?,?,?,?)";
+        String sql = "insert into carports (carport_width, carport_height, carport_length, addon_id, price, parts_list_id) join zip_codes using zip_code values (?,?,?,?,?,?)";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
