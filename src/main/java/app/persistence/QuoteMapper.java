@@ -17,7 +17,7 @@ public class QuoteMapper {
     public QuoteMapper() {
         this.connectionPool = ConnectionPool.getInstance();
     }
-    public void createProductPartsList(int quotePrice, int carportId, int customerId, int salesRepId ) throws DatabaseException {
+    public void createQuote(int quotePrice, int carportId, int customerId, int salesRepId ) throws DatabaseException {
 
         String sql = "insert into quotes (quote_price, carport_id, customer_id, sales_rep_id) values (?,?,?,?)";
 
