@@ -13,6 +13,11 @@ import java.util.logging.Logger;
  */
 public class ConnectionPool {
 
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "postgres";
+    private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
+    private static final String DB = "carport_db";
+
     private static volatile ConnectionPool instance = null;
     private static HikariDataSource ds = null;
     private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class.getName());
@@ -54,6 +59,9 @@ public class ConnectionPool {
         return instance;
     }
 
+    public static ConnectionPool getInstance(){
+        return getInstance(USER, PASSWORD, URL, DB);
+    }
     /***
      * Getting a live connection from the Hikari Connection Pool
      * @return a database connection

@@ -6,5 +6,4 @@ public class Quote {
     private Carport carport;
     private Customer customer;
     private SalesRep salesRep;
-
 }

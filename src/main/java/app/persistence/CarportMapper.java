@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class CarportMapper {
     private ConnectionPool connectionPool;
 
-    public CarportMapper(ConnectionPool connectionPool) {
-        this.connectionPool = connectionPool;
+    public CarportMapper() {
+        this.connectionPool = ConnectionPool.getInstance();
     }
 
     public void createCarport(Carport carport, int addonId, int partsListId) throws DatabaseException {
@@ -76,10 +76,11 @@ public class CarportMapper {
             preparedStatement.setDouble(1, carport.getWidth());
             preparedStatement.setDouble(2, carport.getHeight());
             preparedStatement.setDouble(3, carport.getLength());
-            preparedStatement.setDouble(5, carport.getPrice());
-            preparedStatement.setInt(6, partsListId);
+            preparedStatement.setDouble(4, carport.getPrice());
+            preparedStatement.setInt(5, partsListId);
+            preparedStatement.setInt(6,carport.getCarportId());
 
-            int rowsAffected = preparedStatement.executeUpdate(sql);
+            int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected != 1) {
                 throw new DatabaseException("Could not update carport");
@@ -91,7 +92,7 @@ public class CarportMapper {
     }
 
     public void removeCarportById(int carportId) throws DatabaseException {
-        String sql = "delete from carports where cartport_id = ?";
+        String sql = "delete from carports where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
