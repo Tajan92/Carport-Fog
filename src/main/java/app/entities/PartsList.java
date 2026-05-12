@@ -1,14 +1,16 @@
 package app.entities;
+import app.persistence.PartsListMapper;
+
 import java.util.List;
 
 public class PartsList {
-    List<Product> partsList;
+    List<PartsListEntry> partsList;
 
-    public PartsList(List<Product> partsList) {
-        this.partsList = partsList;
+    public PartsList(List<PartsListEntry> productList) {
+        this.partsList = productList;
     }
 
-    public void addToPartList(Product product){
+    public void addToPartList(PartsListEntry product){
         partsList.add(product);
     }
 }

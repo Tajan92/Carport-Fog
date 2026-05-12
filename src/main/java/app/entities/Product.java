@@ -14,7 +14,5 @@ public class Product {
     private String unit;
     private String productGroup;
     private String description;
-    private double quantity;
-
-    private String placementDescription; //Kun i DTO?
+//    private String placementDescription; Kun i DTO?
 }
