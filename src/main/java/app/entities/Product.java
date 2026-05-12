@@ -16,5 +16,16 @@ public class Product {
     private String description;
     private double quantity;
 
-    private String placementDescription; //Kun i DTO?
+//    private String placementDescription; Kun i DTO?
+
+
+    public Product(int productId, double costPrice, double retailPrice, double length, String unit, String productGroup, String description) {
+        this.productId = productId;
+        this.costPrice = costPrice;
+        this.retailPrice = retailPrice;
+        this.length = length;
+        this.unit = unit;
+        this.productGroup = productGroup;
+        this.description = description;
+    }
 }
