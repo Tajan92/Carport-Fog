@@ -1,6 +1,8 @@
 package app.entities;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public abstract class User {
     protected int id;
