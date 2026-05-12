@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public class Inquiry {
     private int inquiryId;
-    private Customer customer;
-    private Carport carport;
+    private int customerId;
     private String remark;
+    private int carportId;
 }

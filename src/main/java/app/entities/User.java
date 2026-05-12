@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Getter
 public abstract class User {
     protected int id;
     protected String firstName;
