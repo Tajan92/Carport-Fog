@@ -16,18 +16,18 @@ public class CustomerMapper {
         this.connectionPool = connectionPool;
     }
 
-    public void createCustomer(String firstName, String lastName, String email, String password, String phoneNumber, String address, String zipCode) throws DatabaseException {
+    public void createCustomer(Customer customer) throws DatabaseException {
 
-        String sql = "insert into customers(email,password,first_name,last_name,address,zip_code,phone_number,city) values (?,?,?,?,?,?,?)";
+        String sql = "insert into customers(email,password,first_name,last_name,address,zip_code,phone_number) values (?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, firstName);
-            preparedStatement.setString(4, lastName);
-            preparedStatement.setString(5, address);
-            preparedStatement.setString(6, zipCode);
-            preparedStatement.setString(7, phoneNumber);
+            preparedStatement.setString(1, customer.getEmail());
+            preparedStatement.setString(2, customer.getPassword());
+            preparedStatement.setString(3, customer.getFirstName());
+            preparedStatement.setString(4, customer.getLastName());
+            preparedStatement.setString(5, customer.getAddress());
+            preparedStatement.setString(6, customer.getZipCode());
+            preparedStatement.setString(7, customer.getPhoneNumber());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
@@ -38,7 +38,6 @@ public class CustomerMapper {
             throw new DatabaseException(errorMessage, e.getMessage());
         }
     }
-
 
     public Customer getCustomerById(int customerId) throws DatabaseException {
 
