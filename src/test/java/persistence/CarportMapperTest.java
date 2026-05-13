@@ -108,7 +108,7 @@ void setup(){
             try (Statement statement = connection.createStatement())
             {
                 // Remove all rows from all tables
-                stmt.execute("DELETE FROM test.orders");
+                statement.execute("DELETE FROM test.orders");
     }
 
 }
