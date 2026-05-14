@@ -71,7 +71,7 @@ public class QuoteMapper {
 
     public List<Quote> getAllQuotes() throws DatabaseException {
         List<Quote> quotes = new ArrayList<>();
-        String sql = "select quote.quote_id, quote.quote_price, carport..carport_id, customer.customer_id, sales.sales_rep_id from quotes quote \n" +
+        String sql = "select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote \n" +
                 "left join carports carport using(carport_id) \n" +
                 "left join customers customer using(customer_id) \n" +
                 "left join sales_reps sales using(sales_rep_id)\n";

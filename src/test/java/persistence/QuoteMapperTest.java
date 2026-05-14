@@ -59,6 +59,6 @@ public class QuoteMapperTest extends MapperTest {
         QuoteMapper quoteMapper = new QuoteMapper();
         int allQuotes =  quoteMapper.getAllQuotes().size();
 
-        assertEquals(6,allInquiries);
+        assertEquals(8,allQuotes);
     }
 }
