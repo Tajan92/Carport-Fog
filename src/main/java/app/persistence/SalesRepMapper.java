@@ -13,13 +13,13 @@ public class SalesRepMapper {
 
     private ConnectionPool connectionPool;
 
-    public SalesRepMapper(ConnectionPool connectionPool) {
-        this.connectionPool = connectionPool;
+    public SalesRepMapper() {
+        this.connectionPool = ConnectionPool.getInstance();
     }
 
     public SalesRep getSalesRepById(int salesRepId) throws DatabaseException {
 
-        String sql = "select email,password,first_name,last_name,phone_number from sales_rep where sales_rep_id = ?";
+        String sql = "select email,password,first_name,last_name,phone_number from sales_reps where sales_rep_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
