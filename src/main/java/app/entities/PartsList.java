@@ -1,16 +1,13 @@
 package app.entities;
-import app.persistence.PartsListMapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.util.List;
+@Getter
+@AllArgsConstructor
 
 public class PartsList {
-    List<PartsListEntry> partsList;
-
-    public PartsList(List<PartsListEntry> productList) {
-        this.partsList = productList;
-    }
-
-    public void addToPartList(PartsListEntry product){
-        partsList.add(product);
-    }
+    private int productPartsListsId;
+    private int productId;
+    private int partsListId;
+    private double quantity;
 }

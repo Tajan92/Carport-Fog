@@ -90,4 +90,81 @@ public class PartsListMapper {
             throw new DatabaseException(message, e.getMessage());
         }
     }
+
+    public List<PartsList> getAllProductPartsLists() throws DatabaseException {
+        List<PartsList> partList = new ArrayList<>();
+
+        String sql = "select * from products_parts_lists";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int productPartListId = resultSet.getInt("prod_parts_list_id");
+                int productId = resultSet.getInt("product_id");
+                int partsListId = resultSet.getInt("parts_list_id");
+                double quantity = resultSet.getDouble("quantity");
+
+                PartsList parts = new PartsList(productPartListId, productId, partsListId, quantity);
+                partList.add(parts);
+            }
+            return partList;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente styk liste";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public List<Integer> getAllPartsListsIds() throws DatabaseException {
+        List<Integer> partList = new ArrayList<>();
+
+        String sql = "select * from parts_lists";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int productPartListId = resultSet.getInt("prod_parts_list_id");
+
+                partList.add(productPartListId);
+            }
+            return partList;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente styk liste id'er";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public void deleteProductPartsListById(int partsListId) throws DatabaseException {
+        String sql = "DELETE FROM products_parts_lists WHERE parts_list_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, partsListId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved sletning af produkter fra stykliste", e.getMessage());
+        }
+    }
+
+    public void deletePartsListById(int partsListId) throws DatabaseException {
+        String sql = "DELETE FROM parts_lists WHERE parts_list_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, partsListId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("An error occurred trying to remove a parts list from DB");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved forsøg på at fjerne styk liste";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
+    }
 }
