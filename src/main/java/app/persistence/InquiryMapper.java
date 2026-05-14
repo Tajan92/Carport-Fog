@@ -16,20 +16,25 @@ public class InquiryMapper {
         this.connectionPool = ConnectionPool.getInstance();
     }
 
-    public void createInquiry(Inquiry inquiry) throws DatabaseException {
+    public int createInquiry(Inquiry inquiry) throws DatabaseException {
 
         String sql = "insert into inquiries (customer_id, remark, carport_id) values (?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, inquiry.getCustomerId());
             preparedStatement.setString(2, inquiry.getRemark());
             preparedStatement.setInt(3, inquiry.getCarportId());
-
+            int inquiryId = 0;
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("An error occurred trying to insert values in the inquiry table");
             }
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                inquiryId = resultSet.getInt("inquiry_id");
+            }
+            return inquiryId;
         } catch (SQLException e) {
             String errorMessage = "Fejl ved oprettelse af inquiry, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
             throw new DatabaseException(errorMessage, e.getMessage());
