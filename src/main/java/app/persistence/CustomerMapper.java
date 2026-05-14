@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerMapper {
 
@@ -75,6 +77,35 @@ public class CustomerMapper {
             }
         } catch (SQLException e) {
             String message = "Fejl ved at hente customer";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public List<Customer> getAllCustomers() throws DatabaseException {
+        List<Customer> customers = new ArrayList<>();
+        String sql = "select * from customers join zip_codes using (zip_code)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("customer_id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String phoneNumber = resultSet.getString("phone_number");
+                String address = resultSet.getString("address");
+                String zipCode = resultSet.getString("zip_code");
+                String town = resultSet.getString("town");
+
+                customers.add(new Customer(userId, firstName, lastName, email, password, phoneNumber, address, zipCode, town));
+            }
+            return customers;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente alle brugere";
             throw new DatabaseException(message, e.getMessage());
         }
     }
