@@ -44,4 +44,13 @@ public class QuoteMapperTest extends MapperTest {
             throw new DatabaseException(e.getMessage());
         }
     }
+
+    @Test
+    void getQuoteByIdTest() throws DatabaseException {
+        QuoteMapper quoteMapper = new QuoteMapper();
+        Quote expectedQuote = new Quote(1, 24999, 1, 1, 1);
+        Quote actualQuot = quoteMapper.getQuoteById(1);
+
+        assertEquals(expectedQuote, actualQuot);
+    }
 }
