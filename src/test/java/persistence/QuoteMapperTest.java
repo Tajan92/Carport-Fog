@@ -61,4 +61,13 @@ public class QuoteMapperTest extends MapperTest {
 
         assertEquals(8,allQuotes);
     }
+
+    @Test
+    void removeQuoteByIdTest() throws DatabaseException {
+        QuoteMapper quoteMapper = new QuoteMapper();
+        quoteMapper.deleteQuoteById(1);
+        int size = quoteMapper.getAllQuotes().size();
+
+        assertEquals(7,size);
+    }
 }
