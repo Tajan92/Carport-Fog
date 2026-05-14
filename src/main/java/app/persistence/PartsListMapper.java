@@ -126,7 +126,7 @@ public class PartsListMapper {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int productPartListId = resultSet.getInt("prod_parts_list_id");
+                int productPartListId = resultSet.getInt("parts_list_id");
 
                 partList.add(productPartListId);
             }

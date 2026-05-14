@@ -1,60 +1,63 @@
 package persistence;
-
-import app.entities.Carport;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
+import app.persistence.PartsListMapper;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PartsListMapperTest extends MapperTest{
+public class PartsListMapperTest extends MapperTest {
     @Test
-    void createCarportTest() throws DatabaseException {
-        CarportMapper carportMapper = new CarportMapper();
+    void createPartsListTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
 
+        partsListMapper.createPartListId();
+        int actualNumberOfIds = partsListMapper.getAllPartsListsIds().size();
+        assertEquals(7, actualNumberOfIds);
 
+        partsListMapper.createProductPartsList(3, 7, 5);
+        partsListMapper.createProductPartsList(6, 7, 3);
 
+        int actualNumberOfProductById = partsListMapper.getPartsListById(7).size();
+        assertEquals(2, actualNumberOfProductById);
     }
 
     @Test
-    void getCarportByIdTest() throws DatabaseException {
-        CarportMapper carportMapper = new CarportMapper();
-        Carport expectedCarport = new Carport(1, 3.00, 2.08, 5.00, 24999.00, 1, 0, 0);
+    void getPartListByIdTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
 
-        Carport actualCarport = carportMapper.getCarportById(1, 1, 0, 0);
+        int actualPartsListCountById = partsListMapper.getPartsListById(1).size();
 
-        assertEquals(expectedCarport.getCarportId(), actualCarport.getCarportId());
+        assertEquals(11, actualPartsListCountById);
     }
 
     @Test
-    void updateCarportByIdTest() throws DatabaseException {
-        CarportMapper carportMapper = new CarportMapper();
-        Carport expectedCarport = new Carport(1, 4.00, 2.50, 5.00, 23000, 1, 0, 0);
+    void getAllProductPartsListsTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
 
-        carportMapper.updateCarportById(expectedCarport, 1);
-        Carport actualCarport = carportMapper.getCarportById(1, 1, 0, 0);
+        int actualPartsListCount = partsListMapper.getAllProductPartsLists().size();
 
-        assertEquals(expectedCarport.getCarportId(), actualCarport.getCarportId());
+        assertEquals(68, actualPartsListCount);
     }
 
     @Test
-    void removeCarportByIdTest() throws DatabaseException {
-        CarportMapper carportMapper = new CarportMapper();
-        carportMapper.removeCarportById(1);
-        int size = carportMapper.getAllCarports().size();
+    void getAllPartsListsIdsTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
 
-        assertEquals(5,size);
+        int partListSize = partsListMapper.getAllPartsListsIds().size();
+
+        assertEquals(6, partListSize);
     }
 
     @Test
-    void getAllCarportTest() throws DatabaseException {
-        CarportMapper carportMapper = new CarportMapper();
-        int size = carportMapper.getAllCarports().size();
+    void deleteAllInProductPartsListByIdTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
 
-        assertEquals(6,size);
+        partsListMapper.deleteProductPartsListById(1);
+
+        int actualPartsListCountById = partsListMapper.getPartsListById(1).size();
+        assertEquals(0, actualPartsListCountById);
+
+        partsListMapper.deletePartsListById(1);
+        int partListSize = partsListMapper.getAllPartsListsIds().size();
+        assertEquals(5, partListSize);
     }
 }
