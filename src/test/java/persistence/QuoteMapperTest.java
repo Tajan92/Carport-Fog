@@ -53,4 +53,12 @@ public class QuoteMapperTest extends MapperTest {
 
         assertEquals(expectedQuote, actualQuot);
     }
+
+    @Test
+    void getAllQuotesTest() throws DatabaseException{
+        QuoteMapper quoteMapper = new QuoteMapper();
+        int allQuotes =  quoteMapper.getAllQuotes().size();
+
+        assertEquals(6,allInquiries);
+    }
 }

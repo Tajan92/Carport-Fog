@@ -1,15 +1,14 @@
 package app.persistence;
 
-import app.entities.Carport;
-import app.entities.Quote;
-import app.entities.Roof;
-import app.entities.Shed;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuoteMapper {
     private ConnectionPool connectionPool;
@@ -66,6 +65,34 @@ public class QuoteMapper {
             }
         } catch (SQLException e) {
             String message = "Fejl ved at hente tilbud";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public List<Quote> getAllQuotes() throws DatabaseException {
+        List<Quote> quotes = new ArrayList<>();
+        String sql = "select quote.quote_id, quote.quote_price, carport..carport_id, customer.customer_id, sales.sales_rep_id from quotes quote \n" +
+                "left join carports carport using(carport_id) \n" +
+                "left join customers customer using(customer_id) \n" +
+                "left join sales_reps sales using(sales_rep_id)\n";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int quoteId = resultSet.getInt("quote_id");
+                double quotePrice = resultSet.getInt("quote_price");
+                int carportId = resultSet.getInt("carport_id");
+                int customerId = resultSet.getInt("customer_id");
+                int salesRepId = resultSet.getInt("sales_rep_id");
+
+                quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId));
+            }
+            return quotes;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente alle tilbud";
             throw new DatabaseException(message, e.getMessage());
         }
     }
