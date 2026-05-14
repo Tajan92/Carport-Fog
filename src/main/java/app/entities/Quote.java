@@ -1,9 +1,12 @@
 package app.entities;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
+
 
 public class Quote {
     private int quoteId;
@@ -11,4 +14,11 @@ public class Quote {
     private int carportId;
     private int customerId;
     private int salesRepId;
+
+    public Quote(double quotePrice, int carportId, int customerId, int salesRepId) {
+        this.quotePrice = quotePrice;
+        this.carportId = carportId;
+        this.customerId = customerId;
+        this.salesRepId = salesRepId;
+    }
 }
