@@ -59,7 +59,7 @@ public class ShedMapper {
                 String siding = resultSet.getString("siding");
                 boolean hasFloor = resultSet.getBoolean("floor");
 
-                return new Shed(width, length, siding, hasFloor);
+                return new Shed(shedId, width, length, siding, hasFloor);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get shed by provided id: " + shedId);
             }

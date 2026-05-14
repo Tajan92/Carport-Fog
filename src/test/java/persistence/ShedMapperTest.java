@@ -21,7 +21,7 @@ public class ShedMapperTest extends MapperTest{
 
     @Test
     void getShedById() throws DatabaseException {
-        Shed expectedShed = new Shed(2.40, 3.00, "Trykimp. bræddebeklædning", true);
+        Shed expectedShed = new Shed(1,2.40, 3.00, "Trykimp. bræddebeklædning", true);
 
         Shed actualShed = shedMapper.getShedById(1);
 
@@ -36,6 +36,5 @@ public class ShedMapperTest extends MapperTest{
 
         //Deleted one from total of 4 sheds
         assertEquals(3, size);
-
     }
 }
