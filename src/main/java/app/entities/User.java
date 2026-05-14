@@ -1,9 +1,11 @@
 package app.entities;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@EqualsAndHashCode
 public abstract class User {
     protected int id;
     protected String firstName;
