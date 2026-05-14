@@ -19,6 +19,7 @@ public class CustomerMapper {
     public int createCustomer(Customer customer) throws DatabaseException {
 
         String sql = "insert into customers(email,password,first_name,last_name,address,zip_code,phone_number) values (?,?,?,?,?,?,?)";
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, customer.getEmail());
@@ -66,9 +67,9 @@ public class CustomerMapper {
                 String address = resultSet.getString("address");
                 String zipCode = resultSet.getString("zip_code");
                 String phoneNumber = resultSet.getString("phone_number");
-                String city = resultSet.getString("city");
+                String town = resultSet.getString("town");
 
-                return new Customer(customerId, email, password, firstName, lastName, address, zipCode, phoneNumber, city);
+                return new Customer(customerId, email, password, firstName, lastName, address, zipCode, phoneNumber, town);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get customer by provided id: " + customerId);
             }
