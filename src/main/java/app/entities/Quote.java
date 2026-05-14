@@ -11,4 +11,11 @@ public class Quote {
     private int carportId;
     private int customerId;
     private int salesRepId;
+
+    public Quote(double quotePrice, int carportId, int customerId, int salesRepId) {
+        this.quotePrice = quotePrice;
+        this.carportId = carportId;
+        this.customerId = customerId;
+        this.salesRepId = salesRepId;
+    }
 }
