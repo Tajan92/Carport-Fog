@@ -11,7 +11,17 @@ public class Carport {
     private double height;
     private double length;
     private double price;
-    private PartsList partsList;
-    private Shed shed;
-    private Roof roof;
+    private int partsListId;
+    private int shedId;
+    private int roofId;
+
+    public Carport(double width, double height, double length, double price, int partsListId, int shedId, int roofId) {
+        this.width = width;
+        this.height = height;
+        this.length = length;
+        this.price = price;
+        this.partsListId = partsListId;
+        this.shedId = shedId;
+        this.roofId = roofId;
+    }
 }

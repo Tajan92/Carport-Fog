@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-@Getter
 public abstract class User {
     protected int id;
     protected String firstName;
@@ -12,4 +11,12 @@ public abstract class User {
     protected String email;
     protected String password;
     protected String phoneNumber;
+
+    public User(String firstName, String lastName, String email, String password, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
 }

@@ -12,15 +12,15 @@ public class CustomerMapper {
 
     private ConnectionPool connectionPool;
 
-    public CustomerMapper(ConnectionPool connectionPool) {
-        this.connectionPool = connectionPool;
+    public CustomerMapper() {
+        this.connectionPool = ConnectionPool.getInstance();
     }
 
-    public void createCustomer(Customer customer) throws DatabaseException {
+    public int createCustomer(Customer customer) throws DatabaseException {
 
         String sql = "insert into customers(email,password,first_name,last_name,address,zip_code,phone_number) values (?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, customer.getEmail());
             preparedStatement.setString(2, customer.getPassword());
             preparedStatement.setString(3, customer.getFirstName());
@@ -29,10 +29,16 @@ public class CustomerMapper {
             preparedStatement.setString(6, customer.getZipCode());
             preparedStatement.setString(7, customer.getPhoneNumber());
 
+            int customerId = 0;
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("An error occurred trying to insert values in the customers table");
             }
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                customerId = resultSet.getInt("customer_id");
+            }
+            return customerId;
         } catch (SQLException e) {
             String errorMessage = "Fejl ved oprettelse af bruger, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
             throw new DatabaseException(errorMessage, e.getMessage());
@@ -41,7 +47,7 @@ public class CustomerMapper {
 
     public Customer getCustomerById(int customerId) throws DatabaseException {
 
-        String sql = "select c.email,c.password,c.first_name,c.last_name,c.address,c.zip_code,c.phone_number,z.city" +
+        String sql = "select c.email,c.password,c.first_name,c.last_name,c.address,c.zip_code,c.phone_number,z.town" +
                 " from customers c" +
                 " join zip_codes z using (zip_code) " +
                 " where customer_id = ?";
