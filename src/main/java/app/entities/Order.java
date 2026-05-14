@@ -22,15 +22,4 @@ public class Order {
         this.orderPrice = orderPrice;
         this.partsListId = partsListId;
     }
-
-    @Override
-    public String toString() {
-        return "Order: " + "ID=" + orderId +
-                ", customerId=" + customerId +
-                ", salesRepId=" + salesRepId +
-                ", carportId=" + carportId +
-                ", orderPrice=" + orderPrice +
-                ", partsListId=" + partsListId +
-                '}';
-    }
 }
