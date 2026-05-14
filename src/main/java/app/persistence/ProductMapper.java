@@ -14,7 +14,7 @@ public class ProductMapper {
     public ProductMapper() {
         this.connectionPool = ConnectionPool.getInstance();
     }
-    public Product getProduct(int productId) throws DatabaseException {
+    public Product getProductById(int productId) throws DatabaseException {
 
         String sql = "select * from products where product_id = ?";
 

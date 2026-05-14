@@ -26,6 +26,7 @@ public abstract class MapperTest {
                 statement.execute("DROP TABLE IF EXISTS test.products");
                 statement.execute("DROP TABLE IF EXISTS test.sheds");
                 statement.execute("DROP TABLE IF EXISTS test.roofs");
+                statement.execute("DROP TABLE IF EXISTS test.zip_codes");
                 statement.execute("DROP TABLE IF EXISTS test.customers");
                 statement.execute("DROP TABLE IF EXISTS test.sales_reps");
 
@@ -38,6 +39,7 @@ public abstract class MapperTest {
                 statement.execute("CREATE TABLE test.orders AS (SELECT * from public.orders) WITH NO DATA");
                 statement.execute("CREATE TABLE test.inquiries AS (SELECT * from public.inquiries) WITH NO DATA");
                 statement.execute("CREATE TABLE test.quotes AS (SELECT * from public.quotes) WITH NO DATA");
+                statement.execute("CREATE TABLE test.zip_codes AS (SELECT * FROM public.zip_codes) WITH NO DATA");
                 statement.execute("CREATE TABLE test.customers AS (SELECT * from public.customers) WITH NO DATA");
                 statement.execute("CREATE TABLE test.sales_reps AS (SELECT * from public.sales_reps) WITH NO DATA");
                 statement.execute("CREATE TABLE test.carports AS (SELECT * from public.carports) WITH NO DATA");
@@ -66,6 +68,7 @@ public abstract class MapperTest {
                 statement.execute("DELETE FROM test.sheds");
                 statement.execute("DELETE FROM test.roofs");
                 statement.execute("DELETE FROM test.customers");
+                statement.execute("DELETE FROM test.zip_codes");
                 statement.execute("DELETE FROM test.sales_reps");
 
                 statement.execute("DROP SEQUENCE IF EXISTS test.products_parts_lists_prod_parts_list_id_seq CASCADE;");
@@ -116,6 +119,16 @@ public abstract class MapperTest {
 
                 statement.execute("CREATE SEQUENCE test.carports_carport_id_seq");
                 statement.execute("ALTER TABLE test.carports ALTER COLUMN carport_id SET DEFAULT nextval('test.carports_carport_id_seq')");
+
+                // zip codes
+                statement.execute("INSERT INTO test.zip_codes (zip_code, town) VALUES " +
+                        "('2100', 'København Ø')," +
+                        "('2200', 'København N')," +
+                        "('8000', 'Aarhus C')," +
+                        "('5000', 'Odense C')," +
+                        "('9000', 'Aalborg')," +
+                        "('3000', 'Helsingør')");
+
                 // customers
                 statement.execute("INSERT INTO test.customers (first_name, last_name, email, password, phone_number, address, zip_code) VALUES " +
                         "('Anders', 'Jensen', 'anders@email.dk', 'hashed_pw1', '12345678', 'Elmevej 4', '2100')," +
