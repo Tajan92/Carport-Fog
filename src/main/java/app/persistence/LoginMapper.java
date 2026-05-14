@@ -1,23 +1,22 @@
 package app.persistence;
 import app.entities.Customer;
 import app.entities.SalesRep;
-import app.entities.User;
 import app.exceptions.DatabaseException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper {
+public class LoginMapper {
 
     private ConnectionPool connectionPool;
 
-    public UserMapper() {
+    public LoginMapper() {
         this.connectionPool = ConnectionPool.getInstance();
     }
 
     public Customer customerLogin(String typedEmail, String typedPassword) throws DatabaseException {
-        String sql = "select * from customers join zip_codes using (zip_code) where email=? and password=?";
+        String sql = "select c.customer_id, c.first_name, c.last_name, c.email, c.password, c.phone_number, c.address, c.zip_code, z.town from customers c join zip_codes z using (zip_code)  where email=? and password=?";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -56,7 +55,7 @@ public class UserMapper {
 
 
     public SalesRep salesRepLogin(String typedEmail, String typedPassword) throws DatabaseException {
-        String sql = "select * from sales_rep where email=? and password=?";
+        String sql = "select * from sales_reps where email=? and password=?";
 
         try (
                 Connection connection = connectionPool.getConnection();
