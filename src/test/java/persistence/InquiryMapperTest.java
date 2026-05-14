@@ -45,12 +45,20 @@ public class InquiryMapperTest extends MapperTest {
         }
     }
     @Test
-    void getInquiryById() throws DatabaseException {
+    void getInquiryByIdTest() throws DatabaseException {
         InquiryMapper inquiryMapper = new InquiryMapper();
         Inquiry expectedInquiry = new Inquiry(1, 1, "Ønsker carport med skur til haveredskaber", 1);
         Inquiry actualInquiry = inquiryMapper.getInquiryById(1);
 
         assertEquals(expectedInquiry,actualInquiry);
+    }
+
+    @Test
+    void getAllInquiriesTest() throws DatabaseException{
+        InquiryMapper inquiryMapper = new InquiryMapper();
+        int allInquiries =  inquiryMapper.getAllInquiries().size();
+
+        assertEquals(6,allInquiries);
     }
 
     @Test
@@ -61,6 +69,5 @@ public class InquiryMapperTest extends MapperTest {
 
         assertEquals(5,size);
     }
-
 
 }
