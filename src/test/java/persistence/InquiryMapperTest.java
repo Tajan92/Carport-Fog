@@ -3,6 +3,7 @@ package persistence;
 import app.entities.Customer;
 import app.entities.Inquiry;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
 import app.persistence.CustomerMapper;
 import app.persistence.InquiryMapper;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,14 @@ public class InquiryMapperTest extends MapperTest {
         assertEquals(expectedInquiry,actualInquiry);
     }
 
+    @Test
+    void removeInquiryByIdTest() throws DatabaseException {
+        InquiryMapper inquiryMapper = new InquiryMapper();
+        inquiryMapper.deleteInquiryById(1);
+        int size = inquiryMapper.getAllInquiries().size();
 
+        assertEquals(5,size);
+    }
 
 
 }

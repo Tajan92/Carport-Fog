@@ -87,7 +87,7 @@ public class InquiryMapper {
 
     public List<Inquiry> getAllInquiries() throws DatabaseException {
         List<Inquiry> inquiries = new ArrayList<>();
-        String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id, from inquiries inquiries \n" +
+        String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
                 "left join customers customer using(customer_id) \n" +
                 "left join carports carport using(carport_id)\n";
 
