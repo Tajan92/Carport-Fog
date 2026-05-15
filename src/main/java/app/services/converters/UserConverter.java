@@ -1,6 +1,6 @@
 package app.services.converters;
 
-import app.dto.requestDTO.users.CreateCustomerDTO;
+import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.entities.Customer;
@@ -21,14 +21,14 @@ public class UserConverter {
         return new CustomerResponseDTO(id, firstName, lastName, email, phoneNumber, address, zipCode, town);
     }
 
-    public Customer convertCustomerDTOtoEntity(CreateCustomerDTO createCustomerDTO) {
-        String firstName = createCustomerDTO.getFirstName();
-        String lastName = createCustomerDTO.getLastName();
-        String email = createCustomerDTO.getEmail();
-        String password = createCustomerDTO.getPassword();
-        String phoneNumber = createCustomerDTO.getPhoneNumber();
-        String address = createCustomerDTO.getAddress();
-        String zipCode = createCustomerDTO.getZipCode();
+    public Customer convertCustomerDTOtoEntity(CustomerRequestDTO customerRequestDTO) {
+        String firstName = customerRequestDTO.getFirstName();
+        String lastName = customerRequestDTO.getLastName();
+        String email = customerRequestDTO.getEmail();
+        String password = customerRequestDTO.getPassword();
+        String phoneNumber = customerRequestDTO.getPhoneNumber();
+        String address = customerRequestDTO.getAddress();
+        String zipCode = customerRequestDTO.getZipCode();
 
         return new Customer(firstName,lastName,email,password,phoneNumber,address,zipCode);
     }

@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 
-public class CreateCustomerDTO {
+public class CustomerRequestDTO {
     private String firstName;
     private String lastName;
     private String email;

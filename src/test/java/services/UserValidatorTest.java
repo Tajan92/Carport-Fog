@@ -1,5 +1,5 @@
 package services;
-import app.dto.requestDTO.users.CreateCustomerDTO;
+import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.services.utils.UserValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserValidatorTest {
-    CreateCustomerDTO createCustomerDTO = new CreateCustomerDTO("Morten", "Helander", "", "", "Morten123!", "42411031", "Carl Møllers Alle 43", "4769");
+    CustomerRequestDTO customerRequestDTO = new CustomerRequestDTO("Morten", "Helander", "", "", "Morten123!", "42411031", "Carl Møllers Alle 43", "4769");
 
     String password = "Morten123!";
     String passwordNoNumber = "Morten";
@@ -90,6 +90,6 @@ public class UserValidatorTest {
         expectedMessage.add("Adgangskoder skal være ens");
         expectedMessage.add("Email skal indeholde @ og .");
 
-        assertEquals(expectedMessage, UserValidator.validate(createCustomerDTO));
+        assertEquals(expectedMessage, UserValidator.validate(customerRequestDTO));
     }
 }

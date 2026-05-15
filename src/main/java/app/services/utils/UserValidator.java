@@ -1,6 +1,6 @@
 package app.services.utils;
 
-import app.dto.requestDTO.users.CreateCustomerDTO;
+import app.dto.requestDTO.users.CustomerRequestDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.List;
 public class UserValidator {
     static List<String> message = new ArrayList<>();
 
-    public static List<String> validate(CreateCustomerDTO createCustomerDTO) {
-        String email = createCustomerDTO.getEmail();
-        String password = createCustomerDTO.getPassword();
-        String passwordCheck = createCustomerDTO.getPasswordCheck();
+    public static List<String> validate(CustomerRequestDTO customerRequestDTO) {
+        String email = customerRequestDTO.getEmail();
+        String password = customerRequestDTO.getPassword();
+        String passwordCheck = customerRequestDTO.getPasswordCheck();
 
         validateEmailNotEmpty(email);
         validatePassword(password);
