@@ -18,8 +18,12 @@ public class RoofConverter {
     }
 
 
-    public Roof convertRoofDTOtoEntity(){
+    public Roof convertRoofDTOtoEntity(RoofRequestDTO roofRequestDTO) {
+        Double roofSlope = roofRequestDTO.getRoofSlope();
+        String roofMaterial = roofRequestDTO.getRoofMaterial();
+        String roofType = roofRequestDTO.getRoofType();
 
+        return new Roof(roofSlope, roofMaterial, roofType);
     }
 
 
