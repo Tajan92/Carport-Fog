@@ -15,15 +15,14 @@ public class LoginMapper {
         this.connectionPool = ConnectionPool.getInstance();
     }
 
-    public Customer customerLogin(String typedEmail, String typedPassword) throws DatabaseException {
-        String sql = "select c.customer_id, c.first_name, c.last_name, c.email, c.password, c.phone_number, c.address, c.zip_code, z.town from customers c join zip_codes z using (zip_code)  where email=? and password=?";
+    public Customer customerLogin(String typedEmail) throws DatabaseException {
+        String sql = "select c.customer_id, c.first_name, c.last_name, c.email, c.password, c.phone_number, c.address, c.zip_code, z.town from customers c join zip_codes z using (zip_code)  where email=?";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             ps.setString(1, typedEmail);
-            ps.setString(2, typedPassword);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -54,15 +53,14 @@ public class LoginMapper {
     }
 
 
-    public SalesRep salesRepLogin(String typedEmail, String typedPassword) throws DatabaseException {
-        String sql = "select * from sales_reps where email=? and password=?";
+    public SalesRep salesRepLogin(String typedEmail) throws DatabaseException {
+        String sql = "select * from sales_reps where email=?";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             ps.setString(1, typedEmail);
-            ps.setString(2, typedPassword);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
