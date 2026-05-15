@@ -11,37 +11,57 @@ import app.exceptions.DatabaseException;
 import app.persistence.CustomerMapper;
 import app.persistence.LoginMapper;
 import app.services.converters.UserConverter;
+import app.services.utils.PasswordUtil;
 import app.services.utils.UserValidator;
-
 import java.util.List;
 
-
 public class UserService {
-    UserConverter userConverter = new UserConverter();
-    UserValidator userValidator = new UserValidator();
-    LoginMapper loginMapper = new LoginMapper();
-    CustomerMapper customerMapper = new CustomerMapper();
+    private final UserConverter userConverter;
+    private final LoginMapper loginMapper;
+    private final CustomerMapper customerMapper;
+
+    public UserService(LoginMapper loginMapper, CustomerMapper customerMapper) {
+        this.loginMapper = loginMapper;
+        this.customerMapper = customerMapper;
+        this.userConverter = new UserConverter();
+    }
 
     private SalesRepResponseDTO adminLogin(LoginSalesRepRequestDTO loginSalesRepDTO) throws DatabaseException {
         String email = loginSalesRepDTO.getEmail();
         String password = loginSalesRepDTO.getPassword();
-        SalesRep salesRep = loginMapper.salesRepLogin(email, password);
+
+        SalesRep salesRep = loginMapper.salesRepLogin(email);
+
+        if (!PasswordUtil.checkPassword(password, salesRep.getPassword())){
+            throw new DatabaseException("Forkert email eller adgangskode, prøv igen!");
+        }
         return userConverter.convertSalesRepToDto(salesRep);
     }
 
     private CustomerResponseDTO customerLogin(LoginCustomerRequestDTO loginCustomerDTO) throws DatabaseException {
         String email = loginCustomerDTO.getEmail();
         String password = loginCustomerDTO.getPassword();
-        Customer customer = loginMapper.customerLogin(email, password);
+
+        Customer customer = loginMapper.customerLogin(email);
+
+        if (!PasswordUtil.checkPassword(password, customer.getPassword())){
+            throw new DatabaseException("Forkert email eller adgangskode, prøv igen!");
+        }
         return userConverter.convertCustomerToDto(customer);
     }
 
     private void createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
-        List<String> messages = userValidator.validate(customerRequestDTO);
+        List<String> messages = UserValidator.validate(customerRequestDTO);
+
+        String hashedPassword = PasswordUtil.hashPassword(customerRequestDTO.getPassword());
+        customerRequestDTO.setPassword(hashedPassword);
+
         Customer customer = userConverter.convertCustomerDTOtoEntity(customerRequestDTO);
         if (messages.isEmpty()){
             customerMapper.createCustomer(customer);
         }
+        if (!messages.isEmpty()){
+            throw new DatabaseException(messages.toString());
+        }
     }
-
 }
