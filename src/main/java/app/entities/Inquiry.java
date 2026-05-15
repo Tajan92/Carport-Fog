@@ -8,13 +8,11 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 
-
 public class Inquiry {
     private int inquiryId;
     private int customerId;
     private String remark;
     private int carportId;
-
 
     public Inquiry(int customerId, String remark, int carportId) {
         this.customerId = customerId;
