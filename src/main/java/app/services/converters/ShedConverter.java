@@ -9,7 +9,6 @@ import app.entities.Shed;
 
 public class ShedConverter {
 
-
     public ShedResponseDTO convertShedToDto(Shed shed) {
         int shedId = shed.getShedId();
         Double width = shed.getWidth();
@@ -19,7 +18,6 @@ public class ShedConverter {
 
         return new ShedResponseDTO(shedId, width, length, siding, floor);
     }
-
 
     public Shed convertShedDTOtoEntity(ShedRequestDTO shedRequestDTO) {
         Double width = shedRequestDTO.getWidth();
