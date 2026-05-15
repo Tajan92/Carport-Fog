@@ -3,9 +3,11 @@ package app.entities;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 
 public class Inquiry {
@@ -18,6 +20,10 @@ public class Inquiry {
         this.customerId = customerId;
         this.remark = remark;
         this.carportId = carportId;
+    }
+
+    public Inquiry(String remark) {
+        this.remark = remark;
     }
 }
 
