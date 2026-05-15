@@ -3,10 +3,7 @@ package app.persistence;
 import app.entities.Carport;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +12,38 @@ public class CarportMapper {
 
     public CarportMapper() {
         this.connectionPool = ConnectionPool.getInstance();
+    }
+
+    public int createAddonId(Integer roofId, Integer shedId) throws DatabaseException {
+
+        String sql = "insert into addons (roof_id, shed_id) values (?,?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            if (roofId != null) {
+                preparedStatement.setInt(1, roofId);
+            }else{
+                preparedStatement.setNull(1, Types.INTEGER);
+            }
+            if (shedId != null) {
+                preparedStatement.setInt(2, shedId);
+            }else{
+                preparedStatement.setNull(2, Types.INTEGER);
+            }
+            preparedStatement.executeUpdate();
+
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                throw new DatabaseException("An error occurred trying to insert into addons");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved oprettelse af nyt addon id, prøv og konfigurer på nyt";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
     }
 
     public int createCarport(Carport carport, int addonId, int partsListId) throws DatabaseException {
