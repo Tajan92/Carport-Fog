@@ -24,4 +24,11 @@ public class Carport {
         this.shedId = shedId;
         this.roofId = roofId;
     }
+
+    public Carport(double width, double height, double length, double price) {
+        this.width = width;
+        this.height = height;
+        this.length = length;
+        this.price = price;
+    }
 }
