@@ -1,5 +1,7 @@
 package app.dto.requestDTO;
 
+import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.requestDTO.users.CustomerRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 
 public class InquiryRequestDTO {
-    private int customerId;
     private String remark;
-    private int carportId;
+    private CustomerRequestDTO customerRequestDTO;
+    private CarportRequestDTO carportRequestDTO;
 }
