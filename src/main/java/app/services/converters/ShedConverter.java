@@ -22,9 +22,11 @@ public class ShedConverter {
 
 
     public Shed convertShedDTOtoEntity(ShedRequestDTO shedRequestDTO) {
+        Double width = shedRequestDTO.getWidth();
+        Double length = shedRequestDTO.getLength();
+        String siding = shedRequestDTO.getSiding();
+        Boolean floor = shedRequestDTO.isFloor();
 
-
-        return new Shed();
+        return new Shed(width, length, siding, floor);
     }
-
 }
