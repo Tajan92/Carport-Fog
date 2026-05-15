@@ -11,8 +11,13 @@ public class ShedConverter {
 
 
     public ShedResponseDTO convertShedToDto(Shed shed) {
+        int shedId = shed.getShedId();
+        Double width = shed.getWidth();
+        Double length = shed.getLength();
+        String siding = shed.getSiding();
+        Boolean floor = shed.isFloor();
 
-        return new ShedResponseDTO();
+        return new ShedResponseDTO(shedId, width, length, siding, floor);
     }
 
 
