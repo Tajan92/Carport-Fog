@@ -1,8 +1,8 @@
 package app.services;
 
-import app.dto.requestDTO.CreateCustomerDTO;
-import app.dto.requestDTO.LoginCustomerDTO;
-import app.dto.requestDTO.LoginSalesRepDTO;
+import app.dto.requestDTO.users.CreateCustomerDTO;
+import app.dto.requestDTO.users.LoginCustomerDTO;
+import app.dto.requestDTO.users.LoginSalesRepDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.entities.Customer;
