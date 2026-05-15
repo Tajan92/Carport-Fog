@@ -8,8 +8,13 @@ import app.entities.Roof;
 
 public class RoofConverter {
 
-    public RoofResponseDTO convertRoofToDto() {
+    public RoofResponseDTO convertRoofToDto(Roof roof) {
+        int roofId = roof.getRoofId();
+        Double roofSlope = roof.getRoofSlope();
+        String roofMaterial = roof.getRoofMaterial();
+        String roofType = roof.getRoofType();
 
+        return new RoofResponseDTO(roofId, roofSlope, roofMaterial, roofType);
     }
 
 
