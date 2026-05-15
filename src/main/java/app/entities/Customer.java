@@ -10,6 +10,12 @@ public class Customer extends User {
     private String zipCode;
     private String town;
 
+    public Customer(String firstName, String lastName, String email, String password, String phoneNumber, String address, String zipCode) {
+        super(firstName, lastName, email, password, phoneNumber);
+        this.address = address;
+        this.zipCode = zipCode;
+    }
+
     public Customer(int id, String firstName, String lastName, String email, String password, String phoneNumber, String address, String zipCode, String town) {
         super(id, firstName, lastName, email, password, phoneNumber);
         this.address = address;
