@@ -67,9 +67,9 @@ public class CarportMapperTest extends MapperTest {
     }
 
     @Test
-    void removeCarportByIdTest() throws DatabaseException {
+    void deleteCarportByIdTest() throws DatabaseException {
         CarportMapper carportMapper = new CarportMapper();
-        carportMapper.removeCarportById(1);
+        carportMapper.deleteCarportById(1);
         int size = carportMapper.getAllCarports().size();
 
         assertEquals(5,size);

@@ -1,7 +1,6 @@
-package app.services.utils;
+package app.services;
 
 import app.dto.requestDTO.InquiryRequestDTO;
-import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.entities.Inquiry;

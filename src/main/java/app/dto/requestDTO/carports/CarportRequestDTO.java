@@ -1,11 +1,11 @@
 package app.dto.requestDTO.carports;
+import app.dto.requestDTO.RoofRequestDTO;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-@EqualsAndHashCode
+@Getter
+
 public class CarportRequestDTO {
     private double width;
     private double height;

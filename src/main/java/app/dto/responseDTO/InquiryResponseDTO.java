@@ -1,5 +1,5 @@
 package app.dto.responseDTO;
-
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +11,8 @@ import lombok.Setter;
 public class InquiryResponseDTO {
     private String remark;
     private int inquiryId;
-    private CarportRespondDTO CarportRespondDto;
+    private CarportResponseDTO CarportResponseDto;
     private CustomerResponseDTO customerResponseDTO;
-
 
     public InquiryResponseDTO(String remark, int inquiryId) {
         this.remark = remark;

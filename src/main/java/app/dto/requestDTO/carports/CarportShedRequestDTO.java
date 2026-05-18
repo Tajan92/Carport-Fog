@@ -1,4 +1,6 @@
 package app.dto.requestDTO.carports;
+import app.dto.requestDTO.RoofRequestDTO;
+import app.dto.requestDTO.ShedRequestDTO;
 import lombok.Getter;
 
 @Getter
