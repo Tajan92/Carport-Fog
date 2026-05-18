@@ -28,7 +28,7 @@ public class ShedService {
 
     public void updateShed(int shedId) throws DatabaseException {
         Shed shed = shedMapper.getShedById(shedId);
-        shedMapper.updateShedById(shed);
+        shedMapper.updateShed(shed);
     }
 
     public void deleteShed(int shedId) throws DatabaseException {

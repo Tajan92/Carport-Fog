@@ -1,5 +1,4 @@
 package app.persistence;
-import app.entities.Carport;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
 import java.sql.Connection;
@@ -110,7 +109,7 @@ public class ShedMapper {
         }
     }
 
-    public void updateShedById(Shed shed) throws DatabaseException {
+    public void updateShed(Shed shed) throws DatabaseException {
 
         String sql = "update sheds set shed_width = ?, shed_length = ?, siding = ?, floor = ? where shed_id = ?";
 

@@ -27,7 +27,7 @@ public class RoofService {
 
     public void updateShed(int roofId) throws DatabaseException {
         Roof roof = roofMapper.getRoofById(roofId);
-        roofMapper.updateRoofById(roof);
+        roofMapper.updateRoof(roof);
     }
 
     public void deleteRoof(int roofId) throws DatabaseException {

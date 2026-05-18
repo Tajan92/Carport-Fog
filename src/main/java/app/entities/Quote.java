@@ -17,10 +17,6 @@ public class Quote {
     private int customerId;
     private int salesRepId;
 
-    public Quote(double quotePrice) {
-        this.quotePrice = quotePrice;
-    }
-
     public Quote(double quotePrice, int carportId, int customerId, int salesRepId) {
         this.quotePrice = quotePrice;
         this.carportId = carportId;

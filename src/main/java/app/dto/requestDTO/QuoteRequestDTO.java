@@ -10,8 +10,8 @@ import lombok.Getter;
 @Getter
 
 public class QuoteRequestDTO {
+    private int customerId;
     private double discount;
-    private CarportNoShedRequestDTO carportRequestDTO;
-    private CustomerRequestDTO customerRequestDTO;
-    private SalesRepRequestDTO salesRepRequestDTO;
+    private int carportId;
+    private int salesRepId;
 }

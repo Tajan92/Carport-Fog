@@ -1,6 +1,5 @@
 package app.persistence;
 import app.entities.Roof;
-import app.entities.Shed;
 import app.exceptions.DatabaseException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -91,7 +90,7 @@ public class RoofMapper {
         }
     }
 
-    public void updateRoofById(Roof roof) throws DatabaseException {
+    public void updateRoof(Roof roof) throws DatabaseException {
 
         String sql = "update roofs set roof_slope = ?, roof_material = ?, roof_type = ? where roof_id = ?";
 

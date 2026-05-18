@@ -1,12 +1,8 @@
 package app.services;
-
 import app.dto.requestDTO.InquiryRequestDTO;
-import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.entities.Inquiry;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.CustomerMapper;
 import app.persistence.InquiryMapper;
 import app.services.converters.InquiryConverter;
 
@@ -14,16 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InquiryService {
-
-    private CarportMapper carportMapper;
-    private CustomerMapper customerMapper;
     private InquiryMapper inquiryMapper;
-
     private InquiryConverter inquiryConverter;
 
-    public InquiryService(CarportMapper carportMapper, CustomerMapper customerMapper, InquiryMapper inquiryMapper, InquiryConverter inquiryConverter) {
-        this.carportMapper = carportMapper;
-        this.customerMapper = customerMapper;
+    public InquiryService(InquiryMapper inquiryMapper) {
         this.inquiryMapper = inquiryMapper;
         this.inquiryConverter = new InquiryConverter();
     }

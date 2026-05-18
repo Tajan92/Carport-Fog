@@ -12,5 +12,4 @@ public class ShedResponseDTO {
     private double length;
     private String siding;
     private boolean floor;
-
 }

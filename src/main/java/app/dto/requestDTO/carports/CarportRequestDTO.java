@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-
-public class CarportRequestDTO {
+public abstract class CarportRequestDTO {
     private double width;
     private double height;
     private double length;

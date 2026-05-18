@@ -22,6 +22,7 @@ public class ServiceFactory {
         RoofMapper roofMapper = new RoofMapper();
         SalesRepMapper salesRepMapper = new SalesRepMapper();
         ShedMapper shedMapper = new ShedMapper();
+
         //TODO:we need to add the mappers later
         this.carportService = new CarportService(partsListMapper, carportMapper, roofMapper, shedMapper);
         this.inquiryService = new InquiryService();
