@@ -10,6 +10,9 @@ import app.persistence.CustomerMapper;
 import app.persistence.InquiryMapper;
 import app.services.converters.InquiryConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InquiryService {
 
     private CarportMapper carportMapper;
@@ -25,25 +28,27 @@ public class InquiryService {
         this.inquiryConverter = new InquiryConverter();
     }
 
-    public void createInquiry(InquiryRequestDTO inquiryRequestDTO, int customerId, int carportId) throws DatabaseException {
+    public void createInquiry(InquiryRequestDTO inquiryRequestDTO) throws DatabaseException {
         Inquiry inquiry = inquiryConverter.convertInquiryDtoToEntity(inquiryRequestDTO);
-
-        inquiry.setCustomerId(customerId);
-        inquiry.setCarportId(carportId);
-
         inquiryMapper.createInquiry(inquiry);
     }
 
 
-    public InquiryResponseDTO getInquiry(int inquiryId, CarportRespondDTO carportRespondDTO, CustomerResponseDTO customerResponseDTO) throws DatabaseException {
-
+    public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException {
         Inquiry inquiry = inquiryMapper.getInquiryById(inquiryId);
-
-        InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
-        inquiryResponseDTO.setCarportRespondDto(carportRespondDTO);
-        inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);
-
         return inquiryConverter.convertInquiryToDto(inquiry);
     }
 
+    public List<InquiryResponseDTO> getAllInquiries() throws DatabaseException {
+        List<Inquiry> allInquiries = inquiryMapper.getAllInquiries();
+        List<InquiryResponseDTO> responseDTOS = new ArrayList<>();
+        for (Inquiry allInquiry : allInquiries) {
+            responseDTOS.add(inquiryConverter.convertInquiryToDto(allInquiry));
+        }
+        return responseDTOS;
+    }
+
+    public void deleteInquiry(int inquiryId) throws DatabaseException {
+        inquiryMapper.deleteInquiryById(inquiryId);
+    }
 }
