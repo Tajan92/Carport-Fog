@@ -58,8 +58,8 @@ public class PartsListMapper {
         }
     }
 
-    public List<PartsListEntry> getPartsListById(int partsListId) throws DatabaseException {
-        List<PartsListEntry> partList = new ArrayList<>();
+    public List<ProductsPartsListEntry> getPartsListById(int partsListId) throws DatabaseException {
+        List<ProductsPartsListEntry> partList = new ArrayList<>();
 
         String sql = "select ppl.quantity, p.product_id, p.cost_price, p.retail_price, p.length, p.unit, p.product_group, p.description from products_parts_lists ppl \n" +
                 "join products p using (product_id)\n" +
@@ -80,9 +80,10 @@ public class PartsListMapper {
                 String unit = resultSet.getString("unit");
                 String productGroup = resultSet.getString("product_group");
                 String description = resultSet.getString("description");
+                int productsPartsListEntryId = resultSet.getInt("prod_parts_list_id");
 
                 Product product = new Product(productId, costPrice, retail_price, length, unit, productGroup, description);
-                partList.add(new PartsListEntry(product, quantity));
+                partList.add(new ProductsPartsListEntry(productsPartsListEntryId, product, quantity));
             }
             return partList;
         } catch (SQLException e) {

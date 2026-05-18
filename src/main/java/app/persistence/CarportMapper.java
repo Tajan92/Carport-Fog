@@ -23,12 +23,12 @@ public class CarportMapper {
 
             if (roofId != null) {
                 preparedStatement.setInt(1, roofId);
-            }else{
+            } else {
                 preparedStatement.setNull(1, Types.INTEGER);
             }
             if (shedId != null) {
                 preparedStatement.setInt(2, shedId);
-            }else{
+            } else {
                 preparedStatement.setNull(2, Types.INTEGER);
             }
             preparedStatement.executeUpdate();
@@ -76,9 +76,13 @@ public class CarportMapper {
         }
     }
 
-    public Carport getCarportById(int carportId, int partsListId, int shedId, int roofId) throws DatabaseException {
+    public Carport getCarportById(int carportId) throws DatabaseException {
 
-        String sql = "select carport_width, carport_height, carport_length, price from carports where carport_id = ?";
+        String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, s.shed_id, r.roof_id  from carports c\n" +
+                "join addons using (addon_id)\n" +
+                "join sheds s using (shed_id)\n" +
+                "join roofs r using (roof_id)\n" +
+                "where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -91,6 +95,9 @@ public class CarportMapper {
                 double height = resultSet.getDouble("carport_height");
                 double length = resultSet.getDouble("carport_length");
                 double price = resultSet.getDouble("price");
+                int partsListId = resultSet.getInt("parts_list_id");
+                int shedId = resultSet.getInt("shed_id");
+                int roofId = resultSet.getInt("roof_id");
 
                 return new Carport(carportId, width, height, length, price, partsListId, shedId, roofId);
             } else {
@@ -133,9 +140,9 @@ public class CarportMapper {
         }
     }
 
-    public void updateCarportById(Carport carport, int partsListId) throws DatabaseException {
+    public void updateCarportById(Carport carport) throws DatabaseException {
 
-        String sql = "update carports set carport_width = ?, carport_height = ?, carport_length = ?, price = ?, parts_list_id = ? where carport_id = ?";
+        String sql = "update carports set carport_width = ?, carport_height = ?, carport_length = ?, price = ? where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -143,7 +150,6 @@ public class CarportMapper {
             preparedStatement.setDouble(2, carport.getHeight());
             preparedStatement.setDouble(3, carport.getLength());
             preparedStatement.setDouble(4, carport.getPrice());
-            preparedStatement.setInt(5, partsListId);
             preparedStatement.setInt(6, carport.getCarportId());
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -157,7 +163,7 @@ public class CarportMapper {
         }
     }
 
-    public void removeCarportById(int carportId) throws DatabaseException {
+    public void deleteCarportById(int carportId) throws DatabaseException {
         String sql = "delete from carports where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();

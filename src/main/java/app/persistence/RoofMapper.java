@@ -90,6 +90,28 @@ public class RoofMapper {
         }
     }
 
+    public void updateRoof(Roof roof) throws DatabaseException {
+
+        String sql = "update roofs set roof_slope = ?, roof_material = ?, roof_type = ? where roof_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, roof.getRoofSlope());
+            preparedStatement.setString(2, roof.getRoofMaterial());
+            preparedStatement.setString(3, roof.getRoofType());
+            preparedStatement.setInt(4, roof.getRoofId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Could not update roof");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved opdatering af tag, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
+    }
+
     public void deleteRoofById(int roofId) throws DatabaseException {
 
         String sql = "delete from roofs where roof_id = ?";

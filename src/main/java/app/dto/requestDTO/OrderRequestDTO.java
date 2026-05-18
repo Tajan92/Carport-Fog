@@ -1,13 +1,13 @@
 package app.dto.requestDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
-
-public class InquiryRequestDTO {
+@Getter
+public class OrderRequestDTO {
     private int customerId;
-    private String remark;
+    private int salesRepId;
     private int carportId;
+    private double orderPrice;
+    private int partsListId;
 }

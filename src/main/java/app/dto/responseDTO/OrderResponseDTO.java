@@ -2,16 +2,15 @@ package app.dto.responseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
-@Setter
 
-public class QuoteResponseDTO {
-    private int quoteId;
+public class OrderResponseDTO {
+    private int orderId;
     private int customerId;
-    private double quotePrice;
-    private int carportId;
     private int salesRepId;
+    private int carportId;
+    private double orderPrice;
+    private int partsListId;
 }

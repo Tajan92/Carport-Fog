@@ -68,23 +68,6 @@ public class InquiryMapper {
         }
     }
 
-    public void deleteInquiryById(int inquiryId) throws DatabaseException {
-        String sql = "delete from inquiries where inquiry_id = ?";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setInt(1, inquiryId);
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected != 1) {
-                throw new DatabaseException("An error occurred trying to remove a inquiry from DB");
-            }
-        } catch (SQLException e) {
-            String errorMessage = "Fejl ved forsøg på at fjerne inquiry";
-            throw new DatabaseException(errorMessage, e.getMessage());
-        }
-    }
-
     public List<Inquiry> getAllInquiries() throws DatabaseException {
         List<Inquiry> inquiries = new ArrayList<>();
         String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
@@ -111,4 +94,20 @@ public class InquiryMapper {
         }
     }
 
+    public void deleteInquiryById(int inquiryId) throws DatabaseException {
+        String sql = "delete from inquiries where inquiry_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, inquiryId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("An error occurred trying to remove a inquiry from DB");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved forsøg på at fjerne inquiry";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
+    }
 }

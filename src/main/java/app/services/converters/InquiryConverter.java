@@ -11,14 +11,16 @@ public class InquiryConverter {
 
     public InquiryResponseDTO convertInquiryToDto(Inquiry inquiry) {
         int inquiryId = inquiry.getInquiryId();
+        int customerId = inquiry.getCustomerId();
         String remark = inquiry.getRemark();
-
-        return new InquiryResponseDTO(remark, inquiryId);
+        int carportId = inquiry.getCarportId();
+        return new InquiryResponseDTO(inquiryId, customerId, remark, carportId);
     }
 
     public Inquiry convertInquiryDtoToEntity(InquiryRequestDTO inquiryRequestDTO) {
+        int customerId = inquiryRequestDTO.getCustomerId();
         String remark = inquiryRequestDTO.getRemark();
-
-        return new Inquiry(remark);
+        int carportId = inquiryRequestDTO.getCarportId();
+        return new Inquiry(customerId, remark, carportId);
     }
 }
