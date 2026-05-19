@@ -35,6 +35,7 @@ public class CarportService {
         this.shedMapper = shedMapper;
     }
 
+    //TODO: Slå createCarport sammen og find ud af om det er med skur eller ikke
     public int createCarportWithShed(CarportShedRequestDTO carportShedRequestDTO) throws DatabaseException {
         Carport carportNoId = carportConverter.covertCarportDTOToEntity(carportShedRequestDTO);
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportShedRequestDTO.getRoofRequestDTO());
@@ -57,6 +58,7 @@ public class CarportService {
         return carportMapper.createCarport(carportNoId, addonId, partsListId);
     }
 
+    // TODO: Slå getCarport sammen og find ud af om der er skur eller ikke
     public CarportShedResponseDTO getCarportShed(int carportId) throws DatabaseException {
         Carport carport = carportMapper.getCarportById(carportId);
         return carportConverter.convertCarportShedEntityToDTO(carport);

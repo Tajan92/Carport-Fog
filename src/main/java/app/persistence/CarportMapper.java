@@ -79,9 +79,9 @@ public class CarportMapper {
     public Carport getCarportById(int carportId) throws DatabaseException {
 
         String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, s.shed_id, r.roof_id  from carports c\n" +
-                "join addons using (addon_id)\n" +
-                "join sheds s using (shed_id)\n" +
-                "join roofs r using (roof_id)\n" +
+                "left join addons using (addon_id)\n" +
+                "left join sheds s using (shed_id)\n" +
+                "left join roofs r using (roof_id)\n" +
                 "where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
@@ -96,7 +96,7 @@ public class CarportMapper {
                 double length = resultSet.getDouble("carport_length");
                 double price = resultSet.getDouble("price");
                 int partsListId = resultSet.getInt("parts_list_id");
-                int shedId = resultSet.getInt("shed_id");
+                Integer shedId = resultSet.getObject("shed_id", Integer.class);
                 int roofId = resultSet.getInt("roof_id");
 
                 return new Carport(carportId, width, height, length, price, partsListId, shedId, roofId);
@@ -150,7 +150,7 @@ public class CarportMapper {
             preparedStatement.setDouble(2, carport.getHeight());
             preparedStatement.setDouble(3, carport.getLength());
             preparedStatement.setDouble(4, carport.getPrice());
-            preparedStatement.setInt(6, carport.getCarportId());
+            preparedStatement.setInt(5, carport.getCarportId());
 
             int rowsAffected = preparedStatement.executeUpdate();
 

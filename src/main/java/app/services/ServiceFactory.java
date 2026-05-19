@@ -1,14 +1,15 @@
 package app.services;
+
 import app.persistence.*;
 import lombok.Getter;
 
 @Getter
+
 public class ServiceFactory {
-    CarportService carportService;
-    InquiryService inquiryService;
-    QuoteService quoteService;
-    OrderService orderService;
-    UserService userService;
+    private CarportService carportService;
+    private InquiryService inquiryService;
+    private QuoteService quoteService;
+    private UserService userService;
 
     public ServiceFactory() {
         CarportMapper carportMapper = new CarportMapper();
@@ -23,11 +24,9 @@ public class ServiceFactory {
         SalesRepMapper salesRepMapper = new SalesRepMapper();
         ShedMapper shedMapper = new ShedMapper();
 
-        //TODO:we need to add the mappers later
         this.carportService = new CarportService(partsListMapper, carportMapper, roofMapper, shedMapper);
-        this.inquiryService = new InquiryService();
-        this.quoteService = new QuoteService();
-        this.orderService = new OrderService();
-        this.userService = new UserService();
+        this.inquiryService = new InquiryService(carportMapper, customerMapper, inquiryMapper);
+        this.quoteService = new QuoteService(quoteMapper, carportMapper, customerMapper, salesRepMapper);
+        this.userService = new UserService(loginMapper, customerMapper);
     }
 }

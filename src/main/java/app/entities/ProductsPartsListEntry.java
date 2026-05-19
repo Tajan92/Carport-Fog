@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 
 public class ProductsPartsListEntry {
-    private int productsPartsListEntryId;
     private Product product;
     private double quantity;
 }

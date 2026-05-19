@@ -14,10 +14,10 @@ public class Carport {
     private double length;
     private double price;
     private int partsListId;
-    private int shedId;
+    private Integer shedId;
     private int roofId;
 
-    public Carport(double width, double height, double length, double price, int partsListId, int shedId, int roofId) {
+    public Carport(double width, double height, double length, double price, int partsListId, Integer shedId, int roofId) {
         this.width = width;
         this.height = height;
         this.length = length;
