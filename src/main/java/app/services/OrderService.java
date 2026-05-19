@@ -1,10 +1,14 @@
 package app.services;
 
 import app.dto.requestDTO.OrderRequestDTO;
+import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
+import app.persistence.CustomerMapper;
 import app.persistence.OrderMapper;
+import app.persistence.RoofMapper;
 import app.services.converters.OrderConverter;
 
 import java.util.ArrayList;
@@ -13,6 +17,9 @@ import java.util.List;
 public class OrderService {
     private OrderConverter orderConverter;
     private OrderMapper orderMapper;
+    private RoofMapper roofMapper;
+    private CarportService carportService;
+    private UserService userService;
 
     public void createOrder(OrderRequestDTO orderRequestDTO) throws DatabaseException {
         Order order = orderConverter.convertOrderToEntity(orderRequestDTO);

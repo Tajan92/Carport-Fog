@@ -26,7 +26,7 @@ public class UserService {
         this.userConverter = new UserConverter();
     }
 
-    private SalesRepResponseDTO adminLogin(LoginSalesRepRequestDTO loginSalesRepDTO) throws DatabaseException {
+    public SalesRepResponseDTO adminLogin(LoginSalesRepRequestDTO loginSalesRepDTO) throws DatabaseException {
         String email = loginSalesRepDTO.getEmail();
         String password = loginSalesRepDTO.getPassword();
 
@@ -38,7 +38,7 @@ public class UserService {
         return userConverter.convertSalesRepToDto(salesRep);
     }
 
-    private CustomerResponseDTO customerLogin(LoginCustomerRequestDTO loginCustomerDTO) throws DatabaseException {
+    public CustomerResponseDTO customerLogin(LoginCustomerRequestDTO loginCustomerDTO) throws DatabaseException {
         String email = loginCustomerDTO.getEmail();
         String password = loginCustomerDTO.getPassword();
 
@@ -64,4 +64,11 @@ public class UserService {
             throw new DatabaseException(messages.toString());
         }
     }
+
+    public CustomerResponseDTO getCustomer (int customerId) throws DatabaseException {
+        Customer customer = customerMapper.getCustomerById(customerId);
+
+        return userConverter.convertCustomerToDto(customer);
+    }
+
 }
