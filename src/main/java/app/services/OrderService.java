@@ -3,6 +3,8 @@ package app.services;
 import app.dto.requestDTO.OrderRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
+import app.dto.responseDTO.PartsListResponseDTO;
+import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
@@ -30,7 +32,9 @@ public class OrderService {
         Order order = orderMapper.getOrderById(orderId);
         CarportResponseDTO carportResponseDTO = carportService.getCarport(order.getCarportId());
         CustomerResponseDTO customerResponseDTO = userService.getCustomer(order.getCustomerId());
-        
+        SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(order.getSalesRepId());
+        PartsListResponseDTO partsListResponseDTO = partsListService.getProductsPartsListEntries(carport);
+
 
         return orderConverter.convertOrderToDto(order);
     }

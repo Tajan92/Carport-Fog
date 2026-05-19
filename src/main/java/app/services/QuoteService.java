@@ -47,7 +47,7 @@ public class QuoteService {
 
         /* Instantiate variables that cannot be instantiated in the converter */
         double carportPrice = carportMapper.getCarportById(quoteRequestDTO.getCarportId()).getPrice();
-        double quotePrice = DiscountCalculator.calculateDiscount(carportPrice, quoteRequestDTO.getDiscount());
+        double quotePrice = DiscountCalculator.calculateDiscount(carportPrice, quoteRequestDTO.getQuotePrice());
 
         /* Set the new variables */
         Quote quote = quoteConverter.convertQuoteDTOtoEntity(quoteRequestDTO);
