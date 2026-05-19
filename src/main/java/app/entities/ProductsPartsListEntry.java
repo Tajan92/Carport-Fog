@@ -8,4 +8,5 @@ import lombok.Getter;
 public class ProductsPartsListEntry {
     private Product product;
     private double quantity;
+    private String placementDescription;
 }
