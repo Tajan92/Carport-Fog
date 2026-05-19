@@ -3,9 +3,9 @@
     background-color: white;
     border-radius: 15px;
     padding: 25px;
+    width: 60%;
     justify-content: center;
     justify-self: center;
-    width: min(50vw, 420px); /* shrinks on mobile, caps on desktop */
 }
 
 .logo {
@@ -27,9 +27,10 @@
 
 
 #register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* 2 equal columns */
+    gap: 8px 16px;                    /* row-gap column-gap */
+    align-items: end;                 /* labels sit above inputs neatly */
 }
 
 .input-box {
@@ -49,6 +50,7 @@
     width: clamp(16rem, 40vw, 24rem);
     text-align: left;
     font-size: clamp(0.8rem, 2vw, 1.35625rem);
+    margin-bottom: 5px;
 }
 
 .register-button {
@@ -63,13 +65,20 @@
     font-weight: 500;
     align-self: center;
     margin-top: 20px;
+    grid-column: 1 / -1;
 }
 
-.login-button:hover {
+.register-button:hover {
     cursor: pointer;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     transform: translateY(-3px);
 
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .register {

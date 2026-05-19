@@ -13,15 +13,44 @@
 
 
     <form id="register-form" action="/login" method="post">
-        <p class="input-description">EMAIL</p>
-        <input class="input-box" type="text" name="email" placeholder="eg. User1234..">
-        <p class="input-description">PASSWORD</p>
-        <input class="input-box" type="password" name="password"  placeholder=" •••••••••••">
-        <p class="input-description">RE-ENTER PASSWORD</p>
-        <input class="input-box" type="password" name="password"  placeholder=" •••••••••••">
 
+        <div class="field-group">
+            <p class="input-description">EMAIL</p>
+            <input class="input-box" type="text" name="email" placeholder="eg. user@example.com">
+        </div>
 
-        <button class="register-button" type="submit">Log In</button>
+        <div class="field-group">
+            <p class="input-description">USERNAME</p>
+            <input class="input-box" type="text" name="username" placeholder="eg. JohnDoe">
+        </div>
+
+        <div class="field-group">
+            <p class="input-description">PASSWORD</p>
+            <input class="input-box" type="password" name="password" placeholder="••••••••••">
+        </div>
+
+        <div class="field-group">
+            <p class="input-description">RE-ENTER PASSWORD</p>
+            <input class="input-box" type="password" name="confirmPassword" placeholder="••••••••••">
+        </div>
+
+        <div class="field-group">
+            <p class="input-description">PHONE NUMBER</p>
+            <input class="input-box" type="tel" name="phone" placeholder="eg. 12345678">
+        </div>
+
+        <div class="field-group">
+            <p class="input-description">ADDRESS</p>
+            <input class="input-box" type="text" name="address" placeholder="eg. Hovedgaden 12">
+        </div>
+
+        <div class="field-group">
+            <p class="input-description">ZIP CODE</p>
+            <input class="input-box" type="text" name="zipcode" placeholder="eg. 1550">
+        </div>
+
+        <button class="register-button" type="submit">Opret konto</button>
+
     </form>
 
     <div class="register">

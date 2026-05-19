@@ -5,7 +5,6 @@
     padding: 25px;
     justify-content: center;
     justify-self: center;
-    width: min(50vw, 420px); /* shrinks on mobile, caps on desktop */
 }
 
 .logo {
