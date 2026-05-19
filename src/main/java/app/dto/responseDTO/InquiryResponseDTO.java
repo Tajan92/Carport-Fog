@@ -11,7 +11,7 @@ import lombok.Setter;
 public class InquiryResponseDTO {
     private String remark;
     private int inquiryId;
-    private CarportRespondDTO CarportRespondDto;
+    private CarportResponseDTO CarportRespondDTO;
     private CustomerResponseDTO customerResponseDTO;
 
 
