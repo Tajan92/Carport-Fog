@@ -12,12 +12,12 @@ public class QuoteConverter {
 
     public QuoteResponseDTO convertQuoteToDto(Quote quote) {
         int quoteId = quote.getQuoteId();
-        int customerId = quote.getCustomerId();
         double quotePrice = quote.getQuotePrice();
+        int customerId = quote.getCustomerId();
         int carportId = quote.getCarportId();
         int salesRepId = quote.getSalesRepId();
 
-        return new QuoteResponseDTO(quoteId, customerId, quotePrice, carportId, salesRepId);
+        return new QuoteResponseDTO(quoteId, quotePrice);
     }
     // TODO: Flyt mapper til service
     public Quote convertQuoteDTOtoEntity(QuoteRequestDTO quoteRequestDTO) throws DatabaseException {

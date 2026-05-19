@@ -1,5 +1,6 @@
 package app.dto.responseDTO;
 
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +11,16 @@ import lombok.Setter;
 
 public class QuoteResponseDTO {
     private int quoteId;
-    private int customerId;
     private double quotePrice;
-    private int carportId;
-    private int salesRepId;
+    private CustomerResponseDTO customerResponseDTO;
+    private CarportResponseDTO carportResponseDTO;
+    private SalesRepResponseDTO salesRepResponseDTO;
+
+
+    public QuoteResponseDTO(int quoteId, double quotePrice) {
+        this.quoteId = quoteId;
+        this.quotePrice = quotePrice;
+    }
 }
+
+
