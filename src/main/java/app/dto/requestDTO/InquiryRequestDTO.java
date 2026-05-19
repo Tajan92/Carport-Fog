@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 
 public class InquiryRequestDTO {
+    private int customerId;
     private String remark;
-    private CustomerRequestDTO customerRequestDTO;
-    private CarportRequestDTO carportRequestDTO;
+    private int carportId;
 }
