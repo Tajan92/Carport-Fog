@@ -43,11 +43,13 @@ public class InquiryService {
         Inquiry inquiry = inquiryMapper.getInquiryById(inquiryId);
         InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
 
+        /* Instantiate variables that cannot be instantiated in the converter */
         Customer customer = customerMapper.getCustomerById(inquiry.getCustomerId());
 
         CustomerResponseDTO customerResponseDTO = userConverter.convertCustomerToDto(customer);
         CarportResponseDTO carportResponseDTO = carportService.getCarport(inquiry.getCarportId());
 
+        /* Set the new DTO´s */
         inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);
         inquiryResponseDTO.setCarportRespondDto(carportResponseDTO);
 
