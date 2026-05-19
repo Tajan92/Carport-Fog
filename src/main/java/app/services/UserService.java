@@ -50,7 +50,7 @@ public class UserService {
         return userConverter.convertCustomerToDto(customer);
     }
 
-    private void createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
+    public void createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
         List<String> messages = UserValidator.validate(customerRequestDTO);
 
         String hashedPassword = PasswordUtil.hashPassword(customerRequestDTO.getPassword());

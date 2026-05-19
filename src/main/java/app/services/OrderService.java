@@ -21,6 +21,10 @@ public class OrderService {
 
     public OrderResponseDTO getOrder(int orderId) throws DatabaseException {
         Order order = orderMapper.getOrderById(orderId);
+        CarportResponseDTO carportResponseDTO = carportService.getCarport(order.getCarportId());
+        CustomerResponseDTO customerResponseDTO = userService.getCustomer(order.getCustomerId());
+        
+
         return orderConverter.convertOrderToDto(order);
     }
 
