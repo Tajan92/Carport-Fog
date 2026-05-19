@@ -1,5 +1,4 @@
 package app.persistence;
-import app.entities.Carport;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
 import java.sql.Connection;
@@ -107,6 +106,46 @@ public class ShedMapper {
         } catch (SQLException e) {
             String message = "Fejl ved at hente alle skur";
             throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public void updateShed(Shed shed) throws DatabaseException {
+
+        String sql = "update sheds set shed_width = ?, shed_length = ?, siding = ?, floor = ? where shed_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, shed.getWidth());
+            preparedStatement.setDouble(2, shed.getLength());
+            preparedStatement.setString(3, shed.getSiding());
+            preparedStatement.setBoolean(4, shed.isFloor());
+            preparedStatement.setInt(5, shed.getShedId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Could not update shed");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved opdatering af skur, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
+    }
+
+    public void deleteShed(int shedId) throws DatabaseException{
+        String sql = "delete from sheds where shed_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, shedId);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("An error occurred trying to remove a shed from DB");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved forsøg på at fjerne skur";
+            throw new DatabaseException(errorMessage, e.getMessage());
         }
     }
 }

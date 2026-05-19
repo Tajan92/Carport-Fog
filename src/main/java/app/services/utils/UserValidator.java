@@ -23,8 +23,8 @@ public class UserValidator {
         return message;
     }
 
-    public static void passwordsMustMatch(String password, String passwordCheck){
-        if (!password.equals(passwordCheck)){
+    public static void passwordsMustMatch(String password, String passwordCheck) {
+        if (!password.equals(passwordCheck)) {
             message.add("Adgangskoder skal være ens");
         }
     }
@@ -41,9 +41,9 @@ public class UserValidator {
         }
     }
 
-    public static void validateEmail(String email){
+    public static void validateEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        if (!email.matches(emailRegex)){
+        if (!email.matches(emailRegex)) {
             message.add("Email skal indeholde @ og .");
         }
     }
@@ -69,5 +69,4 @@ public class UserValidator {
     public static List<String> getMessage() {
         return message;
     }
-
 }

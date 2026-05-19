@@ -1,4 +1,4 @@
-package app.entities;
+package app.dto.responseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,10 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 
-public class Product {
-    private int productId;
-    private double costPrice;
-    private double retailPrice;
+public class ProductResponseDTO {
     private double length;
     private String unit;
     private String productGroup;

@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class PartsListEntry {
-    Product product;
-    double quantity;
+
+public class ProductsPartsListEntry {
+    private Product product;
+    private double quantity;
 }

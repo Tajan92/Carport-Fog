@@ -106,6 +106,25 @@ public class OrderMapper {
         }
     }
 
+    public void updateOrder(Order order) throws DatabaseException {
+
+        String sql = "update orders set order_price = ? where order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, order.getOrderPrice());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Could not update order");
+            }
+        } catch (SQLException e) {
+            String errorMessage = "Fejl ved opdatering af ordre, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
+            throw new DatabaseException(errorMessage, e.getMessage());
+        }
+    }
+
     public void removeOrderById(int orderId) throws DatabaseException {
         String sql = "delete from orders where order_id = ?";
 
