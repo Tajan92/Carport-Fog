@@ -3,6 +3,7 @@ import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.RoofResponseDTO;
 import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.entities.Carport;
 import app.entities.Roof;
@@ -13,7 +14,6 @@ import app.persistence.ShedMapper;
 
 public class CarportConverter {
 
-    // TODO: Flyt mapper kald til service og kobl de resterende ting på der
     public Carport covertCarportDTOToEntity(CarportRequestDTO carportRequestDTO){
         double width = carportRequestDTO.getWidth();
         double height = carportRequestDTO.getHeight();
@@ -29,10 +29,8 @@ public class CarportConverter {
         double height = carport.getHeight();
         double length = carport.getLength();
         double price = carport.getPrice();
-        Roof roof = roofMapper.getRoofById(carport.getRoofId());
-        RoofResponseDTO roofResponseDTO = roofConverter.convertRoofToDto(roof);
 
-        return new CarportNoShedResponseDTO(id, width, height, length, price, roofResponseDTO);
+        return new CarportNoShedResponseDTO(id, width, height, length, price);
     }
 
     public CarportShedResponseDTO convertCarportShedEntityToDTO(Carport carport) throws DatabaseException {
@@ -41,11 +39,7 @@ public class CarportConverter {
         double height = carport.getHeight();
         double length = carport.getLength();
         double price = carport.getPrice();
-        Roof roof = roofMapper.getRoofById(carport.getRoofId());
-        Shed shed = shedMapper.getShedById(carport.getShedId());
-        RoofResponseDTO roofResponseDTO = roofConverter.convertRoofToDto(roof);
-        ShedResponseDTO shedResponseDTO = shedConverter.convertShedToDto(shed);
 
-        return new CarportShedResponseDTO(id, width, height, length, price, roofResponseDTO, shedResponseDTO);
+        return new CarportShedResponseDTO(id, width, height, length, price);
     }
 }
