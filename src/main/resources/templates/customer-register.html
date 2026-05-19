@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments :: head('Customer register')}"></head>
+<link rel="stylesheet" href="/public/css/customer-register.css" th:href="@{/css/customer-register.css}"/>
+<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+
+<body>
+
+<h1 class="logo">Fog</h1>
+
+<div class="box-register">
+    <h1 class="welcome-message">Create User</h1>
+
+
+    <form id="register-form" action="/login" method="post">
+        <p class="input-description">EMAIL</p>
+        <input class="input-box" type="text" name="email" placeholder="eg. User1234..">
+        <p class="input-description">PASSWORD</p>
+        <input class="input-box" type="password" name="password"  placeholder=" •••••••••••">
+        <p class="input-description">RE-ENTER PASSWORD</p>
+        <input class="input-box" type="password" name="password"  placeholder=" •••••••••••">
+
+
+        <button class="register-button" type="submit">Log In</button>
+    </form>
+
+    <div class="register">
+        <p>Har du ikke en bruger?</p>
+        <a th:href="@{/register}"  type="button" id="register-button" >Opret dig her</a>
+    </div>
+
+</div>
+
+</body>
+</html>
