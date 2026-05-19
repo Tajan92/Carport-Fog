@@ -9,8 +9,14 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class InquiryResponseDTO {
-    private int inquiryId;
-    private int customerId;
     private String remark;
-    private int carportId;
+    private int inquiryId;
+    private CarportRespondDTO CarportRespondDto;
+    private CustomerResponseDTO customerResponseDTO;
+
+
+    public InquiryResponseDTO(String remark, int inquiryId) {
+        this.remark = remark;
+        this.inquiryId = inquiryId;
+    }
 }

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+    <link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
 </head>
 <body>
 
