@@ -11,10 +11,8 @@ public class InquiryConverter {
 
     public InquiryResponseDTO convertInquiryToDto(Inquiry inquiry) {
         int inquiryId = inquiry.getInquiryId();
-        int customerId = inquiry.getCustomerId();
         String remark = inquiry.getRemark();
-        int carportId = inquiry.getCarportId();
-        return new InquiryResponseDTO(inquiryId, customerId, remark, carportId);
+        return new InquiryResponseDTO(remark,inquiryId);
     }
 
     public Inquiry convertInquiryDtoToEntity(InquiryRequestDTO inquiryRequestDTO) {
