@@ -25,7 +25,7 @@ public class ServiceFactory {
         ShedMapper shedMapper = new ShedMapper();
 
         this.carportService = new CarportService(partsListMapper, carportMapper, roofMapper, shedMapper);
-        this.inquiryService = new InquiryService(carportMapper, customerMapper, inquiryMapper);
+        this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper);
         this.quoteService = new QuoteService(quoteMapper, carportMapper, customerMapper, salesRepMapper);
         this.userService = new UserService(loginMapper, customerMapper);
     }

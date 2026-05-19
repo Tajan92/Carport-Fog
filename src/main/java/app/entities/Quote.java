@@ -23,4 +23,12 @@ public class Quote {
         this.customerId = customerId;
         this.salesRepId = salesRepId;
     }
+
+    public Quote( int carportId, int customerId, int salesRepId) {
+        this.carportId = carportId;
+        this.customerId = customerId;
+        this.salesRepId = salesRepId;
+    }
+
+
 }

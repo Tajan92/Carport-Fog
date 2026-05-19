@@ -1,11 +1,8 @@
 package app.services.converters;
 
 import app.dto.requestDTO.InquiryRequestDTO;
-import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.RoofResponseDTO;
 import app.entities.Inquiry;
-import app.entities.Roof;
 
 public class InquiryConverter {
 

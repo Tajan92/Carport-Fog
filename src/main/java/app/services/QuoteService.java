@@ -34,6 +34,8 @@ public class QuoteService {
         quote.setCustomerId(quoteRequestDTO.getCustomerId());
         quote.setSalesRepId(quoteRequestDTO.getSalesRepId());
 
+        /* Mapper fra converter kobles på her */
+
         quoteMapper.createQuote(quote);
     }
 

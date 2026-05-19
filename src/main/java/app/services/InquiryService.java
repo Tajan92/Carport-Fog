@@ -21,19 +21,15 @@ import java.util.List;
 public class InquiryService {
     private InquiryMapper inquiryMapper;
     private InquiryConverter inquiryConverter;
-    private CarportMapper carportMapper;
     private CustomerMapper customerMapper;
     private UserConverter userConverter;
-    private CarportConverter carportConverter;
     private CarportService carportService;
 
-    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService) {
+    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper) {
         this.inquiryMapper = inquiryMapper;
         this.inquiryConverter = new InquiryConverter();
-        this.carportMapper = carportMapper;
         this.customerMapper = customerMapper;
         this.userConverter = new UserConverter();
-        this.carportConverter = new CarportConverter();
         this.carportService = carportService;
     }
 
@@ -45,15 +41,18 @@ public class InquiryService {
 
     public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException {
         Inquiry inquiry = inquiryMapper.getInquiryById(inquiryId);
+        InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
 
         Customer customer = customerMapper.getCustomerById(inquiry.getCustomerId());
-        Carport carport = carportMapper.getCarportById(inquiry.getCarportId());
 
         CustomerResponseDTO customerResponseDTO = userConverter.convertCustomerToDto(customer);
-        CarportResponseDTO carportResponseDTO = carportService.getCarport(carport.getCarportId());
+        CarportResponseDTO carportResponseDTO = carportService.getCarport(inquiry.getCarportId());
 
-        return inquiryConverter.convertInquiryToDto(inquiry);
-}
+        inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);
+        inquiryResponseDTO.setCarportRespondDto(carportResponseDTO);
+
+        return inquiryResponseDTO;
+    }
 
     public List<InquiryResponseDTO> getAllInquiries() throws DatabaseException {
         List<Inquiry> allInquiries = inquiryMapper.getAllInquiries();

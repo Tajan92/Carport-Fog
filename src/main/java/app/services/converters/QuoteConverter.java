@@ -25,6 +25,8 @@ public class QuoteConverter {
         int carportId = quoteRequestDTO.getCarportId();
         double discount = quoteRequestDTO.getDiscount();
         int salesRepId = quoteRequestDTO.getSalesRepId();
+        /* fjern carport price og quote price her */
+
         double carportPrice = carportMapper.getCarportById(carportId).getPrice();
         double quotePrice = DiscountCalculator.calculateDiscount(carportPrice, discount);
 
