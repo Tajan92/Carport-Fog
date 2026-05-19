@@ -19,7 +19,7 @@ public class QuoteConverter {
 
         return new QuoteResponseDTO(quoteId, customerId, quotePrice, carportId, salesRepId);
     }
-
+    // TODO: Flyt mapper til service
     public Quote convertQuoteDTOtoEntity(QuoteRequestDTO quoteRequestDTO) throws DatabaseException {
         int customerId = quoteRequestDTO.getCustomerId();
         int carportId = quoteRequestDTO.getCarportId();

@@ -12,11 +12,8 @@ import app.persistence.RoofMapper;
 import app.persistence.ShedMapper;
 
 public class CarportConverter {
-    private RoofMapper roofMapper;
-    private RoofConverter roofConverter;
-    private ShedMapper shedMapper;
-    private ShedConverter shedConverter;
 
+    // TODO: Flyt mapper kald til service og kobl de resterende ting på der
     public Carport covertCarportDTOToEntity(CarportRequestDTO carportRequestDTO){
         double width = carportRequestDTO.getWidth();
         double height = carportRequestDTO.getHeight();

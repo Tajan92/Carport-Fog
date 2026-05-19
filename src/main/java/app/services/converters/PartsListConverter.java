@@ -16,6 +16,7 @@ import java.util.List;
 public class PartsListConverter {
     PartsListMapper partsListMapper = new PartsListMapper();
 
+    // TODO: Kan mapperen flyttes til service?
     public List<ProductsPartsListEntryResponseDTO> convertProductsPartsListToDTO(Carport carport) throws DatabaseException {
 
         List<ProductsPartsListEntryResponseDTO> responseDTOS = new ArrayList<>();
