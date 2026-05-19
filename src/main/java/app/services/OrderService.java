@@ -6,6 +6,7 @@ import app.dto.responseDTO.OrderResponseDTO;
 import app.dto.responseDTO.PartsListResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.entities.Carport;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.CustomerMapper;
@@ -22,6 +23,7 @@ public class OrderService {
     private RoofMapper roofMapper;
     private CarportService carportService;
     private UserService userService;
+    private PartsListService partsListService;
 
     public void createOrder(OrderRequestDTO orderRequestDTO) throws DatabaseException {
         Order order = orderConverter.convertOrderToEntity(orderRequestDTO);
@@ -30,6 +32,7 @@ public class OrderService {
 
     public OrderResponseDTO getOrder(int orderId) throws DatabaseException {
         Order order = orderMapper.getOrderById(orderId);
+        Carport carport = carportService.getCarport(order.getCarportId());
         CarportResponseDTO carportResponseDTO = carportService.getCarport(order.getCarportId());
         CustomerResponseDTO customerResponseDTO = userService.getCustomer(order.getCustomerId());
         SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(order.getSalesRepId());

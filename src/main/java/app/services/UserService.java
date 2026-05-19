@@ -10,6 +10,7 @@ import app.entities.SalesRep;
 import app.exceptions.DatabaseException;
 import app.persistence.CustomerMapper;
 import app.persistence.LoginMapper;
+import app.persistence.SalesRepMapper;
 import app.services.converters.UserConverter;
 import app.services.utils.PasswordUtil;
 import app.services.utils.UserValidator;
@@ -19,11 +20,13 @@ public class UserService {
     private final UserConverter userConverter;
     private final LoginMapper loginMapper;
     private final CustomerMapper customerMapper;
+    private SalesRepMapper salesRepMapper;
 
-    public UserService(LoginMapper loginMapper, CustomerMapper customerMapper) {
+    public UserService(LoginMapper loginMapper, CustomerMapper customerMapper, SalesRepMapper salesRepMapper) {
         this.loginMapper = loginMapper;
         this.customerMapper = customerMapper;
         this.userConverter = new UserConverter();
+        this.salesRepMapper = salesRepMapper;
     }
 
     public SalesRepResponseDTO adminLogin(LoginSalesRepRequestDTO loginSalesRepDTO) throws DatabaseException {
@@ -71,4 +74,9 @@ public class UserService {
         return userConverter.convertCustomerToDto(customer);
     }
 
+    public SalesRepResponseDTO getSalesRep (int salesRepId) throws DatabaseException {
+        SalesRep salesRep = salesRepMapper.getSalesRepById(salesRepId);
+
+        return userConverter.convertSalesRepToDto(salesRep);
+    }
 }

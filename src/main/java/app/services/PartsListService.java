@@ -1,5 +1,5 @@
 package app.services;
-
+import app.dto.responseDTO.PartsListResponseDTO;
 import app.dto.responseDTO.ProductsPartsListEntryResponseDTO;
 import app.entities.*;
 import app.exceptions.DatabaseException;
@@ -12,9 +12,7 @@ import app.services.converters.PartsListConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
-
 import java.util.List;
-
 
 public class PartsListService {
     private PartsListMapper partsListMapper;
@@ -39,7 +37,7 @@ public class PartsListService {
         }
     }
 
-    public List<ProductsPartsListEntryResponseDTO> getProductsPartsListEntries(Carport carport) throws DatabaseException {
+    public PartsListResponseDTO getPartsList(Carport carport) throws DatabaseException {
         String placementDescription = Placementfinder.getDescription(carport);
         List<ProductsPartsListEntryResponseDTO> productsPartsListEntriesWithDescription = partsListConverter.convertProductsPartsListToDTO(carport);
 
