@@ -28,6 +28,7 @@ public class CarportService {
     private CarportMapper carportMapper;
     private RoofMapper roofMapper;
     private ShedMapper shedMapper;
+    private PartsListService partsListService;
 
     public CarportService(PartsListMapper partsListMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper) {
         this.carportConverter = new CarportConverter();
@@ -52,6 +53,10 @@ public class CarportService {
         int roofId = roofMapper.createRoof(roof);
         int partsListId = partsListMapper.createPartListId();
         int addonId = carportMapper.createAddonId(roofId, shedId);
+
+        //create the parts list in database but don't return anything
+        partsListService.createProductsPartsListEntries(carportRequestDTO);
+
         return carportMapper.createCarport(carport, addonId, partsListId);
     }
 
