@@ -80,10 +80,9 @@ public class PartsListMapper {
                 String unit = resultSet.getString("unit");
                 String productGroup = resultSet.getString("product_group");
                 String description = resultSet.getString("description");
-                int productsPartsListEntryId = resultSet.getInt("prod_parts_list_id");
 
                 Product product = new Product(productId, costPrice, retail_price, length, unit, productGroup, description);
-                partList.add(new ProductsPartsListEntry(productsPartsListEntryId, product, quantity));
+                partList.add(new ProductsPartsListEntry(product, quantity));
             }
             return partList;
         } catch (SQLException e) {

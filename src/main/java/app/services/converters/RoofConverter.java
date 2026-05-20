@@ -10,7 +10,7 @@ public class RoofConverter {
 
     public RoofResponseDTO convertRoofToDto(Roof roof) {
         int roofId = roof.getRoofId();
-        Double roofSlope = roof.getRoofSlope();
+        double roofSlope = roof.getRoofSlope();
         String roofMaterial = roof.getRoofMaterial();
         String roofType = roof.getRoofType();
 
@@ -19,7 +19,7 @@ public class RoofConverter {
 
 
     public Roof convertRoofDTOtoEntity(RoofRequestDTO roofRequestDTO) {
-        Double roofSlope = roofRequestDTO.getRoofSlope();
+        double roofSlope = roofRequestDTO.getRoofSlope();
         String roofMaterial = roofRequestDTO.getRoofMaterial();
         String roofType = roofRequestDTO.getRoofType();
 
