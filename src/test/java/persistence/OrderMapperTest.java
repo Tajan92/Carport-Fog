@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class OrderMapperTest extends MapperTest {
     OrderMapper orderMapper = new OrderMapper();
@@ -75,6 +76,17 @@ public class OrderMapperTest extends MapperTest {
         //Removed one so new size should be 3
         assertEquals(3, size);
 
+    }
+
+    @Test
+    void updateOrderTest() throws DatabaseException{
+        OrderMapper orderMapper = new OrderMapper();
+        Order expectedOrder = new Order(1, 1, 1, 1, 25000.00, 1);
+        orderMapper.updateOrder(expectedOrder);
+
+        Order actualOrder = orderMapper.getOrderById(1);
+
+        assertEquals(expectedOrder, actualOrder);
     }
 }
 
