@@ -49,7 +49,7 @@ public class PartsListService {
         }
     }
 
-    public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException {
+    public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException, CalculatorException {
         List<Product> allProducts = productMapper.getAllProducts();
         Carport carport = carportMapper.getCarportById(carportId);
         Roof roof = roofMapper.getRoofById(carport.getRoofId());
