@@ -23,6 +23,7 @@ public class PartsListCalculator {
     private double rafterQuantity;
     private String rafterDescription;
     private double poleQuantity;
+    private double bracingQuantity;
     private final String flatRoof = "Fladt tag";
     private final String highRoof = "Højt tag";
 
@@ -44,6 +45,7 @@ public class PartsListCalculator {
             this.siding = shed.getSiding();
         }
 
+        //======= Timber & Roofing ======= //
         addPoles();
         addRafters();
         addTopPlates();
@@ -56,6 +58,12 @@ public class PartsListCalculator {
             addStabilizerToShedDoor();
             addPolesToShed();
         }
+
+        //======= Hardware & Screws ======= //
+        addScrewsToRoof();
+        addBracingStrap();
+        addUniversalConnectorAndScrews();
+
         return this.productsPartsListEntries;
     }
 
@@ -417,7 +425,82 @@ public class PartsListCalculator {
 
     //======= Hardware & Screws ======= //
 
-    private void addScrewsToRoof() {
+    private void addScrewsToRoof() throws CalculatorException {
+        String placementDescription = "Skruer til tag";
+        String productDescription = "";
+        double quantity = 0;
 
+        if (roofType.equals(flatRoof)) {
+            double squareMeters = (width / 100.0) * (length / 100.0);
+            double totalScrews = squareMeters * 12; // Plastmo — 12 screws pr. m²
+            quantity = Math.ceil(totalScrews / 200); // 200 pr. package
+            productDescription = "plastmo bundskruer 200 stk.";
+
+        } else if (roofType.equals(highRoof)) {
+            switch (roofMaterial) {
+                case "Betontagsten - sort", "Betontagsten - koralrød" -> {
+                    double squareMeters = (width / 100.0) * (length / 100.0);
+                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
+                    double totalNails = roofArea * 9 * 2; // 2 nails pr. stone and 9 stones pr. m²
+                    quantity = Math.ceil(totalNails / 350); // 350 nail pr. package
+                    productDescription = "4,5 x 50 mm. Skruer 300 stk.";
+                }
+                case "Eternittag B6 - sortblå", "Eternittag B6 - grå" -> {
+                    double squareMeters = (width / 100.0) * (length / 100.0);
+                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
+                    double platesPerM2 = 1.0 / (1.03 * 1.01); // plate covers 103*101
+                    double totalScrews = roofArea * platesPerM2 * 6; // 6 screws pr. plate
+                    quantity = Math.ceil(totalScrews / 250); // 250 screw pr. package
+                    productDescription = "4,0 x 50 mm. beslagskruer 250 stk.";
+                }
+                case "Eternittag B7 - sortblå" -> {
+                    double squareMeters = (width / 100.0) * (length / 100.0);
+                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
+                    double platesPerM2 = 1.0 / (0.46 * 1.02); // plate covers 46*102
+                    double totalScrews = roofArea * platesPerM2 * 4; // 4 screws pr. plate
+                    quantity = Math.ceil(totalScrews / 250);
+                    productDescription = "4,0 x 50 mm. beslagskruer 250 stk.";
+                }
+                default -> throw new CalculatorException("Ukendt tagmateriale: " + roofMaterial);
+            }
+        } else {
+            throw new CalculatorException("Ukendt tagtype: " + roofType);
+        }
+
+        Product product = findProductByDescription(productDescription);
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, quantity, placementDescription));
     }
+
+    private void addBracingStrap() throws CalculatorException {
+        String placementDescription = "Til vindkryds på spær";
+        String productDescription = "hulbånd 1x20 mm. 10 mtr.";
+        Product strapRollProduct = findProductByDescription(productDescription);
+        double bracingWidth = width;
+        bracingQuantity = 2;
+
+        if (roofType.equals(highRoof)) {
+            bracingWidth = (width / 2.0) / Math.cos(Math.toRadians(roofSlope));
+            bracingQuantity = 4;
+        }
+        double oneBracingLength = Math.sqrt(Math.pow(length, 2) + Math.pow(bracingWidth, 2));
+        double bracingRollQuantity = Math.ceil(((bracingQuantity * oneBracingLength)*1.1) / 1000); // 1.1 is adding 10% extra and 1000 is 10 mtr roll
+
+        productsPartsListEntries.add(new ProductsPartsListEntry(strapRollProduct, bracingRollQuantity, placementDescription))
+    }
+
+    private void addUniversalConnectorAndScrews() throws CalculatorException {
+        Product leftConnector = findProductByDescription("universal 190 mm venstre");
+        Product rightConnector = findProductByDescription("universal 190 mm højre");
+        Product screws = findProductByDescription("4,0 x 50 mm. beslagskruer 250 stk.");
+
+        productsPartsListEntries.add(new ProductsPartsListEntry(leftConnector, rafterQuantity, "Til montering af spær på rem"));
+        productsPartsListEntries.add(new ProductsPartsListEntry(rightConnector, rafterQuantity, "Til montering af spær på rem"));
+
+        double totalConnectors = rafterQuantity*2;
+        double screwsQuantity = (totalConnectors*14)+(bracingQuantity*rafterQuantity); //14 screws pr connector + adding screws for bracing
+
+        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwsQuantity, " Til montering af universalbeslag + hulbånd"));
+    }
+
+
 }
