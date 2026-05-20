@@ -6,7 +6,7 @@
     width: 60%;
     justify-content: center;
     justify-self: center;
-    max-height: 90vh;        /* ← this is what limits the height */
+    max-height: 90vh;
 
 }
 
@@ -30,9 +30,9 @@
 
 #register-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* 2 equal columns */
-    gap: 8px 16px;                    /* row-gap column-gap */
-    align-items: end;                 /* labels sit above inputs neatly */
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    align-items: end;
 }
 
 .input-box {
@@ -92,9 +92,17 @@
     margin-top: 5px;
 }
 
+.register-button{
+    width: 50%;
+    justify-self: center;
+}
+
 #register-button {
     color: #013d7a;
+
+
 }
+
 
 #register-button:hover {
     cursor: pointer;
