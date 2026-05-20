@@ -91,7 +91,6 @@ public class PartsListMapperTest extends MapperTest {
         //we create a new "empty" partslistid so we can test it can be deleted
 
         partsListMapper.createPartListId();
-
         partsListMapper.deletePartsListById(7);
 
         int size = partsListMapper.getAllPartsListsIds().size();
