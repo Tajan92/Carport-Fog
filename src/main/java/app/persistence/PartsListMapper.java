@@ -105,11 +105,18 @@ public class PartsListMapper {
                 int productId = resultSet.getInt("product_id");
                 int partsListId = resultSet.getInt("parts_list_id");
                 double quantity = resultSet.getDouble("quantity");
+                double costPrice = resultSet.getDouble("cost_price");
+                double retailPrice = resultSet.getDouble("retail_price");
+                double length = resultSet.getDouble("length");
+                String unit = resultSet.getString("unit");
+                String productGroup = resultSet.getString("product_group");
+                String productDescription = resultSet.getString("description");
+                Product product = new Product(productId, costPrice, retailPrice, length, unit, productGroup, productDescription);
 
-                PartsList parts = new PartsList(productPartListId, productId, partsListId, quantity);
-                partList.add(parts);
+                ProductsPartsListEntry productsPartsListEntry = new ProductsPartsListEntry(product, quantity);
+                productsPartsListEntries.add(productsPartsListEntry);
             }
-            return partList;
+            return new PartsList(partsListId, productsPartsListEntries);
         } catch (SQLException e) {
             String message = "Fejl ved at hente styk liste";
             throw new DatabaseException(message, e.getMessage());
@@ -137,7 +144,7 @@ public class PartsListMapper {
         }
     }
 
-    public void deleteProductPartsListById(int partsListId) throws DatabaseException {
+    public void deleteAllProductPartsListById(int partsListId) throws DatabaseException {
         String sql = "DELETE FROM products_parts_lists WHERE parts_list_id = ?";
 
         try (Connection connection = connectionPool.getConnection();

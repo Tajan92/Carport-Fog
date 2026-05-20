@@ -56,7 +56,7 @@ public class PartsListMapperTest extends MapperTest {
     void deleteAllInProductPartsListByIdTest() throws DatabaseException {
         PartsListMapper partsListMapper = new PartsListMapper();
 
-        partsListMapper.deleteProductPartsListById(1);
+        partsListMapper.deleteAllProductPartsListById(1);
 
         int actualPartsListCountById = partsListMapper.getPartsListById(1).size();
 
@@ -68,5 +68,20 @@ public class PartsListMapperTest extends MapperTest {
 
         // There is 6 unique partListId's
         assertEquals(5, partListSize);
+    }
+
+    @Test
+    void deleteProductPartsListByIDTest() throws DatabaseException {
+        PartsListMapper partsListMapper = new PartsListMapper();
+        //we create a new "empty" partslistid so we can test it can be deleted
+
+        partsListMapper.createPartListId();
+
+        partsListMapper.deletePartsListById(7);
+
+        int size = partsListMapper.getAllPartsListsIds().size();
+
+        assertEquals(6, size);
+
     }
 }
