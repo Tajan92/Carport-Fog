@@ -16,14 +16,15 @@ public class PartsListCalculator {
     private double shedLength;
     private double shedWidth;
     private String siding;
+    private double sidingQuantity;
     private String roofType;
     private double roofSlope;
     private String roofMaterial;
     private double rafterDistance;
-    private double rafterQuantity;
+    private int rafterQuantity;
     private String rafterDescription;
-    private double poleQuantity;
-    private double bracingQuantity;
+    private int poleQuantity;
+    private int bracingQuantity;
     private final String flatRoof = "Fladt tag";
     private final String highRoof = "Højt tag";
 
@@ -66,7 +67,11 @@ public class PartsListCalculator {
         addFasciaAndFasciaCappingScrews();
         addBoltsToPoles();
         addBoltPlates();
-
+        if (shedId != null) {
+            addScrewsToSiding();
+            addHardwareToShedDoor();
+            addAngleBracketsToShedWithScrews();
+        }
         return this.productsPartsListEntries;
     }
 
@@ -89,16 +94,23 @@ public class PartsListCalculator {
         Product roofProduct = null;
         double quantity;
         double plateCoverageLength = 0;
-        double plateCoverageWidth = 1;
+        double plateCoverageWidth = 100;
 
         if (roofType.equals(flatRoof)) {
-            if (length >= 1200 || length == 600) {
+            if (length >= 600) {
                 plateCoverageLength = 600;
-                roofProduct = findProductByDescriptionAndNearestLength(descriptionRoofMaterial, 600);
             } else {
                 plateCoverageLength = 360;
-                roofProduct = findProductByDescriptionAndNearestLength(descriptionRoofMaterial, 360);
             }
+            roofProduct = findProductByDescriptionAndNearestLength(descriptionRoofMaterial, plateCoverageLength);
+
+            double lengthPlates = Math.ceil(length / plateCoverageLength);
+            double widthPlates = Math.ceil(width / plateCoverageWidth);
+
+            quantity = lengthPlates * widthPlates;
+            productsPartsListEntries.add(new ProductsPartsListEntry(roofProduct, quantity, placementDescriptionRoofMaterial));
+
+            return;
         } else if (roofType.equals(highRoof)) {
             switch (roofMaterial) {
                 case "Eternittag B6 - sortblå", "Eternittag B6 - grå" -> {
@@ -118,54 +130,52 @@ public class PartsListCalculator {
                 }
             }
             roofProduct = findProductByDescription(descriptionRoofMaterial);
-        }
 
-        if (plateCoverageLength > 0 && plateCoverageWidth > 0 && roofProduct != null) {
+            double actualRoofWidthOneSide = (width / 2.0) / Math.cos(Math.toRadians(roofSlope));
             double lengthPlates = Math.ceil(length / plateCoverageLength);
-            double widthPlates = Math.ceil(width / plateCoverageWidth);
-            quantity = lengthPlates * widthPlates;
+            double widthPlates = Math.ceil(actualRoofWidthOneSide / plateCoverageWidth);
+
+            quantity = (lengthPlates * widthPlates) * 2;
+
             productsPartsListEntries.add(new ProductsPartsListEntry(roofProduct, quantity, placementDescriptionRoofMaterial));
+            return;
         }
+            throw new CalculatorException("Kan ikke finde materialet til dette tag.");
     }
 
     private void addShedSiding() throws CalculatorException {
         String placementDescriptionShedSiding = "til beklædning af skur";
         double sidingCover = 0;
-        double quantity = 0;
         double add10percent = 1.1;
         double shedHeight = 210;
         Product shedSiding;
 
-        if (siding.equals("Beklædning: 19x100 mm. trykimp. Brædt")) {
-            sidingCover = 8.5;
-            quantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover) * 2;
-
-        } else if (siding.equals("Beklædning: 19x125mm Klinkbeklædning trykimp.")) {
-            sidingCover = 10.0;
-            quantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover);
-
-        } else if (siding.equals("Beklædning: 25x150mm Blokhusbrædder ubehandlet")) {
-            sidingCover = 14.3;
-            quantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover);
-
-        } else if (siding.equals("Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)")) {
-            sidingCover = 8.5;
-            quantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover) * 2;
-
-
-        } else if (siding.equals("Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)")) {
-            double plateWidth = 122.0;
-            double plateHeight = 244.0;
-            double perimeterCm = (shedWidth * 2 + shedLength * 2);
-            double platesHorizontal = Math.ceil(perimeterCm / plateWidth);
-            double platesVertical = Math.ceil(shedHeight / plateHeight);
-            quantity = platesHorizontal * platesVertical;
-        } else {
-            throw new CalculatorException("Kan ikke tilføje " + siding + " som beklædning");
+        switch (siding) {
+            case "Beklædning: 19x100 mm. trykimp. Brædt", "Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)" -> {
+                sidingCover = 8.5;
+                sidingQuantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover) * 2;
+            }
+            case "Beklædning: 19x125mm Klinkbeklædning trykimp." -> {
+                sidingCover = 10.0;
+                sidingQuantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover);
+            }
+            case "Beklædning: 25x150mm Blokhusbrædder ubehandlet" -> {
+                sidingCover = 14.3;
+                sidingQuantity = Math.ceil(((shedWidth * 2) + (shedLength * 2)) / sidingCover);
+            }
+            case "Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)" -> {
+                double plateWidth = 122.0;
+                double plateHeight = 244.0;
+                double perimeterCm = (shedWidth * 2 + shedLength * 2);
+                double platesHorizontal = Math.ceil(perimeterCm / plateWidth);
+                double platesVertical = Math.ceil(shedHeight / plateHeight);
+                sidingQuantity = platesHorizontal * platesVertical;
+            }
+            default -> throw new CalculatorException("Kan ikke tilføje " + siding + " som beklædning");
         }
 
         shedSiding = findProductByDescriptionAndNearestLength(siding, shedHeight);
-        productsPartsListEntries.add(new ProductsPartsListEntry(shedSiding, quantity * add10percent, placementDescriptionShedSiding));
+        productsPartsListEntries.add(new ProductsPartsListEntry(shedSiding, sidingQuantity * add10percent, placementDescriptionShedSiding));
     }
 
     private void addFasciaCapping() throws CalculatorException {
@@ -265,14 +275,16 @@ public class PartsListCalculator {
         String placementDescriptionSides = "Løsholter til skur sider";
         Product product = findProductByDescriptionAndNearestLength(description, 240);
         Product productEnds = findProductByDescriptionAndNearestLength(description, 270);
-        double quantityEnds = getStudQuantity(shedWidth);
-        double quantitySides = getStudQuantity(shedLength);
+
+        double spaceEnds = getStudQuantity(shedWidth) + 1;
+        double spaceSides = getStudQuantity(shedLength) + 1;
+        double quantityEnds = spaceEnds * 2 * 3; // 2 walls, 3 rows
+        double quantitySides = spaceSides * 2 * 3; // 2 walls, 3 rows
 
         if (roofType.equals(flatRoof)) {
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantityEnds, placementDescriptionEnds));
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantitySides, placementDescriptionSides));
-        }
-        if (roofType.equals(highRoof)) {
+        } else if (roofType.equals(highRoof)) {
             productsPartsListEntries.add(new ProductsPartsListEntry(productEnds, quantityEnds, placementDescriptionEnds));
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantitySides, placementDescriptionSides));
         } else {
@@ -325,107 +337,6 @@ public class PartsListCalculator {
         }
     }
 
-    private void calculateQuantityOfRafterLightRoof() throws CalculatorException {
-        String placementDescription = "Spær, monteres på rem";
-
-        if (length <= 372) {
-            rafterDistance = 100;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 397) {
-            rafterDistance = 80;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 434) {
-            rafterDistance = 60;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 488) {
-            rafterDistance = 60;
-            rafterDescription = "45x220 mm. spærtræ ubh.";
-        } else if (length <= 542) {
-            rafterDistance = 60;
-            rafterDescription = "45x245 mm. spærtræ ubh.";
-        } else if (length <= 607) {
-            rafterDistance = 40;
-            rafterDescription = "45x245 mm. spærtræ ubh.";
-        } else if (length <= 648) {
-            rafterDistance = 60;
-            rafterDescription = "45x295 mm. spærtræ ubh.";
-        } else if (length <= 723) {
-            rafterDistance = 40;
-            rafterDescription = "45x295 mm. spærtræ ubh.";
-        } else {
-            throw new CalculatorException("Carporten er for lang til let tag: " + length + " cm");
-        }
-
-        Product product = findProductByDescriptionAndNearestLength(rafterDescription, width);
-
-        rafterQuantity = Math.ceil(length / rafterDistance) + 1;
-        productsPartsListEntries.add(new ProductsPartsListEntry(product, rafterQuantity, placementDescription));
-    }
-
-    private void calculateQuantityOfRafterHeavyRoof() throws CalculatorException {
-        String placementDescription = "Spær, monteres på rem";
-        String placementDescriptionRoof = "Spær, til taghældning";
-
-        if (length <= 319) {
-            rafterDistance = 100;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 343) {
-            rafterDistance = 80;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 376) {
-            rafterDistance = 60;
-            rafterDescription = "45x195 mm. spærtræ ubh.";
-        } else if (length <= 388) {
-            rafterDistance = 80;
-            rafterDescription = "45x220 mm. spærtræ ubh.";
-        } else if (length <= 431) {
-            rafterDistance = 80;
-            rafterDescription = "45x245 mm. spærtræ ubh.";
-        } else if (length <= 472) {
-            rafterDistance = 60;
-            rafterDescription = "45x245 mm. spærtræ ubh.";
-        } else if (length <= 518) {
-            rafterDistance = 80;
-            rafterDescription = "45x295 mm. spærtræ ubh.";
-        } else if (length <= 566) {
-            rafterDistance = 60;
-            rafterDescription = "45x295 mm. spærtræ ubh.";
-        } else if (length <= 637) {
-            rafterDistance = 40;
-            rafterDescription = "45x295 mm. spærtræ ubh.";
-        } else {
-            throw new CalculatorException("Carporten er for lang til tungt tag: " + length + " cm");
-        }
-        double roofRafterWidth = (width / 2) / Math.cos(Math.toRadians(roofSlope));
-
-        Product productRafter = findProductByDescriptionAndNearestLength(rafterDescription, width);
-        Product productRoofRafter = findProductByDescriptionAndNearestLength(rafterDescription, roofRafterWidth);
-
-        rafterQuantity = Math.ceil(length / rafterDistance) + 1;
-        productsPartsListEntries.add(new ProductsPartsListEntry(productRafter, rafterQuantity, placementDescription));
-        productsPartsListEntries.add(new ProductsPartsListEntry(productRoofRafter, rafterQuantity * 2, placementDescriptionRoof));
-    }
-
-    private double getStudQuantity(double lengthOrWidth) {
-        double studSpace = 70;
-        return (Math.ceil(lengthOrWidth / studSpace) - 1) * 2;
-    }
-
-    private Product findProductByDescription(String description) throws CalculatorException {
-        return products.stream()
-                .filter(p -> p.getDescription().equals(description))
-                .findFirst()
-                .orElseThrow(() -> new CalculatorException("Produkt ikke fundet: " + description));
-    }
-
-    private Product findProductByDescriptionAndNearestLength(String description, double minLength) throws CalculatorException {
-        return products.stream()
-                .filter(p -> p.getDescription().equals(description))
-                .filter(p -> p.getLength() >= minLength)
-                .min(Comparator.comparing(Product::getLength))
-                .orElseThrow(() -> new CalculatorException("Produkt ikke fundet: " + description + " med minimum længde " + minLength + " cm"));
-    }
-
     //======= Hardware & Screws ======= //
 
     private void addScrewsToRoof() throws CalculatorException {
@@ -440,27 +351,26 @@ public class PartsListCalculator {
             productDescription = "plastmo bundskruer 200 stk.";
 
         } else if (roofType.equals(highRoof)) {
+            double actualRoofWidthOneSide = (width / 2.0) / Math.cos(Math.toRadians(roofSlope));
+
             switch (roofMaterial) {
                 case "Betontagsten - sort", "Betontagsten - koralrød" -> {
-                    double squareMeters = (width / 100.0) * (length / 100.0);
-                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
-                    double totalNails = roofArea * 9 * 2; // 2 nails pr. stone and 9 stones pr. m²
-                    quantity = Math.ceil(totalNails / 350); // 350 nail pr. package
+                    double squareMeters = (actualRoofWidthOneSide / 100.0) * (length / 100.0) * 2;
+                    double totalNails = squareMeters * 9 * 2; // 2 nails pr. stone and 9 stones pr. m²
+                    quantity = Math.ceil(totalNails / 300); // Retted: divideret med 300 for at matche "300 stk." produktet
                     productDescription = "4,5 x 50 mm. Skruer 300 stk.";
                 }
                 case "Eternittag B6 - sortblå", "Eternittag B6 - grå" -> {
-                    double squareMeters = (width / 100.0) * (length / 100.0);
-                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
-                    double platesPerM2 = 1.0 / (1.03 * 1.01); // plate covers 103*101
-                    double totalScrews = roofArea * platesPerM2 * 6; // 6 screws pr. plate
+                    double roofArea = length * actualRoofWidthOneSide * 2;
+                    double platesPerCm2 = 1.0 / (103 * 101); // plate covers 103*101
+                    double totalScrews = roofArea * platesPerCm2 * 6; // 6 screws pr. plate
                     quantity = Math.ceil(totalScrews / 250); // 250 screw pr. package
                     productDescription = "4,0 x 50 mm. beslagskruer 250 stk.";
                 }
                 case "Eternittag B7 - sortblå" -> {
-                    double squareMeters = (width / 100.0) * (length / 100.0);
-                    double roofArea = squareMeters / Math.cos(Math.toRadians(roofSlope));
-                    double platesPerM2 = 1.0 / (0.46 * 1.02); // plate covers 46*102
-                    double totalScrews = roofArea * platesPerM2 * 4; // 4 screws pr. plate
+                    double roofArea = length * actualRoofWidthOneSide * 2;
+                    double platesPerCm2 = 1.0 / (46 * 102); // plate covers 46*102
+                    double totalScrews = roofArea * platesPerCm2 * 4; // 4 screws pr. plate
                     quantity = Math.ceil(totalScrews / 250);
                     productDescription = "4,0 x 50 mm. beslagskruer 250 stk.";
                 }
@@ -488,7 +398,7 @@ public class PartsListCalculator {
         double oneBracingLength = Math.sqrt(Math.pow(length, 2) + Math.pow(bracingWidth, 2));
         double bracingRollQuantity = Math.ceil(((bracingQuantity * oneBracingLength) * 1.1) / 1000); // 1.1 is adding 10% extra and 1000 is 10 mtr roll
 
-        productsPartsListEntries.add(new ProductsPartsListEntry(strapRollProduct, bracingRollQuantity, placementDescription))
+        productsPartsListEntries.add(new ProductsPartsListEntry(strapRollProduct, bracingRollQuantity, placementDescription));
     }
 
     private void addUniversalConnectorAndScrews() throws CalculatorException {
@@ -501,8 +411,8 @@ public class PartsListCalculator {
 
         double totalConnectors = rafterQuantity * 2;
         double screwsQuantity = (totalConnectors * 14) + (bracingQuantity * rafterQuantity); //14 screws pr connector + adding screws for bracing
-
-        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwsQuantity, "Til montering af universalbeslag + hulbånd"));
+        double screwBox = Math.ceil(screwsQuantity / 250); // 250 screws pr box
+        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwBox, "Til montering af universalbeslag + hulbånd"));
     }
 
     private void addFasciaAndFasciaCappingScrews() throws CalculatorException {
@@ -514,14 +424,176 @@ public class PartsListCalculator {
         Product product = findProductByDescription("bræddebolt 10 x 120 mm.");
         double ifShed = 0;
         if (shedId != null) {
-            ifShed = 2 + 8; // 2x6 extra bolts + 4 ekstra bolts when shed starts
+            ifShed = 12+4; // 2x6 extra bolts + 4 ekstra bolts when shed starts
         }
-        double quantity = Math.ceil(((poleQuantity * 2) + ifShed) / 12);
+        double quantity = Math.ceil(((poleQuantity * 2) + ifShed) / 12); // 12 per package
         productsPartsListEntries.add(new ProductsPartsListEntry(product, quantity, "Til montering af rem på stolper"));
     }
 
     private void addBoltPlates() throws CalculatorException {
         Product product = findProductByDescription("firkantskiver 40x40x11mm");
-        productsPartsListEntries.add(new ProductsPartsListEntry(product, poleQuantity, "Til montering af rem på stolper"));
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, poleQuantity*2, "Til montering af rem på stolper"));
+    }
+
+    private void addScrewsToSiding() throws CalculatorException {
+        double totalShortScrews = 0;
+        double totalLongScrews = 0;
+
+        switch (siding) {
+            case "Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)",
+                 "Beklædning: 19x100 mm. trykimp. Brædt" -> {
+                totalShortScrews = Math.ceil(sidingQuantity / 2) * 3;
+                totalLongScrews = Math.ceil(sidingQuantity / 2) * 6;
+            }
+            case "Beklædning: 19x125mm Klinkbeklædning trykimp.",
+                 "Beklædning: 25x150mm Blokhusbrædder ubehandlet" -> {
+                totalLongScrews = sidingQuantity * 8;
+            }
+            case "Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)" -> {
+                totalShortScrews = sidingQuantity * 50;
+            }
+            default -> throw new CalculatorException("Kan ikke tilføje skruer");
+        }
+        if (totalLongScrews > 0) {
+            double box = Math.ceil(totalLongScrews / 400.0);
+            Product outerProduct = findProductByDescription("4,5 x 70 mm. Skruer 400 stk.");
+            productsPartsListEntries.add(new ProductsPartsListEntry(outerProduct, box, "Til montering af beklædning"));
+        }
+        if (totalShortScrews > 0) {
+            double box = Math.ceil(totalShortScrews / 300.0);
+            Product innerProduct = findProductByDescription("4,5 x 50 mm. Skruer 300 stk.");
+            productsPartsListEntries.add(new ProductsPartsListEntry(innerProduct, box, "Til montering af beklædning"));
+        }
+    }
+
+    private void addHardwareToShedDoor() throws CalculatorException {
+        Product hinge = findProductByDescription("t hængsel 390 mm");
+        Product latch = findProductByDescription("stalddørsgreb 50x75");
+        productsPartsListEntries.add(new ProductsPartsListEntry(hinge, 2, "Til skur dør"));
+        productsPartsListEntries.add(new ProductsPartsListEntry(latch, 1, "Til lås på dør i skur"));
+    }
+
+    private void addAngleBracketsToShedWithScrews() throws CalculatorException {
+        double studsEnds = getStudQuantity(shedWidth) + 1;
+        double studsSides = getStudQuantity(shedLength) + 1;
+
+        double totalColumns = (studsEnds * 2) + (studsSides * 2); // 2 end walls, 2 side walls
+
+        int totalRows = 3; // Always 3
+        double totalHorizontalBeams = totalColumns * totalRows;
+
+        double totalBracketsNeeded = (totalHorizontalBeams * 2) + 4; // 2 brackets pr beam, 4 to reinforce around door.
+
+        Product angleBracket = findProductByDescription("vinkelbeslag 35");
+        productsPartsListEntries.add(new ProductsPartsListEntry(angleBracket, totalBracketsNeeded, "Til montering af løsholter i skur"));
+
+        double totalBracketScrews = totalBracketsNeeded * 6; // 6 screws pr bracket
+        double screwBoxes = Math.ceil(totalBracketScrews / 250.0); // 250 pr package
+
+        Product screws = findProductByDescription("4,0 x 50 mm. beslagskruer 250 stk.");
+        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwBoxes, "Til montering af vinkelbeslag 35 i skur"));
+    }
+
+    //======= Service Methods ======= //
+
+    private void calculateQuantityOfRafterLightRoof() throws CalculatorException {
+        String placementDescription = "Spær, monteres på rem";
+
+        if (width <= 372) {
+            rafterDistance = 100;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 397) {
+            rafterDistance = 80;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 434) {
+            rafterDistance = 60;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 488) {
+            rafterDistance = 60;
+            rafterDescription = "45x220 mm. spærtræ ubh.";
+        } else if (width <= 542) {
+            rafterDistance = 60;
+            rafterDescription = "45x245 mm. spærtræ ubh.";
+        } else if (width <= 607) {
+            rafterDistance = 40;
+            rafterDescription = "45x245 mm. spærtræ ubh.";
+        } else if (width <= 648) {
+            rafterDistance = 60;
+            rafterDescription = "45x295 mm. spærtræ ubh.";
+        } else if (width <= 723) {
+            rafterDistance = 40;
+            rafterDescription = "45x295 mm. spærtræ ubh.";
+        } else {
+            throw new CalculatorException("Carporten er for bred til let tag: " + width + " cm");
+        }
+
+        Product product = findProductByDescriptionAndNearestLength(rafterDescription, width);
+
+        rafterQuantity = (int) (Math.ceil(length / rafterDistance) + 1);
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, rafterQuantity, placementDescription));
+    }
+
+    private void calculateQuantityOfRafterHeavyRoof() throws CalculatorException {
+        String placementDescription = "Spær, monteres på rem";
+        String placementDescriptionRoof = "Spær, til taghældning";
+
+        if (width <= 319) {
+            rafterDistance = 100;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 343) {
+            rafterDistance = 80;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 376) {
+            rafterDistance = 60;
+            rafterDescription = "45x195 mm. spærtræ ubh.";
+        } else if (width <= 388) {
+            rafterDistance = 80;
+            rafterDescription = "45x220 mm. spærtræ ubh.";
+        } else if (width <= 431) {
+            rafterDistance = 80;
+            rafterDescription = "45x245 mm. spærtræ ubh.";
+        } else if (width <= 472) {
+            rafterDistance = 60;
+            rafterDescription = "45x245 mm. spærtræ ubh.";
+        } else if (width <= 518) {
+            rafterDistance = 80;
+            rafterDescription = "45x295 mm. spærtræ ubh.";
+        } else if (width <= 566) {
+            rafterDistance = 60;
+            rafterDescription = "45x295 mm. spærtræ ubh.";
+        } else if (width <= 637) {
+            rafterDistance = 40;
+            rafterDescription = "45x295 mm. spærtræ ubh.";
+        } else {
+            throw new CalculatorException("Carporten er for bred til tungt tag: " + width + " cm");
+        }
+        double roofRafterWidth = (width / 2) / Math.cos(Math.toRadians(roofSlope));
+
+        Product productRafter = findProductByDescriptionAndNearestLength(rafterDescription, width);
+        Product productRoofRafter = findProductByDescriptionAndNearestLength(rafterDescription, roofRafterWidth);
+
+        rafterQuantity = (int) (Math.ceil(length / rafterDistance) + 1);
+        productsPartsListEntries.add(new ProductsPartsListEntry(productRafter, rafterQuantity, placementDescription));
+        productsPartsListEntries.add(new ProductsPartsListEntry(productRoofRafter, rafterQuantity * 2, placementDescriptionRoof));
+    }
+
+    private double getStudQuantity(double lengthOrWidth) {
+        double studSpace = 70;
+        return (Math.ceil(lengthOrWidth / studSpace) - 1);
+    }
+
+    private Product findProductByDescription(String description) throws CalculatorException {
+        return products.stream()
+                .filter(p -> p.getDescription().equals(description))
+                .findFirst()
+                .orElseThrow(() -> new CalculatorException("Produkt ikke fundet: " + description));
+    }
+
+    private Product findProductByDescriptionAndNearestLength(String description, double minLength) throws CalculatorException {
+        return products.stream()
+                .filter(p -> p.getDescription().equals(description))
+                .filter(p -> p.getLength() >= minLength)
+                .min(Comparator.comparing(Product::getLength))
+                .orElseThrow(() -> new CalculatorException("Produkt ikke fundet: " + description + " med minimum længde " + minLength + " cm"));
     }
 }
