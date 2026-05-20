@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{fragments :: head('Customer Login')}"></head>
+<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+<link rel="stylesheet" href="/public/css/customer-carport-maker.css"
+      th:href="@{/css/general-custom-carport-maker.css}"/>
+<link rel="stylesheet" href="/public/css/header.css" th:href="@{/css/header.css}"/>
+
 <body>
+
+
+<div class="carport-maker-progress">
+
+    <h1 class="progress-steps" id="progress-step-1">Trin 1. Vælg tagtype</h1>
+    <h1 class="progress-steps" id="progress-step-2">Trin 2. Valg af skur</h1>
+    <h1 class="progress-steps" id="progress-step-3">Trin 3. Indtast mål</h1>
+    <h1 class="progress-steps" id="progress-step-4">Trin 4. Valg af skur</h1>
+    <h1 class="progress-steps" id="progress-step-5">Trin 5. Valg af skur</h1>
+</div>
+
+<div class="custom-carport-maker-main-grid">
+
+    <div class="stage-picker">
+        <div class="stage-picker-categories">
+            <a class="maker-categories">Vælg tagtype</a>
+            <a class="maker-categories">Vælg Skur</a>
+            <a class="maker-categories">Indtast mål</a>
+        </div>
+    </div>
+    <div class="stage-display">
+        <div class="roof-picker-boxes">
+            <div class="roof-boxes">
+                <p>Flat Tag</p>
+            </div>
+            <div class="roof-boxes">
+                <p>Skrådt Tag</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 
 </body>
 </html>
