@@ -2,6 +2,7 @@ package app.services.utils;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +23,8 @@ public class PartsListCalculator {
     private double rafterQuantity;
     private String rafterDescription;
     private double poleQuantity;
+    private final String flatRoof = "Fladt tag";
+    private final String highRoof = "Højt tag";
 
     public List<ProductsPartsListEntry> createProductsPartsList(Carport carport, Shed shed, Roof roof, List<Product> allProducts) throws CalculatorException {
         this.width = carport.getWidth();
@@ -56,6 +59,8 @@ public class PartsListCalculator {
         return this.productsPartsListEntries;
     }
 
+    //======= Timber & Roofing ======= //
+
     private void addPolesToShed() throws CalculatorException {
         Product product = findProductByDescription("97x97 mm. trykimp. Stolpe");
         productsPartsListEntries.add(new ProductsPartsListEntry(product, 2, "Midterstolper til skur"));
@@ -75,7 +80,7 @@ public class PartsListCalculator {
         double plateCoverageLength = 0;
         double plateCoverageWidth = 1;
 
-        if (roofType.equals("light")) {
+        if (roofType.equals(flatRoof)) {
             if (length >= 1200 || length == 600) {
                 plateCoverageLength = 600;
                 roofProduct = findProductByDescriptionAndNearestLength(descriptionRoofMaterial, 600);
@@ -83,7 +88,7 @@ public class PartsListCalculator {
                 plateCoverageLength = 360;
                 roofProduct = findProductByDescriptionAndNearestLength(descriptionRoofMaterial, 360);
             }
-        } else if (roofType.equals("heavy")) {
+        } else if (roofType.equals(highRoof)) {
             switch (roofMaterial) {
                 case "Eternittag B6 - sortblå", "Eternittag B6 - grå" -> {
                     plateCoverageLength = 103;
@@ -162,7 +167,7 @@ public class PartsListCalculator {
         double sidesQuantity;
         double fasciaCappingWidth = width;
 
-        if (roofType.equals("heavy")) {
+        if (roofType.equals(highRoof)) {
             fasciaCappingWidth = width / Math.cos(Math.toRadians(roofSlope));
         }
 
@@ -206,7 +211,7 @@ public class PartsListCalculator {
         double sidesQuantity;
         double fasciaBoardWidth = width;
 
-        if (roofType.equals("heavy")) {
+        if (roofType.equals(highRoof)) {
             fasciaBoardWidth = width / Math.cos(Math.toRadians(roofSlope));
         }
 
@@ -214,7 +219,7 @@ public class PartsListCalculator {
             frontBackQuantity = Math.ceil(fasciaBoardWidth / 540) * 2;
             underFasciasFrontBack = findProductByDescriptionAndNearestLength(productDescriptionUnderFascias, 540);
             overFasciasFront = findProductByDescriptionAndNearestLength(productDescriptionOverFascias, 540);
-        } else if (width == 540 && !roofType.equals("heavy")) {
+        } else if (width == 540 && !roofType.equals(highRoof)) {
             frontBackQuantity = 2;
             underFasciasFrontBack = findProductByDescriptionAndNearestLength(productDescriptionUnderFascias, 540);
             overFasciasFront = findProductByDescriptionAndNearestLength(productDescriptionOverFascias, 540);
@@ -252,14 +257,14 @@ public class PartsListCalculator {
         double quantityEnds = getStudQuantity(shedWidth);
         double quantitySides = getStudQuantity(shedLength);
 
-        if (roofType.equals("light")) {
+        if (roofType.equals(flatRoof)) {
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantityEnds, placementDescriptionEnds));
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantitySides, placementDescriptionSides));
         }
-        if (roofType.equals("heavy")) {
+        if (roofType.equals(highRoof)) {
             productsPartsListEntries.add(new ProductsPartsListEntry(productEnds, quantityEnds, placementDescriptionEnds));
             productsPartsListEntries.add(new ProductsPartsListEntry(product, quantitySides, placementDescriptionSides));
-        }else {
+        } else {
             throw new CalculatorException("Ukendt tagtype til løsholter: " + roofType);
         }
     }
@@ -300,9 +305,9 @@ public class PartsListCalculator {
     }
 
     private void addRafters() throws CalculatorException {
-        if (roofType.equals("light")) {
+        if (roofType.equals(flatRoof)) {
             calculateQuantityOfRafterLightRoof();
-        } else if (roofType.equals("heavy")) {
+        } else if (roofType.equals(highRoof)) {
             calculateQuantityOfRafterHeavyRoof();
         } else {
             throw new CalculatorException("Ukendt tagtype: " + roofType);
@@ -408,5 +413,11 @@ public class PartsListCalculator {
                 .filter(p -> p.getLength() >= minLength)
                 .min(Comparator.comparing(Product::getLength))
                 .orElseThrow(() -> new CalculatorException("Produkt ikke fundet: " + description + " med minimum længde " + minLength + " cm"));
+    }
+
+    //======= Hardware & Screws ======= //
+
+    private void addScrewsToRoof() {
+
     }
 }
