@@ -91,19 +91,19 @@ public class PartsListMapper {
         }
     }
 
-    public List<PartsList> getAllProductPartsLists() throws DatabaseException {
-        List<PartsList> partList = new ArrayList<>();
+    public PartsList getAllProductPartsLists(int partsListId) throws DatabaseException {
+        List<ProductsPartsListEntry> productsPartsListEntries = new ArrayList<>();
 
-        String sql = "select * from products_parts_lists";
+        String sql = "select pps.product_id, pps.parts_list_id, pps.quantity, p.cost_price, p.retail_price, p.length, p.unit, p.product_group, p.description" +
+                " from products_parts_lists pps join products p using (product_id) where parts_list_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            preparedStatement.setInt(1, partsListId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int productPartListId = resultSet.getInt("prod_parts_list_id");
                 int productId = resultSet.getInt("product_id");
-                int partsListId = resultSet.getInt("parts_list_id");
                 double quantity = resultSet.getDouble("quantity");
                 double costPrice = resultSet.getDouble("cost_price");
                 double retailPrice = resultSet.getDouble("retail_price");

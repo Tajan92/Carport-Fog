@@ -1,4 +1,6 @@
 package persistence;
+import app.entities.Product;
+import app.entities.ProductsPartsListEntry;
 import app.exceptions.DatabaseException;
 import app.persistence.PartsListMapper;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,17 @@ public class PartsListMapperTest extends MapperTest {
         int actualNumberOfProductById = partsListMapper.getPartsListById(7).size();
         //As this started empty and added 2 PartsList it should be 2
         assertEquals(2, actualNumberOfProductById);
+    }
+
+    @Test
+    void createProductPartsListTest() throws DatabaseException{
+        PartsListMapper partsListMapper = new PartsListMapper();
+        Product product = new Product(1, 25.00, 55.00, 1.00, "2", "Brædde", "Et bræt");
+        ProductsPartsListEntry productsPartsListEntry = new ProductsPartsListEntry(product, 4);
+        partsListMapper.createProductPartsList(1, 1, 4);
+
+
+
     }
 
     @Test
