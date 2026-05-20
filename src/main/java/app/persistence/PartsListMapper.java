@@ -58,7 +58,7 @@ public class PartsListMapper {
         }
     }
 
-    public List<ProductsPartsListEntry> getPartsListById(int partsListId) throws DatabaseException {
+    public List<ProductsPartsListEntry> getProductsPartsListEntries(int partsListId) throws DatabaseException {
         List<ProductsPartsListEntry> partList = new ArrayList<>();
 
         String sql = "select ppl.quantity, p.product_id, p.cost_price, p.retail_price, p.length, p.unit, p.product_group, p.description from products_parts_lists ppl \n" +
@@ -91,25 +91,32 @@ public class PartsListMapper {
         }
     }
 
-    public List<PartsList> getAllProductPartsLists() throws DatabaseException {
-        List<PartsList> partList = new ArrayList<>();
+    public PartsList getPartsListById(int partsListId) throws DatabaseException {
+        List<ProductsPartsListEntry> productsPartsListEntries = new ArrayList<>();
 
-        String sql = "select * from products_parts_lists";
+        String sql = "select pps.product_id, pps.parts_list_id, pps.quantity, p.cost_price, p.retail_price, p.length, p.unit, p.product_group, p.description" +
+                " from products_parts_lists pps join products p using (product_id) where parts_list_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            preparedStatement.setInt(1, partsListId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int productPartListId = resultSet.getInt("prod_parts_list_id");
                 int productId = resultSet.getInt("product_id");
-                int partsListId = resultSet.getInt("parts_list_id");
                 double quantity = resultSet.getDouble("quantity");
+                double costPrice = resultSet.getDouble("cost_price");
+                double retailPrice = resultSet.getDouble("retail_price");
+                double length = resultSet.getDouble("length");
+                String unit = resultSet.getString("unit");
+                String productGroup = resultSet.getString("product_group");
+                String productDescription = resultSet.getString("description");
+                Product product = new Product(productId, costPrice, retailPrice, length, unit, productGroup, productDescription);
 
-                PartsList parts = new PartsList(productPartListId, productId, partsListId, quantity);
-                partList.add(parts);
+                ProductsPartsListEntry productsPartsListEntry = new ProductsPartsListEntry(product, quantity);
+                productsPartsListEntries.add(productsPartsListEntry);
             }
-            return partList;
+            return new PartsList(partsListId, productsPartsListEntries);
         } catch (SQLException e) {
             String message = "Fejl ved at hente styk liste";
             throw new DatabaseException(message, e.getMessage());
@@ -137,7 +144,7 @@ public class PartsListMapper {
         }
     }
 
-    public void deleteProductPartsListById(int partsListId) throws DatabaseException {
+    public void deleteAllProductPartsListById(int partsListId) throws DatabaseException {
         String sql = "DELETE FROM products_parts_lists WHERE parts_list_id = ?";
 
         try (Connection connection = connectionPool.getConnection();

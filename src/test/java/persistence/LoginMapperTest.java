@@ -13,7 +13,7 @@ public class LoginMapperTest extends MapperTest{
     @Test
     void salesRepLogin() throws DatabaseException {
         SalesRep expectedSalesRep = new SalesRep(1, "Thomas", "Møller", "thomas@carport.dk", "hashed_rep1", "11111111");
-        SalesRep actualSalesRep = loginMapper.salesRepLogin("thomas@carport.dk", "hashed_rep1");
+        SalesRep actualSalesRep = loginMapper.salesRepLogin("thomas@carport.dk");
 
         assertEquals(expectedSalesRep, actualSalesRep);
 
@@ -23,7 +23,7 @@ public class LoginMapperTest extends MapperTest{
     @Test
     void customerLogin() throws DatabaseException {
         Customer expectedCustomer = new Customer(1, "Anders", "Jensen", "anders@email.dk", "hashed_pw1", "12345678", "Elmevej 4", "2100", "København Ø");
-        Customer actualCustomer = loginMapper.customerLogin("anders@email.dk", "hashed_pw1");
+        Customer actualCustomer = loginMapper.customerLogin("anders@email.dk");
 
         assertEquals(expectedCustomer, actualCustomer);
 

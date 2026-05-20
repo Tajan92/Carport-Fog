@@ -113,6 +113,7 @@ public class OrderMapper {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setDouble(1, order.getOrderPrice());
+            preparedStatement.setInt(2, order.getOrderId());
 
             int rowsAffected = preparedStatement.executeUpdate();
 

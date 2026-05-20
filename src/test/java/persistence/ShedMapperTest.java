@@ -1,7 +1,9 @@
 package persistence;
 
+import app.entities.Roof;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
+import app.persistence.RoofMapper;
 import app.persistence.ShedMapper;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +25,16 @@ public class ShedMapperTest extends MapperTest{
     void getShedById() throws DatabaseException {
         Shed expectedShed = new Shed(1,2.40, 3.00, "Trykimp. bræddebeklædning", true);
 
+        Shed actualShed = shedMapper.getShedById(1);
+
+        assertEquals(expectedShed, actualShed);
+    }
+
+    @Test
+    void updateShedTest() throws DatabaseException {
+        ShedMapper shedMapper = new ShedMapper();
+        Shed expectedShed = new Shed(1, 3.40, 5.00, "Smurt mursten", false);
+        shedMapper.updateShed(expectedShed);
         Shed actualShed = shedMapper.getShedById(1);
 
         assertEquals(expectedShed, actualShed);

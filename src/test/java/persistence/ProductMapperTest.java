@@ -5,6 +5,8 @@ import app.exceptions.DatabaseException;
 import app.persistence.ProductMapper;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProductMapperTest extends MapperTest{
@@ -17,5 +19,13 @@ public class ProductMapperTest extends MapperTest{
 
         assertEquals(expectedProduct.getProductId(), actualProduct.getProductId());
         assertEquals(expectedProduct.getProductGroup(), actualProduct.getProductGroup());
+    }
+
+    @Test
+    void getAllProductsTest() throws DatabaseException {
+        ProductMapper productMapper = new ProductMapper();
+        int size = productMapper.getAllProducts().size();
+        /*We know that we have 12 products in our test DB*/
+        assertEquals(12, size);
     }
 }

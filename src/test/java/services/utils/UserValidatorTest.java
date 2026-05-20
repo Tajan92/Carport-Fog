@@ -1,4 +1,4 @@
-package services;
+package services.utils;
 import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.services.utils.UserValidator;
 import org.junit.jupiter.api.BeforeEach;

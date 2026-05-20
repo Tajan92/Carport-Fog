@@ -3,6 +3,7 @@ package persistence;
 import app.entities.Carport;
 import app.entities.Roof;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
 import app.persistence.RoofMapper;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,16 @@ public class RoofMapperTest extends MapperTest {
 
         // There is 4 roofs
         assertEquals(4, size);
+    }
+
+    @Test
+    void updateRoofTest() throws DatabaseException {
+        RoofMapper roofMapper = new RoofMapper();
+        Roof expectedRoof = new Roof(1, 25, "Trapezplast", "Rejsning");
+        roofMapper.updateRoof(expectedRoof);
+        Roof actualRoof = roofMapper.getRoofById(1);
+
+        assertEquals(expectedRoof, actualRoof);
     }
 
     @Test
