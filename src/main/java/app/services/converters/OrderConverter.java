@@ -7,12 +7,9 @@ public class OrderConverter {
 
     public OrderResponseDTO convertOrderToDto(Order order) {
         int orderId = order.getOrderId();
-        int customerId = order.getCustomerId();
-        int salesRepId = order.getSalesRepId();
-        int carportId = order.getCarportId();
         double orderPrice = order.getOrderPrice();
-        int partsListId = order.getPartsListId();
-        return new OrderResponseDTO(orderId, customerId, salesRepId, carportId, orderPrice, partsListId);
+
+        return new OrderResponseDTO(orderId, orderPrice);
     }
 
     public Order convertOrderToEntity(OrderRequestDTO orderRequestDTO) {

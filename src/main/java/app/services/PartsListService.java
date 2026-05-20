@@ -1,53 +1,69 @@
 package app.services;
-
+import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.requestDTO.carports.CarportShedRequestDTO;
+import app.dto.responseDTO.PartsListResponseDTO;
 import app.dto.responseDTO.ProductsPartsListEntryResponseDTO;
 import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.PartsListMapper;
-import app.persistence.ProductMapper;
-import app.persistence.RoofMapper;
-import app.persistence.ShedMapper;
+import app.persistence.*;
 import app.services.converters.CarportConverter;
 import app.services.converters.PartsListConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
-
 import java.util.List;
-
 
 public class PartsListService {
     private PartsListMapper partsListMapper;
     private ShedMapper shedMapper;
     private RoofMapper roofMapper;
+    private CarportMapper carportMapper;
     ProductMapper productMapper;
     private CarportConverter carportConverter;
     private ShedConverter shedConverter;
     private RoofConverter roofConverter;
     PartsListConverter partsListConverter;
-    PartsListCalculator partsListUtil = new PartsListCalculator();
+    PartsListCalculator partsListCalculator = new PartsListCalculator();
+    CarportService carportService;
 
     public int createPartsListId() throws DatabaseException {
         return partsListMapper.createPartListId();
     }
 
-    public void createProductsPartsListEntries(Carport carport, Shed shed, Roof roof) throws DatabaseException {
+    public void createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException {
         List<Product> products = productMapper.getAllProducts();
-        List<ProductsPartsListEntry> allEntries = partsListUtil.createProductsPartsList(carport, shed, roof, products);
+        Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
+        Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
+        Shed shed;
+
+        if (carportRequestDTO instanceof CarportShedRequestDTO withShed){
+            shed = shedConverter.convertShedDTOtoEntity(withShed.getShedRequestDTO());
+        }else {
+            shed = null;
+        }
+
+        List<ProductsPartsListEntry> allEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
         for (ProductsPartsListEntry entry : allEntries) {
             partsListMapper.createProductPartsList(entry.getProduct().getProductId(), carport.getPartsListId(), entry.getQuantity());
         }
     }
 
-    public List<ProductsPartsListEntryResponseDTO> getProductsPartsListEntries(Carport carport) throws DatabaseException {
-        String placementDescription = Placementfinder.getDescription(carport);
-        List<ProductsPartsListEntryResponseDTO> productsPartsListEntriesWithDescription = partsListConverter.convertProductsPartsListToDTO(carport);
+    public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException {
+        List<Product> allProducts = productMapper.getAllProducts();
+        Carport carport = carportMapper.getCarportById(carportId);
+        Roof roof = roofMapper.getRoofById(carport.getRoofId());
+        Shed shed;
 
-        for (ProductsPartsListEntryResponseDTO productsPartsListEntryResponseDTO : productsPartsListEntriesWithDescription) {
-            productsPartsListEntryResponseDTO.setPlacementDescription(placementDescription);
+        if (carport.getShedId() != null){
+            shed = shedMapper.getShedById(carport.getShedId());
+        } else {
+            shed = null;
         }
 
-        return productsPartsListEntriesWithDescription;
+        List<ProductsPartsListEntry> partsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, allProducts);
+        List<ProductsPartsListEntryResponseDTO> productsPartsListEntriesWithDescription = partsListConverter.convertProductsPartsListToDTO(partsListEntries);
+
+        return new PartsListResponseDTO(carport.getPartsListId(), productsPartsListEntriesWithDescription);
     }
 
 }

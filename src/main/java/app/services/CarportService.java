@@ -1,8 +1,12 @@
 package app.services;
+import app.dto.requestDTO.ShedRequestDTO;
 import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
+import app.dto.responseDTO.RoofResponseDTO;
+import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.entities.Carport;
 import app.entities.Roof;
@@ -24,6 +28,7 @@ public class CarportService {
     private CarportMapper carportMapper;
     private RoofMapper roofMapper;
     private ShedMapper shedMapper;
+    private PartsListService partsListService;
 
     public CarportService(PartsListMapper partsListMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper) {
         this.carportConverter = new CarportConverter();
@@ -35,44 +40,46 @@ public class CarportService {
         this.shedMapper = shedMapper;
     }
 
-    //TODO: Slå createCarport sammen og find ud af om det er med skur eller ikke
-    public int createCarportWithShed(CarportShedRequestDTO carportShedRequestDTO) throws DatabaseException {
-        Carport carportNoId = carportConverter.covertCarportDTOToEntity(carportShedRequestDTO);
-        Roof roof = roofConverter.convertRoofDTOtoEntity(carportShedRequestDTO.getRoofRequestDTO());
-        Shed shed = shedConverter.convertShedDTOtoEntity(carportShedRequestDTO.getShedRequestDTO());
-        int partsListId = partsListMapper.createPartListId();
+    public int createCarport(CarportRequestDTO carportRequestDTO) throws DatabaseException{
+        Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
+        Integer shedId = null;
+        Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
+
+        //if the carport has a shed dto, a not null id needs to be created for shed in db
+        if (carportRequestDTO instanceof CarportShedRequestDTO withShed){
+            Shed shed = shedConverter.convertShedDTOtoEntity(withShed.getShedRequestDTO());
+            shedId = shedMapper.createShed(shed);
+        }
         int roofId = roofMapper.createRoof(roof);
-        int shedId = shedMapper.createShed(shed);
+        int partsListId = partsListMapper.createPartListId();
         int addonId = carportMapper.createAddonId(roofId, shedId);
 
-        return carportMapper.createCarport(carportNoId, addonId, partsListId);
+        //create the parts list in database but don't return anything
+        partsListService.createProductsPartsListEntries(carportRequestDTO);
+
+        return carportMapper.createCarport(carport, addonId, partsListId);
     }
 
-    public int createCarportNoShed(CarportNoShedRequestDTO carportNoShedRequestDTO) throws DatabaseException {
-        Carport carportNoId = carportConverter.covertCarportDTOToEntity(carportNoShedRequestDTO);
-        Roof roof = roofConverter.convertRoofDTOtoEntity(carportNoShedRequestDTO.getRoofRequestDTO());
-        int partsListId = partsListMapper.createPartListId();
-        int roofId = roofMapper.createRoof(roof);
-        int addonId = carportMapper.createAddonId(roofId, null);
-
-        return carportMapper.createCarport(carportNoId, addonId, partsListId);
-    }
-
-    // TODO: Slå getCarport sammen og find ud af om der er skur eller ikke
-    public CarportShedResponseDTO getCarportShed(int carportId) throws DatabaseException {
+    public CarportResponseDTO getCarport(int carportId) throws DatabaseException {
         Carport carport = carportMapper.getCarportById(carportId);
-        return carportConverter.convertCarportShedEntityToDTO(carport);
-    }
+        Roof roof = roofMapper.getRoofById(carport.getRoofId());
+        RoofResponseDTO roofResponseDTO = roofConverter.convertRoofToDto(roof);
 
-    public CarportNoShedResponseDTO getNoCarportShed(int carportId) throws DatabaseException {
-        Carport carport = carportMapper.getCarportById(carportId);
-        return carportConverter.convertCarportNoShedEntityToDTO(carport);
-    }
+        //return different DTO based on shed or no shed
+        if (carport.getShedId() != null){
+            Shed shed = shedMapper.getShedById(carport.getShedId());
+            ShedResponseDTO shedResponseDTO = shedConverter.convertShedToDto(shed);
+            CarportShedResponseDTO carportShedResponseDTO = carportConverter.convertCarportShedEntityToDTO(carport);
+            carportShedResponseDTO.setShedResponseDTO(shedResponseDTO);
+            carportShedResponseDTO.setRoofResponseDTO(roofResponseDTO);
 
-    public void updateCarport(CarportRequestDTO carportRequestDTO, int carportId) throws DatabaseException {
-        Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
-        carport.setCarportId(carportId);
-        carportMapper.updateCarportById(carport);
+            return carportShedResponseDTO;
+        } else {
+            CarportNoShedResponseDTO carportNoShedResponseDTO = carportConverter.convertCarportNoShedEntityToDTO(carport);
+            carportNoShedResponseDTO.setRoofResponseDTO(roofResponseDTO);
+
+            return carportNoShedResponseDTO;
+        }
     }
 
     public void deleteCarport(int carportId) throws DatabaseException {

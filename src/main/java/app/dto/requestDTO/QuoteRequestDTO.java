@@ -11,7 +11,7 @@ import lombok.Getter;
 
 public class QuoteRequestDTO {
     private int customerId;
-    private double discount;
+    private double quotePrice;
     private int carportId;
     private int salesRepId;
 }

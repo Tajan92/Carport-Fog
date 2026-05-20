@@ -9,13 +9,11 @@ import lombok.Setter;
 @Setter
 
 public class ProductsPartsListEntryResponseDTO {
-    private int productsPartsListEntryId;
     private Product product;
     private String placementDescription;
     private double quantity;
 
-    public ProductsPartsListEntryResponseDTO(int productsPartsListEntryId, Product product, double quantity) {
-        this.productsPartsListEntryId = productsPartsListEntryId;
+    public ProductsPartsListEntryResponseDTO(Product product, double quantity) {
         this.product = product;
         this.quantity = quantity;
     }
