@@ -6,6 +6,8 @@
     width: 60%;
     justify-content: center;
     justify-self: center;
+    max-height: 90vh;        /* ← this is what limits the height */
+
 }
 
 .logo {
