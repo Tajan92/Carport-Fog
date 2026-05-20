@@ -76,6 +76,7 @@ body {
     width: clamp(16rem, 40vw, 24rem);
     text-align: left;
     font-size: clamp(0.8rem, 2vw, 1.35625rem);
+    margin-bottom: 10px;
 }
 
 /* Login button with transition */
