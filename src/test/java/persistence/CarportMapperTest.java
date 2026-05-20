@@ -50,18 +50,18 @@ public class CarportMapperTest extends MapperTest {
         CarportMapper carportMapper = new CarportMapper();
         Carport expectedCarport = new Carport(1, 3.00, 2.08, 5.00, 24999.00, 1, 0, 0);
 
-        Carport actualCarport = carportMapper.getCarportById(1, 1, 0, 0);
+        Carport actualCarport = carportMapper.getCarportById(1);
 
         assertEquals(expectedCarport.getCarportId(), actualCarport.getCarportId());
     }
 
     @Test
-    void updateCarportByIdTest() throws DatabaseException {
+    void updateCarportTest() throws DatabaseException {
         CarportMapper carportMapper = new CarportMapper();
         Carport expectedCarport = new Carport(1, 4.00, 2.50, 5.00, 23000, 1, 0, 0);
 
-        carportMapper.updateCarportById(expectedCarport, 1);
-        Carport actualCarport = carportMapper.getCarportById(1, 1, 0, 0);
+        carportMapper.updateCarport(expectedCarport);
+        Carport actualCarport = carportMapper.getCarportById(1);
 
         assertEquals(expectedCarport.getCarportId(), actualCarport.getCarportId());
     }

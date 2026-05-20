@@ -140,7 +140,7 @@ public class CarportMapper {
         }
     }
 
-    public void updateCarportById(Carport carport) throws DatabaseException {
+    public void updateCarport(Carport carport) throws DatabaseException {
 
         String sql = "update carports set carport_width = ?, carport_height = ?, carport_length = ?, price = ? where carport_id = ?";
 
