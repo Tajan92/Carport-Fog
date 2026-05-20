@@ -1,6 +1,5 @@
 package persistence;
-import app.entities.Product;
-import app.entities.ProductsPartsListEntry;
+import app.entities.PartsList;
 import app.exceptions.DatabaseException;
 import app.persistence.PartsListMapper;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class PartsListMapperTest extends MapperTest {
         partsListMapper.createProductPartsList(3, 7, 5);
         partsListMapper.createProductPartsList(6, 7, 3);
 
-        int actualNumberOfProductById = partsListMapper.getPartsListById(7).size();
+        int actualNumberOfProductById = partsListMapper.getProductsPartsListEntries(7).size();
         //As this started empty and added 2 PartsList it should be 2
         assertEquals(2, actualNumberOfProductById);
     }
@@ -27,32 +26,35 @@ public class PartsListMapperTest extends MapperTest {
     @Test
     void createProductPartsListTest() throws DatabaseException{
         PartsListMapper partsListMapper = new PartsListMapper();
-        Product product = new Product(1, 25.00, 55.00, 1.00, "2", "Brædde", "Et bræt");
-        ProductsPartsListEntry productsPartsListEntry = new ProductsPartsListEntry(product, 4);
+
         partsListMapper.createProductPartsList(1, 1, 4);
 
+        //there should be 12 entries to partslistid 1 in the database after we add one
+        int size = partsListMapper.getProductsPartsListEntries(1).size();
 
-
+        assertEquals(12, size);
     }
 
     @Test
     void getPartListByIdTest() throws DatabaseException {
         PartsListMapper partsListMapper = new PartsListMapper();
 
-        int actualPartsListCountById = partsListMapper.getPartsListById(1).size();
+        int actualPartsListCountById = partsListMapper.getProductsPartsListEntries(1).size();
 
         //PartListId 1 has 11 productPartsListId's so should be 11.
         assertEquals(11, actualPartsListCountById);
     }
 
+
     @Test
-    void getAllProductPartsListsTest() throws DatabaseException {
+    void getPartsListById() throws DatabaseException{
         PartsListMapper partsListMapper = new PartsListMapper();
+        PartsList partsList = partsListMapper.getPartsListById(1);
 
-        int actualPartsListCount = partsListMapper.getAllProductPartsLists().size();
+        //partslistid 1 has 11 entries
+        int size = partsList.getPartsListEntries().size();
 
-        //products_parts_lists has 68 rows
-        assertEquals(68, actualPartsListCount);
+     assertEquals(11,size);
     }
 
     @Test
@@ -71,7 +73,7 @@ public class PartsListMapperTest extends MapperTest {
 
         partsListMapper.deleteAllProductPartsListById(1);
 
-        int actualPartsListCountById = partsListMapper.getPartsListById(1).size();
+        int actualPartsListCountById = partsListMapper.getProductsPartsListEntries(1).size();
 
         //PartListId 1 has 11 productPartsListId's so should be 0, af deletion.
         assertEquals(0, actualPartsListCountById);
@@ -95,6 +97,5 @@ public class PartsListMapperTest extends MapperTest {
         int size = partsListMapper.getAllPartsListsIds().size();
 
         assertEquals(6, size);
-
     }
 }
