@@ -4,6 +4,7 @@ import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.PartsListResponseDTO;
 import app.dto.responseDTO.ProductsPartsListEntryResponseDTO;
 import app.entities.*;
+import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.converters.CarportConverter;
@@ -30,7 +31,7 @@ public class PartsListService {
         return partsListMapper.createPartListId();
     }
 
-    public void createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException {
+    public void createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
         List<Product> products = productMapper.getAllProducts();
         Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
@@ -48,7 +49,7 @@ public class PartsListService {
         }
     }
 
-    public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException {
+    public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException, CalculatorException {
         List<Product> allProducts = productMapper.getAllProducts();
         Carport carport = carportMapper.getCarportById(carportId);
         Roof roof = roofMapper.getRoofById(carport.getRoofId());

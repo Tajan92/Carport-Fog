@@ -8,6 +8,7 @@ import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.Carport;
 import app.entities.Order;
+import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.CustomerMapper;
 import app.persistence.OrderMapper;
@@ -32,7 +33,7 @@ public class OrderService {
         orderMapper.createOrder(order);
     }
 
-    public OrderResponseDTO getOrder(int orderId) throws DatabaseException {
+    public OrderResponseDTO getOrder(int orderId) throws DatabaseException, CalculatorException {
         Order order = orderMapper.getOrderById(orderId);
         double orderPrice = order.getOrderPrice();
         CarportResponseDTO carportResponseDTO = carportService.getCarport(order.getCarportId());
@@ -43,7 +44,7 @@ public class OrderService {
         return new OrderResponseDTO(orderId, orderPrice, customerResponseDTO, salesRepResponseDTO, carportResponseDTO, partsListResponseDTO);
     }
 
-    public List<OrderResponseDTO> getAllOrders() throws DatabaseException {
+    public List<OrderResponseDTO> getAllOrders() throws DatabaseException, CalculatorException {
         List<Order> allOrders = orderMapper.getAllOrders();
         List<OrderResponseDTO> responseDTOS = new ArrayList<>();
 

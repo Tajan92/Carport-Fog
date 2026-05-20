@@ -11,6 +11,7 @@ import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.entities.Carport;
 import app.entities.Roof;
 import app.entities.Shed;
+import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.PartsListMapper;
@@ -40,7 +41,7 @@ public class CarportService {
         this.shedMapper = shedMapper;
     }
 
-    public int createCarport(CarportRequestDTO carportRequestDTO) throws DatabaseException{
+    public int createCarport(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
         Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
         Integer shedId = null;
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
