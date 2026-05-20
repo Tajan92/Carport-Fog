@@ -1,10 +1,13 @@
-.box-login {
+.box-register {
     justify-items: center;
     background-color: white;
     border-radius: 15px;
     padding: 25px;
+    width: 60%;
     justify-content: center;
     justify-self: center;
+    max-height: 90vh;
+
 }
 
 .logo {
@@ -24,16 +27,12 @@
     font-size: clamp(1.5rem, 5vw, 3rem);
 }
 
-#login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 #register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    align-items: end;
 }
 
 .input-box {
@@ -53,9 +52,10 @@
     width: clamp(16rem, 40vw, 24rem);
     text-align: left;
     font-size: clamp(0.8rem, 2vw, 1.35625rem);
+    margin-bottom: 5px;
 }
 
-.login-button {
+.register-button {
     border-radius: clamp(0.5rem, 1.5vw, 1.085rem);
     background: #013d7a;
     width: 100%;
@@ -67,16 +67,23 @@
     font-weight: 500;
     align-self: center;
     margin-top: 20px;
+    grid-column: 1 / -1;
 }
 
-.login-button:hover {
+.register-button:hover {
     cursor: pointer;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     transform: translateY(-3px);
 
 }
 
-.opret {
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.register {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -85,9 +92,17 @@
     margin-top: 5px;
 }
 
+.register-button{
+    width: 50%;
+    justify-self: center;
+}
+
 #register-button {
     color: #013d7a;
+
+
 }
+
 
 #register-button:hover {
     cursor: pointer;
