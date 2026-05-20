@@ -63,6 +63,9 @@ public class PartsListCalculator {
         addScrewsToRoof();
         addBracingStrap();
         addUniversalConnectorAndScrews();
+        addFasciaAndFasciaCappingScrews();
+        addBoltsToPoles();
+        addBoltPlates();
 
         return this.productsPartsListEntries;
     }
@@ -483,7 +486,7 @@ public class PartsListCalculator {
             bracingQuantity = 4;
         }
         double oneBracingLength = Math.sqrt(Math.pow(length, 2) + Math.pow(bracingWidth, 2));
-        double bracingRollQuantity = Math.ceil(((bracingQuantity * oneBracingLength)*1.1) / 1000); // 1.1 is adding 10% extra and 1000 is 10 mtr roll
+        double bracingRollQuantity = Math.ceil(((bracingQuantity * oneBracingLength) * 1.1) / 1000); // 1.1 is adding 10% extra and 1000 is 10 mtr roll
 
         productsPartsListEntries.add(new ProductsPartsListEntry(strapRollProduct, bracingRollQuantity, placementDescription))
     }
@@ -496,11 +499,29 @@ public class PartsListCalculator {
         productsPartsListEntries.add(new ProductsPartsListEntry(leftConnector, rafterQuantity, "Til montering af spær på rem"));
         productsPartsListEntries.add(new ProductsPartsListEntry(rightConnector, rafterQuantity, "Til montering af spær på rem"));
 
-        double totalConnectors = rafterQuantity*2;
-        double screwsQuantity = (totalConnectors*14)+(bracingQuantity*rafterQuantity); //14 screws pr connector + adding screws for bracing
+        double totalConnectors = rafterQuantity * 2;
+        double screwsQuantity = (totalConnectors * 14) + (bracingQuantity * rafterQuantity); //14 screws pr connector + adding screws for bracing
 
-        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwsQuantity, " Til montering af universalbeslag + hulbånd"));
+        productsPartsListEntries.add(new ProductsPartsListEntry(screws, screwsQuantity, "Til montering af universalbeslag + hulbånd"));
     }
 
+    private void addFasciaAndFasciaCappingScrews() throws CalculatorException {
+        Product product = findProductByDescription("4,5 x 60 mm. skruer 200 stk.");
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, 1, "Til montering af stern & vandbrædt"));
+    }
 
+    private void addBoltsToPoles() throws CalculatorException {
+        Product product = findProductByDescription("bræddebolt 10 x 120 mm.");
+        double ifShed = 0;
+        if (shedId != null) {
+            ifShed = 2 + 8; // 2x6 extra bolts + 4 ekstra bolts when shed starts
+        }
+        double quantity = Math.ceil(((poleQuantity * 2) + ifShed) / 12);
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, quantity, "Til montering af rem på stolper"));
+    }
+
+    private void addBoltPlates() throws CalculatorException {
+        Product product = findProductByDescription("firkantskiver 40x40x11mm");
+        productsPartsListEntries.add(new ProductsPartsListEntry(product, poleQuantity, "Til montering af rem på stolper"));
+    }
 }
