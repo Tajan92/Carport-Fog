@@ -2,6 +2,8 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.CustomerController;
+import app.controllers.MainController;
 import app.persistence.ConnectionPool;
 import app.services.ServiceFactory;
 import io.javalin.Javalin;
@@ -20,5 +22,6 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
 
+        CustomerController customerController = new CustomerController();
     }
 }

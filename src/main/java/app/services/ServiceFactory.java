@@ -10,6 +10,7 @@ public class ServiceFactory {
     private InquiryService inquiryService;
     private QuoteService quoteService;
     private UserService userService;
+    private OrderService orderService;
 
     public ServiceFactory() {
         CarportMapper carportMapper = new CarportMapper();
@@ -25,7 +26,7 @@ public class ServiceFactory {
         ShedMapper shedMapper = new ShedMapper();
 
         this.carportService = new CarportService(partsListMapper, carportMapper, roofMapper, shedMapper);
-        this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper);
+        this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper, carportMapper);
         this.quoteService = new QuoteService(quoteMapper, carportService, customerMapper, salesRepMapper, carportMapper);
         this.userService = new UserService(loginMapper, customerMapper,salesRepMapper);
     }

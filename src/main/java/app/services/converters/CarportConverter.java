@@ -18,9 +18,8 @@ public class CarportConverter {
         double width = carportRequestDTO.getWidth();
         double height = carportRequestDTO.getHeight();
         double length = carportRequestDTO.getLength();
-        double price = carportRequestDTO.getPrice();
 
-        return new Carport(width, height, length, price);
+        return new Carport(width, height, length);
     }
 
     public CarportNoShedResponseDTO convertCarportNoShedEntityToDTO(Carport carport) throws DatabaseException {

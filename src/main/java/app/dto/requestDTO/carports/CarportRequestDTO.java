@@ -9,6 +9,5 @@ public abstract class CarportRequestDTO {
     private double width;
     private double height;
     private double length;
-    private double price;
     private RoofRequestDTO roofRequestDTO;
 }

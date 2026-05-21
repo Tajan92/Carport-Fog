@@ -33,4 +33,10 @@ public class Carport {
         this.length = length;
         this.price = price;
     }
+
+    public Carport(double width, double height, double length) {
+        this.width = width;
+        this.height = height;
+        this.length = length;
+    }
 }

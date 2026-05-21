@@ -4,16 +4,15 @@ import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
-import app.entities.Carport;
-import app.entities.Customer;
-import app.entities.Inquiry;
+import app.entities.*;
+import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.CustomerMapper;
-import app.persistence.InquiryMapper;
+import app.persistence.*;
 import app.services.converters.CarportConverter;
 import app.services.converters.InquiryConverter;
 import app.services.converters.UserConverter;
+import app.services.utils.PartsListCalculator;
+import app.services.utils.PriceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,21 @@ public class InquiryService {
     private CustomerMapper customerMapper;
     private UserConverter userConverter;
     private CarportService carportService;
+    private CarportMapper carportMapper;
+    private RoofMapper roofMapper;
+    private ShedMapper shedMapper;
+    private ProductMapper productMapper;
 
-    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper) {
+    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper, ProductMapper productMapper) {
         this.inquiryMapper = inquiryMapper;
         this.inquiryConverter = new InquiryConverter();
         this.customerMapper = customerMapper;
         this.userConverter = new UserConverter();
         this.carportService = carportService;
+        this.carportMapper = carportMapper;
+        this.roofMapper = roofMapper;
+        this.shedMapper = shedMapper;
+        this.productMapper = productMapper;
     }
 
     public void createInquiry(InquiryRequestDTO inquiryRequestDTO) throws DatabaseException {
@@ -38,11 +45,25 @@ public class InquiryService {
         inquiryMapper.createInquiry(inquiry);
     }
 
-
-    public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException {
+    public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException, CalculatorException {
         Inquiry inquiry = inquiryMapper.getInquiryById(inquiryId);
         InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
+        PartsListCalculator partsListCalculator = new PartsListCalculator();
 
+        Carport carport = carportMapper.getCarportById(inquiryResponseDTO.getCarportRespondDto().getCarportId());
+        Roof roof = roofMapper.getRoofById(carport.getRoofId());
+        Shed shed = shedMapper.getShedById(carport.getShedId());
+        List<Product> products = productMapper.getAllProducts();
+
+        List<ProductsPartsListEntry> productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
+
+        double costPrice = PriceCalculator.calculateInquiryCostPrice(productsPartsListEntries);
+        double retailPrice = PriceCalculator.calculateInquiryRetailPrice(productsPartsListEntries);
+        double serviceFee = PriceCalculator.calculateServiceFee(productsPartsListEntries);
+
+        inquiryResponseDTO.setCostPrice(costPrice);
+        inquiryResponseDTO.setRetailPrice(retailPrice);
+        inquiryResponseDTO.setServiceFee(serviceFee);
         /* Instantiate variables that cannot be instantiated in the converter */
         Customer customer = customerMapper.getCustomerById(inquiry.getCustomerId());
 
