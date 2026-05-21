@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments :: head('Customer Login')}"></head>
+
+<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+<link rel="stylesheet" href="/public/css/customer-carport-maker.css"
+      th:href="@{/css/general-custom-carport-maker.css}"/>
+<link rel="stylesheet" href="/public/css/customer-my-page.css" th:href="@{/css/customer-my-page.css}"/>
+
+<body>
+<div class="carport-maker-progress">
+    <a class="progress-steps" id="progress-step-1" href="customer-carport-maker.html">FOG</a>
+    <a class="progress-steps" id="progress-step-2" href="customer-carport-maker.html">Lav carport</a>
+    <a class="progress-steps" id="progress-step-3" href="customer-my-page.html">Min side</a>
+    <a class="progress-steps" id="progress-step-4" href="customer-login.html">Log ud</a>
+</div>
+
+
+<div class="my-page-box">
+    <h1 class="my-page-title">Min side</h1>
+    <div class="my-page-overview">
+        <div class="my-page-overview-boxes">
+            <a class="my-page-categories">Mine Forespørgelser</a>
+            <a class="my-page-categories">Mine tilbud</a>
+            <a class="my-page-categories">Mine ordre</a>
+        </div>
+        <div class="my-page-results">
+            <div class="result-box"></div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

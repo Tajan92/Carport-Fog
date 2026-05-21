@@ -1,0 +1,138 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #012d5a 0%, #013d7a 50%, #0a5298 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-page-overview {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: auto;
+    height: 100%;
+}
+
+.my-page-box {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 20px;
+    padding: 40px 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+    height: 70vh;
+    width: 70vw;
+    margin-bottom: auto;
+}
+
+.my-page-title {
+    color: #013d7a;
+    font-family: "Playfair Display";
+    font-weight: 600;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    margin-top: 10px;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+.my-page-overview-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 40%;
+
+    justify-content: center; /* vertical alignment */
+    align-items: flex-start;
+    align-self: flex-start; /* <-- this pushes ONLY the box group left */
+    justify-self: left;
+    height: 100%; /* important */
+}
+
+.my-page-categories {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    color: #013d7a;
+    font-weight: 600;
+}
+
+.my-page-categories:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.carport-maker-progress {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+    height: auto;
+    min-height: 10%;
+    justify-content: right;
+    font-size: clamp(0.3rem, 2vw, 0.7rem);
+    align-items: center;
+    border-bottom: 2px solid #e0e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: auto;
+}
+
+.progress-steps {
+    color: #013d7a;
+    font-family: "Playfair Display";
+    display: grid;
+    margin-right: 25px;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.progress-steps:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#progress-step-1 {
+    justify-self: left;
+    margin-right: auto;
+    margin-left: 25px;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.my-page-results {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+
+    justify-content: center; /* vertical alignment */
+    align-items: flex-start;
+    align-self: flex-start; /* <-- this pushes ONLY the box group left */
+    justify-self: left;
+    height: 100%; /* important */
+}
+
+.result-box {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background-color: rgba(175, 175, 175, 0.95);
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    height: 80%;
+    text-align: center;
+    color: #013d7a;
+    font-weight: 600;
+    justify-self: center;
+}

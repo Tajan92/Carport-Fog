@@ -3,19 +3,16 @@
 
 <link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
 <link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
-<link rel="stylesheet" href="/public/css/customer-carport-maker.css"
-      th:href="@{/css/general-custom-carport-maker.css}"/>
-<link rel="stylesheet" href="/public/css/header.css" th:href="@{/css/header.css}"/>
+<link rel="stylesheet" href="/public/css/customer-carport-maker.css" th:href="@{/css/general-custom-carport-maker.css}"/>
 
 <body>
 
 
 <div class="carport-maker-progress">
-
-    <h1 class="progress-steps" id="progress-step-1">FOG</h1>
-    <h1 class="progress-steps" id="progress-step-2">Lav carport</h1>
-    <h1 class="progress-steps" id="progress-step-3">Min side</h1>
-    <h1 class="progress-steps" id="progress-step-4">Log ud</h1>
+    <h1 class="progress-steps" id="progress-step-1" th:href="@{/customer-carport-maker.html}" >FOG</h1>
+    <a class="progress-steps" id="progress-step-2">Lav carport</a>
+    <a class="progress-steps" id="progress-step-3">Min side</a>
+    <a class="progress-steps" id="progress-step-4" th:href="customer-login.html" >Log ud</a>
 
 </div>
 
