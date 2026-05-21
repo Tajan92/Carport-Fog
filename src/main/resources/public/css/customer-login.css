@@ -8,7 +8,9 @@ body {
 }
 
 .box-login {
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 40px 35px;
     justify-items: center;
@@ -29,7 +31,7 @@ body {
 }
 
 .welcome-message {
-    color: #013d7a;
+    color: white;
     font-family: "Playfair Display";
     font-weight: 600;
     font-size: clamp(1.5rem, 5vw, 3rem);
@@ -69,7 +71,7 @@ body {
 }
 
 .input-description {
-    color: #013d7a;
+    color: white;
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
@@ -82,11 +84,12 @@ body {
 
 /* Login button with transition */
 .login-button {
-    border-radius: clamp(0.5rem, 1.5vw, 1.085rem);
-    background: linear-gradient(135deg, #013d7a, #0a5298);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
     width: 100%;
     height: clamp(2.8rem, 7vw, 4rem);
-    border: none;
     color: #FFF;
     font-family: Inter;
     font-size: clamp(1rem, 2.5vw, 1.76313rem);
@@ -112,12 +115,12 @@ body {
     border-top: 1px solid #e0e8f0;  /* divider*/
     width: 100%;
     justify-content: center;
-    color: #555;
+    color: white;
     margin-bottom: 0;
 }
 
 #register-button {
-    color: #013d7a;
+    color:  #97c9ff;
     font-weight: 600;
     transition: transform 0.2s ease;
 }
@@ -139,12 +142,12 @@ body {
     border-top: 1px solid #e0e8f0;  /* divider*/
     width: 100%;
     justify-content: center;
-    color: #555;
+    color: white;
     margin-bottom: 0;
 }
 
 #admin-login-button{
-    color: #013d7a;
+    color: #97c9ff;
     font-weight: 600;
     transition: transform 0.2s ease;
 }

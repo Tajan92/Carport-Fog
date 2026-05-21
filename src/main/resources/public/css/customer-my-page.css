@@ -15,29 +15,30 @@ body {
 }
 
 .my-page-box {
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 40px 35px;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
-
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
     height: 70vh;
     width: 70vw;
     margin-bottom: auto;
 }
 
+/* Title becomes white to show on dark glass */
 .my-page-title {
-    color: #013d7a;
+    color: white;
     font-family: "Playfair Display";
     font-weight: 600;
     font-size: clamp(1.5rem, 5vw, 3rem);
     margin-top: 10px;
     margin-bottom: auto;
     text-align: center;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 .my-page-overview-boxes {
@@ -46,26 +47,31 @@ body {
     gap: 20px;
     width: 40%;
 
-    justify-content: center; /* vertical alignment */
+    justify-content: center;
     align-items: flex-start;
-    align-self: flex-start; /* <-- this pushes ONLY the box group left */
+    align-self: flex-start;
     justify-self: left;
-    height: 100%; /* important */
+    height: 100%;
 }
 
+/* Category buttons — frosted glass panels */
 .my-page-categories {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
-    background-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
     padding: 20px;
     width: 80%;
     text-align: center;
-    color: #013d7a;
+    color: white;
     font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .my-page-categories:hover {
     transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     cursor: pointer;
 }
@@ -117,22 +123,63 @@ body {
     gap: 20px;
     width: 60%;
 
-    justify-content: center; /* vertical alignment */
+    justify-content: center;
     align-items: flex-start;
-    align-self: flex-start; /* <-- this pushes ONLY the box group left */
+    align-self: flex-start;
     justify-self: left;
-    height: 100%; /* important */
+    height: 100%;
+
 }
 
-.result-box {
+/* Result container — slightly lighter glass */
+.my-page-result-box {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
-    background-color: rgba(175, 175, 175, 0.95);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     padding: 20px;
     width: 90%;
     height: 80%;
-    text-align: center;
-    color: #013d7a;
+    text-align: left;
     font-weight: 600;
-    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+
+/* Order cards — white glass with blue tint */
+.my-page-orders {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.my-page-orders:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+/* Scrollbar to match */
+.my-page-result-box::-webkit-scrollbar {
+    width: 6px;
+}
+.my-page-result-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.my-page-result-box::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
 }
