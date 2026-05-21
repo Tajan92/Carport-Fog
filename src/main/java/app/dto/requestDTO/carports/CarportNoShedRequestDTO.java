@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class CarportNoShedRequestDTO extends CarportRequestDTO{
 
-    public CarportNoShedRequestDTO(double width, double height, double length, double price, RoofRequestDTO roofRequestDTO) {
-        super(width, height, length, price, roofRequestDTO);
+    public CarportNoShedRequestDTO(double width, double height, double length, RoofRequestDTO roofRequestDTO) {
+        super(width, height, length, roofRequestDTO);
     }
 }

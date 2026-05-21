@@ -1,6 +1,4 @@
 package app.services;
-import app.dto.requestDTO.ShedRequestDTO;
-import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.RoofResponseDTO;
@@ -83,7 +81,19 @@ public class CarportService {
         }
     }
 
+    public void updateCarport(int carportId, CarportRequestDTO carportRequestDTO) throws DatabaseException {
+        Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
+        carport.setCarportId(carportId);
+        carportMapper.updateCarport(carport);
+    }
+
     public void deleteCarport(int carportId) throws DatabaseException {
+        Carport carport = carportMapper.getCarportById(carportId);
+        partsListMapper.deleteAllProductPartsListById(carport.getPartsListId());
         carportMapper.deleteCarportById(carportId);
+        partsListMapper.deletePartsListById(carport.getPartsListId());
+        carportMapper.deleteAddonId(carport.getRoofId(), carport.getShedId());
+        shedMapper.deleteShed(carport.getShedId());
+        roofMapper.deleteRoofById(carport.getRoofId());
     }
 }

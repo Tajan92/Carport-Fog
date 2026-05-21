@@ -2,12 +2,10 @@ package app.services;
 
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.Customer;
-import app.entities.Inquiry;
 import app.entities.Quote;
 import app.entities.SalesRep;
 import app.exceptions.DatabaseException;
@@ -17,7 +15,7 @@ import app.persistence.QuoteMapper;
 import app.persistence.SalesRepMapper;
 import app.services.converters.QuoteConverter;
 import app.services.converters.UserConverter;
-import app.services.utils.DiscountCalculator;
+import app.services.utils.PriceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +45,7 @@ public class QuoteService {
 
         /* Instantiate variables that cannot be instantiated in the converter */
         double carportPrice = carportMapper.getCarportById(quoteRequestDTO.getCarportId()).getPrice();
-        double quotePrice = DiscountCalculator.calculateDiscount(carportPrice, quoteRequestDTO.getQuotePrice());
+        double quotePrice = PriceCalculator.calculateDiscount(carportPrice, quoteRequestDTO.getQuotePrice());
 
         /* Set the new variables */
         Quote quote = quoteConverter.convertQuoteDTOtoEntity(quoteRequestDTO);

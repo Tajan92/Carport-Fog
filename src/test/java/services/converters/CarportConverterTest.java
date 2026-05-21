@@ -23,12 +23,12 @@ public class CarportConverterTest extends MapperTest {
     @Test
     void convertCarportDTOToEntityTest() throws DatabaseException {
 
-        CarportRequestDTO expectedCarport = new CarportNoShedRequestDTO(3.00, 2.08, 5.00, 24999.00, roofRequestDTO);
+        CarportRequestDTO expectedCarport = new CarportNoShedRequestDTO(3.00, 2.08, 5.00,  roofRequestDTO);
 
         Carport actualCarport = carportConverter.covertCarportDTOToEntity(expectedCarport);
 
-        assertEquals(expectedCarport.getWidth() + expectedCarport.getHeight() + expectedCarport.getLength() + expectedCarport.getPrice(),
-                actualCarport.getWidth() + actualCarport.getHeight() + actualCarport.getLength() + actualCarport.getPrice());
+        assertEquals(expectedCarport.getWidth() + expectedCarport.getHeight() + expectedCarport.getLength(),
+                actualCarport.getWidth() + actualCarport.getHeight() + actualCarport.getLength());
 
     }
 
