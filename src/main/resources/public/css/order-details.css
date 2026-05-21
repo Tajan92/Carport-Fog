@@ -1,0 +1,93 @@
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #012d5a 0%, #013d7a 50%, #0a5298 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.order-details-overview {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+    height: 70vh;
+    width: 70vw;
+    margin-bottom: auto;
+}
+
+/* Title becomes white to show on dark glass */
+.order-details-title {
+    color: white;
+    font-family: "Playfair Display";
+    font-weight: 600;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    margin-top: auto;
+    text-align: center;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.order-details-box{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    height: 100%;
+    margin-bottom: auto;
+}
+
+.carport-maker-progress {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+    height: auto;
+    min-height: 10%;
+    justify-content: right;
+    font-size: clamp(0.3rem, 2vw, 0.7rem);
+    align-items: center;
+    border-bottom: 2px solid #e0e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: auto;
+}
+
+.progress-steps {
+    color: #013d7a;
+    font-family: "Playfair Display";
+    display: grid;
+    margin-right: 25px;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.progress-steps:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#progress-step-1 {
+    justify-self: left;
+    margin-right: auto;
+    margin-left: 25px;
+    font-size: clamp(1rem, 2vw, 1.6rem);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+
+
+
+

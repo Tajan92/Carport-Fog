@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments :: head('Order details')}"></head>
+
+<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+<link rel="stylesheet" href="/public/css/customer-carport-maker.css" th:href="@{/css/general-custom-carport-maker.css}"/>
+<link rel="stylesheet" href="/public/css/customer-my-page.css" th:href="@{/css/customer-my-page.css}"/>
+<link rel="stylesheet" href="/public/css/order-details.css" th:href="@{/css/order-details.css}"/>
+
+<body>
+<div class="carport-maker-progress">
+    <a class="progress-steps" id="progress-step-1" href="customer-carport-maker.html">FOG</a>
+    <a class="progress-steps" id="progress-step-2" href="customer-carport-maker.html">Lav carport</a>
+    <a class="progress-steps" id="progress-step-3" href="customer-my-page.html">Min side</a>
+    <a class="progress-steps" id="progress-step-4" href="customer-login.html">Log ud</a>
+</div>
+
+
+<div class="order-details-overview">
+    <h1 class="order-details-title">Ordre oversigt</h1>
+
+    <div class="order-details-box"></div>
+
+
+</div>
+</body>
+</html>
