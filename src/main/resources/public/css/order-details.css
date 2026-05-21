@@ -86,6 +86,26 @@ body {
     font-weight: bold;
 }
 
+.order-header{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+#order-return-button{
+    align-self: flex-start;
+}
+
+.order-return-svg{
+    stroke: white;
+}
+
+#order-return-button:hover .order-return-svg{
+    stroke: #8fbae4;
+    cursor: pointer;
+}
+
 
 
 

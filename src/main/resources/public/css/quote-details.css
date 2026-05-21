@@ -34,7 +34,7 @@ body {
     margin-top: auto;
     text-align: center;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-}
+justify-self: center}
 
 .quote-details-box{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
@@ -85,6 +85,26 @@ body {
     font-size: clamp(1rem, 2vw, 1.6rem);
     text-decoration: none;
     font-weight: bold;
+}
+
+.quote-header{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+#quote-return-button{
+    align-self: flex-start;
+}
+
+.quote-return-svg{
+    stroke: white;
+}
+
+#quote-return-button:hover .quote-return-svg{
+    stroke: #8fbae4;
+    cursor: pointer;
 }
 
 

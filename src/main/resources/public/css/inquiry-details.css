@@ -88,6 +88,29 @@ body {
 }
 
 
+.inquiry-header{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+#inquiry-return-button{
+    align-self: flex-start;
+}
+
+.inquiry-return-svg{
+    stroke: white;
+}
+
+#inquiry-return-button:hover .inquiry-return-svg{
+    stroke: #8fbae4;
+    cursor: pointer;
+}
+
+
+
+
 
 
 
