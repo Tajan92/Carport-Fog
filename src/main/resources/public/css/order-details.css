@@ -35,15 +35,6 @@ body {
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-.order-details-box{
-    font-size: clamp(1.2rem, 1.8vw, 2rem);
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 10px;
-    height: 100%;
-    margin-bottom: auto;
-}
 
 .carport-maker-progress {
     background: white;
@@ -104,6 +95,28 @@ body {
 #order-return-button:hover .order-return-svg{
     stroke: #8fbae4;
     cursor: pointer;
+}
+
+.order-details-box{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    height: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    overflow-x: auto;
+    justify-content: left;
+}
+
+.order-detail-info-box{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    border-radius: 10px;
+    margin-left: 20px;
+    text-align: left;
+    color: white;
+    font-weight: 600;
 }
 
 
