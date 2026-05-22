@@ -1,17 +1,17 @@
 package app.dto.responseDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 
-public class CustomerResponseDTO {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
+public class CustomerResponseDTO extends UserResponseDTO {
     private String address;
     private String zipCode;
     private String town;
+
+    public CustomerResponseDTO(int id, String firstName, String lastName, String email, String phoneNumber, String address, String zipCode, String town) {
+        super(id, firstName, lastName, email, phoneNumber);
+        this.address = address;
+        this.zipCode = zipCode;
+        this.town = town;
+    }
 }

@@ -2,19 +2,14 @@ package app.controllers;
 
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
-import app.dto.requestDTO.ShedRequestDTO;
-import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.requestDTO.carports.CarportShedRequestDTO;
-import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
-import app.entities.Customer;
+import app.dto.responseDTO.UserResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
 import java.util.List;
 
 public class InquiryController {
@@ -47,10 +42,10 @@ public class InquiryController {
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
-        CustomerResponseDTO customer = ctx.sessionAttribute("currentUser");
+        UserResponseDTO userResponseDTO  = ctx.sessionAttribute("currentUser");
         String inquiryRemark = ctx.formParam("inquiry_remark");
 
-        if (customer == null) {
+        if (userResponseDTO == null) {
             // save all form params to session before redirecting
             ctx.sessionAttribute("pending_carport_width", ctx.formParam("carport_width"));
             ctx.sessionAttribute("pending_carport_length", ctx.formParam("carport_length"));
@@ -69,7 +64,7 @@ public class InquiryController {
         }
 
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-        int customerId = customer.getId();
+        int customerId = userResponseDTO.getId();
 
         InquiryRequestDTO inquiryRequestDTO = new InquiryRequestDTO(customerId, inquiryRemark, carportId);
         serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);

@@ -1,14 +1,10 @@
 package app.dto.responseDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@AllArgsConstructor
-@Getter
 
-public class SalesRepResponseDTO {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
+
+public class SalesRepResponseDTO extends UserResponseDTO {
+
+    public SalesRepResponseDTO(int id, String firstName, String lastName, String email, String phoneNumber) {
+        super(id, firstName, lastName, email, phoneNumber);
+    }
 }

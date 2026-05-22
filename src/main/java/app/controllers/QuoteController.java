@@ -3,9 +3,7 @@ package app.controllers;
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.QuoteResponseDTO;
-import app.dto.responseDTO.SalesRepResponseDTO;
+import app.dto.responseDTO.*;
 import app.entities.ProductsPartsListEntry;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
@@ -21,9 +19,11 @@ public class QuoteController {
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.get("/createQuote/{inquiry_id}", ctx -> showCreateQuotePage(ctx, serviceFactory));
         app.post("/createQuote/{inquiry_id}", ctx -> createQuote(ctx, serviceFactory));
-        app.post("/getQuote/{quote_id}", ctx -> getQuote(ctx, serviceFactory));
-        app.post("/getAllQuotes", ctx -> getAllQuotes(ctx, serviceFactory));
-        app.post("/deleteQuote", ctx -> deleteQuote(ctx, serviceFactory));
+        app.post("/getQuote/{quote_id}", ctx -> getQuoteAdmin(ctx, serviceFactory));
+        app.post("/quotes/admin", ctx -> getAllQuotes(ctx, serviceFactory));
+        app.post("/deleteQuote/{quote_id}", ctx -> deleteQuote(ctx, serviceFactory));
+        app.get("/getAllQuotesCustomer", ctx -> getAllQuotesCustomer(ctx, serviceFactory));
+        app.get("/getQuoteCustomer/{quote_id}", ctx -> getQuoteCustomer(ctx, serviceFactory));
     }
 
     public void showCreateQuotePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
@@ -44,7 +44,7 @@ public class QuoteController {
         double grossMarginPercent = serviceFactory.getPriceService().getGrossMarginInPercent(costPrice, retailPrice, serviceFee, discount);
 
         ctx.attribute("retail_price", retailPrice);
-        ctx.attribute("service_fee");
+        ctx.attribute("service_fee", serviceFee);
 
         ctx.attribute("cost_price", costPrice);
         ctx.attribute("gross_margin_percent", grossMarginPercent);
@@ -55,7 +55,7 @@ public class QuoteController {
     }
 
     public void createQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        SalesRepResponseDTO salesRepResponseDTO = ctx.sessionAttribute("currentUser");
+        UserResponseDTO salesRepResponseDTO = ctx.sessionAttribute("currentUser");
 
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         //Carport
@@ -66,7 +66,7 @@ public class QuoteController {
         //Roof
         double roofSlope = Double.parseDouble(ctx.formParam("quote_roof_slope"));
         String roofMaterial = ctx.formParam("quote_roof_material");
-        String roofType = ctx.formParam("quote-roof_type");
+        String roofType = ctx.formParam("quote_roof_type");
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         //Shed
@@ -84,15 +84,30 @@ public class QuoteController {
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
         QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(inquiryResponseDTO.getCustomerResponseDTO().getId(),revenue, carportId, salesRepResponseDTO.getId());
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
-        ctx.redirect("/getAllQuotes");
+        ctx.redirect("/quotes/admin");
     }
 
-    public void getQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+    public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
 
         ctx.attribute("selected_quote", quoteResponseDTO);
         ctx.render("admin-quote-details.html");
+    }
+
+    public void getAllQuotesCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+        CustomerResponseDTO customerResponseDTO = ctx.sessionAttribute("currentUser");
+        List<QuoteResponseDTO> allCustomerQuotes = serviceFactory.getQuoteService().getAllQuotesByCustomerId(customerResponseDTO.getId());
+
+        ctx.attribute("customer_quotes", allCustomerQuotes);
+        ctx.render("customer-all-quotes.html");
+    }
+
+    public void getQuoteCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+        int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
+        QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
+        ctx.attribute("quote", quoteResponseDTO);
+        ctx.render("customer-quote-details.html");
     }
 
     public void getAllQuotes(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
@@ -106,6 +121,6 @@ public class QuoteController {
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
         serviceFactory.getQuoteService().deleteQuote(quoteId);
         serviceFactory.getCarportService().deleteCarport(quoteResponseDTO.getCarportResponseDTO().getCarportId());
-        ctx.redirect("/getAllQuotes");
+        ctx.redirect("/quotes/admin");
     }
 }
