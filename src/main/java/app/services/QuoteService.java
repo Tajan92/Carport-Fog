@@ -86,6 +86,15 @@ public class QuoteService {
         return responseDTOS;
     }
 
+    public List<QuoteResponseDTO> getAllQuotesByCustomerId(int customerId) throws DatabaseException{
+        List<Quote> quotes = quoteMapper.getAllQuotesByCustomerId(customerId);
+        List<QuoteResponseDTO> quoteResponseDTOS = new ArrayList<>();
+        for (Quote quote : quotes) {
+            quoteResponseDTOS.add(quoteConverter.convertQuoteToDto(quote));
+        }
+        return quoteResponseDTOS;
+    }
+
     public void deleteQuote(int quoteId) throws DatabaseException {
         quoteMapper.deleteQuoteById(quoteId);
     }

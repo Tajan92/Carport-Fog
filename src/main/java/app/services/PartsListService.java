@@ -25,13 +25,22 @@ public class PartsListService {
     private RoofConverter roofConverter;
     PartsListConverter partsListConverter;
     PartsListCalculator partsListCalculator = new PartsListCalculator();
-    CarportService carportService;
 
+    public PartsListService (PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper){
+        this.partsListMapper = partsListMapper;
+        this.shedMapper = shedMapper;
+        this.roofMapper = roofMapper;
+        this.productMapper = productMapper;
+        this.carportMapper = carportMapper;
+        this.carportConverter = new CarportConverter();
+        this.shedConverter = new ShedConverter();
+        this.roofConverter = new RoofConverter();
+    }
     public int createPartsListId() throws DatabaseException {
         return partsListMapper.createPartListId();
     }
 
-    public void createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
+    public List<ProductsPartsListEntry> createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
         List<Product> products = productMapper.getAllProducts();
         Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
@@ -47,6 +56,7 @@ public class PartsListService {
         for (ProductsPartsListEntry entry : allEntries) {
             partsListMapper.createProductPartsList(entry.getProduct().getProductId(), carport.getPartsListId(), entry.getQuantity());
         }
+        return allEntries;
     }
 
     public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException, CalculatorException {

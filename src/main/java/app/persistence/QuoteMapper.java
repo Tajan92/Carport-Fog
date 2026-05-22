@@ -71,10 +71,12 @@ public class QuoteMapper {
 
     public List<Quote> getAllQuotes() throws DatabaseException {
         List<Quote> quotes = new ArrayList<>();
-        String sql = "select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote \n" +
-                "left join carports carport using(carport_id) \n" +
-                "left join customers customer using(customer_id) \n" +
-                "left join sales_reps sales using(sales_rep_id)\n";
+        String sql = """
+                select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote\s
+                left join carports carport using(carport_id)\s
+                left join customers customer using(customer_id)\s
+                left join sales_reps sales using(sales_rep_id)
+                """;
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -93,6 +95,35 @@ public class QuoteMapper {
             return quotes;
         } catch (SQLException e) {
             String message = "Fejl ved at hente alle tilbud";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public List<Quote> getAllQuotesByCustomerId(int customerId) throws DatabaseException {
+        List<Quote> quotes = new ArrayList<>();
+        String sql = """
+                select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote\s
+                left join carports carport using(carport_id)\s
+                left join customers customer using(customer_id)\s
+                left join sales_reps sales using(sales_rep_id) where customer_id = ?
+                """;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, customerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int quoteId = resultSet.getInt("quote_id");
+            double quotePrice = resultSet.getInt("quote_price");
+            int carportId = resultSet.getInt("carport_id");
+            int salesRepId = resultSet.getInt("sales_rep_id");
+
+            quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId));
+        }
+        return quotes;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente alle kundens tilbud";
             throw new DatabaseException(message, e.getMessage());
         }
     }

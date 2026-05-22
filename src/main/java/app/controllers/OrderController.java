@@ -21,7 +21,6 @@ public class OrderController {
         app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
     }
 
-
     public void getOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         int orderId = Integer.parseInt(ctx.pathParam("order_id"));
         OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);

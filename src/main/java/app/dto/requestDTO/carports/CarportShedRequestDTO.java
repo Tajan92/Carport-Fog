@@ -2,8 +2,10 @@ package app.dto.requestDTO.carports;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.ShedRequestDTO;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class CarportShedRequestDTO extends CarportRequestDTO {
     private ShedRequestDTO shedRequestDTO;
 
