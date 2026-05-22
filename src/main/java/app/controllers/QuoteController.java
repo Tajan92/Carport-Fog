@@ -30,15 +30,38 @@ public class QuoteController {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         ctx.attribute("inquiry_responseDTO", inquiryResponseDTO);
+
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(inquiryResponseDTO.getCarportRespondDto());
+        List<ProductsPartsListEntry> allEntries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
+
+        //Load default prices for the carport request
+        double costPrice = serviceFactory.getPriceService().getCostPrice(allEntries);
+        double retailPrice = serviceFactory.getPriceService().getRetailPrice(allEntries);
+        double serviceFee = serviceFactory.getPriceService().getServiceFee(allEntries);
+        double discount = 0;
+        double revenue = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
+        double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
+        double grossMarginPercent = serviceFactory.getPriceService().getGrossMarginInPercent(costPrice, retailPrice, serviceFee, discount);
+
+        ctx.attribute("retail_price", retailPrice);
+        ctx.attribute("service_fee");
+
+        ctx.attribute("cost_price", costPrice);
+        ctx.attribute("gross_margin_percent", grossMarginPercent);
+        ctx.attribute("gross_profit", grossProfit);
+        ctx.attribute("revenue", revenue);
+        ctx.attribute("discount", discount);
         ctx.render("create-quote.html");
     }
 
     public void createQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+        SalesRepResponseDTO salesRepResponseDTO = ctx.sessionAttribute("currentUser");
+
+        int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         //Carport
         double carportWidth = Double.parseDouble(ctx.formParam("quote_carport_width"));
         double carportHeight = 230;
         double carportLength = Double.parseDouble(ctx.formParam("quote_carport_length"));
-        CarportRequestDTO carportRequestDTO;
 
         //Roof
         double roofSlope = Double.parseDouble(ctx.formParam("quote_roof_slope"));
@@ -55,15 +78,13 @@ public class QuoteController {
         //Price
         double revenue = Double.parseDouble(Objects.requireNonNull(ctx.formParam("revenue")));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
-        CarportResponseDTO carportResponseDTO = serviceFactory.getCarportService().getCarport(inquiryResponseDTO.getCarportRespondDto().getCarportId());
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-
-        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO();
+        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(inquiryResponseDTO.getCustomerResponseDTO().getId(),revenue, carportId, salesRepResponseDTO.getId());
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
-
+        ctx.redirect("/getAllQuotes");
     }
 
     public void getQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
@@ -73,7 +94,6 @@ public class QuoteController {
         ctx.attribute("selected_quote", quoteResponseDTO);
         ctx.render("admin-quote-details.html");
     }
-
 
     public void getAllQuotes(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
         List<QuoteResponseDTO> quoteResponseDTOS = serviceFactory.getQuoteService().getAllQuotes();
