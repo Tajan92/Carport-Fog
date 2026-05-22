@@ -26,5 +26,13 @@ public class RoofConverter {
         return new Roof(roofSlope, roofMaterial, roofType);
     }
 
+    public RoofRequestDTO convertRoofResponseToRequestDTO(RoofResponseDTO roofResponseDTO){
+        double roofSlope = roofResponseDTO.getRoofSlope();
+        String roofMaterial = roofResponseDTO.getRoofMaterial();
+        String roofType = roofResponseDTO.getRoofType();
+
+        return new RoofRequestDTO(roofSlope, roofMaterial, roofType);
+    }
+
 
 }
