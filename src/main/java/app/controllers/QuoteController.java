@@ -77,7 +77,8 @@ public class QuoteController {
         boolean floor = Boolean.parseBoolean(ctx.formParam("quote_floor"));
 
         //Price
-        double revenue = Double.parseDouble(Objects.requireNonNull(ctx.formParam("revenue")));
+        double discount = ctx.formParam("discount_admin");
+        double revenue = serviceFactory.getPriceService().getRevenue()
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);

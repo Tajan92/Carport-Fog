@@ -82,7 +82,7 @@ public class InquiryController {
             return;
         }
 
-        ctx.sessionAttribute("inguiry_responseDTO",inquiryResponseDTO);
+        ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
         ctx.render("admin-inquiry-details.html");
     }
