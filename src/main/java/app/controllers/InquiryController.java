@@ -31,7 +31,6 @@ public class InquiryController {
         double carportWidth = Double.parseDouble(ctx.formParam("carport_width"));
         double carportHeight = 230;
         double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
-        CarportRequestDTO carportRequestDTO;
 
         //Roof
         double roofSlope = Double.parseDouble(ctx.formParam("roof_slope"));
@@ -45,12 +44,8 @@ public class InquiryController {
         String shedSiding = ctx.formParam("shed_siding");
         boolean floor = Boolean.parseBoolean(ctx.formParam("floor"));
 
-        if (shedLength == null || shedWidth == null || shedWidth.isBlank() || shedLength.isBlank()) {
-            carportRequestDTO = new CarportNoShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO);
-        } else {
-            ShedRequestDTO shedRequestDTO = new ShedRequestDTO(Double.parseDouble(shedWidth), Double.parseDouble(shedLength), shedSiding, floor);
-            carportRequestDTO = new CarportShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO, shedRequestDTO);
-        }
+
+        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
         CustomerResponseDTO customer = ctx.sessionAttribute("currentUser");
         String inquiryRemark = ctx.formParam("inquiry_remark");
