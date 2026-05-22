@@ -1,4 +1,7 @@
 package app.services;
+import app.dto.requestDTO.RoofRequestDTO;
+import app.dto.requestDTO.ShedRequestDTO;
+import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.RoofResponseDTO;
@@ -96,5 +99,15 @@ public class CarportService {
         carportMapper.deleteAddonId(carport.getRoofId(), carport.getShedId());
         shedMapper.deleteShed(carport.getShedId());
         roofMapper.deleteRoofById(carport.getRoofId());
+    }
+
+    public CarportRequestDTO convertCarportResponseToRequest(CarportResponseDTO carportResponseDTO){
+        RoofRequestDTO roofRequestDTO = roofConverter.convertRoofResponseToRequestDTO(carportResponseDTO.getRoofResponseDTO());
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed){
+            ShedRequestDTO shedRequestDTO = shedConverter.convertShedResponseToRequestDTO(withShed.getShedResponseDTO());
+            return new CarportShedRequestDTO(carportResponseDTO.getWidth(), carportResponseDTO.getHeight(), carportResponseDTO.getLength(), roofRequestDTO, shedRequestDTO);
+        }else{
+            return new CarportNoShedRequestDTO(carportResponseDTO.getWidth(), carportResponseDTO.getHeight(), carportResponseDTO.getLength(), roofRequestDTO);
+        }
     }
 }
