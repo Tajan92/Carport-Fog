@@ -6,6 +6,7 @@ import app.dto.requestDTO.ShedRequestDTO;
 import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
+import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.entities.Customer;
 import app.exceptions.CalculatorException;
@@ -51,7 +52,7 @@ public class InquiryController {
             carportRequestDTO = new CarportShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO, shedRequestDTO);
         }
 
-        Customer customer = ctx.sessionAttribute("currentUser");
+        CustomerResponseDTO customer = ctx.sessionAttribute("currentUser");
         String inquiryRemark = ctx.formParam("inquiry_remark");
 
         if (customer == null) {

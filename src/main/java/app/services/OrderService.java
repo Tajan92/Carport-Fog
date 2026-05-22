@@ -22,11 +22,19 @@ import java.util.List;
 public class OrderService {
     private OrderConverter orderConverter;
     private OrderMapper orderMapper;
-    private RoofMapper roofMapper;
     private CarportService carportService;
     private UserService userService;
     private PartsListService partsListService;
     private CarportConverter carportConverter;
+
+    public OrderService(OrderMapper orderMapper, CarportService carportService, UserService userService, PartsListService partsListService){
+        this.orderMapper = orderMapper;
+        this.carportService = carportService;
+        this.userService = userService;
+        this.partsListService = partsListService;
+        this.orderConverter = new OrderConverter();
+        this.carportConverter = new CarportConverter();
+    }
 
     public void createOrder(OrderRequestDTO orderRequestDTO) throws DatabaseException {
         Order order = orderConverter.convertOrderToEntity(orderRequestDTO);

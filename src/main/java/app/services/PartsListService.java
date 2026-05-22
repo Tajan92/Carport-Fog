@@ -25,8 +25,17 @@ public class PartsListService {
     private RoofConverter roofConverter;
     PartsListConverter partsListConverter;
     PartsListCalculator partsListCalculator = new PartsListCalculator();
-    CarportService carportService;
 
+    public PartsListService (PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper){
+        this.partsListMapper = partsListMapper;
+        this.shedMapper = shedMapper;
+        this.roofMapper = roofMapper;
+        this.productMapper = productMapper;
+        this.carportMapper = carportMapper;
+        this.carportConverter = new CarportConverter();
+        this.shedConverter = new ShedConverter();
+        this.roofConverter = new RoofConverter();
+    }
     public int createPartsListId() throws DatabaseException {
         return partsListMapper.createPartListId();
     }

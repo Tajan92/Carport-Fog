@@ -97,7 +97,7 @@
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid #e0e8f0;  /* divider — no HR needed */
+    border-top: 1px solid #e0e8f0;  /* divider */
     width: 100%;
     justify-content: center;
     color: #555;

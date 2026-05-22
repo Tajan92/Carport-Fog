@@ -33,4 +33,21 @@ public class PriceCalculator {
         }
         return totalServiceFee;
     }
+
+    public static double getRevenue (double retailPrice, double serviceFee, double discount){
+        return (retailPrice+serviceFee-discount);
+    }
+
+    public static double getGrossProfit(double costPrice, double retailPrice, double serviceFee, double discount){
+        return (retailPrice+serviceFee-costPrice-discount);
+    }
+
+    public static double getGrossMarginInPercent(double costPrice, double retailPrice, double serviceFee, double discount){
+        double revenue = (retailPrice+serviceFee-discount);
+        if (revenue == 0){
+            return 0;
+        }
+        double grossProfit = revenue-costPrice;
+        return (grossProfit/revenue)*100;
+    }
 }

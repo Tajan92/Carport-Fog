@@ -29,7 +29,8 @@ public class CarportService {
     private ShedMapper shedMapper;
     private PartsListService partsListService;
 
-    public CarportService(PartsListMapper partsListMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper) {
+    public CarportService(PartsListService partsListService, PartsListMapper partsListMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper) {
+        this.partsListService = partsListService;
         this.carportConverter = new CarportConverter();
         this.shedConverter = new ShedConverter();
         this.roofConverter = new RoofConverter();

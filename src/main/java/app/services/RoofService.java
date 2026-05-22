@@ -20,12 +20,12 @@ public class RoofService {
         return roofMapper.createRoof(roof);
     }
 
-    public RoofResponseDTO getShed(int roofId) throws DatabaseException {
+    public RoofResponseDTO getRoof(int roofId) throws DatabaseException {
         Roof roof = roofMapper.getRoofById(roofId);
         return roofConverter.convertRoofToDto(roof);
     }
 
-    public void updateShed(int roofId) throws DatabaseException {
+    public void updateRoof(int roofId) throws DatabaseException {
         Roof roof = roofMapper.getRoofById(roofId);
         roofMapper.updateRoof(roof);
     }

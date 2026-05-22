@@ -1,6 +1,10 @@
 package app.services;
 
+import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.ShedRequestDTO;
+import app.dto.requestDTO.carports.CarportNoShedRequestDTO;
+import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.ShedResponseDTO;
 import app.entities.Shed;
 import app.exceptions.DatabaseException;
@@ -33,5 +37,15 @@ public class ShedService {
 
     public void deleteShed(int shedId) throws DatabaseException {
         shedMapper.deleteShed(shedId);
+    }
+
+    public CarportRequestDTO checkShed(String width, String length, String siding, boolean floor, double carportWidth, double carportHeight, double carportLength, RoofRequestDTO roofRequestDTO) {
+
+        if (length == null || width == null || width.isBlank() || length.isBlank()) {
+            return new CarportNoShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO);
+        } else {
+            ShedRequestDTO shedRequestDTO = new ShedRequestDTO(Double.parseDouble(width), Double.parseDouble(length), siding, floor);
+            return new CarportShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO, shedRequestDTO);
+        }
     }
 }

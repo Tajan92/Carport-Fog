@@ -5,7 +5,8 @@ import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
-import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.dto.responseDTO.SalesRepResponseDTO;
+import app.entities.ProductsPartsListEntry;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -13,6 +14,7 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.util.List;
+import java.util.Objects;
 
 public class QuoteController {
 
@@ -50,13 +52,12 @@ public class QuoteController {
         String shedSiding = ctx.formParam("quote_shed_siding");
         boolean floor = Boolean.parseBoolean(ctx.formParam("quote_floor"));
 
+        //Price
+        double revenue = Double.parseDouble(Objects.requireNonNull(ctx.formParam("revenue")));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         CarportResponseDTO carportResponseDTO = serviceFactory.getCarportService().getCarport(inquiryResponseDTO.getCarportRespondDto().getCarportId());
 
-        CarportRequestDTO carportRequestDTO;
-        if (carportRequestDTO.) {
-
-        }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
 
@@ -85,6 +86,6 @@ public class QuoteController {
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
         serviceFactory.getQuoteService().deleteQuote(quoteId);
         serviceFactory.getCarportService().deleteCarport(quoteResponseDTO.getCarportResponseDTO().getCarportId());
-        ctx.render("admin-all-quotes.html");
+        ctx.redirect("/getAllQuotes");
     }
 }
