@@ -1,5 +1,4 @@
 package app.services;
-
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
@@ -8,7 +7,6 @@ import app.entities.*;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
-import app.services.converters.CarportConverter;
 import app.services.converters.InquiryConverter;
 import app.services.converters.UserConverter;
 import app.services.utils.PartsListCalculator;

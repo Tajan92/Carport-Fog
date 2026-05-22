@@ -40,7 +40,7 @@ public class PartsListService {
         return partsListMapper.createPartListId();
     }
 
-    public void createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
+    public List<ProductsPartsListEntry> createProductsPartsListEntries(CarportRequestDTO carportRequestDTO) throws DatabaseException, CalculatorException {
         List<Product> products = productMapper.getAllProducts();
         Carport carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
@@ -56,6 +56,7 @@ public class PartsListService {
         for (ProductsPartsListEntry entry : allEntries) {
             partsListMapper.createProductPartsList(entry.getProduct().getProductId(), carport.getPartsListId(), entry.getQuantity());
         }
+        return allEntries;
     }
 
     public PartsListResponseDTO getPartsList(int carportId) throws DatabaseException, CalculatorException {
