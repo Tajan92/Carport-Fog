@@ -11,6 +11,11 @@ public class ServiceFactory {
     private QuoteService quoteService;
     private UserService userService;
     private OrderService orderService;
+    private ShedService shedService;
+    private RoofService roofService;
+    private PartsListService partsListService;
+    private BlueprintService blueprintService;
+    private PriceService priceService;
 
     public ServiceFactory() {
         CarportMapper carportMapper = new CarportMapper();

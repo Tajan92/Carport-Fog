@@ -17,11 +17,20 @@ public class ShedConverter {
     }
 
     public Shed convertShedDTOtoEntity(ShedRequestDTO shedRequestDTO) {
-        Double width = shedRequestDTO.getWidth();
-        Double length = shedRequestDTO.getLength();
+        double width = shedRequestDTO.getWidth();
+        double length = shedRequestDTO.getLength();
         String siding = shedRequestDTO.getSiding();
-        Boolean floor = shedRequestDTO.isFloor();
+        boolean floor = shedRequestDTO.isFloor();
 
         return new Shed(width, length, siding, floor);
+    }
+
+    public ShedRequestDTO convertShedResponseToRequestDTO(ShedResponseDTO shedResponseDTO) {
+        double width = shedResponseDTO.getWidth();
+        double length = shedResponseDTO.getLength();
+        String siding = shedResponseDTO.getSiding();
+        boolean floor = shedResponseDTO.isFloor();
+
+        return new ShedRequestDTO(width, length, siding, floor);
     }
 }
