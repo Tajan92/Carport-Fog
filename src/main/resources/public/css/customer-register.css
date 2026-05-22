@@ -21,8 +21,8 @@
     color: #013d7a;
     font-family: "Playfair Display";
     font-weight: 600;
-    font-size: clamp(1.2rem, 3vw, 2rem);  /* down from 1.5/5vw/3rem */
-    margin-bottom: 12px;    /* down from 24px */
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-bottom: 12px;
     text-align: center;
 }
 
@@ -30,7 +30,7 @@
 #register-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4px 12px;          /* down from 8px 16px */
+    gap: 4px 12px;
 
     align-items: end;
 }
@@ -40,7 +40,8 @@
     border: 1.5px solid #c5d5e8;
     background: #f4f8fd;
     width: 20vw;
-    height: clamp(2rem, 4vw, 2.5rem);   /* down from 2.5rem/6vw/3rem */    padding: 0 12px;
+    height: clamp(2rem, 4vw, 2.5rem);
+    padding: 0 12px;
     font-size: 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
@@ -55,7 +56,7 @@
     color: #013d7a;
     font-family: Inter;
     font-weight: 500;
-    font-size: clamp(0.7rem, 1.5vw, 0.9rem);   /* down from 0.8/2vw/1rem */
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
     text-align: left;
     margin-bottom: 5px;
     width: 100%;
@@ -109,13 +110,13 @@
     background: linear-gradient(135deg, #013d7a, #0a5298);
     width: 50%;
     justify-self: center;
-    height: clamp(2.2rem, 5vw, 3rem);   /* down from 2.8/7vw/4rem */
+    height: clamp(2.2rem, 5vw, 3rem);
     border: none;
     color: #FFF;
     font-family: Inter;
     font-size: clamp(0.9rem, 2vw, 1.2rem);
     font-weight: 500;
-    margin-top: 12px;       /* down from 20px */
+    margin-top: 12px;
     grid-column: 1 / -1;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
