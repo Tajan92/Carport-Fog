@@ -7,7 +7,6 @@
     justify-content: center;
     justify-self: center;
     max-height: 90vh;
-
 }
 
 .logo {
@@ -19,40 +18,47 @@
 }
 
 .welcome-message {
-    color: black;
+    color: #013d7a;
     font-family: "Playfair Display";
-    font-style: normal;
     font-weight: 600;
-    height: auto;
-    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-size: clamp(1.2rem, 3vw, 2rem);  /* down from 1.5/5vw/3rem */
+    margin-bottom: 12px;    /* down from 24px */
+    text-align: center;
 }
 
 
 #register-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px 16px;
+    gap: 4px 12px;          /* down from 8px 16px */
+
     align-items: end;
 }
 
 .input-box {
-    border-radius: 0.3125rem;
-    border: 1.085px solid #013d7a;
-    background: #FFF;
-    width: 100%;
-    height: clamp(2.5rem, 6vw, 3rem);
+    border-radius: 8px;
+    border: 1.5px solid #c5d5e8;
+    background: #f4f8fd;
+    width: 20vw;
+    height: clamp(2rem, 4vw, 2.5rem);   /* down from 2.5rem/6vw/3rem */    padding: 0 12px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+.input-box:focus {
+    border-color: #013d7a;
+    box-shadow: 0 0 0 3px rgba(1, 61, 122, 0.12);
+    background: white;
 }
 
 .input-description {
     color: #013d7a;
     font-family: Inter;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
-    width: clamp(16rem, 40vw, 24rem);
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);   /* down from 0.8/2vw/1rem */
     text-align: left;
-    font-size: clamp(0.8rem, 2vw, 1.35625rem);
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .register-button {
@@ -80,7 +86,7 @@
 .field-group {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 
 .register {
@@ -88,21 +94,43 @@
     flex-direction: row;
     align-items: center;
     gap: clamp(6px, 1vw, 10px);
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    margin-top: 5px;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e8f0;  /* divider — no HR needed */
+    width: 100%;
+    justify-content: center;
+    color: #555;
+    grid-column: 1 / -1;
 }
 
-.register-button{
+.register-button {
+    border-radius: clamp(0.5rem, 1.5vw, 1.085rem);
+    background: linear-gradient(135deg, #013d7a, #0a5298);
     width: 50%;
     justify-self: center;
+    height: clamp(2.2rem, 5vw, 3rem);   /* down from 2.8/7vw/4rem */
+    border: none;
+    color: #FFF;
+    font-family: Inter;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 500;
+    margin-top: 12px;       /* down from 20px */
+    grid-column: 1 / -1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-button:hover {
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
+    transform: translateY(-3px);
 }
 
 #register-button {
     color: #013d7a;
-
-
+    font-weight: 600;
+    transition: transform 0.2s ease;
 }
-
 
 #register-button:hover {
     cursor: pointer;

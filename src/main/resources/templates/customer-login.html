@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
 
 
+
 <body>
 
 <h1 class="logo">Fog</h1>
@@ -18,7 +19,7 @@
         <p class="input-description">EMAIL</p>
         <input class="input-box" type="text" name="email" placeholder="eg. user@example.com..">
         <p class="input-description">KODEORD</p>
-        <input class="input-box" type="password" name="password"  placeholder=" •••••••••••">
+        <input class="input-box" type="password" name="password"  placeholder="eg.1234...">
 
 
         <button class="login-button" type="submit">Log In</button>
@@ -27,6 +28,10 @@
     <div class="opret">
         <p>Har du ikke en bruger?</p>
         <a th:href="@{/register}" class="button-box" type="button" id="register-button" >Opret dig her</a>
+    </div>
+    <div class="admin-login">
+        <p>Skal du logge ind som admin?</p>
+        <a th:href="@{/register}" class="button-box" type="button" id="admin-login-button" >Log ind her</a>
     </div>
 
 </div>

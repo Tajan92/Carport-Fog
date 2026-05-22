@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments :: head('inquiry details')}"></head>
+
+<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+<link rel="stylesheet" href="/public/css/customer-carport-maker.css" th:href="@{/css/general-custom-carport-maker.css}"/>
+<link rel="stylesheet" href="/public/css/customer-my-page.css" th:href="@{/css/customer-my-page.css}"/>
+<link rel="stylesheet" href="/public/css/order-details.css" th:href="@{/css/order-details.css}"/>
+<link rel="stylesheet" href="/public/css/inquiry-details.css" th:href="@{/css/inquiry-details.css}"/>
+
+<body>
+<div class="carport-maker-progress">
+    <a class="progress-steps" id="progress-step-1" href="customer-carport-maker.html">FOG</a>
+    <a class="progress-steps" id="progress-step-2" href="customer-carport-maker.html">Lav carport</a>
+    <a class="progress-steps" id="progress-step-3" href="customer-my-page.html">Min side</a>
+    <a class="progress-steps" id="progress-step-4" href="customer-login.html">Log ud</a>
+</div>
+
+
+<div class="inquiry-details-overview">
+    <div class="inquiry-header">
+
+        <svg id="inquiry-return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
+             fill="none">
+            <path class="inquiry-return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
+                  stroke-width="9.25"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="inquiry-return-svg"
+                  d="M8 18.6667H38.6587C47.836 18.6667 55.6293 26.16 55.9867 35.3333C56.3653 45.0267 48.356 53.3333 38.6587 53.3333H15.9973"
+                  stroke="black" stroke-width="9.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 class="inquiry-details-title">Forespørgsels oversigt</h1>
+    </div>
+
+    <div class="inquiry-details-box"></div>
+
+
+</div>
+</body>
+</html>
