@@ -1,12 +1,24 @@
 package app.services.utils;
 
 import app.dto.requestDTO.users.CustomerRequestDTO;
+import app.dto.responseDTO.UserResponseDTO;
+import io.javalin.http.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserValidator {
     static List<String> message = new ArrayList<>();
+
+    public static boolean isAdmin(Context ctx) {
+        UserResponseDTO user = ctx.sessionAttribute("currentUser");
+        return user != null && user.getRole().equals("ADMIN");
+    }
+
+    public static boolean isCustomer(Context ctx) {
+        UserResponseDTO user = ctx.sessionAttribute("currentUser");
+        return user != null && user.getRole().equals("CUSTOMER");
+    }
 
     public static List<String> validate(CustomerRequestDTO customerRequestDTO) {
         String email = customerRequestDTO.getEmail();

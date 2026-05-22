@@ -74,7 +74,13 @@ public class InquiryController {
 
     public void getInquiry(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
+        UserResponseDTO userResponseDTO = ctx.sessionAttribute("currentUser");
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+
+        if (inquiryResponseDTO.getCustomerResponseDTO().getId() != userResponseDTO.getId()){
+            ctx.status(403);
+            return;
+        }
 
         ctx.sessionAttribute("inguiry_responseDTO",inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);

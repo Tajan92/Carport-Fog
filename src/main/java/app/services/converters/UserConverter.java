@@ -17,8 +17,9 @@ public class UserConverter {
         String address = customer.getAddress();
         String zipCode = customer.getZipCode();
         String town = customer.getTown();
+        String role = "CUSTOMER";
 
-        return new CustomerResponseDTO(id, firstName, lastName, email, phoneNumber, address, zipCode, town);
+        return new CustomerResponseDTO(id, firstName, lastName, email, phoneNumber, address, zipCode, town, role);
     }
 
     public Customer convertCustomerDTOtoEntity(CustomerRequestDTO customerRequestDTO) {
@@ -39,7 +40,8 @@ public class UserConverter {
         String lastName = salesRep.getLastName();
         String email = salesRep.getEmail();
         String phoneNumber = salesRep.getPhoneNumber();
+        String role = "ADMIN";
 
-        return new SalesRepResponseDTO(id, firstName, lastName, email, phoneNumber);
+        return new SalesRepResponseDTO(id, firstName, lastName, email, phoneNumber, role);
     }
 }

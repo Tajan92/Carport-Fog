@@ -8,6 +8,7 @@ import app.entities.ProductsPartsListEntry;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
+import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -19,8 +20,8 @@ public class QuoteController {
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.get("/createQuote/{inquiry_id}", ctx -> showCreateQuotePage(ctx, serviceFactory));
         app.post("/createQuote/{inquiry_id}", ctx -> createQuote(ctx, serviceFactory));
-        app.post("/getQuote/{quote_id}", ctx -> getQuoteAdmin(ctx, serviceFactory));
-        app.post("/quotes/admin", ctx -> getAllQuotes(ctx, serviceFactory));
+        app.get("/getQuote/{quote_id}", ctx -> getQuoteAdmin(ctx, serviceFactory));
+        app.get("/quotes/admin", ctx -> getAllQuotesAdmin(ctx, serviceFactory));
         app.post("/deleteQuote/{quote_id}", ctx -> deleteQuote(ctx, serviceFactory));
         app.get("/getAllQuotesCustomer", ctx -> getAllQuotesCustomer(ctx, serviceFactory));
         app.get("/getQuoteCustomer/{quote_id}", ctx -> getQuoteCustomer(ctx, serviceFactory));
@@ -88,8 +89,18 @@ public class QuoteController {
     }
 
     public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+        if (!UserValidator.isAdmin(ctx)){
+            ctx.redirect("/");
+            return;
+        }
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
+        UserResponseDTO customerResponseDTO = ctx.sessionAttribute("currentUser");
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
+
+        if (quoteResponseDTO.getCustomerResponseDTO().getId() != customerResponseDTO.getId()) {
+            ctx.status(403);
+            return;
+        }
 
         ctx.attribute("selected_quote", quoteResponseDTO);
         ctx.render("admin-quote-details.html");
@@ -110,7 +121,7 @@ public class QuoteController {
         ctx.render("customer-quote-details.html");
     }
 
-    public void getAllQuotes(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+    public void getAllQuotesAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
         List<QuoteResponseDTO> quoteResponseDTOS = serviceFactory.getQuoteService().getAllQuotes();
         ctx.attribute("all_quotes", quoteResponseDTOS);
         ctx.render("admin-all-quotes.html");
