@@ -26,6 +26,7 @@
 .progress-steps:hover{
     text-decoration: underline;
     cursor: pointer;
+    color: #2783e1;
 }
 
 #progress-step-1{
@@ -33,5 +34,11 @@
     margin-right: auto;
     margin-left: 25px;
     font-size: clamp(0.3rem, 2vw, 2rem);
+}
 
+
+/* ===== HEADER STATE ======*/
+.header-state-active {
+    color: #2783e1; !important;
+    text-decoration: underline !important;
 }
