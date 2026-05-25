@@ -36,12 +36,14 @@
     color: white;
     font-weight: 600;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
 }
 
 .maker-categories:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .stage-display {
@@ -82,11 +84,15 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    animation: fadeIn 1s ease;
+
 }
 
 .roof-boxes:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+border:  solid #2783e1;
 }
 
 
@@ -99,6 +105,53 @@
     fill: white;
 }
 
+/*===== SHED BOXES =====*/
+
+.shed-picker-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+}
+
+.shed-boxes {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    animation: fadeIn 1s ease;
+
+}
+
+.shed-boxes:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border:  solid #2783e1;
+}
+
+
+.half-shed-svg, .full-shed-svg {
+    height: 150px;
+    width: 150px;
+}
+
+.svg-color{
+    fill: white;
+}
 
 
 /*===== CARPORT MEASUREMENTS INPUTS =====*/
@@ -143,6 +196,8 @@
     padding: 25px;
     border-radius: 15px;
     align-items: end;
+    animation: fadeIn 1s ease;
+
 }
 .continue {
     background: rgba(255, 255, 255, 0.1);

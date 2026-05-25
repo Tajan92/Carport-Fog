@@ -26,7 +26,6 @@ public class Main {
         CustomerController customerController = new CustomerController();
         MainController mainController = new MainController();
         SalesRepController salesRepController = new SalesRepController();
-
         salesRepController.addRoutes(app,serviceFactory);
         customerController.addRoutes(app, serviceFactory);
         mainController.addRoutes(app, serviceFactory);
