@@ -2,8 +2,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments :: head('Customer Login')}"></head>
-<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
-<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
 
 
 
@@ -27,11 +25,11 @@
 
     <div class="opret">
         <p>Har du ikke en bruger?</p>
-        <a th:href="@{/register}" class="button-box" type="button" id="register-button" >Opret dig her</a>
+        <a th:href="@{/customerRegister}" class="button-box" type="button" id="register-button" >Opret dig her</a>
     </div>
     <div class="admin-login">
         <p>Skal du logge ind som admin?</p>
-        <a th:href="@{/register}" class="button-box" type="button" id="admin-login-button" >Log ind her</a>
+        <a th:href="@{/loginSalesRep}" class="button-box" type="button" id="admin-login-button" >Log ind her</a>
     </div>
 
 </div>

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<head th:replace="~{fragments :: head('Customer Login')}"></head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Customer carport maker')}"></head>
 
-<link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
-<link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
-<link rel="stylesheet" href="/public/css/customer-carport-maker.css" th:href="@{/css/general-custom-carport-maker.css}"/>
 
 <body>
 
@@ -12,7 +10,7 @@
     <h1 class="progress-steps" id="progress-step-1" th:href="@{/customer-carport-maker.html}" >FOG</h1>
     <a class="progress-steps" id="progress-step-2">Lav carport</a>
     <a class="progress-steps" id="progress-step-3">Min side</a>
-    <a class="progress-steps" id="progress-step-4" th:href="customer-login.html" >Log ud</a>
+    <a class="progress-steps" id="progress-step-4" th:href="@{/customerLogin}" >Log ud</a>
 
 </div>
 
@@ -68,6 +66,7 @@
                 <p class="carport-measurement-input-description">HØJDE</p>
                 <input class="carport-measurement-box" type="text" name="height" placeholder="eg. 160cm">
             </div>
+
 
             <button class="continue" type="submit">Videre</button>
         </div>

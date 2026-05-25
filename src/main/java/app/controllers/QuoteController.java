@@ -76,17 +76,17 @@ public class QuoteController {
         String shedSiding = ctx.formParam("quote_shed_siding");
         boolean floor = Boolean.parseBoolean(ctx.formParam("quote_floor"));
 
-        //Price
-        double discount = ctx.formParam("discount_admin");
-        double revenue = serviceFactory.getPriceService().getRevenue()
-        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
-
-        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
-
-        int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(inquiryResponseDTO.getCustomerResponseDTO().getId(),revenue, carportId, salesRepResponseDTO.getId());
-        serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
-        ctx.redirect("/quotes/admin");
+//        //Price
+//        double discount = ctx.formParam("discount_admin");
+//        double revenue = serviceFactory.getPriceService().getRevenue()
+//        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+//
+//        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
+//
+//        int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
+//        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(inquiryResponseDTO.getCustomerResponseDTO().getId(),revenue, carportId, salesRepResponseDTO.getId());
+//        serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
+//        ctx.redirect("/quotes/admin");
     }
 
     public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
