@@ -180,13 +180,20 @@ public class CarportMapper {
         }
     }
 
-    public void deleteAddonId(int roofId, int shedId) throws DatabaseException {
-        String sql = "delete from addons where roof_id = ? and shed_id = ?";
+    public void deleteAddonId(int roofId, Integer shedId) throws DatabaseException {
+        String sql;
+        if (shedId == null) {
+            sql = "DELETE FROM addons WHERE roof_id = ? AND shed_id IS NULL";
+        } else {
+            sql = "DELETE FROM addons WHERE roof_id = ? AND shed_id = ?";
+        }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, roofId);
-            preparedStatement.setInt(1, shedId);
+            if (shedId != null) {
+                preparedStatement.setInt(2, shedId);
+            }
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("An error occurred trying to remove a addon id from DB");
