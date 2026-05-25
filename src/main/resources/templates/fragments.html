@@ -3,12 +3,23 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
-    <link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
-    <link rel="stylesheet" href="/public/css/customer-carport-maker.css" th:href="@{/css/customer-carport-maker.css}"/>
-    <link rel="stylesheet" href="/public/css/sales-rep-login.css" th:href="@{/css/sales-rep-login.css}"/>
+    <link rel="stylesheet" href="/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+    <link rel="stylesheet" href="/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+    <link rel="stylesheet" href="/css/customer-carport-maker.css" th:href="@{/css/customer-carport-maker.css}"/>
+    <link rel="stylesheet" href="/css/sales-rep-login.css" th:href="@{/css/sales-rep-login.css}"/>
+    <link rel="stylesheet" href="/public/css/customer-my-page.css" th:href="@{/css/customer-my-page.css}"/>
+    <link rel="stylesheet" href="/public/css/header.css" th:href="@{/css/header.css}"/>
 </head>
 
+<header>
+    <div class="carport-maker-progress">
+        <h1 class="progress-steps" id="progress-step-1" th:href="@{/}">FOG</h1>
+        <a class="progress-steps" id="progress-step-2" th:href="@{/}">Lav carport</a>
+        <a class="progress-steps" id="progress-step-3" th:href="@{/customerProfilePage}">Min side</a>
+        <a class="progress-steps" id="progress-step-4" th:href="@{/customerLogin}">Log ud</a>
+
+    </div>
+</header>
 
 
 <body>

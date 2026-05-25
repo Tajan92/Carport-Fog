@@ -11,10 +11,10 @@ public class CustomerController {
         app.get("/customerLogin", ctx -> ctx.render("customer-login.html"));
 //        app.post("/login", ctx -> customerLogin(ctx, serviceFactory));
 //
-//        app.get("/profilPage", ctx -> ctx.render("profil-page.html"));
+        app.get("/customerProfilePage", ctx -> ctx.render("customer-my-page.html"));
 //        app.get("/getCustomerById", ctx -> getCustomerById(ctx, serviceFactory));
 //        app.get("/getAllCustomers", ctx -> getAllCustomers(ctx, serviceFactory));
     }
 
 
-    }
+}
