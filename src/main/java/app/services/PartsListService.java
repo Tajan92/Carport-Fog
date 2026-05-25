@@ -51,10 +51,10 @@ public class PartsListService {
         }else {
             shed = null;
         }
-
+        int partsListId = createPartsListId();
         List<ProductsPartsListEntry> allEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
         for (ProductsPartsListEntry entry : allEntries) {
-            partsListMapper.createProductPartsList(entry.getProduct().getProductId(), carport.getPartsListId(), entry.getQuantity());
+            partsListMapper.createProductPartsList(entry.getProduct().getProductId(), partsListId, entry.getQuantity());
         }
         return allEntries;
     }
