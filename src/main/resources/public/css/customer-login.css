@@ -19,6 +19,7 @@ body {
     justify-self: center;
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
     width: clamp(20rem, 45vw, 32rem);
+    animation: fadeIn 1s ease;
 }
 
 .logo {
@@ -29,6 +30,7 @@ body {
     margin-bottom: 20px;
     letter-spacing: 2px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+
 }
 
 .welcome-message {
@@ -39,12 +41,14 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
+
 }
 
 #login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 #register-form {

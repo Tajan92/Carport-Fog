@@ -9,6 +9,8 @@
     justify-content: center;
     justify-self: center;
     max-height: 90vh;
+    animation: fadeIn 1s ease;
+
 }
 
 .logo {
@@ -108,12 +110,13 @@
 }
 
 .register-button {
-    border-radius: clamp(0.5rem, 1.5vw, 1.085rem);
-    background: linear-gradient(135deg, #013d7a, #0a5298);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
     width: 50%;
     justify-self: center;
     height: clamp(2.2rem, 5vw, 3rem);
-    border: none;
     color: #FFF;
     font-family: Inter;
     font-size: clamp(0.9rem, 2vw, 1.2rem);

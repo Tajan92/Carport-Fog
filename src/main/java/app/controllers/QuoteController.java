@@ -104,7 +104,7 @@ public class QuoteController {
         }
 
         ctx.attribute("selected_quote", quoteResponseDTO);
-        ctx.render("admin-quote-details.html");
+        ctx.render("admin-customer-quote-details.html");
     }
 
     public void getAllQuotesCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {

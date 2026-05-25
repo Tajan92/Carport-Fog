@@ -22,6 +22,8 @@ body {
     height: 70vh;
     width: 70vw;
     margin-bottom: auto;
+    animation: fadeIn 1s ease;
+
 }
 
 /* Title becomes white to show on dark glass */
