@@ -6,11 +6,11 @@ import java.util.List;
 
 public class PriceService {
 
-    public double getCostPrice(List<ProductsPartsListEntry> allEntries){
+    public double getTotalCostPrice(List<ProductsPartsListEntry> allEntries){
         return PriceCalculator.calculateInquiryCostPrice(allEntries);
     }
 
-    public double getRetailPrice(List<ProductsPartsListEntry> allEntries){
+    public double getTotalRetailPrice(List<ProductsPartsListEntry> allEntries){
         return PriceCalculator.calculateInquiryRetailPrice(allEntries);
     }
 

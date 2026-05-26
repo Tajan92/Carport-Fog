@@ -14,7 +14,7 @@ public class ProductMapperTest extends MapperTest{
     void getProductByIdTest() throws DatabaseException {
         ProductMapper productMapper = new ProductMapper();
 
-        Product expectedProduct = new Product(1,48,75,6,"stk","Træ","Stolpe 97x97 mm trykimp");
+        Product expectedProduct = new Product(1,48,75,6.0,"stk","Træ","Stolpe 97x97 mm trykimp");
         Product actualProduct = productMapper.getProductById(1);
 
         assertEquals(expectedProduct.getProductId(), actualProduct.getProductId());

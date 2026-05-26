@@ -48,8 +48,8 @@ public class QuoteController {
 
         //Load default prices for the carport request
         double discount = 0;
-        double costPrice = serviceFactory.getPriceService().getCostPrice(allEntries);
-        double retailPrice = serviceFactory.getPriceService().getRetailPrice(allEntries);
+        double costPrice = serviceFactory.getPriceService().getTotalCostPrice(allEntries);
+        double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(allEntries);
         double serviceFee = serviceFactory.getPriceService().getServiceFee(allEntries);
         double revenue = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
         double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
@@ -78,7 +78,7 @@ public class QuoteController {
         //Calculate prices again for added security
         CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
         List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
-        double retailPrice = serviceFactory.getPriceService().getRetailPrice(entries);
+        double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
         double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
         double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
 
