@@ -29,7 +29,7 @@
     color: #2783e1;
 }
 
-#progress-step-1{
+#progress-step-1, #progress-step-5{
     justify-self: left;
     margin-right: auto;
     margin-left: 25px;

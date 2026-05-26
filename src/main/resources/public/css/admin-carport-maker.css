@@ -1,0 +1,283 @@
+.custom-carport-maker-main-grid {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    width: 100%;
+    height: 100%;
+}
+
+.stage-picker {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s ease;
+}
+
+.stage-picker-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+}
+
+.maker-categories {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+.maker-categories:hover {
+    transform: translateY(-3px);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.stage-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    width: 100%;
+    margin-left: 0;
+    animation: fadeIn 1s ease;
+}
+
+
+/*===== ROOF BOXES =====*/
+
+.roof-picker-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+}
+
+.roof-boxes {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    animation: fadeIn 1s ease;
+
+}
+
+.roof-boxes:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border:  solid #2783e1;
+}
+
+
+.flat-roof-svg, .tilted-roof-svg {
+    height: 150px;
+    width: 150px;
+}
+
+.svg-color{
+    fill: white;
+}
+
+/*===== SHED BOXES =====*/
+
+.shed-picker-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+}
+
+.shed-boxes {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    animation: fadeIn 1s ease;
+}
+
+.no-shed-text-button{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-shed-text-button:hover{
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border:  solid #2783e1;
+}
+
+#no-shed-text-description{
+    color: white;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 100%;
+    text-align:center;
+    font-size: clamp(0.8rem, 2vw, 1.35625rem);
+}
+
+.shed-boxes:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border:  solid #2783e1;
+}
+
+
+.half-shed-svg, .full-shed-svg {
+    height: 150px;
+    width: 150px;
+}
+
+.svg-color{
+    fill: white;
+}
+
+
+/*===== CARPORT MEASUREMENTS INPUTS =====*/
+.carport-measurement-box {
+    border-radius: 8px;
+    border: 1.5px solid #c5d5e8;
+    background: #f4f8fd;
+    width: 25vw;
+    height: clamp(2rem, 4vw, 2.5rem);
+    padding: 0 12px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.carport-measurement-box:focus {
+    border-color: #5fa8f3;
+    box-shadow: 0 0 0 3px rgba(1, 61, 122, 0.12);
+    background: white;
+}
+
+.carport-measurement-input-description {
+    color: white;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    text-align: left;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.carport-measurement-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+    height: 60vh;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    align-items: end;
+    animation: fadeIn 1s ease;
+
+}
+.continue {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    width: 50%;
+    justify-self: center;
+    height: clamp(2.2rem, 5vw, 3rem);
+    color: #FFF;
+    font-family: Inter;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 500;
+    margin-top: 12px;
+    grid-column: 1 / -1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.continue:hover {
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
+    transform: translateY(-3px);
+}
+/*===== CARPORT MATERIALS INPUTS =====*/
+
+
+
+
+
+
+
+/*=====   ACTIVE CLASSES =====*/
+.hidden {
+    display: none;
+}
+
+.chosen-category{
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

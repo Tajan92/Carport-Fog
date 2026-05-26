@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments :: customerHead('Customer carport maker')}"></head>
-
+<head th:replace="~{fragments :: adminHead('Customer carport maker')}"></head>
 
 <body>
-<div th:replace="~{fragments :: customerHeader('customer header')}"></div>
-
+<div th:replace="~{fragments :: adminHeader ('admin header')}"></div>
 
 <div class="custom-carport-maker-main-grid">
     <div class="stage-picker">
@@ -15,7 +13,6 @@
             <a class="maker-categories" id="measurements-button">Indtast mål</a>
             <a class="maker-categories">Indtast mål</a>
             <a class="maker-categories">Send forespørgelse</a>
-            <a class="maker-categories" th:href="@{/carportMakerSalesRep}" >Admin side</a>
         </div>
     </div>
     <div class="stage-display">
