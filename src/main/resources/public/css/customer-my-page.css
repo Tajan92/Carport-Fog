@@ -151,3 +151,53 @@ body {
     background: rgba(255, 255, 255, 0.25);
     border-radius: 10px;
 }
+
+
+.my-page-inquiry-results{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    padding: 20px;
+    width: 90%;
+    height: 100%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+
+.my-page-quote-results{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    padding: 20px;
+    width: 90%;
+    height: 100%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+
+.my-page-order-results{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    padding: 20px;
+    width: 90%;
+    height: 100%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
+}

@@ -19,6 +19,8 @@ public class InquiryController {
         app.post("/getInquiry/{inquiry_id}", ctx -> getInquiry(ctx, serviceFactory));
         app.post("/getAllInquiries", ctx -> getAllInquiries(ctx, serviceFactory));
         app.post("/deleteInquiry", ctx -> deleteInquiry(ctx, serviceFactory));
+        app.get("/getInquiryCustomer", ctx -> ctx.render("customer-inquiry-details")); /* Test route af AJ*/
+
     }
 
     public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
