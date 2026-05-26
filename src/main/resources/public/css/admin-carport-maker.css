@@ -56,6 +56,55 @@
     animation: fadeIn 1s ease;
 }
 
+/*===== CHOOSE CUSTOMER INPUT =====*/
+.customer-receive-form{
+    display: flex;
+    gap: 4px 12px;
+    height: 40vh;
+    width: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    align-items: center;
+    animation: fadeIn 1s ease;
+    justify-content: center;
+}
+
+.customer-receive-input-description{
+    color: white;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: clamp(0.7rem, 1.5vw, 2rem);
+    text-align: left;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.customer-receive-input-box{
+    border-radius: 8px;
+    border: 1.5px solid #c5d5e8;
+    background: #f4f8fd;
+    width: 25vw;
+    height: clamp(2rem, 4vw, 5rem);
+    padding: 0 12px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.customer-receive-input-box:focus{
+    border-color: #5fa8f3;
+    box-shadow: 0 0 0 3px rgba(1, 61, 122, 0.12);
+    background: white;
+}
+
+
+
+
+
 
 /*===== ROOF BOXES =====*/
 
@@ -228,7 +277,6 @@
     border-radius: 15px;
     align-items: end;
     animation: fadeIn 1s ease;
-
 }
 .continue {
     background: rgba(255, 255, 255, 0.1);

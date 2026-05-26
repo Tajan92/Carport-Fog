@@ -1,12 +1,30 @@
+const customerBtn = document.querySelector("#choose-customer-button");
 const roofBtn = document.querySelector("#roof-button");
 const shedBtn = document.querySelector("#shed-button");
 const measurementsBtn = document.querySelector("#measurements-button");
 
 
-
 const roofBoxes = document.querySelector(".roof-picker-boxes");
 const carportMeasurements = document.querySelector(".carport-measurement-form");
 const shedBoxes = document.querySelector(".shed-picker-boxes");
+const customer = document.querySelector(".customer-receive-form");
+
+
+
+
+customerBtn.addEventListener("click", () => {
+    customerBtn.classList.add("chosen-category")
+
+    carportMeasurements.classList.add("hidden")
+    shedBoxes.classList.add("hidden")
+    roofBoxes.classList.add("hidden")
+    roofBtn.classList.remove("chosen-category")
+    measurementsBtn.classList.remove("chosen-category")
+    shedBtn.classList.remove("chosen-category")
+
+    customer.classList.remove("hidden")
+    console.log("clicking on customerBTN")
+})
 
 
 roofBtn.addEventListener("click", () => {
@@ -14,8 +32,10 @@ roofBtn.addEventListener("click", () => {
 
     carportMeasurements.classList.add("hidden")
     shedBoxes.classList.add("hidden")
+    customer.classList.add("hidden")
     measurementsBtn.classList.remove("chosen-category")
     shedBtn.classList.remove("chosen-category")
+    customerBtn.classList.remove("chosen-category")
 
     roofBoxes.classList.remove("hidden")
 })
@@ -25,8 +45,10 @@ shedBtn.addEventListener("click", () => {
 
     carportMeasurements.classList.add("hidden")
     roofBoxes.classList.add("hidden")
+    customer.classList.add("hidden")
     measurementsBtn.classList.remove("chosen-category")
     roofBtn.classList.remove("chosen-category")
+    customerBtn.classList.remove("chosen-category")
 
     shedBoxes.classList.remove("hidden")
 
@@ -37,12 +59,12 @@ measurementsBtn.addEventListener("click", () => {
 
     roofBoxes.classList.add("hidden")
     shedBoxes.classList.add("hidden")
+    customer.classList.add("hidden")
     roofBtn.classList.remove("chosen-category")
     shedBtn.classList.remove("chosen-category")
+    customerBtn.classList.remove("chosen-category")
 
     carportMeasurements.classList.remove("hidden")
-
-
 })
 
 
