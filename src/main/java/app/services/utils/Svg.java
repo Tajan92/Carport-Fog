@@ -11,7 +11,10 @@ public class Svg {
             "        </marker>\n" +
             "    </defs>";
 
-    private final static String SVG_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\"\n" +
+    private final static String SVG_GROUP_START_TEMPLATE = "<g transform=\"translate(%f,%f)\">";
+    private final static String SVG_GROUP_END = "</g>";
+
+    private final static String SVG_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" height=\"%f\" width=\"%f\"\n" +
             "              style=\"stroke:#000000; fill: %s\"/>";
 
     private final static String SVG_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke: #000000;\" />";
@@ -37,7 +40,7 @@ public class Svg {
     }
 
     public void addRectangle(double x, double y, double height, double width, String fillColor) {
-        svg.append(String.format(SVG_RECT_TEMPLATE, x, y, width, height, fillColor));
+        svg.append(String.format(SVG_RECT_TEMPLATE, x, y, height, width, fillColor));
     }
 
     public void addLine(double x1, double y1, double x2, double y2) {
@@ -64,8 +67,12 @@ public class Svg {
         svg.append(String.format(SVG_TEXT_TEMPLATE, x, y, rotation, text));
     }
 
-    public void addSvg(Svg innerSvg) {
-        svg.append(innerSvg.toString());
+    public void startGroup(double x, double y) {
+        svg.append(String.format(SVG_GROUP_START_TEMPLATE, x, y));
+    }
+
+    public void endGroup() {
+        svg.append(SVG_GROUP_END);
     }
 
     @Override
