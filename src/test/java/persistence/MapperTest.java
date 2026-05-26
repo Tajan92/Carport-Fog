@@ -156,12 +156,14 @@ public abstract class MapperTest {
                 statement.execute("INSERT INTO test.roofs (roof_slope, roof_material, roof_type) VALUES " +
                         "(15, 'Betontagsten - sort', 'Højt tag')," +
                         "(20, 'Betontagsten - sort', 'Højt tag')," +
-                        "(25, 'Bitumentagpap', 'Højt tag')," +
-                        "(15, 'Stålprofil', 'Fladt tag')");
+                        "(25, 'Eternittag B6 - sortblå', 'Højt tag')," +
+                        "(15, 'Eternittag B6 - sortblå', 'Højt tag')," +
+                        "(20, 'Betontagsten - sort', 'Højt tag')," +
+                        "(15, 'Plastmo Ecolite blåtonet', 'Fladt tag')");
 
                 // addons
                 statement.execute("INSERT INTO test.addons (shed_id, roof_id) VALUES " +
-                        "(1, 1),(2, NULL),(NULL, 2),(3, 3),(4, NULL),(NULL, 4)");
+                        "(1, 1),(2, 2),(NULL, 3),(3, 4),(4, 5),(NULL, 6)");
 
                 // parts_lists
                 statement.execute("INSERT INTO test.parts_lists DEFAULT VALUES");
@@ -266,7 +268,7 @@ public abstract class MapperTest {
 
                 // orders
                 statement.execute("INSERT INTO test.orders (customer_id, sales_rep_id, carport_id, order_price) VALUES " +
-                        "(1, 1, 1, 23500.00),(2, 1, 2, 28999.00),(4, 4, 4, 19999.00),(5, 1, 5, 26999.00)");
+                        "(1, 1, 1, 23500.00),(2, 1, 2, 28999.00),(4, 4, 4, 19999.00),(5, 1, 5, 26999.00),(1, 1, 3, 22000.00),(1, 2, 6, 18299.00)");
 
 
                 statement.execute("SELECT setval('test.customers_customer_id_seq', COALESCE((SELECT MAX(customer_id) + 1 FROM test.customers), 1), false)");

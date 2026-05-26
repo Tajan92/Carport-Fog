@@ -14,7 +14,7 @@ public class InquiryResponseDTO {
     private double costPrice;
     private double retailPrice;
     private double serviceFee;
-    private CarportResponseDTO CarportRespondDto;
+    private CarportResponseDTO CarportResponseDTO;
     private CustomerResponseDTO customerResponseDTO;
 
     public InquiryResponseDTO(String remark, int inquiryId) {
@@ -22,10 +22,10 @@ public class InquiryResponseDTO {
         this.inquiryId = inquiryId;
     }
 
-    public InquiryResponseDTO(int inquiryId, String remark, CarportResponseDTO carportRespondDto, CustomerResponseDTO customerResponseDTO) {
+    public InquiryResponseDTO(int inquiryId, String remark, CarportResponseDTO carportResponseDTO, CustomerResponseDTO customerResponseDTO) {
         this.inquiryId = inquiryId;
         this.remark = remark;
-        CarportRespondDto = carportRespondDto;
+        CarportResponseDTO = carportResponseDTO;
         this.customerResponseDTO = customerResponseDTO;
     }
 }

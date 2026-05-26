@@ -73,7 +73,7 @@ public class InquiryService {
 
         /* Set the new DTO´s */
         inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);
-        inquiryResponseDTO.setCarportRespondDto(carportResponseDTO);
+        inquiryResponseDTO.setCarportResponseDTO(carportResponseDTO);
 
         return inquiryResponseDTO;
     }

@@ -23,7 +23,7 @@ public class PartsListService {
     private CarportConverter carportConverter;
     private ShedConverter shedConverter;
     private RoofConverter roofConverter;
-    PartsListConverter partsListConverter;
+    PartsListConverter partsListConverter = new PartsListConverter();
     PartsListCalculator partsListCalculator = new PartsListCalculator();
 
     public PartsListService (PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper){

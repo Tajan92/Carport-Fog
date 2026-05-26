@@ -78,10 +78,8 @@ public class CarportMapper {
 
     public Carport getCarportById(int carportId) throws DatabaseException {
 
-        String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, s.shed_id, r.roof_id  from carports c\n" +
-                "left join addons using (addon_id)\n" +
-                "left join sheds s using (shed_id)\n" +
-                "left join roofs r using (roof_id)\n" +
+        String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, a.shed_id, a.roof_id  from carports c\n" +
+                "left join addons a using (addon_id)\n" +
                 "where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();

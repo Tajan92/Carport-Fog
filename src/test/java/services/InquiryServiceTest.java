@@ -39,12 +39,12 @@ public class InquiryServiceTest extends MapperTest {
 
         //Verify that the attatched DTO's are on the response
         assertNotNull(response.getCustomerResponseDTO());
-        assertNotNull(response.getCarportRespondDto());
+        assertNotNull(response.getCarportResponseDTO());
 
         //Check if the information matches
         assertEquals(existingInquiryId, response.getInquiryId());
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
-        assertEquals(existingCarportId, response.getCarportRespondDto().getCarportId());
+        assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingRemark, response.getRemark());
     }
 

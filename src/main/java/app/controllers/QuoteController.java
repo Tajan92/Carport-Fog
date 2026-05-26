@@ -30,7 +30,7 @@ public class QuoteController {
     public void loadCreateQuotePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
-        CarportResponseDTO carportResponseDTO = serviceFactory.getCarportService().getCarport(inquiryResponseDTO.getCarportRespondDto().getCarportId());
+        CarportResponseDTO carportResponseDTO = serviceFactory.getCarportService().getCarport(inquiryResponseDTO.getCarportResponseDTO().getCarportId());
 
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", carportResponseDTO);
