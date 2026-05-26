@@ -51,10 +51,16 @@
 
 
 
-<div th:fragment="scripts">
-    <script th:src="@{/javascript/header-states.js}"></script>
-    <script th:src="@{/javascript/custom-carport-maker.js}"></script>
+<div th:fragment="customerScripts">
+    <script th:src="@{/javascript/customer-header-states.js}"></script>
+    <script th:src="@{/javascript/customer-carport-maker.js}"></script>
     <script th:src="@{/javascript/customer-my-page.js}"></script>
+</div>
+
+<div th:fragment="adminScripts">
+    <script th:src="@{/javascript/admin-header-states.js}"></script>
+    <script th:src="@{/javascript/admin-carport-maker.js}"></script>
+    <script th:src="@{/javascript/admin-my-page.js}"></script>
 </div>
 
 
