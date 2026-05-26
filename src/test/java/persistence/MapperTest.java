@@ -147,21 +147,23 @@ public abstract class MapperTest {
 
                 // sheds
                 statement.execute("INSERT INTO test.sheds (shed_width, shed_length, siding, floor) VALUES " +
-                        "(2.40, 3.00, 'Trykimp. bræddebeklædning', true)," +
-                        "(3.00, 3.00, 'Plastik panel', true)," +
-                        "(3.00, 5.00, 'Trykimp. bræddebeklædning', true)," +
-                        "(2.40, 2.40, 'Plastik panel', false)");
+                        "(240, 300, 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)', true)," +
+                        "(300, 300, 'Beklædning: 19x100 mm. trykimp. Brædt', true)," +
+                        "(300, 500, 'Beklædning: 19x125mm Klinkbeklædning trykimp.', true)," +
+                        "(240, 240, 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)', false)");
 
                 // roofs
                 statement.execute("INSERT INTO test.roofs (roof_slope, roof_material, roof_type) VALUES " +
-                        "(15, 'Betontagsten', 'Rejsning')," +
-                        "(20, 'Betontagsten', 'Rejsning')," +
-                        "(25, 'Bitumentagpap', 'Rejsning')," +
-                        "(15, 'Stålprofil', 'Fladt')");
+                        "(15, 'Betontagsten - sort', 'Højt tag')," +
+                        "(20, 'Betontagsten - sort', 'Højt tag')," +
+                        "(25, 'Eternittag B6 - sortblå', 'Højt tag')," +
+                        "(15, 'Eternittag B6 - sortblå', 'Højt tag')," +
+                        "(20, 'Betontagsten - sort', 'Højt tag')," +
+                        "(15, 'Plastmo Ecolite blåtonet', 'Fladt tag')");
 
                 // addons
                 statement.execute("INSERT INTO test.addons (shed_id, roof_id) VALUES " +
-                        "(1, 1),(2, NULL),(NULL, 2),(3, 3),(4, NULL),(NULL, 4)");
+                        "(1, 1),(2, 2),(NULL, 3),(3, 4),(4, 5),(NULL, 6)");
 
                 // parts_lists
                 statement.execute("INSERT INTO test.parts_lists DEFAULT VALUES");
@@ -173,27 +175,67 @@ public abstract class MapperTest {
 
                 // carports
                 statement.execute("INSERT INTO test.carports (carport_width, carport_height, carport_length, addon_id, price, parts_list_id) VALUES " +
-                        "(3.00, 2.08, 5.00, 1, 24999.00, 1)," +
-                        "(3.00, 2.08, 7.80, 2, 28999.00, 2)," +
-                        "(4.50, 2.30, 7.80, 3, 32999.00, 3)," +
-                        "(6.00, 2.30, 7.80, 4, 19999.00, 4)," +
-                        "(3.00, 2.08, 5.00, 5, 26999.00, 5)," +
-                        "(4.50, 2.30, 5.00, 6, 21999.00, 6)");
+                        "(300, 208, 500, 1, 24999.00, 1)," +
+                        "(300, 208, 780, 2, 28999.00, 2)," +
+                        "(450, 230, 780, 3, 32999.00, 3)," +
+                        "(600, 230, 780, 4, 19999.00, 4)," +
+                        "(300, 208, 500, 5, 26999.00, 5)," +
+                        "(450, 230, 500, 6, 21999.00, 6)");
 
                 // products
-                statement.execute("INSERT INTO test.products (cost_price, retail_price, length, unit, product_group, description) VALUES " +
-                        "(48.00, 75.00, 6.00, 'stk', 'Træ', 'Stolpe 97x97 mm trykimp.')," +
-                        "(120.00, 185.00, 6.00, 'stk', 'Træ', 'Spær 45x195 mm spærtræ')," +
-                        "(95.00, 149.00, 6.00, 'stk', 'Træ', 'Rem 45x195 mm spærtræ')," +
-                        "(35.00, 55.00, 3.00, 'stk', 'Træ', 'Stern bræt 25x200 mm')," +
-                        "(12.00, 19.00, NULL, 'rulle', 'Beslag', 'Hulbånd 1x20 mm')," +
-                        "(89.00, 139.00, 6.00, 'stk', 'Tag', 'Plastmo Ecolite tagplade blåtonet')," +
-                        "(5.50, 8.50, NULL, 'stk', 'Beslag', 'Universalbeslag højre')," +
-                        "(5.50, 8.50, NULL, 'stk', 'Beslag', 'Universalbeslag venstre')," +
-                        "(2.50, 4.00, NULL, 'stk', 'Skruer', 'Skruer 4,5x60 mm')," +
-                        "(3.00, 4.75, NULL, 'stk', 'Skruer', 'Skruer 4,5x50 mm')," +
-                        "(45.00, 72.00, 3.00, 'stk', 'Træ', 'Vandbrædt 19x100 mm')," +
-                        "(28.00, 44.00, 2.40, 'stk', 'Træ', 'Bræddebeklædning 22x100 mm trykimp.')");
+                statement.execute("INSERT INTO test.products (product_id, cost_price, retail_price, length, unit, product_group, description) VALUES " +
+                        "(1, 95.00, 145.00, 360.00, 'Stk', 'Træ & Tagplader', '25x200 mm. trykimp. Brædt (Sternbræt)')," +
+                        "(2, 140.00, 215.00, 540.00, 'Stk', 'Træ & Tagplader', '25x200 mm. trykimp. Brædt (Sternbræt)')," +
+                        "(3, 60.00, 95.00, 360.00, 'Stk', 'Træ & Tagplader', '25x125mm. trykimp. Brædt')," +
+                        "(4, 92.00, 142.00, 540.00, 'Stk', 'Træ & Tagplader', '25x125mm. trykimp. Brædt')," +
+                        "(5, 40.00, 65.00, 420.00, 'Stk', 'Træ & Tagplader', '38x73 mm. Lægte ubh. (Lægte til dør)')," +
+                        "(6, 45.00, 72.00, 270.00, 'Stk', 'Træ & Tagplader', '45x95 mm. Reglar ub.')," +
+                        "(7, 40.00, 64.00, 240.00, 'Stk', 'Træ & Tagplader', '45x95 mm. Reglar ub.')," +
+                        "(8, 125.00, 195.00, 300.00, 'Stk', 'Træ & Tagplader', '97x97 mm. trykimp. Stolpe')," +
+                        "(9, 20.00, 32.00, 210.00, 'Stk', 'Træ & Tagplader', '19x100 mm. trykimp. Brædt')," +
+                        "(10, 52.00, 82.00, 540.00, 'Stk', 'Træ & Tagplader', '19x100 mm. trykimp. Brædt')," +
+                        "(11, 35.00, 55.00, 360.00, 'Stk', 'Træ & Tagplader', '19x100 mm. trykimp. Brædt')," +
+                        "(12, 100.00, 155.00, 240.00, 'Stk', 'Træ & Tagplader', '45x195 mm. spærtræ ubh.')," +
+                        "(13, 170.00, 260.00, 400.00, 'Stk', 'Træ & Tagplader', '45x195 mm. spærtræ ubh.')," +
+                        "(14, 230.00, 355.00, 550.00, 'Stk', 'Træ & Tagplader', '45x195 mm. spærtræ ubh.')," +
+                        "(15, 320.00, 495.00, 720.00, 'Stk', 'Træ & Tagplader', '45x195 mm. spærtræ ubh.')," +
+                        "(16, 120.00, 185.00, 240.00, 'Stk', 'Træ & Tagplader', '45x220 mm. spærtræ ubh.')," +
+                        "(17, 200.00, 310.00, 400.00, 'Stk', 'Træ & Tagplader', '45x220 mm. spærtræ ubh.')," +
+                        "(18, 275.00, 425.00, 550.00, 'Stk', 'Træ & Tagplader', '45x220 mm. spærtræ ubh.')," +
+                        "(19, 380.00, 590.00, 720.00, 'Stk', 'Træ & Tagplader', '45x220 mm. spærtræ ubh.')," +
+                        "(20, 150.00, 230.00, 240.00, 'Stk', 'Træ & Tagplader', '45x245 mm. spærtræ ubh.')," +
+                        "(21, 245.00, 380.00, 400.00, 'Stk', 'Træ & Tagplader', '45x245 mm. spærtræ ubh.')," +
+                        "(22, 340.00, 525.00, 550.00, 'Stk', 'Træ & Tagplader', '45x245 mm. spærtræ ubh.')," +
+                        "(23, 465.00, 720.00, 720.00, 'Stk', 'Træ & Tagplader', '45x245 mm. spærtræ ubh.')," +
+                        "(24, 95.00, 149.00, 360.00, 'Stk', 'Træ & Tagplader', 'Plastmo Ecolite blåtonet')," +
+                        "(25, 160.00, 249.00, 600.00, 'Stk', 'Træ & Tagplader', 'Plastmo Ecolite blåtonet')," +
+                        "(26, 9.00, 14.50, 42.00, 'Stk', 'Træ & Tagplader', 'Betontagsten - koralrød')," +
+                        "(27, 8.50, 13.50, 42.00, 'Stk', 'Træ & Tagplader', 'Betontagsten - sort')," +
+                        "(28, 78.00, 119.00, 118.00, 'Stk', 'Træ & Tagplader', 'Eternittag B6 - grå')," +
+                        "(29, 84.00, 129.00, 118.00, 'Stk', 'Træ & Tagplader', 'Eternittag B6 - sortblå')," +
+                        "(30, 88.00, 135.00, 118.00, 'Stk', 'Træ & Tagplader', 'Eternittag B7 - sortblå')," +
+                        "(31, 58.00, 89.00, 420.00, 'Stk', 'Træ & Tagplader', 'Beklædning: 19x125mm Klinkbeklædning trykimp.')," +
+                        "(32, 95.00, 145.00, 420.00, 'Stk', 'Træ & Tagplader', 'Beklædning: 25x150mm Blokhusbrædder ubehandlet')," +
+                        "(33, 38.00, 58.00, 360.00, 'Stk', 'Træ & Tagplader', 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)')," +
+                        "(34, 220.00, 349.00, 244.00, 'Stk', 'Træ & Tagplader', 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)')," +
+                        "(35, 190.00, 289.00, NULL, 'pakke', 'Beslag & Skruer', 'plastmo bundskruer 200 stk.')," +
+                        "(36, 85.00, 135.00, 1000.00, 'Rulle', 'Beslag & Skruer', 'hulbånd 1x20 mm. 10 mtr.')," +
+                        "(37, 8.00, 14.50, 19.00, 'Stk', 'Beslag & Skruer', 'universal 190 mm højre')," +
+                        "(38, 8.00, 14.50, 19.00, 'Stk', 'Beslag & Skruer', 'universal 190 mm venstre')," +
+                        "(39, 60.00, 99.00, NULL, 'Pakke', 'Beslag & Skruer', '4,5 x 60 mm. skruer 200 stk.')," +
+                        "(40, 75.00, 125.00, NULL, 'pakke', 'Beslag & Skruer', '4,0 x 50 mm. beslagskruer 250 stk.')," +
+                        "(41, 4.50, 8.50, 12.00, 'Stk', 'Beslag & Skruer', 'bræddebolt 10 x 120 mm.')," +
+                        "(42, 3.00, 6.00, NULL, 'Stk', 'Beslag & Skruer', 'firkantskiver 40x40x11mm')," +
+                        "(43, 115.00, 189.00, NULL, 'pk.', 'Beslag & Skruer', '4,5 x 70 mm. Skruer 400 stk.')," +
+                        "(44, 85.00, 139.00, NULL, 'pk.', 'Beslag & Skruer', '4,5 x 50 mm. Skruer 300 stk.')," +
+                        "(45, 105.00, 165.00, NULL, 'Sæt', 'Beslag & Skruer', 'stalddørsgreb 50x75')," +
+                        "(46, 48.00, 79.00, 39.00, 'Stk', 'Beslag & Skruer', 't hængsel 390 mm')," +
+                        "(47, 2.20, 4.50, NULL, 'Stk', 'Beslag & Skruer', 'vinkelbeslag 35')," +
+                        "(48, 180.00, 260.00, 240.00, 'Stk', 'Træ & Tagplader', '45x295 mm. spærtræ ubh.')," +
+                        "(49, 275.00, 410.00, 400.00, 'Stk', 'Træ & Tagplader', '45x295 mm. spærtræ ubh.')," +
+                        "(50, 370.00, 555.00, 550.00, 'Stk', 'Træ & Tagplader', '45x295 mm. spærtræ ubh.')," +
+                        "(51, 495.00, 750.00, 720.00, 'Stk', 'Træ & Tagplader', '45x295 mm. spærtræ ubh.')," +
+                        "(52, 20.00, 32.00, 210.00, 'Stk', 'Træ & Tagplader', 'Beklædning: 19x100 mm. trykimp. Brædt')");
 
                 // products_parts_lists
                 statement.execute("INSERT INTO test.products_parts_lists (product_id, parts_list_id, quantity) VALUES " +
@@ -226,7 +268,7 @@ public abstract class MapperTest {
 
                 // orders
                 statement.execute("INSERT INTO test.orders (customer_id, sales_rep_id, carport_id, order_price) VALUES " +
-                        "(1, 1, 1, 23500.00),(2, 1, 2, 28999.00),(4, 4, 4, 19999.00),(5, 1, 5, 26999.00)");
+                        "(1, 1, 1, 23500.00),(2, 1, 2, 28999.00),(4, 4, 4, 19999.00),(5, 1, 5, 26999.00),(1, 1, 3, 22000.00),(1, 2, 6, 18299.00)");
 
 
                 statement.execute("SELECT setval('test.customers_customer_id_seq', COALESCE((SELECT MAX(customer_id) + 1 FROM test.customers), 1), false)");

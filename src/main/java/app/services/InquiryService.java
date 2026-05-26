@@ -25,8 +25,9 @@ public class InquiryService {
     private RoofMapper roofMapper;
     private ShedMapper shedMapper;
     private ProductMapper productMapper;
+    private UserService userService;
 
-    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper, ProductMapper productMapper) {
+    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper, ProductMapper productMapper, UserService userService) {
         this.inquiryMapper = inquiryMapper;
         this.inquiryConverter = new InquiryConverter();
         this.customerMapper = customerMapper;
@@ -36,6 +37,7 @@ public class InquiryService {
         this.roofMapper = roofMapper;
         this.shedMapper = shedMapper;
         this.productMapper = productMapper;
+        this.userService = userService;
     }
 
     public void createInquiry(InquiryRequestDTO inquiryRequestDTO) throws DatabaseException {
@@ -45,10 +47,14 @@ public class InquiryService {
 
     public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException, CalculatorException {
         Inquiry inquiry = inquiryMapper.getInquiryById(inquiryId);
-        InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
         PartsListCalculator partsListCalculator = new PartsListCalculator();
 
-        Carport carport = carportMapper.getCarportById(inquiryResponseDTO.getCarportRespondDto().getCarportId());
+
+        InquiryResponseDTO inquiryResponseDTO = inquiryConverter.convertInquiryToDto(inquiry);
+        CarportResponseDTO carportResponseDTO = carportService.getCarport(inquiry.getCarportId());
+        CustomerResponseDTO customerResponseDTO = userService.getCustomer(inquiry.getCustomerId());
+
+        Carport carport = carportMapper.getCarportById(inquiry.getInquiryId());
         Roof roof = roofMapper.getRoofById(carport.getRoofId());
         Shed shed = shedMapper.getShedById(carport.getShedId());
         List<Product> products = productMapper.getAllProducts();
@@ -65,12 +71,9 @@ public class InquiryService {
         /* Instantiate variables that cannot be instantiated in the converter */
         Customer customer = customerMapper.getCustomerById(inquiry.getCustomerId());
 
-        CustomerResponseDTO customerResponseDTO = userConverter.convertCustomerToDto(customer);
-        CarportResponseDTO carportResponseDTO = carportService.getCarport(inquiry.getCarportId());
-
         /* Set the new DTO´s */
         inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);
-        inquiryResponseDTO.setCarportRespondDto(carportResponseDTO);
+        inquiryResponseDTO.setCarportResponseDTO(carportResponseDTO);
 
         return inquiryResponseDTO;
     }

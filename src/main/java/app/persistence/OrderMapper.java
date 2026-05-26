@@ -106,6 +106,39 @@ public class OrderMapper {
         }
     }
 
+    public List<Order> getAllOrdersByCustomerId(int customerId) throws DatabaseException {
+        List<Order> orders = new ArrayList<>();
+        String sql = """
+                select o.order_id, o.customer_id, o.sales_rep_id, o.carport_id, o.order_price, pl.parts_list_id from orders o
+                left join customers using(customer_id)
+                left join sales_reps using(sales_rep_id)
+                left join carports using(carport_id)
+                left join parts_lists pl using (parts_list_id)
+                where customer_id = ?
+                """;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int orderId = resultSet.getInt("order_id");
+                int salesRepId = resultSet.getInt("sales_rep_id");
+                int carportId = resultSet.getInt("carport_id");
+                double orderPrice = resultSet.getDouble("order_price");
+                int partsListId = resultSet.getInt("parts_list_id");
+
+                orders.add(new Order(orderId, customerId, salesRepId, carportId, orderPrice, partsListId));
+            }
+            return orders;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente alle ordrer for bruger id:" + customerId;
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
     public void updateOrder(Order order) throws DatabaseException {
 
         String sql = "update orders set order_price = ? where order_id = ?";
