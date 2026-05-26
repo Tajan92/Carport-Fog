@@ -23,6 +23,7 @@ body {
     width: 70vw;
     margin-bottom: auto;
     animation: fadeIn 1s ease;
+    margin-top: auto;
 
 }
 
@@ -38,46 +39,9 @@ body {
 }
 
 
-.carport-maker-progress {
-    background: white;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    width: 100%;
-    height: auto;
-    min-height: 10%;
-    justify-content: right;
-    font-size: clamp(0.3rem, 2vw, 0.7rem);
-    align-items: center;
-    border-bottom: 2px solid #e0e8f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    margin-bottom: auto;
-}
 
-.progress-steps {
-    color: #013d7a;
-    font-family: "Playfair Display";
-    display: grid;
-    margin-right: 25px;
-    font-size: clamp(1rem, 2vw, 1.6rem);
-    text-decoration: none;
-    font-weight: bold;
 
-}
 
-.progress-steps:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-#progress-step-1 {
-    justify-self: left;
-    margin-right: auto;
-    margin-left: 25px;
-    font-size: clamp(1rem, 2vw, 1.6rem);
-    text-decoration: none;
-    font-weight: bold;
-}
 
 .order-header{
     display: grid;

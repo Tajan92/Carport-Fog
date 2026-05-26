@@ -32,6 +32,8 @@ body {
     margin-top: auto;
     margin-bottom: auto;
     align-self: center;
+    animation: fadeIn 1s ease;
+
 }
 
 /* White title */
