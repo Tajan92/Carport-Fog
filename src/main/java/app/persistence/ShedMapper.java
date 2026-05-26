@@ -132,9 +132,13 @@ public class ShedMapper {
         }
     }
 
-    public void deleteShed(int shedId) throws DatabaseException{
-        String sql = "delete from sheds where shed_id = ?";
-
+    public void deleteShed(Integer shedId) throws DatabaseException{
+        String sql;
+        if (shedId != null){
+            sql = "delete from sheds where shed_id = ?";
+        } else {
+            return;
+        }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 

@@ -70,6 +70,24 @@ public class OrderService {
         return responseDTOS;
     }
 
+    public List<OrderResponseDTO> getAllOrdersByCustomerId(int customerId) throws DatabaseException, CalculatorException {
+        List<Order> allOrders = orderMapper.getAllOrdersByCustomerId(customerId);
+        List<OrderResponseDTO> responseDTOS = new ArrayList<>();
+
+        for (Order order : allOrders) {
+            int orderId = order.getOrderId();
+            double orderPrice = order.getOrderPrice();
+            CarportResponseDTO carportResponseDTO = carportService.getCarport(order.getCarportId());
+            CustomerResponseDTO customerResponseDTO = userService.getCustomer(customerId);
+            SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(order.getSalesRepId());
+            PartsListResponseDTO partsListResponseDTO = partsListService.getPartsList(order.getCarportId());
+
+            responseDTOS.add(new OrderResponseDTO(orderId, orderPrice, customerResponseDTO, salesRepResponseDTO, carportResponseDTO, partsListResponseDTO));
+        }
+
+        return responseDTOS;
+    }
+
     public void updateOrder(OrderRequestDTO orderRequestDTO, int orderId) throws DatabaseException {
         Order order = orderConverter.convertOrderToEntity(orderRequestDTO);
         order.setOrderId(orderId);
