@@ -147,10 +147,10 @@ public abstract class MapperTest {
 
                 // sheds
                 statement.execute("INSERT INTO test.sheds (shed_width, shed_length, siding, floor) VALUES " +
-                        "(240, 300, 'Trykimp. bræddebeklædning', true)," +
-                        "(300, 300, 'Plastik panel', true)," +
-                        "(300, 500, 'Trykimp. bræddebeklædning', true)," +
-                        "(240, 240, 'Plastik panel', false)");
+                        "(240, 300, 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)', true)," +
+                        "(300, 300, 'Beklædning: 19x100 mm. trykimp. Brædt', true)," +
+                        "(300, 500, 'Beklædning: 19x125mm Klinkbeklædning trykimp.', true)," +
+                        "(240, 240, 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)', false)");
 
                 // roofs
                 statement.execute("INSERT INTO test.roofs (roof_slope, roof_material, roof_type) VALUES " +

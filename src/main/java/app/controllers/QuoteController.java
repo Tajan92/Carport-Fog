@@ -12,7 +12,6 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
 import java.util.List;
 
 public class QuoteController {
@@ -145,6 +144,6 @@ public class QuoteController {
         String shedSiding  = ctx.formParam("quote_shed_siding");
         boolean floor      = Boolean.parseBoolean(ctx.formParam("quote_floor"));
 
-        return serviceFactory.getShedService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
+        return serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
     }
 }

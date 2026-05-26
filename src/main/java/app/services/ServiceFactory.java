@@ -32,10 +32,10 @@ public class ServiceFactory {
 
         this.partsListService = new PartsListService(partsListMapper,shedMapper, roofMapper, productMapper, carportMapper);
         this.carportService = new CarportService(partsListService, partsListMapper, carportMapper, roofMapper, shedMapper);
-        this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper, carportMapper, roofMapper, shedMapper, productMapper);
+        this.userService = new UserService(loginMapper, customerMapper,salesRepMapper);
+        this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper, carportMapper, roofMapper, shedMapper, productMapper, userService);
         this.quoteService = new QuoteService(quoteMapper, carportService, customerMapper, salesRepMapper, carportMapper);
         this.orderService = new OrderService(orderMapper, carportService, userService, partsListService);
-        this.userService = new UserService(loginMapper, customerMapper,salesRepMapper);
         this.shedService = new ShedService(shedMapper);
         this.roofService = new RoofService(roofMapper);
         this.blueprintService = new BlueprintService();

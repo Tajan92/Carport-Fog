@@ -38,14 +38,4 @@ public class ShedService {
     public void deleteShed(int shedId) throws DatabaseException {
         shedMapper.deleteShed(shedId);
     }
-
-    public CarportRequestDTO checkShed(String width, String length, String siding, boolean floor, double carportWidth, double carportHeight, double carportLength, RoofRequestDTO roofRequestDTO) {
-
-        if (length == null || width == null || width.isBlank() || length.isBlank()) {
-            return new CarportNoShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO);
-        } else {
-            ShedRequestDTO shedRequestDTO = new ShedRequestDTO(Double.parseDouble(width), Double.parseDouble(length), siding, floor);
-            return new CarportShedRequestDTO(carportWidth, carportHeight, carportLength, roofRequestDTO, shedRequestDTO);
-        }
-    }
 }
