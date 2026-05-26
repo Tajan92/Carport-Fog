@@ -147,6 +147,7 @@ public class CarportServiceTest extends MapperTest {
 
     }
 
+    @Test
     public void convertCarportResponseToRequestWithShedTest() throws DatabaseException {
         //Dimensions from db
         double cpWidth = 300;
@@ -158,7 +159,7 @@ public class CarportServiceTest extends MapperTest {
         //Shed
         double sWidth = 240;
         double sLength = 300;
-        String sSiding = "Trykimp. bræddebeklædning";
+        String sSiding = "Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)";
         boolean sFloor = true;
 
         CarportResponseDTO actual = serviceFactory.getCarportService().getCarport(1);

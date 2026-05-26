@@ -1,6 +1,10 @@
 package services;
 import app.dto.requestDTO.OrderRequestDTO;
+import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.requestDTO.carports.CarportShedRequestDTO;
+import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -87,5 +91,47 @@ public class OrderServiceTest extends MapperTest {
         //Check if the first order has correct id = 1 and the size is 3
         assertEquals(1, firstOrder.getOrderId());
         assertEquals(amountOfOrdersByCustomer, orders.size());
+    }
+
+    @Test
+    public void updateOrderTest() throws DatabaseException, CalculatorException {
+        int existingOrderId = 1;
+        int existingCustomerId = 1;
+        int existingSalesRepId = 1;
+        int existingCarportId = 1;
+        double existingOrderPrice = 23500.00;
+        int existingPartsListId = 1;
+
+        OrderResponseDTO oldOrder = serviceFactory.getOrderService().getOrder(1);
+
+        //Confirm existing orders price
+        assertEquals(existingOrderPrice, oldOrder.getOrderPrice());
+
+        //Create order with a change in price
+        double newOrderPrice = 21999.00;
+        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(existingCustomerId, existingSalesRepId, existingCarportId, newOrderPrice, existingPartsListId);
+
+        serviceFactory.getOrderService().updateOrder(orderRequestDTO, existingOrderId);
+
+        //Get updated order from db
+        OrderResponseDTO newOrder = serviceFactory.getOrderService().getOrder(existingOrderId);
+
+        //Check the updated order has new price
+        assertEquals(newOrderPrice, newOrder.getOrderPrice());
+    }
+
+    @Test
+    public void deleteOrderTest() throws CalculatorException, DatabaseException {
+            int orderIdToDelete = 1;
+
+            OrderResponseDTO deletedOrder = serviceFactory.getOrderService().getOrder(orderIdToDelete);
+
+            //Confirm that the order to be deleted exists
+            assertNotNull(deletedOrder);
+
+            serviceFactory.getOrderService().deleteOrder(orderIdToDelete);
+
+            //Now it's deleted method should throw exception
+            assertThrows(Exception.class, () -> serviceFactory.getOrderService().getOrder(orderIdToDelete));
     }
 }
