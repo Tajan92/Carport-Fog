@@ -130,5 +130,25 @@ public class UserServiceTest extends MapperTest {
         assertEquals(expectedTown, response.getTown());
     }
 
+    @Test
+    public void getSalesRepTest() throws DatabaseException {
+        int expectedId = 1;
+        String expectedFName = "Thomas";
+        String expectedLName = "Møller";
+        String expectedEmail = "thomas@carport.dk";
+        String expectedPNumber = "11111111";
+        String expectedRole = "ADMIN";
+
+        SalesRepResponseDTO response = serviceFactory.getUserService().getSalesRep(expectedId);
+
+        //Now to check response for correct info
+        assertEquals(expectedId, response.getId());
+        assertEquals(expectedFName, response.getFirstName());
+        assertEquals(expectedLName, response.getLastName());
+        assertEquals(expectedEmail, response.getEmail());
+        assertEquals(expectedPNumber, response.getPhoneNumber());
+        assertEquals(expectedRole, response.getRole());
+    }
+
 
 }
