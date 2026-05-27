@@ -57,7 +57,7 @@
 }
 
 /*===== CHOOSE CUSTOMER INPUT =====*/
-.customer-receive-form{
+.customer-receive-form {
     display: flex;
     gap: 4px 12px;
     height: 40vh;
@@ -73,7 +73,7 @@
     justify-content: center;
 }
 
-.customer-receive-input-description{
+.customer-receive-input-description {
     color: white;
     font-family: Inter;
     font-weight: 500;
@@ -83,7 +83,7 @@
     width: 100%;
 }
 
-.customer-receive-input-box{
+.customer-receive-input-box {
     border-radius: 8px;
     border: 1.5px solid #c5d5e8;
     background: #f4f8fd;
@@ -95,15 +95,11 @@
     outline: none;
 }
 
-.customer-receive-input-box:focus{
+.customer-receive-input-box:focus {
     border-color: #5fa8f3;
     box-shadow: 0 0 0 3px rgba(1, 61, 122, 0.12);
     background: white;
 }
-
-
-
-
 
 
 /*===== ROOF BOXES =====*/
@@ -141,7 +137,7 @@
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
 
@@ -150,7 +146,7 @@
     width: 150px;
 }
 
-.svg-color{
+.svg-color {
     fill: white;
 }
 
@@ -184,7 +180,7 @@
     animation: fadeIn 1s ease;
 }
 
-.no-shed-text-button{
+.no-shed-text-button {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -198,21 +194,21 @@
     justify-content: center;
 }
 
-.no-shed-text-button:hover{
+.no-shed-text-button:hover {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
-#no-shed-text-description{
+#no-shed-text-description {
     color: white;
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     width: 100%;
-    text-align:center;
+    text-align: center;
     font-size: clamp(0.8rem, 2vw, 1.35625rem);
 }
 
@@ -220,7 +216,7 @@
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
 
@@ -229,7 +225,7 @@
     width: 150px;
 }
 
-.svg-color{
+.svg-color {
     fill: white;
 }
 
@@ -278,6 +274,7 @@
     align-items: end;
     animation: fadeIn 1s ease;
 }
+
 .continue {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
@@ -300,12 +297,8 @@
     box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
     transform: translateY(-3px);
 }
+
 /*===== CARPORT MATERIALS INPUTS =====*/
-
-
-
-
-
 
 
 /*=====   ACTIVE CLASSES =====*/
@@ -313,7 +306,7 @@
     display: none;
 }
 
-.chosen-category{
+.chosen-category {
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
@@ -327,5 +320,156 @@
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    .custom-carport-maker-main-grid {
+        grid-template-columns: 1fr;
+        width: 100vw;
+        max-width: 100vw;
+        overflow: hidden;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* ---- Stage picker → 2-column grid ---- */
+    .stage-picker {
+        height: auto;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .stage-picker-categories {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(6px, 2vw, 10px);
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .maker-categories {
+        font-size: clamp(0.75rem, 3.5vw, 1rem);
+        padding: clamp(8px, 2.5vw, 14px);
+        white-space: normal;
+        text-align: center;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+
+
+    /* ---- Stage display ---- */
+    .stage-display {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 8px;
+        box-sizing: border-box;
+        overflow: hidden;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    /* ---- Customer input form ---- */
+    .customer-receive-form {
+        width: calc(100vw - 16px);
+        max-width: calc(100vw - 16px);
+        height: auto;
+        min-height: 120px;
+        padding: clamp(12px, 4vw, 20px);
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .customer-receive-input-box {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        height: clamp(2rem, 8vw, 2.8rem);
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    .customer-receive-input-description {
+        font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    }
+
+    /* ---- Roof & shed boxes ---- */
+    .roof-picker-boxes,
+    .shed-picker-boxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: calc(100vw - 16px);
+        max-width: calc(100vw - 16px);
+        gap: 8px;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .roof-boxes,
+    .shed-boxes {
+        font-size: clamp(0.75rem, 3vw, 1.1rem);
+        padding: 8px;
+        aspect-ratio: 1 / 1;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .flat-roof-svg,
+    .tilted-roof-svg,
+    .half-shed-svg,
+    .full-shed-svg {
+        height: clamp(50px, 15vw, 90px);
+        width: clamp(50px, 15vw, 90px);
+    }
+
+    .no-shed-text-button {
+        padding: clamp(10px, 3vw, 18px);
+        box-sizing: border-box;
+    }
+
+    #no-shed-text-description {
+        font-size: clamp(0.75rem, 3vw, 1rem);
+    }
+
+    /* ---- Measurements form ---- */
+    .carport-measurement-form {
+        grid-template-columns: 1fr;
+        width: calc(100vw - 16px);
+        max-width: calc(100vw - 16px);
+        height: auto;
+        box-sizing: border-box;
+        padding: clamp(12px, 4vw, 20px);
+    }
+
+    .carport-measurement-box {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        height: clamp(2rem, 8vw, 2.8rem);
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    .carport-measurement-input-description {
+        font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    }
+
+    .continue {
+        width: 100%;
+        font-size: clamp(0.85rem, 3.5vw, 1.2rem);
+        height: clamp(2.2rem, 9vw, 3rem);
     }
 }
