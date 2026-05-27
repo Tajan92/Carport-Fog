@@ -53,6 +53,9 @@ body {
 
 .admin-return-button{
     align-self: flex-start;
+    height: clamp(3rem, 5vw, 5rem);
+    width: clamp(3rem, 5vw, 5rem);
+    margin-bottom: 20px;
 }
 
 .admin-return-svg{
