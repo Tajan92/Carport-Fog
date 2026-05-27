@@ -11,7 +11,6 @@ import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
 import app.services.utils.Svg;
-
 import java.util.List;
 
 public class BluePrintService {
@@ -34,8 +33,8 @@ public class BluePrintService {
         this.roofConverter = new RoofConverter();
         this.shedConverter = new ShedConverter();
         this.partsListCalculator = new PartsListCalculator();
-        sideView = new BlueprintSideView();
-        topView = new BluePrintTopView();
+        this.sideView = new BlueprintSideView();
+        this.topView = new BluePrintTopView();
     }
 
     public String createBlueprint(CarportRequestDTO carportRequestDTO) throws CalculatorException {
@@ -43,107 +42,111 @@ public class BluePrintService {
         this.roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
 
         if (carportRequestDTO instanceof CarportShedRequestDTO carportShedRequestDTO) {
-            shed = shedConverter.convertShedDTOtoEntity(carportShedRequestDTO.getShedRequestDTO());
+            this.shed = shedConverter.convertShedDTOtoEntity(carportShedRequestDTO.getShedRequestDTO());
         } else {
-            shed = null;
+            this.shed = null;
         }
 
         this.productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
 
-        svg = new Svg(0, 0, "1400", "1200",
-                "0 0 1100 1100", 1);
+        svg = new Svg(0, 0, "1400", "1200", "0 0 1100 1100", 1);
 
         // SIDE VIEW
-        svg.startGroup(80, 10);
+        svg.startGroup(BluePrintData.OFFSET_X, BluePrintData.OFFSET_Y_SIDE);
         sideView.addDrawing(svg, carport, shed, roof, productsPartsListEntries);
         svg.endGroup();
 
         // TOP VIEW
-        svg.startGroup(80, 580);
+        svg.startGroup(BluePrintData.OFFSET_X, BluePrintData.OFFSET_Y_TOP);
         topView.addDrawing(svg, carport, shed, roof, productsPartsListEntries);
         svg.endGroup();
 
-        // Measurements/arrows can be added here
+        // Arrows
         addMeasurements();
-
         return svg.toString();
     }
 
     private void addMeasurements() {
-
-        svg.addArrow(80, 650, 650, 650);
-
-        svg.addText(
-                350,
-                640,
-                0,
-                carport.getLength() + " cm"
-        );
+        svg.addArrow(BluePrintData.OFFSET_X, 650, 650, 650);
+        svg.addText(350, 640, 0, carport.getLength() + " cm");
     }
 
-    private void addArrowsToSideView() {
-        // Horizontal Arrows
-        double horizontalStartX = 0.0;
-        double horizontalStartY = 0.0;
-        double roofOverhangStart = 100.0;
-        double roofOverhangEnd = 35.0;
-        double polesPerSide = getQuantityByPlacementDescription("Stolper nedgraves 90 cm. i jord") / 2; //2 sides
+    private void addVerticalArrowsToSideView() {
+        drawVerticalArrow(40, 70, 300, 230);
+        drawVerticalArrow(70, 90, 300, 210);
+        drawVerticalArrow(800, 70, 300, 230);
+    }
 
+    private void addHorizontalArrowsToSideView() {
+        double horizontalStartX = 0.0;// TODO: Find positionsCoordinate
+        double horizontalStartY = 0.0; // TODO: Find positionsCoordinate
+        double roofOverhangStart = BluePrintData.POLE_START_GAP;
+        double roofOverhangEnd = BluePrintData.POLE_END_GAP;
+        int quantityAdjustment = -1;
+
+        // Front overhang
         drawHorizontalArrow(horizontalStartX, horizontalStartX + roofOverhangStart, horizontalStartY, roofOverhangStart, false);
+        double polesPerSide = getQuantityByPlacementDescription("Stolper nedgraves 90 cm. i jord") / 2;
+        double polePlacementWidth = carport.getLength() - roofOverhangStart - roofOverhangEnd;
 
+        if (shed != null) {
+            polePlacementWidth -= shed.getLength();
+            quantityAdjustment = 0;
+        }
+        double spaceDistance = polePlacementWidth / (polesPerSide - quantityAdjustment);
+        double poleDistanceStartX = horizontalStartX + roofOverhangStart;
 
-//         <!--Horizontal Arrow - Side view-->
-//                <line x1="80" y1="130" x2="80" y2="340" style="stroke: #006600;" />
-//
-//                <line x1="80" y1="330" x2="190" y2="330"
-//        style="stroke: #006600;  marker-start: url(#beginArrow); marker-end: url(#endArrow);" />
-//                <text style="text-anchor: middle" transform="translate(135,350)">1,10</text>
-//
-//                <line x1="190" y1="320" x2="190" y2="340" style="stroke: #006600;" />
-//
-//                <line x1="190" y1="330" x2="490" y2="330"
-//        style="stroke: #006600;  marker-start: url(#beginArrow); marker-end: url(#endArrow);" />
-//                <text style="text-anchor: middle" transform="translate(340,350)">3,00</text>
-//
-//                <line x1="490" y1="320" x2="490" y2="340" style="stroke: #006600;" />
-//
-//                <line x1="490" y1="330" x2="790" y2="330"
-//        style="stroke: #006600;  marker-start: url(#beginArrow); marker-end: url(#endArrow);" />
-//                <text style="text-anchor: middle" transform="translate(640,350)">3,00</text>
-//
-//                <line x1="790" y1="320" x2="790" y2="340" style="stroke: #006600;" />
-//
-//                <line x1="790" y1="330" x2="859.5" y2="330"
-//        style="stroke: #006600;  marker-start: url(#beginArrow); marker-end: url(#endArrow);" />
-//                <text style="text-anchor: middle" transform="translate(824.75,350)">0,70</text>
-//
-//                <line x1="859.5" y1="145" x2="859.5" y2="340" style="stroke: #006600;" />
+        for (int i = 0; i < polesPerSide - quantityAdjustment; i++) {
+            drawHorizontalArrow(poleDistanceStartX, poleDistanceStartX + spaceDistance, horizontalStartY, spaceDistance, false);
+            poleDistanceStartX += spaceDistance;
+        }
+        // Shed width
+        if (shed != null) {
+            double shedStartX = horizontalStartX + carport.getLength() - roofOverhangEnd - shed.getLength();
+            drawHorizontalArrow(shedStartX, shedStartX + shed.getLength(), horizontalStartY, shed.getLength(), false);
+        }
+
+        // Rear overhang
+        double endArrowStartX = horizontalStartX + carport.getLength() - roofOverhangEnd;
+        drawHorizontalArrow(endArrowStartX, endArrowStartX + roofOverhangEnd, horizontalStartY, roofOverhangEnd, true);
     }
 
-    private void drawHorizontalArrow(double x1, double x2, double y, double measure, boolean endVerticalEndLine) {
+    private void drawHorizontalArrow(double x1, double x2, double y, double measure, boolean drawEndTick) {
+        // Arrow
         svg.addArrow(x1, y, x2, y);
-        svg.addText((x1 + x2) / 2, y - 10, 0, measure + " cm");
-        svg.addLine(x1, y - 10, x1, y + 10);
 
-        if (endVerticalEndLine == true) {
-            svg.addLine(x2, y - 10, x2, y + 10);
+        // Text
+        double midX = (x1 + x2) / 2;
+
+        svg.addText(midX, y - BluePrintData.TEXT_OFFSET, 0, measure + " cm");
+
+        // Start tick
+        svg.addLine(x1, y - BluePrintData.HALF_TICK_SIZE, x1, y + BluePrintData.HALF_TICK_SIZE);
+
+        // End tick
+        if (drawEndTick) {
+            svg.addLine(x2, y - BluePrintData.HALF_TICK_SIZE, x2, y + BluePrintData.HALF_TICK_SIZE);
         }
     }
 
-    private void drawVerticalArrow(double x, double y1, double y2, double measure, boolean endHorizontalEndLine) {
-        svg.addArrow(x, y1, x, y2);
-        svg.addText(x - 10, (y1 + y2) / 2, -90, measure + " cm");
-        svg.addLine(x - 10, y1, x + 10, y2);
+    private void drawVerticalArrow(double x, double yTop, double yBottom, double measure) {
+        // Arrow
+        svg.addArrow(x, yTop, x, yBottom);
 
-        if (endHorizontalEndLine == true) {
-            svg.addLine(x - 10, y1, x + 10, y2);
-        }
+        // Text
+        double midY = (yTop + yBottom) / 2;
+        svg.addText(x - BluePrintData.TEXT_OFFSET, midY, -90, measure + " cm");
+        // Top tick
+        svg.addLine(x - BluePrintData.HALF_TICK_SIZE, yTop, x + BluePrintData.HALF_TICK_SIZE, yTop);
+
+        // Bottom tick
+        svg.addLine(x - BluePrintData.HALF_TICK_SIZE, yBottom, x + BluePrintData.HALF_TICK_SIZE, yBottom);
     }
 
     private double getQuantityByPlacementDescription(String placementDescription) {
         return productsPartsListEntries.stream()
                 .filter(x -> x.getPlacementDescription().contains(placementDescription))
-                .map(x -> x.getQuantity())
+                .map(ProductsPartsListEntry::getQuantity)
                 .findFirst()
                 .orElse(0.0);
     }
