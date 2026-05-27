@@ -81,7 +81,6 @@ body {
 }
 
 
-
 .my-page-results {
     display: flex;
     flex-direction: column;
@@ -135,21 +134,24 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+
 /* Scrollbar to match */
 .my-page-result-box::-webkit-scrollbar {
     width: 6px;
 }
+
 .my-page-result-box::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
 }
+
 .my-page-result-box::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.25);
     border-radius: 10px;
 }
 
 
-.my-page-inquiry-results{
+.my-page-inquiry-results {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -164,7 +166,7 @@ body {
     align-items: center;
 }
 
-.my-page-quote-results{
+.my-page-quote-results {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -179,7 +181,7 @@ body {
     align-items: center;
 }
 
-.my-page-order-results{
+.my-page-order-results {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -194,6 +196,63 @@ body {
     align-items: center;
 }
 
-.hidden{
+.hidden {
     display: none;
+}
+
+@media screen and (max-width: 768px) {
+    /* Force the main container to stack vertically and center items */
+    .my-page-overview {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px !important;
+        height: auto !important;
+    }
+
+    /* Force the buttons container to sit in a horizontal row at the top */
+    .my-page-overview-boxes {
+        flex-direction: row !important;
+        width: 100% !important;
+        height: auto !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        align-self: center !important;
+        gap: 10px !important;
+
+    }
+
+    /* Adjust button sizes so they fit nicely next to each other */
+    .my-page-categories {
+        width: 80% !important;
+        padding: 12px 5px !important;
+        font-size: 0.8rem !important; /* Shrunk slightly so Danish words don't break awkwardly */
+        text-align: center !important;
+    }
+
+    /* Force the results box underneath the buttons */
+    .my-page-results {
+        width: 100% !important;
+        height: 85% !important; /* Gives it a fixed scrollable height on mobile */
+        align-self: center !important;
+    }
+
+    .my-page-result-box {
+        width: 80% !important;
+        height: 100% !important;
+        padding: 15px 5px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .my-page-title {
+       margin-bottom:15px !important;
+    }
+
+
+    .my-page-box {
+        width: 85vw !important;
+        height: 80vh !important;
+        padding: 20px 15px !important;
+
+    }
 }
