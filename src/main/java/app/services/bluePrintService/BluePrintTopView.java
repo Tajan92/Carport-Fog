@@ -2,7 +2,6 @@ package app.services.bluePrintService;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import app.services.utils.PartsListCalculator;
 import app.services.utils.Svg;
 
 import java.util.List;
@@ -117,4 +116,5 @@ public class BluePrintTopView {
                 .findFirst()
                 .orElse(0.0);
     }
+
 }
