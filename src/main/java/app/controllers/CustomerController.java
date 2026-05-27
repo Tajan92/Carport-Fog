@@ -25,6 +25,7 @@ public class CustomerController {
         app.get("/load/customer/profile/page", ctx -> loadCustomerProfilePage(ctx, serviceFactory));
         app.get("/getAllCustomers", ctx -> loadAllCustomers(ctx, serviceFactory));
         app.get("/getCustomerById/{customer_id}", ctx -> getCustomerById(ctx, serviceFactory));
+        //inquiry, quote, order details page
     }
 
     public void createCustomer(Context ctx, ServiceFactory serviceFactory){
