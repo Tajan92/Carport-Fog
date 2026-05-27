@@ -13,6 +13,8 @@ import app.persistence.SalesRepMapper;
 import app.services.converters.UserConverter;
 import app.services.utils.PasswordUtil;
 import app.services.utils.UserValidator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -52,7 +54,7 @@ public class UserService {
         return userConverter.convertCustomerToDto(customer);
     }
 
-    public void createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
+    public List<String> createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
         List<String> messages = UserValidator.validate(customerRequestDTO);
 
         String hashedPassword = PasswordUtil.hashPassword(customerRequestDTO.getPassword());
@@ -62,15 +64,23 @@ public class UserService {
         if (messages.isEmpty()){
             customerMapper.createCustomer(customer);
         }
-        if (!messages.isEmpty()){
-            throw new DatabaseException(messages.toString());
-        }
+        return messages;
     }
 
     public CustomerResponseDTO getCustomer (int customerId) throws DatabaseException {
         Customer customer = customerMapper.getCustomerById(customerId);
 
         return userConverter.convertCustomerToDto(customer);
+    }
+
+    public List<CustomerResponseDTO> getAllCustomers() throws DatabaseException {
+        List<Customer> customers = customerMapper.getAllCustomers();
+
+        List<CustomerResponseDTO> responseDTOS = new ArrayList<>();
+        for (Customer customer : customers) {
+            responseDTOS.add(userConverter.convertCustomerToDto(customer));
+        }
+        return responseDTOS;
     }
 
     public SalesRepResponseDTO getSalesRep (int salesRepId) throws DatabaseException {
