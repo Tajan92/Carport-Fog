@@ -8,33 +8,27 @@ import app.services.utils.Svg;
 import java.util.List;
 
 public class BluePrintTopView {
-    private PartsListCalculator partsListCalculator;
     private Carport carport;
     private Shed shed;
-    private List<Product> products;
     private List<ProductsPartsListEntry> productsPartsListEntries;
     private Svg svg;
     private double spacing;
-    private final String fillColorWhite = "#ffffff";
-    private final String fillColorNone = "none";
+    private static final String FILL_COLOR_WHITE = "#ffffff";
+    private static final String FILL_COLOR_NONE = "none";
     private static final double RAFTER_AND_PLATE_SIZE = 4.5; // Rafters always 4,5 cm wide
 
-    public String addTopView(Carport carport, Shed shed, Roof roof, List<Product> allProducts) throws CalculatorException {
+    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) throws CalculatorException {
+        this.svg = svg;
         this.carport = carport;
         this.shed = shed;
-        this.products = allProducts;
-        this.partsListCalculator = new PartsListCalculator();
-        productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
-        this.svg = new Svg(0, 0, "1100", "1100", "0 0 1100 1100", 1);
 
-        svg.startGroup(80, 450);
+        this.productsPartsListEntries = productsPartsListEntries;
+
         addTopPlates();
         addRafters();
         addPolesAndShedSiding();
         addDashedLine();
         svg.endGroup();
-
-        return svg.toString();
     }
 
     private void addRafters() {
@@ -47,7 +41,7 @@ public class BluePrintTopView {
 
         spacing = (carport.getLength() - RAFTER_AND_PLATE_SIZE) / (quantity - 1);
         for (int i = 0; i < quantity; i++) {
-            svg.addRectangle(x, y, height, RAFTER_AND_PLATE_SIZE, fillColorWhite);
+            svg.addRectangle(x, y, height, RAFTER_AND_PLATE_SIZE, FILL_COLOR_WHITE);
             x += spacing;
         }
     }
@@ -58,8 +52,8 @@ public class BluePrintTopView {
         double topY = 35.0;
         double bottomY = carport.getWidth() - 35 - RAFTER_AND_PLATE_SIZE;
 
-        svg.addRectangle(x, topY, RAFTER_AND_PLATE_SIZE, width, fillColorNone);
-        svg.addRectangle(x, bottomY, RAFTER_AND_PLATE_SIZE, width, fillColorNone);
+        svg.addRectangle(x, topY, RAFTER_AND_PLATE_SIZE, width, FILL_COLOR_NONE);
+        svg.addRectangle(x, bottomY, RAFTER_AND_PLATE_SIZE, width, FILL_COLOR_NONE);
     }
 
     private void addPolesAndShedSiding() {
@@ -76,20 +70,20 @@ public class BluePrintTopView {
             addShedSiding(x, y, poleSize);
             for (int i = 0; i < 2; i++) {
                 y = 35;
-                svg.addRectangle(x, y, poleSize, poleSize, fillColorWhite);
+                svg.addRectangle(x, y, poleSize, poleSize, FILL_COLOR_WHITE);
                 y = (carport.getWidth() / 2) - (poleSize / 2); // divide by 2 to find center
-                svg.addRectangle(x, y, poleSize, poleSize, fillColorWhite);
+                svg.addRectangle(x, y, poleSize, poleSize, FILL_COLOR_WHITE);
                 y = carport.getWidth() - 35 - poleSize;
-                svg.addRectangle(x, y, poleSize, poleSize, fillColorWhite);
+                svg.addRectangle(x, y, poleSize, poleSize, FILL_COLOR_WHITE);
                 x += shed.getLength() - poleSize;
             }
         }
         x = 100.0;
         for (int i = 0; i < polesPerSide; i++) {
             y = 35; // Standard spacing end and sides = 35 cm.
-            svg.addRectangle(x, y, poleSize, poleSize, fillColorWhite);
+            svg.addRectangle(x, y, poleSize, poleSize, FILL_COLOR_WHITE);
             y = carport.getWidth() - y - poleSize;
-            svg.addRectangle(x, y, poleSize, poleSize, fillColorWhite);
+            svg.addRectangle(x, y, poleSize, poleSize, FILL_COLOR_WHITE);
             x += poleSpacing;
         }
     }

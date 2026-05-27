@@ -2,37 +2,31 @@ package app.services.bluePrintService;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import app.services.utils.PartsListCalculator;
 import app.services.utils.Svg;
 
 import java.util.List;
 
 public class BlueprintSideView {
-    private PartsListCalculator partsListCalculator;
     private Carport carport;
     private Shed shed;
     private Roof roof;
-    private List<Product> products;
     private List<ProductsPartsListEntry> productsPartsListEntries;
     private Svg svg;
     private static final String FILL_COLOR_WHITE = "#ffffff";
     private static final String FILL_COLOR_GREY = "#a6a5a5";
+    private static final String FILL_COLOR_NONE = "none";
     private static final double POLE_HEIGHT = 210.0;
 
-    public String addSideView(Carport carport, Shed shed, Roof roof, List<Product> allProducts) throws CalculatorException {
+    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) throws CalculatorException {
+        this.svg = svg;
         this.carport = carport;
         this.shed = shed;
         this.roof = roof;
-        this.products = allProducts;
-        this.partsListCalculator = new PartsListCalculator();
-        productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
-        this.svg = new Svg(80, 10, "1000", "600", "0 0 1000 600", 0);
+        this.productsPartsListEntries = productsPartsListEntries;
 
         addGround();
         addPolesAndShedSiding();
         addRoof();
-
-        return svg.toString();
     }
 
     private void addGround() {
@@ -43,8 +37,8 @@ public class BlueprintSideView {
     }
 
     private void addPolesAndShedSiding() {
-        double y = 90.0;
-        double poleWidth = 9.7; // pole is 9.7x9.7
+        double topOfPoleY = 90.0;
+        double poleThickness = 9.7; // pole is 9.7x9.7
         double startGap = 100;
         double endGap = 30;
         double polesPerSide = getQuantityByPlacementDescription("Stolper nedgraves 90 cm. i jord") / 2; //2 sides
@@ -58,21 +52,21 @@ public class BlueprintSideView {
         if (shed != null) {
             double shedStartX = carport.getLength() - shed.getLength();
             double shedEndX = shedStartX + shed.getLength();
-            svg.addShedRectangle(shedStartX, y, POLE_HEIGHT, shed.getLength());
-            addShedSiding(shedStartX, shedEndX, y);
+            svg.addShedRectangle(shedStartX, topOfPoleY, POLE_HEIGHT, shed.getLength());
+            addShedSiding(shedStartX, shedEndX, topOfPoleY);
         }
 
         double poleX = startGap;
 
         for (int i = 0; i < polesPerSide; i++) {
-            svg.addRectangle(poleX, y, POLE_HEIGHT, poleWidth, FILL_COLOR_WHITE);
+            svg.addRectangle(poleX, topOfPoleY, POLE_HEIGHT, poleThickness, FILL_COLOR_WHITE);
             poleX += poleSpacing;
         }
     }
 
     private void addShedSiding(double shedStartX, double shedEndX, double shedTopY) {
         //Vertical Siding
-        if (shed.getSiding().contains("Beklædning: 19x100") || shed.getSiding().equals("Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)")) {
+        if (shed.getSiding().contains("Beklædning: 19x100 mm. trykimp. Brædt") || shed.getSiding().equals("Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)")) {
             double plateWidth = 100.0;
             double plateOverlapGap = 20.0;
             double totalWidth = plateWidth + plateOverlapGap;
@@ -123,24 +117,43 @@ public class BlueprintSideView {
     private void addRoof() {
         if (roof.getRoofType().contains("Fladt tag")) {
             double roofTopLeftCornerX = 0.0;
-            double roofTopLefCornerY = 70.0;
+            double roofTopLeftCornerY = 70.0;
             double roofTopRightCornerY = 80.0;
+            double fasciaHeight = 20;
+            double underFasciaHeight = 35;
             double roofBottomRightCornerX = roofTopLeftCornerX + carport.getLength();
 
-            // Upper Fascia
-            svg.addLine(roofTopLeftCornerX,roofTopLefCornerY, roofBottomRightCornerX ,roofTopRightCornerY);
-            svg.addLine(roofTopLeftCornerX,roofTopLefCornerY, roofTopLeftCornerX-2,roofTopLefCornerY+20);
-            svg.addLine(roofTopLeftCornerX-2,roofTopLefCornerY+20, roofBottomRightCornerX-2,roofTopRightCornerY+20);
-            svg.addLine(roofBottomRightCornerX-2,roofTopRightCornerY+20, roofBottomRightCornerX, roofTopRightCornerY);
+            // Upper Fascia ------ Magic Numbers 1,2 and 3 is just to give angles and placement to give style to drawing.
+            svg.addLine(roofTopLeftCornerX, roofTopLeftCornerY, roofBottomRightCornerX, roofTopRightCornerY);
+            svg.addLine(roofTopLeftCornerX, roofTopLeftCornerY, roofTopLeftCornerX - 2, roofTopLeftCornerY + fasciaHeight);
+            svg.addLine(roofTopLeftCornerX - 2, roofTopLeftCornerY + fasciaHeight, roofBottomRightCornerX - 2, roofTopRightCornerY + fasciaHeight);
+            svg.addLine(roofBottomRightCornerX - 2, roofTopRightCornerY + fasciaHeight, roofBottomRightCornerX, roofTopRightCornerY);
 
             // Under Fascia
-            svg.addLine(roofTopLeftCornerX-1, roofTopLefCornerY+20, roofTopLeftCornerX-3 ,roofTopLefCornerY+35);
-            svg.addLine(roofTopLeftCornerX-3 ,roofTopLefCornerY+35, roofBottomRightCornerX-3,roofTopRightCornerY+35);
-            svg.addLine(roofBottomRightCornerX-3,roofTopRightCornerY+35, roofBottomRightCornerX-1,roofTopRightCornerY+20);
-        } else { // If high roof
+            svg.addLine(roofTopLeftCornerX - 1, roofTopLeftCornerY + fasciaHeight, roofTopLeftCornerX - 3, roofTopLeftCornerY + underFasciaHeight);
+            svg.addLine(roofTopLeftCornerX - 3, roofTopLeftCornerY + underFasciaHeight, roofBottomRightCornerX - 3, roofTopRightCornerY + underFasciaHeight);
+            svg.addLine(roofBottomRightCornerX - 3, roofTopRightCornerY + underFasciaHeight, roofBottomRightCornerX - 1, roofTopRightCornerY + fasciaHeight);
 
+            // High roof
+        } else {
+            double height = calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
 
+            if (height > 85) {
+                height = 85;
+            }
+
+            svg.addRectangle(0, 90, 4, carport.getLength(), FILL_COLOR_WHITE);
+            svg.addRoofRectangle(2, 90 - height, height, carport.getLength() - 4);
+            svg.addRectangle(4, 90 - height - 4, 4, carport.getLength() - 8, FILL_COLOR_NONE);
         }
+    }
+
+    public double calculateRoofHeight(double width, double roofSlope) {
+        double run = width / 2.0;
+
+        double angleInRadians = Math.toRadians(roofSlope);
+
+        return run * Math.tan(angleInRadians);
     }
 
     private double getQuantityByPlacementDescription(String placementDescription) {
