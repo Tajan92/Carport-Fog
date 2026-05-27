@@ -1,5 +1,6 @@
 package services;
 
+import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.dto.requestDTO.users.LoginCustomerRequestDTO;
 import app.dto.requestDTO.users.LoginSalesRepRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
@@ -9,7 +10,7 @@ import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
 import persistence.MapperTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends MapperTest {
     ServiceFactory serviceFactory = new ServiceFactory();
@@ -72,4 +73,36 @@ public class UserServiceTest extends MapperTest {
         assertEquals(expectedZip, response.getZipCode());
         assertEquals(expectedTown, response.getTown());
     }
+
+    @Test
+    public void createCustomerTest() throws DatabaseException {
+        CustomerRequestDTO badCustomerInput = new CustomerRequestDTO(
+                "Jens",
+                "Hansen",
+                "jens.hansen@gmail.com",
+                "Hansen2026!",
+                "Hansen2024",
+                "20304050",
+                "Algade 42, 1. th",
+                "4760");
+
+        CustomerRequestDTO goodCustomerInput = new CustomerRequestDTO(
+                "Jens",
+                "Hansen",
+                "jens.hansen@gmail.com",
+                "Hansen2026!",
+                "Hansen2026!",
+                "20304050",
+                "Algade 42, 1. th",
+                "4760"
+        );
+
+        //Password and passwordcheck doesn't match so should throw exception
+        assertThrows(Exception.class, () -> serviceFactory.getUserService().createCustomer(badCustomerInput));
+
+        //Good input should work without issues
+        assertDoesNotThrow(() -> serviceFactory.getUserService().createCustomer(goodCustomerInput));
+    }
+
+
 }
