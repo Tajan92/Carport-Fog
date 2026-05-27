@@ -11,35 +11,44 @@
     <h1 class="my-page-title">Admin side</h1>
     <div class="my-page-overview">
         <div class="my-page-overview-boxes">
+            <a class="my-page-categories" id="my-page-category-customers">Alle Kunder</a>
             <a class="my-page-categories" id="my-page-category-inquiry">Alle Forespørgelser</a>
             <a class="my-page-categories" id="my-page-category-quote">Alle tilbud</a>
             <a class="my-page-categories" id="my-page-category-order">Alle ordre</a>
         </div>
         <div class="my-page-results">
             <div class="my-page-result-box">
-                <div class="my-page-inquiry-results " >
-                    <a class="my-page-orders" th:href="@{/getInquiryAdmin}">Forespørgelse #1</a>
-                    <a class="my-page-orders">Forespørgelse #2</a>
-                    <a class="my-page-orders">Forespørgelse #3</a>
-                    <a class="my-page-orders">Forespørgelse #4</a>
-                    <a class="my-page-orders">Forespørgelse #5</a>
-                    <a class="my-page-orders">Forespørgelse #6</a>
+                <div class="my-page-customer-results " >
+                    <a class="my-page-result-button" th:href="@{/getInquiryAdmin}">Kunde #1</a>
+                    <a class="my-page-result-button">Kunde #2</a>
+                    <a class="my-page-result-button">Kunde #3</a>
+                    <a class="my-page-result-button">Kunde #4</a>
+                    <a class="my-page-result-button">Kunde #5</a>
+                    <a class="my-page-result-button">Kunde #6</a>
+                </div>
+                <div class="my-page-inquiry-results hidden " >
+                    <a class="my-page-result-button" th:href="@{/getInquiryAdmin}">Forespørgelse #1</a>
+                    <a class="my-page-result-button">Forespørgelse #2</a>
+                    <a class="my-page-result-button">Forespørgelse #3</a>
+                    <a class="my-page-result-button">Forespørgelse #4</a>
+                    <a class="my-page-result-button">Forespørgelse #5</a>
+                    <a class="my-page-result-button">Forespørgelse #6</a>
                 </div>
                 <div class="my-page-quote-results hidden">
-                    <a class="my-page-orders" th:href="@{/getQuoteAdmin}">Tilbud #1</a>
-                    <a class="my-page-orders">Tilbud #2</a>
-                    <a class="my-page-orders">Tilbud #3</a>
-                    <a class="my-page-orders">Tilbud #4</a>
-                    <a class="my-page-orders">Tilbud #5</a>
-                    <a class="my-page-orders">Tilbud #6</a>
+                    <a class="my-page-result-button" th:href="@{/getQuoteAdmin}">Tilbud #1</a>
+                    <a class="my-page-result-button">Tilbud #2</a>
+                    <a class="my-page-result-button">Tilbud #3</a>
+                    <a class="my-page-result-button">Tilbud #4</a>
+                    <a class="my-page-result-button">Tilbud #5</a>
+                    <a class="my-page-result-button">Tilbud #6</a>
                 </div>
                 <div class="my-page-order-results hidden" >
-                    <a class="my-page-orders" th:href="@{/getOrderAdmin}">Ordre #1</a>
-                    <a class="my-page-orders">Ordre #2</a>
-                    <a class="my-page-orders">Ordre #3</a>
-                    <a class="my-page-orders">Ordre #4</a>
-                    <a class="my-page-orders">Ordre #5</a>
-                    <a class="my-page-orders">Ordre #6</a>
+                    <a class="my-page-result-button" th:href="@{/getOrderAdmin}">Ordre #1</a>
+                    <a class="my-page-result-button">Ordre #2</a>
+                    <a class="my-page-result-button">Ordre #3</a>
+                    <a class="my-page-result-button">Ordre #4</a>
+                    <a class="my-page-result-button">Ordre #5</a>
+                    <a class="my-page-result-button">Ordre #6</a>
                 </div>
             </div>
         </div>

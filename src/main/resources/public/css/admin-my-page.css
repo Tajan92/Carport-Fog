@@ -90,13 +90,11 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 60%;
-
     justify-content: center;
     align-items: flex-start;
     align-self: flex-start;
     justify-self: left;
     height: 100%;
-
 }
 
 /* Result container — slightly lighter glass */
@@ -120,7 +118,7 @@ body {
 }
 
 /* Order cards — white glass with blue tint */
-.my-page-orders {
+.my-page-result-button {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.18);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -184,6 +182,20 @@ body {
 }
 
 .my-page-order-results{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    padding: 20px;
+    width: 90%;
+    height: 100%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+.my-page-customer-results{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
