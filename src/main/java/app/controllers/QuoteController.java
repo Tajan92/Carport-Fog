@@ -50,8 +50,8 @@ public class QuoteController {
 
         //Load default prices for the carport request
         double discount = 0;
-        double costPrice = serviceFactory.getPriceService().getCostPrice(allEntries);
-        double retailPrice = serviceFactory.getPriceService().getRetailPrice(allEntries);
+        double costPrice = serviceFactory.getPriceService().getTotalCostPrice(allEntries);
+        double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(allEntries);
         double serviceFee = serviceFactory.getPriceService().getServiceFee(allEntries);
         double revenue = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
         double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
@@ -77,11 +77,12 @@ public class QuoteController {
         int customerId = Integer.parseInt(ctx.formParam("customer_id"));
         double discount = Double.parseDouble(ctx.formParam("discount_quote"));
 
-        int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
-        //Carport
-        double carportWidth = Double.parseDouble(ctx.formParam("quote_carport_width"));
-        double carportHeight = 230;
-        double carportLength = Double.parseDouble(ctx.formParam("quote_carport_length"));
+        //Calculate prices again for added security
+        CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
+        List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
+        double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
+        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
+        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
 
         //Roof
         double roofSlope = Double.parseDouble(ctx.formParam("quote_roof_slope"));

@@ -21,6 +21,8 @@ public class UserValidator {
     }
 
     public static List<String> validate(CustomerRequestDTO customerRequestDTO) {
+        //Clears messages each time method is called
+        message.clear();
         String email = customerRequestDTO.getEmail();
         String password = customerRequestDTO.getPassword();
         String passwordCheck = customerRequestDTO.getPasswordCheck();

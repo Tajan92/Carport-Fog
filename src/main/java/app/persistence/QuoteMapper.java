@@ -102,11 +102,14 @@ public class QuoteMapper {
     public List<Quote> getAllQuotesByCustomerId(int customerId) throws DatabaseException {
         List<Quote> quotes = new ArrayList<>();
         String sql = """
-                select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote\s
-                left join carports carport using(carport_id)\s
-                left join customers customer using(customer_id)\s
-                left join sales_reps sales using(sales_rep_id) where customer_id = ?
-                """;
+        select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id 
+        from quotes quote
+        left join carports carport using(carport_id)
+        left join customers customer using(customer_id)
+        left join sales_reps sales using(sales_rep_id) 
+        where customer_id = ?
+        order by quote.quote_id asc;
+        """;
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, customerId);

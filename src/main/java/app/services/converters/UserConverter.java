@@ -19,7 +19,7 @@ public class UserConverter {
         String town = customer.getTown();
         String role = "CUSTOMER";
 
-        return new CustomerResponseDTO(id, firstName, lastName, email, phoneNumber, address, zipCode, town, role);
+        return new CustomerResponseDTO(id, firstName, lastName, email, phoneNumber, role, address, zipCode, town);
     }
 
     public Customer convertCustomerDTOtoEntity(CustomerRequestDTO customerRequestDTO) {
