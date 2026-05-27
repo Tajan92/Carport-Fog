@@ -52,7 +52,7 @@ public class UserService {
         return userConverter.convertCustomerToDto(customer);
     }
 
-    public void createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
+    public List<String> createCustomer(CustomerRequestDTO customerRequestDTO) throws DatabaseException {
         List<String> messages = UserValidator.validate(customerRequestDTO);
 
         String hashedPassword = PasswordUtil.hashPassword(customerRequestDTO.getPassword());
@@ -62,9 +62,7 @@ public class UserService {
         if (messages.isEmpty()){
             customerMapper.createCustomer(customer);
         }
-        if (!messages.isEmpty()){
-            throw new DatabaseException(messages.toString());
-        }
+        return messages;
     }
 
     public CustomerResponseDTO getCustomer (int customerId) throws DatabaseException {

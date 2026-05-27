@@ -87,6 +87,15 @@ public class InquiryService {
         return responseDTOS;
     }
 
+    public List<InquiryResponseDTO> getAllInquiriesByCustomerId(int customerId) throws DatabaseException {
+        List<Inquiry> allInquiries = inquiryMapper.getAllInquiriesByCustomerId(customerId);
+        List<InquiryResponseDTO> responseDTOS = new ArrayList<>();
+        for (Inquiry allInquiry : allInquiries) {
+            responseDTOS.add(inquiryConverter.convertInquiryToDto(allInquiry));
+        }
+        return responseDTOS;
+    }
+
     public void deleteInquiry(int inquiryId) throws DatabaseException {
         inquiryMapper.deleteInquiryById(inquiryId);
     }
