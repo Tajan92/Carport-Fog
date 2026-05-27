@@ -14,12 +14,14 @@ import java.util.List;
 public class OrderController {
 
     public void getRoutes(Javalin app, ServiceFactory serviceFactory) {
-        app.get("/create/order/{quote_id}",           ctx -> createOrder(ctx, serviceFactory));
-        app.get("/order/details/admin/{order_id}",    ctx -> getOrderAdmin(ctx, serviceFactory));
-        app.get("/order/details/customer/{order_id}", ctx -> getOrderCustomer(ctx, serviceFactory));
-        app.get("/orders/customer",                   ctx -> getAllOrdersCustomer(ctx, serviceFactory));
-        app.get("/orders/admin",                      ctx -> getAllOrdersAdmin(ctx, serviceFactory));
-        app.post("/delete/order{order_id}",           ctx -> deleteOrder(ctx, serviceFactory));
+//        app.get("/createOrder", ctx -> createOrder(ctx, serviceFactory));
+//        app.get("/getOrder", ctx -> getOrder(ctx, serviceFactory));
+//        app.get("/getAllOrders", ctx -> getAllOrders(ctx, serviceFactory));
+//        app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
+//        app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
+        app.get("/getOrderCustomer", ctx -> ctx.render("customer-order-details")); /* Test route af AJ*/
+        app.get("/getOrderAdmin", ctx -> ctx.render("admin-order-details")); /* Test route af AJ*/
+
     }
 
     public void createOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {

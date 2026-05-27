@@ -25,6 +25,8 @@ public class QuoteController {
         app.post("/deleteQuote/{quote_id}", ctx -> deleteQuote(ctx, serviceFactory));
         app.get("/getAllQuotesCustomer", ctx -> getAllQuotesCustomer(ctx, serviceFactory));
         app.get("/getQuoteCustomer/{quote_id}", ctx -> getQuoteCustomer(ctx, serviceFactory));
+        app.get("/getQuoteCustomer", ctx -> ctx.render("customer-quote-details")); /* Test route af AJ*/
+        app.get("/getQuoteAdmin", ctx -> ctx.render("admin-quote-details")); /* Test route af AJ*/
     }
 
     public void loadCreateQuotePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
@@ -82,11 +84,29 @@ public class QuoteController {
         double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
         double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
 
-        int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, revenue, carportId, salesRepResponseDTO.getId());
-        serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
+        //Roof
+        double roofSlope = Double.parseDouble(ctx.formParam("quote_roof_slope"));
+        String roofMaterial = ctx.formParam("quote_roof_material");
+        String roofType = ctx.formParam("quote_roof_type");
+        RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
-        ctx.redirect("/quotes/admin");
+        //Shed
+        String shedWidth = ctx.formParam("quote_shed_width");
+        String shedLength = ctx.formParam("quote_shed_length");
+        String shedSiding = ctx.formParam("quote_shed_siding");
+        boolean floor = Boolean.parseBoolean(ctx.formParam("quote_floor"));
+
+//        //Price
+//        double discount = ctx.formParam("discount_admin");
+//        double revenue = serviceFactory.getPriceService().getRevenue()
+//        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+//
+//        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedLength, shedWidth, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
+//
+//        int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
+//        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(inquiryResponseDTO.getCustomerResponseDTO().getId(),revenue, carportId, salesRepResponseDTO.getId());
+//        serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
+//        ctx.redirect("/quotes/admin");
     }
 
     public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
@@ -98,7 +118,7 @@ public class QuoteController {
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
 
         ctx.attribute("selected_quote", quoteResponseDTO);
-        ctx.render("admin-quote-details.html");
+        ctx.render("admin-customer-quote-details.html");
     }
 
     public void getAllQuotesCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
