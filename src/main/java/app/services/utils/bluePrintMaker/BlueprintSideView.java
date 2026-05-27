@@ -1,8 +1,6 @@
 package app.services.utils.bluePrintMaker;
 
 import app.entities.*;
-import app.exceptions.CalculatorException;
-
 import java.util.List;
 
 public class BlueprintSideView {
@@ -12,7 +10,7 @@ public class BlueprintSideView {
     private List<ProductsPartsListEntry> productsPartsListEntries;
     private Svg svg;
 
-    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) throws CalculatorException {
+    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) {
         this.svg = svg;
         this.carport = carport;
         this.shed = shed;
