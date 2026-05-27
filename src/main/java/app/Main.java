@@ -2,8 +2,7 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
-import app.controllers.CustomerController;
-import app.controllers.MainController;
+import app.controllers.*;
 import app.persistence.ConnectionPool;
 import app.services.ServiceFactory;
 import io.javalin.Javalin;
@@ -23,5 +22,18 @@ public class Main {
         }).start(7070);
 
         CustomerController customerController = new CustomerController();
+        MainController mainController = new MainController();
+        SalesRepController salesRepController = new SalesRepController();
+        QuoteController quoteController = new QuoteController();
+        OrderController orderController = new OrderController();
+        InquiryController inquiryController = new InquiryController();
+
+
+        salesRepController.addRoutes(app,serviceFactory);
+        customerController.addRoutes(app, serviceFactory);
+        inquiryController.addRoutes(app,serviceFactory);
+        quoteController.addRoutes(app,serviceFactory);
+        orderController.getRoutes(app,serviceFactory);
+        mainController.addRoutes(app, serviceFactory);
     }
 }

@@ -13,6 +13,8 @@ body {
     margin-bottom: auto;
     height: 100%;
     animation: fadeIn 1s ease;
+
+
 }
 
 .my-page-box {
@@ -31,6 +33,7 @@ body {
     margin-bottom: auto;
     align-self: center;
     animation: fadeIn 1s ease;
+
 }
 
 /* White title */
@@ -81,12 +84,12 @@ body {
 }
 
 
+
 .my-page-results {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 60%;
-
     justify-content: center;
     align-items: flex-start;
     align-self: flex-start;
@@ -113,7 +116,8 @@ body {
     align-items: center;
 }
 
-.my-page-orders {
+/* Order cards — white glass with blue tint */
+.my-page-result-button {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.18);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -132,24 +136,21 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
-
 /* Scrollbar to match */
 .my-page-result-box::-webkit-scrollbar {
     width: 6px;
 }
-
 .my-page-result-box::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
 }
-
 .my-page-result-box::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.25);
     border-radius: 10px;
 }
 
 
-.my-page-inquiry-results {
+.my-page-inquiry-results{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -164,7 +165,7 @@ body {
     align-items: center;
 }
 
-.my-page-quote-results {
+.my-page-quote-results{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -179,7 +180,21 @@ body {
     align-items: center;
 }
 
-.my-page-order-results {
+.my-page-order-results{
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    padding: 20px;
+    width: 90%;
+    height: 100%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+.my-page-customer-results{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     padding: 20px;
     width: 90%;
@@ -194,7 +209,7 @@ body {
     align-items: center;
 }
 
-.hidden {
+.hidden{
     display: none;
 }
 
@@ -214,7 +229,6 @@ body {
         align-items: center !important;
         align-self: center !important;
         gap: 10px !important;
-
     }
 
     .my-page-categories {
@@ -239,7 +253,7 @@ body {
     }
 
     .my-page-title {
-       margin-bottom:15px !important;
+        margin-bottom:15px !important;
     }
 
 
@@ -247,6 +261,5 @@ body {
         width: 85vw !important;
         height: 80vh !important;
         padding: 20px 15px !important;
-
     }
 }

@@ -36,7 +36,7 @@ public class SalesRepMapper {
                 String lastName = resultSet.getString("last_name");
                 String phoneNumber = resultSet.getString("phone_number");
 
-                return new SalesRep(salesRepId, email, password, firstName, lastName, phoneNumber);
+                return new SalesRep(salesRepId, firstName, lastName, email, password, phoneNumber);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get sales rep by provided id: " + salesRepId);
             }

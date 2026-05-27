@@ -94,6 +94,32 @@ public class InquiryMapper {
         }
     }
 
+    public List<Inquiry> getAllInquiriesByCustomerId(int customerId) throws DatabaseException {
+        List<Inquiry> inquiries = new ArrayList<>();
+        String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
+                "left join customers customer using(customer_id) \n" +
+                "left join carports carport using(carport_id) where customer_id = ?\n";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, customerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int inquiryId = resultSet.getInt("inquiry_id");
+                String remark = resultSet.getString("remark");
+                int carportId = resultSet.getInt("carport_id");
+
+                inquiries.add(new Inquiry(inquiryId, customerId, remark, carportId));
+            }
+            return inquiries;
+        } catch (SQLException e) {
+            String message = "Fejl ved at hente alle forespørgsler";
+            throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
     public void deleteInquiryById(int inquiryId) throws DatabaseException {
         String sql = "delete from inquiries where inquiry_id = ?";
 

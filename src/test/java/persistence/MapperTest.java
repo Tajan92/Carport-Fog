@@ -131,7 +131,7 @@ public abstract class MapperTest {
 
                 // customers
                 statement.execute("INSERT INTO test.customers (first_name, last_name, email, password, phone_number, address, zip_code) VALUES " +
-                        "('Anders', 'Jensen', 'anders@email.dk', 'hashed_pw1', '12345678', 'Elmevej 4', '2100')," +
+                        "('Anders', 'Jensen', 'anders@email.dk', '$2a$10$r55aQMgdsMHtoHHMWGfYteXWgVnvPLZvH8HTu3Es86WVBldbCdgP2', '12345678', 'Elmevej 4', '2100')," +
                         "('Mette', 'Nielsen', 'mette@email.dk', 'hashed_pw2', '23456789', 'Birkevej 12', '2200')," +
                         "('Lars', 'Hansen', 'lars@email.dk', 'hashed_pw3', '34567890', 'Kastanievej 7', '8000')," +
                         "('Sofie', 'Pedersen', 'sofie@email.dk', 'hashed_pw4', '45678901', 'Egevej 3', '5000')," +
@@ -140,7 +140,8 @@ public abstract class MapperTest {
 
                 // sales_reps
                 statement.execute("INSERT INTO test.sales_reps (first_name, last_name, email, password, phone_number) VALUES " +
-                        "('Thomas', 'Møller', 'thomas@carport.dk', 'hashed_rep1', '11111111')," +
+                        //hashed the first salesrep pw for testing login
+                        "('Thomas', 'Møller', 'thomas@carport.dk', '$2a$10$1Yzhk/.73PNrGsmrBEvVmeIMb3iIDD6RKEGbxgp3ZAGnV.OE4vzza', '11111111')," +
                         "('Hanne', 'Sørensen', 'hanne@carport.dk', 'hashed_rep2', '22222222')," +
                         "('Rasmus', 'Larsen', 'rasmus@carport.dk', 'hashed_rep3', '33333333')," +
                         "('Gitte', 'Madsen', 'gitte@carport.dk', 'hashed_rep4', '44444444')");

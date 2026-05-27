@@ -2,6 +2,7 @@ package app.services;
 
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
+import app.dto.responseDTO.PartsListResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
@@ -29,9 +30,11 @@ public class QuoteService {
     private CustomerMapper customerMapper;
     private SalesRepMapper salesRepMapper;
     private CarportMapper carportMapper;
+    private UserService userService;
 
 
-    public QuoteService(QuoteMapper quoteMapper, CarportService carportService, CustomerMapper customerMapper, SalesRepMapper salesRepMapper, CarportMapper carportMapper) {
+    public QuoteService(QuoteMapper quoteMapper, CarportService carportService, CustomerMapper customerMapper, SalesRepMapper salesRepMapper, CarportMapper carportMapper, UserService userService) {
+        this.userService = userService;
         this.quoteMapper = quoteMapper;
         this.quoteConverter = new QuoteConverter();
         this.userConverter = new UserConverter();
@@ -80,8 +83,13 @@ public class QuoteService {
     public List<QuoteResponseDTO> getAllQuotes() throws DatabaseException {
         List<Quote> allQuotes = quoteMapper.getAllQuotes();
         List<QuoteResponseDTO> responseDTOS = new ArrayList<>();
-        for (Quote allQuote : allQuotes) {
-            responseDTOS.add(quoteConverter.convertQuoteToDto(allQuote));
+        for (Quote quote : allQuotes) {
+            int quoteId = quote.getQuoteId();
+            double quotePrice = quote.getQuotePrice();
+            CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
+            CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
+            SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
+            responseDTOS.add(new QuoteResponseDTO(quoteId, quotePrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return responseDTOS;
     }
@@ -90,7 +98,12 @@ public class QuoteService {
         List<Quote> quotes = quoteMapper.getAllQuotesByCustomerId(customerId);
         List<QuoteResponseDTO> quoteResponseDTOS = new ArrayList<>();
         for (Quote quote : quotes) {
-            quoteResponseDTOS.add(quoteConverter.convertQuoteToDto(quote));
+            int quoteId = quote.getQuoteId();
+            double quotePrice = quote.getQuotePrice();
+            CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
+            CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
+            SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
+            quoteResponseDTOS.add(new QuoteResponseDTO(quoteId, quotePrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return quoteResponseDTOS;
     }

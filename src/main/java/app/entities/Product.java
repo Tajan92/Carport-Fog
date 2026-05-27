@@ -10,7 +10,7 @@ public class Product {
     private int productId;
     private double costPrice;
     private double retailPrice;
-    private double length;
+    private Double length;
     private String unit;
     private String productGroup;
     private String description;

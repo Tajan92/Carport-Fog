@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head('Customer Login')}"></head>
+
+<body>
+
+<h1 class="logo">Fog</h1>
+
+<div class="admin-box-login">
+    <h1 class="admin-welcome-message">Admin Login</h1>
+
+
+    <form id="admin-login-form" action="/login" method="post">
+        <p class="admin-input-description">EMAIL</p>
+        <input class="admin-input-box" type="text" name="email" placeholder="eg. user@example.com..">
+        <p class="admin-input-description">KODEORD</p>
+        <input class="admin-input-box" type="password" name="password"  placeholder="eg.1234...">
+
+        <button class="admin-login-button" type="submit">Log In</button>
+    </form>
+
+
+    <div class="customer-login">
+        <p>Ikke ansat af fog?</p>
+        <a th:href="@{/customerLogin}" class="customer-button-box" type="button" id="customer-login-button" >Log ind her</a>
+    </div>
+
+</div>
+
+</body>
+</html>

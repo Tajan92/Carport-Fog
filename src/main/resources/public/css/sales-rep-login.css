@@ -7,7 +7,7 @@ body {
     justify-content: center;
 }
 
-.box-login {
+.admin-box-login {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -20,6 +20,7 @@ body {
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
     width: clamp(20rem, 45vw, 32rem);
     animation: fadeIn 1s ease;
+
 }
 
 .logo {
@@ -30,10 +31,9 @@ body {
     margin-bottom: 20px;
     letter-spacing: 2px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.25);
-
 }
 
-.welcome-message {
+.admin-welcome-message {
     color: white;
     font-family: "Playfair Display";
     font-weight: 600;
@@ -41,14 +41,12 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
-
 }
 
-#login-form {
+#admin-login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 #register-form {
@@ -57,7 +55,7 @@ body {
     align-items: center;
 }
 
-.input-box {
+.admin-input-box {
     border-radius: 8px;
     border: 1.5px solid #c5d5e8;
     background: #f4f8fd;
@@ -69,13 +67,13 @@ body {
     outline: none;
 }
 
-.input-box:focus {
+.admin-input-box:focus {
     border-color: #013d7a;
     box-shadow: 0 0 0 3px rgba(1, 61, 122, 0.12);
     background: white;
 }
 
-.input-description {
+.admin-input-description {
     color: white;
     font-family: Inter;
     font-style: normal;
@@ -88,7 +86,7 @@ body {
 }
 
 /* Login button with transition */
-.login-button {
+.admin-login-button {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -103,39 +101,15 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-button:hover {
+.admin-login-button:hover {
     cursor: pointer;
     box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
     transform: translateY(-3px);
 }
 
-.opret {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: clamp(6px, 1vw, 10px);
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #e0e8f0;  /* divider*/
-    width: 100%;
-    justify-content: center;
-    color: white;
-    margin-bottom: 0;
-}
 
-#register-button {
-    color:  #97c9ff;
-    font-weight: 600;
-    transition: transform 0.2s ease;
-}
 
-#register-button:hover {
-    cursor: pointer;
-    transform: translateY(-3px);
-}
-
-.admin-login{
+.customer-login{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -151,13 +125,13 @@ body {
     margin-bottom: 0;
 }
 
-#admin-login-button{
+#customer-login-button{
     color: #97c9ff;
     font-weight: 600;
     transition: transform 0.2s ease;
 }
 
-#admin-login-button:hover{
+#customer-login-button:hover{
     cursor: pointer;
     transform: translateY(-3px);
 }

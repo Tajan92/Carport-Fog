@@ -10,7 +10,7 @@ body {
 
 
 
-.inquiry-details-overview {
+.quote-details-overview {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -23,10 +23,13 @@ body {
     height: 70vh;
     width: 70vw;
     margin-bottom: auto;
+    animation: fadeIn 1s ease;
+    margin-top: auto;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
-/* Title becomes white to show on dark glass */
-.inquiry-details-title {
+.quote-details-title {
     color: white;
     font-family: "Playfair Display";
     font-weight: 600;
@@ -34,9 +37,9 @@ body {
     margin-top: auto;
     text-align: center;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-}
+    justify-self: center}
 
-.inquiry-details-box{
+.quote-details-box{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -46,69 +49,25 @@ body {
     margin-bottom: auto;
 }
 
-.carport-maker-progress {
-    background: white;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    width: 100%;
-    height: auto;
-    min-height: 10%;
-    justify-content: right;
-    font-size: clamp(0.3rem, 2vw, 0.7rem);
-    align-items: center;
-    border-bottom: 2px solid #e0e8f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    margin-bottom: auto;
-}
-
-.progress-steps {
-    color: #013d7a;
-    font-family: "Playfair Display";
-    display: grid;
-    margin-right: 25px;
-    font-size: clamp(1rem, 2vw, 1.6rem);
-    text-decoration: none;
-    font-weight: bold;
-
-}
-
-.progress-steps:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-#progress-step-1 {
-    justify-self: left;
-    margin-right: auto;
-    margin-left: 25px;
-    font-size: clamp(1rem, 2vw, 1.6rem);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-
-.inquiry-header{
+.quote-header{
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     width: 100%;
 }
 
-#inquiry-return-button{
+.admin-return-button{
     align-self: flex-start;
 }
 
-.inquiry-return-svg{
+.admin-return-svg{
     stroke: white;
 }
 
-#inquiry-return-button:hover .inquiry-return-svg{
+.admin-return-button:hover .admin-return-svg{
     stroke: #8fbae4;
     cursor: pointer;
 }
-
-
 
 
 
