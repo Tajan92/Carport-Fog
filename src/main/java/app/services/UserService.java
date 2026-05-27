@@ -13,6 +13,8 @@ import app.persistence.SalesRepMapper;
 import app.services.converters.UserConverter;
 import app.services.utils.PasswordUtil;
 import app.services.utils.UserValidator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -69,6 +71,16 @@ public class UserService {
         Customer customer = customerMapper.getCustomerById(customerId);
 
         return userConverter.convertCustomerToDto(customer);
+    }
+
+    public List<CustomerResponseDTO> getAllCustomers() throws DatabaseException {
+        List<Customer> customers = customerMapper.getAllCustomers();
+
+        List<CustomerResponseDTO> responseDTOS = new ArrayList<>();
+        for (Customer customer : customers) {
+            responseDTOS.add(userConverter.convertCustomerToDto(customer));
+        }
+        return responseDTOS;
     }
 
     public SalesRepResponseDTO getSalesRep (int salesRepId) throws DatabaseException {
