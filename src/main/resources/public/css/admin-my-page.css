@@ -213,3 +213,60 @@ body {
 .hidden{
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    /* Force the main container to stack vertically and center items */
+    .my-page-overview {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px !important;
+        height: auto !important;
+    }
+
+    /* Force the buttons container to sit in a horizontal row at the top */
+    .my-page-overview-boxes {
+        flex-direction: row !important;
+        width: 100% !important;
+        height: auto !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        align-self: center !important;
+        gap: 10px !important;
+
+    }
+
+    /* Adjust button sizes so they fit nicely next to each other */
+    .my-page-categories {
+        width: 80% !important;
+        padding: 12px 5px !important;
+        font-size: 0.8rem !important; /* Shrunk slightly so Danish words don't break awkwardly */
+        text-align: center !important;
+    }
+
+    /* Force the results box underneath the buttons */
+    .my-page-results {
+        width: 100% !important;
+        height: 85% !important; /* Gives it a fixed scrollable height on mobile */
+        align-self: center !important;
+    }
+
+    .my-page-result-box {
+        width: 80% !important;
+        height: 100% !important;
+        padding: 15px 5px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .my-page-title {
+        margin-bottom:15px !important;
+    }
+
+
+    .my-page-box {
+        width: 85vw !important;
+        height: 80vh !important;
+        padding: 20px 15px !important;
+
+    }
+}
