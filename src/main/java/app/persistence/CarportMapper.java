@@ -78,10 +78,8 @@ public class CarportMapper {
 
     public Carport getCarportById(int carportId) throws DatabaseException {
 
-        String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, s.shed_id, r.roof_id  from carports c\n" +
-                "left join addons using (addon_id)\n" +
-                "left join sheds s using (shed_id)\n" +
-                "left join roofs r using (roof_id)\n" +
+        String sql = "select c.carport_width, c.carport_height, c.carport_length, c.price, c.parts_list_id, a.shed_id, a.roof_id  from carports c\n" +
+                "left join addons a using (addon_id)\n" +
                 "where carport_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
@@ -180,13 +178,20 @@ public class CarportMapper {
         }
     }
 
-    public void deleteAddonId(int roofId, int shedId) throws DatabaseException {
-        String sql = "delete from addons where roof_id = ? and shed_id = ?";
+    public void deleteAddonId(int roofId, Integer shedId) throws DatabaseException {
+        String sql;
+        if (shedId == null) {
+            sql = "DELETE FROM addons WHERE roof_id = ? AND shed_id IS NULL";
+        } else {
+            sql = "DELETE FROM addons WHERE roof_id = ? AND shed_id = ?";
+        }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, roofId);
-            preparedStatement.setInt(1, shedId);
+            if (shedId != null) {
+                preparedStatement.setInt(2, shedId);
+            }
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
                 throw new DatabaseException("An error occurred trying to remove a addon id from DB");

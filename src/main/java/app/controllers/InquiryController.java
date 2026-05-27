@@ -43,7 +43,7 @@ public class InquiryController {
         boolean floor = Boolean.parseBoolean(ctx.formParam("floor"));
 
 
-        CarportRequestDTO carportRequestDTO = serviceFactory.getShedService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
         UserResponseDTO userResponseDTO  = ctx.sessionAttribute("currentUser");
         String inquiryRemark = ctx.formParam("inquiry_remark");
@@ -100,8 +100,7 @@ public class InquiryController {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         serviceFactory.getInquiryService().deleteInquiry(inquiryId);
-        serviceFactory.getCarportService().deleteCarport(inquiryResponseDTO.getCarportRespondDto().getCarportId());
+        serviceFactory.getCarportService().deleteCarport(inquiryResponseDTO.getCarportResponseDTO().getCarportId());
         ctx.render("admin-all-inquiries.html");
-
     }
 }
