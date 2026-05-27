@@ -378,7 +378,7 @@
         max-width: 100vw;
         padding: 8px;
         box-sizing: border-box;
-        overflow-y: auto;              /* only THIS section scrolls */
+        overflow-y: auto;
         overflow-x: hidden;
         align-items: flex-start;
         justify-content: flex-start;
@@ -394,17 +394,17 @@
         padding: clamp(12px, 4vw, 20px);
         box-sizing: border-box;
         flex-direction: column;
-        align-items: stretch;          /* ← stretch children to full width */
+        align-items: stretch;
         justify-content: center;
     }
 
     .customer-receive-form .field-group {
-        width: 100%;                   /* ← force the wrapper to fill the form */
+        width: 100%;
         box-sizing: border-box;
     }
 
     .customer-receive-input-box {
-        width: 100%;                   /* ← now 100% of field-group, which is 100% of form */
+        width: 100%;
         max-width: 100%;
         box-sizing: border-box;
         height: clamp(2rem, 8vw, 2.8rem);

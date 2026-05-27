@@ -94,7 +94,6 @@ body {
     height: 100%;
 }
 
-/* Result container — slightly lighter glass */
 .my-page-result-box {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.1);
@@ -114,7 +113,6 @@ body {
     align-items: center;
 }
 
-/* Order cards — white glass with blue tint */
 .my-page-orders {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.18);
@@ -201,7 +199,6 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-    /* Force the main container to stack vertically and center items */
     .my-page-overview {
         flex-direction: column !important;
         align-items: center !important;
@@ -209,7 +206,6 @@ body {
         height: auto !important;
     }
 
-    /* Force the buttons container to sit in a horizontal row at the top */
     .my-page-overview-boxes {
         flex-direction: row !important;
         width: 100% !important;
@@ -221,18 +217,16 @@ body {
 
     }
 
-    /* Adjust button sizes so they fit nicely next to each other */
     .my-page-categories {
         width: 80% !important;
         padding: 12px 5px !important;
-        font-size: 0.8rem !important; /* Shrunk slightly so Danish words don't break awkwardly */
+        font-size: 0.8rem !important;
         text-align: center !important;
     }
 
-    /* Force the results box underneath the buttons */
     .my-page-results {
         width: 100% !important;
-        height: 85% !important; /* Gives it a fixed scrollable height on mobile */
+        height: 85% !important;
         align-self: center !important;
     }
 
