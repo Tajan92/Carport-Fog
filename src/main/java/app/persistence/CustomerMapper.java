@@ -71,7 +71,7 @@ public class CustomerMapper {
                 String phoneNumber = resultSet.getString("phone_number");
                 String town = resultSet.getString("town");
 
-                return new Customer(customerId, email, password, firstName, lastName, address, zipCode, phoneNumber, town);
+                return new Customer(customerId,firstName, lastName, email, password, phoneNumber, address, zipCode, town);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get customer by provided id: " + customerId);
             }

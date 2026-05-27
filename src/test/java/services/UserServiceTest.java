@@ -104,5 +104,31 @@ public class UserServiceTest extends MapperTest {
         assertDoesNotThrow(() -> serviceFactory.getUserService().createCustomer(goodCustomerInput));
     }
 
+    @Test
+    public void getCustomerTest() throws DatabaseException {
+        int expectedId = 1;
+        String expectedFName = "Anders";
+        String expectedLName = "Jensen";
+        String expectedEmail = "anders@email.dk";
+        String expectedPNumber = "12345678";
+        String expectedRole = "CUSTOMER";
+        String expectedAddress = "Elmevej 4";
+        String expectedZip = "2100";
+        String expectedTown = "København Ø";
+
+        CustomerResponseDTO response = serviceFactory.getUserService().getCustomer(expectedId);
+
+        //Check if correct data is gotten from db
+        assertEquals(expectedId, response.getId());
+        assertEquals(expectedFName, response.getFirstName());
+        assertEquals(expectedLName, response.getLastName());
+        assertEquals(expectedEmail, response.getEmail());
+        assertEquals(expectedPNumber, response.getPhoneNumber());
+        assertEquals(expectedRole, response.getRole());
+        assertEquals(expectedAddress, response.getAddress());
+        assertEquals(expectedZip, response.getZipCode());
+        assertEquals(expectedTown, response.getTown());
+    }
+
 
 }
