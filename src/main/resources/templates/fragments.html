@@ -1,13 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head(title)">
+<head th:fragment="customerHead(title)">
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" href="/public/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
-    <link rel="stylesheet" href="/public/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
-
-
+    <link rel="stylesheet" href="/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+    <link rel="stylesheet" href="/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+    <link rel="stylesheet" href="/css/customer-carport-maker.css" th:href="@{/css/customer-carport-maker.css}"/>
+    <link rel="stylesheet" href="/css/sales-rep-login.css" th:href="@{/css/sales-rep-login.css}"/>
+    <link rel="stylesheet" href="/public/css/customer-my-page.css" th:href="@{/css/customer-my-page.css}"/>
+    <link rel="stylesheet" href="/public/css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" href="/public/css/customer-order-details.css" th:href="@{/css/customer-order-details.css}"/>
+    <link rel="stylesheet" href="/public/css/customer-quote-details.css" th:href="@{/css/customer-quote-details.css}"/>
+    <link rel="stylesheet" href="/public/css/customer-inquiry-details.css" th:href="@{/css/customer-inquiry-details.css}"/>
 </head>
+
+<head th:fragment="adminHead(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/css/general-styles.css" th:href="@{/css/general-styles.css}"/>
+    <link rel="stylesheet" href="/css/customer-login.css" th:href="@{/css/customer-login.css}"/>
+    <link rel="stylesheet" href="/css/sales-rep-login.css" th:href="@{/css/sales-rep-login.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-my-page.css" th:href="@{/css/admin-my-page.css}"/>
+    <link rel="stylesheet" href="/public/css/header.css" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-order-details.css" th:href="@{/css/admin-order-details.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-quote-details.css" th:href="@{/css/admin-quote-details.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-inquiry-details.css" th:href="@{/css/admin-inquiry-details.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-customer-details.css" th:href="@{/css/admin-customer-details.css}"/>
+    <link rel="stylesheet" href="/public/css/admin-carport-maker.css" th:href="@{/css/admin-carport-maker.css}"/>
+</head>
+
+
+<header th:fragment="customerHeader(title)">
+    <div class="carport-maker-progress">
+        <h1 class="progress-steps" id="progress-step-1" th:href="@{/}">FOG</h1>
+        <a class="progress-steps" id="progress-step-2" th:href="@{/}">Lav carport</a>
+        <a class="progress-steps" id="progress-step-3" th:href="@{/customerProfilePage}">Min side</a>
+        <a class="progress-steps" id="progress-step-4" th:href="@{/customerLogin}">Log ud</a>
+    </div>
+</header>
+
+<header th:fragment="adminHeader(title)">
+    <div class="carport-maker-progress">
+        <h1 class="progress-steps" id="progress-step-5" th:href="@{/}">FOG</h1>
+        <h1 class="progress-steps" id="progress-step-6" th:href="@{/}">ADMIN</h1>
+        <a class="progress-steps" id="progress-step-7" th:href="@{/}">Lav carport</a>
+        <a class="progress-steps" id="progress-step-8" th:href="@{/adminProfilePage}">Min side</a>
+        <a class="progress-steps" id="progress-step-9" th:href="@{/loginSalesRep}">Log ud</a>
+    </div>
+</header>
+
+
+
+
+<div th:fragment="customerScripts">
+    <script th:src="@{/javascript/customer-header-states.js}"></script>
+    <script th:src="@{/javascript/customer-carport-maker.js}"></script>
+    <script th:src="@{/javascript/customer-my-page.js}"></script>
+</div>
+
+<div th:fragment="adminScripts">
+    <script th:src="@{/javascript/admin-header-states.js}"></script>
+    <script th:src="@{/javascript/admin-carport-maker.js}"></script>
+    <script th:src="@{/javascript/admin-my-page.js}"></script>
+</div>
+
+
 <body>
 
 </body>
