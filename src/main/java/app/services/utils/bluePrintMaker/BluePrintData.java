@@ -1,4 +1,4 @@
-package app.services.bluePrintService;
+package app.services.utils.bluePrintMaker;
 
 public class BluePrintData {
 
@@ -13,6 +13,7 @@ public class BluePrintData {
     public static final String FILL_NONE = "none";
 
     // Carport
+    public static final double CARPORT_HEIGHT_FLAT_ROOF = 230.0;
     public static final double RAFTER_WIDTH = 4.5;
     public static final double POLE_SIZE = 9.7;
     public static final double POLE_HEIGHT = 210.0;
@@ -48,4 +49,5 @@ public class BluePrintData {
     // Arrows
     public static final double TEXT_OFFSET = 10.0;
     public static final double HALF_TICK_SIZE = 10.0;
+    public static final double ARROW_OFFSET = 30.0;
 }

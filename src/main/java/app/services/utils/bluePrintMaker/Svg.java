@@ -1,4 +1,4 @@
-package app.services.utils;
+package app.services.utils.bluePrintMaker;
 
 public class Svg {
     private final static String SVG_START_TEMPLATE = "<svg x=\"%d\" y=\"%d\" width=\"%s\" height=\"%s\" viewBox=\"%s\" style=\"border: %dpx solid #ccc; \" preserveAspectRatio=\"xMinYMin\">";

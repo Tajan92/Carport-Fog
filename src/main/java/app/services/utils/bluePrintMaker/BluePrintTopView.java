@@ -1,8 +1,7 @@
-package app.services.bluePrintService;
+package app.services.utils.bluePrintMaker;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import app.services.utils.Svg;
 
 import java.util.List;
 

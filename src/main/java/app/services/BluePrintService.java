@@ -1,4 +1,4 @@
-package app.services.bluePrintService;
+package app.services;
 
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
@@ -6,11 +6,15 @@ import app.entities.*;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.ProductMapper;
+import app.services.utils.bluePrintMaker.BluePrintData;
+import app.services.utils.bluePrintMaker.BluePrintTopView;
+import app.services.utils.bluePrintMaker.BlueprintSideView;
 import app.services.converters.CarportConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
-import app.services.utils.Svg;
+import app.services.utils.bluePrintMaker.Svg;
+
 import java.util.List;
 
 public class BluePrintService {
@@ -67,19 +71,62 @@ public class BluePrintService {
     }
 
     private void addMeasurements() {
-        svg.addArrow(BluePrintData.OFFSET_X, 650, 650, 650);
-        svg.addText(350, 640, 0, carport.getLength() + " cm");
+        addHorizontalArrowsToTopView();
+        addVerticalArrowsToTopView();
+        addVerticalArrowsToSideView();
+        addHorizontalArrowsToSideView();
+    }
+
+    private void addVerticalArrowsToTopView() {
+        double x = BluePrintData.OFFSET_X - BluePrintData.ARROW_OFFSET;
+        double y1 = BluePrintData.OFFSET_Y_TOP;
+        double y2 = BluePrintData.OFFSET_Y_TOP + carport.getWidth();
+        drawVerticalArrow(x, y1 + BluePrintData.POLE_END_GAP, y2 - BluePrintData.POLE_END_GAP, carport.getWidth()-(BluePrintData.POLE_END_GAP * 2));
+
+        drawVerticalArrow(x-20, y1, y2,carport.getWidth());
+    }
+
+    private void addHorizontalArrowsToTopView() {
+        double horizontalStartX = BluePrintData.OFFSET_X;
+        double horizontalStartY = BluePrintData.OFFSET_Y_TOP + carport.getWidth() + BluePrintData.ARROW_OFFSET;
+
+        drawHorizontalArrow(horizontalStartX, horizontalStartX + carport.getLength(), horizontalStartY, carport.getLength(), true);
+
+        double rafterQuantity = getQuantityByPlacementDescription("Spær, monteres på rem");
+        if (rafterQuantity <= 1) return;
+
+        double rafterSpacing = carport.getLength() / (rafterQuantity - 1);
+        double x = horizontalStartX;
+        double x2 = x + rafterSpacing;
+
+        double y = BluePrintData.OFFSET_Y_TOP - BluePrintData.ARROW_OFFSET;
+        for (int i = 0; i < rafterQuantity - 1; i++) {
+            boolean drawTick = (i == rafterQuantity - 2);
+
+            drawHorizontalArrow(x, x2, y, rafterSpacing, drawTick);
+            x += rafterSpacing;
+            x2 += rafterSpacing;
+        }
     }
 
     private void addVerticalArrowsToSideView() {
-        drawVerticalArrow(40, 70, 300, 230);
-        drawVerticalArrow(70, 90, 300, 210);
-        drawVerticalArrow(800, 70, 300, 230);
+        double verticalStartX = BluePrintData.OFFSET_X - BluePrintData.ARROW_OFFSET;
+        double carportWithRoofHeight = BluePrintData.CARPORT_HEIGHT_FLAT_ROOF;
+        if (roof.getRoofType().contains("Højt tag")) {
+            carportWithRoofHeight = BluePrintData.POLE_HEIGHT + calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
+        }
+        double verticalStartY = BluePrintData.GROUND_Y - carportWithRoofHeight;
+
+        drawVerticalArrow(verticalStartX - 20, verticalStartY, BluePrintData.GROUND_Y, carportWithRoofHeight);
+        drawVerticalArrow(verticalStartX, verticalStartY + BluePrintData.VERTICAL_SIDING_OVERLAP, BluePrintData.GROUND_Y, carportWithRoofHeight - BluePrintData.VERTICAL_SIDING_OVERLAP);
+        if (!roof.getRoofType().contains("Højt tag")) {
+            drawVerticalArrow(verticalStartX + carport.getLength() + BluePrintData.ARROW_OFFSET, verticalStartY - 10, BluePrintData.GROUND_Y, carportWithRoofHeight - 10);
+        }
     }
 
     private void addHorizontalArrowsToSideView() {
-        double horizontalStartX = 0.0;// TODO: Find positionsCoordinate
-        double horizontalStartY = 0.0; // TODO: Find positionsCoordinate
+        double horizontalStartX = BluePrintData.OFFSET_X;
+        double horizontalStartY = BluePrintData.GROUND_Y + BluePrintData.ARROW_OFFSET;
         double roofOverhangStart = BluePrintData.POLE_START_GAP;
         double roofOverhangEnd = BluePrintData.POLE_END_GAP;
         int quantityAdjustment = -1;
@@ -118,7 +165,7 @@ public class BluePrintService {
         // Text
         double midX = (x1 + x2) / 2;
 
-        svg.addText(midX, y - BluePrintData.TEXT_OFFSET, 0, measure + " cm");
+        svg.addText(midX, y - BluePrintData.TEXT_OFFSET, 0, String.format("%.1f cm", measure));
 
         // Start tick
         svg.addLine(x1, y - BluePrintData.HALF_TICK_SIZE, x1, y + BluePrintData.HALF_TICK_SIZE);
@@ -135,7 +182,7 @@ public class BluePrintService {
 
         // Text
         double midY = (yTop + yBottom) / 2;
-        svg.addText(x - BluePrintData.TEXT_OFFSET, midY, -90, measure + " cm");
+        svg.addText(x - BluePrintData.TEXT_OFFSET, midY, -90, String.format("%.1f cm", measure));
         // Top tick
         svg.addLine(x - BluePrintData.HALF_TICK_SIZE, yTop, x + BluePrintData.HALF_TICK_SIZE, yTop);
 
@@ -149,5 +196,11 @@ public class BluePrintService {
                 .map(ProductsPartsListEntry::getQuantity)
                 .findFirst()
                 .orElse(0.0);
+    }
+
+    public double calculateRoofHeight(double width, double roofSlope) {
+        double run = width / 2.0;
+        double angleInRadians = Math.toRadians(roofSlope);
+        return run * Math.tan(angleInRadians);
     }
 }
