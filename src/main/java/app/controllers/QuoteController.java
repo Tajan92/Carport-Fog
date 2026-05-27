@@ -26,6 +26,7 @@ public class QuoteController {
         app.get("/getAllQuotesCustomer", ctx -> getAllQuotesCustomer(ctx, serviceFactory));
         app.get("/getQuoteCustomer/{quote_id}", ctx -> getQuoteCustomer(ctx, serviceFactory));
         app.get("/getQuoteCustomer", ctx -> ctx.render("customer-quote-details")); /* Test route af AJ*/
+        app.get("/getQuoteAdmin", ctx -> ctx.render("admin-quote-details")); /* Test route af AJ*/
     }
 
     public void showCreateQuotePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
