@@ -20,6 +20,7 @@ public class OrderController {
 //        app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
 //        app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
         app.get("/getOrderCustomer", ctx -> ctx.render("customer-order-details")); /* Test route af AJ*/
+        app.get("/getOrderAdmin", ctx -> ctx.render("admin-order-details")); /* Test route af AJ*/
 
     }
 

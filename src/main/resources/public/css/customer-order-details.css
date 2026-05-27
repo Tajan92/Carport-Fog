@@ -39,11 +39,6 @@ body {
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-
-
-
-
-
 .order-header{
     display: grid;
     grid-template-columns: 1fr auto 1fr;
