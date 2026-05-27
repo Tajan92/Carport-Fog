@@ -11,14 +11,14 @@
     <h1 class="my-page-title">Admin side</h1>
     <div class="my-page-overview">
         <div class="my-page-overview-boxes">
-            <a class="my-page-categories" id="my-page-category-inquiry">Mine Forespørgelser</a>
-            <a class="my-page-categories" id="my-page-category-quote">Mine tilbud</a>
-            <a class="my-page-categories" id="my-page-category-order">Mine ordre</a>
+            <a class="my-page-categories" id="my-page-category-inquiry">Alle Forespørgelser</a>
+            <a class="my-page-categories" id="my-page-category-quote">Alle tilbud</a>
+            <a class="my-page-categories" id="my-page-category-order">Alle ordre</a>
         </div>
         <div class="my-page-results">
             <div class="my-page-result-box">
                 <div class="my-page-inquiry-results " >
-                    <a class="my-page-orders" th:href="@{/getInquiryCustomer}">Forespørgelse #1</a>
+                    <a class="my-page-orders" th:href="@{/getInquiryAdmin}">Forespørgelse #1</a>
                     <a class="my-page-orders">Forespørgelse #2</a>
                     <a class="my-page-orders">Forespørgelse #3</a>
                     <a class="my-page-orders">Forespørgelse #4</a>
@@ -26,7 +26,7 @@
                     <a class="my-page-orders">Forespørgelse #6</a>
                 </div>
                 <div class="my-page-quote-results hidden">
-                    <a class="my-page-orders" th:href="@{/getQuoteCustomer}">Tilbud #1</a>
+                    <a class="my-page-orders" th:href="@{/getQuoteAdmin}">Tilbud #1</a>
                     <a class="my-page-orders">Tilbud #2</a>
                     <a class="my-page-orders">Tilbud #3</a>
                     <a class="my-page-orders">Tilbud #4</a>
@@ -34,7 +34,7 @@
                     <a class="my-page-orders">Tilbud #6</a>
                 </div>
                 <div class="my-page-order-results hidden" >
-                    <a class="my-page-orders" th:href="@{/getOrderCustomer}">Ordre #1</a>
+                    <a class="my-page-orders" th:href="@{/getOrderAdmin}">Ordre #1</a>
                     <a class="my-page-orders">Ordre #2</a>
                     <a class="my-page-orders">Ordre #3</a>
                     <a class="my-page-orders">Ordre #4</a>

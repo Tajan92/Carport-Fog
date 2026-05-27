@@ -51,15 +51,15 @@ body {
     width: 100%;
 }
 
-#order-return-button{
+.return-button{
     align-self: flex-start;
 }
 
-.order-return-svg{
+.return-svg{
     stroke: white;
 }
 
-#order-return-button:hover .order-return-svg{
+.return-button:hover .return-svg{
     stroke: #8fbae4;
     cursor: pointer;
 }

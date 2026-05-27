@@ -20,6 +20,7 @@ public class InquiryController {
         app.post("/getAllInquiries", ctx -> getAllInquiries(ctx, serviceFactory));
         app.post("/deleteInquiry", ctx -> deleteInquiry(ctx, serviceFactory));
         app.get("/getInquiryCustomer", ctx -> ctx.render("customer-inquiry-details")); /* Test route af AJ*/
+        app.get("/getInquiryAdmin", ctx -> ctx.render("admin-inquiry-details")); /* Test route af AJ*/
 
     }
 

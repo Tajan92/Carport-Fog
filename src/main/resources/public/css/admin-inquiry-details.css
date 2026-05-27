@@ -10,7 +10,7 @@ body {
 
 
 
-.quote-details-overview {
+.inquiry-details-overview {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -30,7 +30,7 @@ body {
 }
 
 /* Title becomes white to show on dark glass */
-.quote-details-title {
+.inquiry-details-title {
     color: white;
     font-family: "Playfair Display";
     font-weight: 600;
@@ -38,9 +38,9 @@ body {
     margin-top: auto;
     text-align: center;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-justify-self: center}
+}
 
-.quote-details-box{
+.inquiry-details-box{
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -48,27 +48,33 @@ justify-self: center}
     border-radius: 10px;
     height: 100%;
     margin-bottom: auto;
+    overflow-y: scroll;
 }
 
-.quote-header{
+
+
+
+.inquiry-header{
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     width: 100%;
 }
 
-.return-button{
+.admin-return-button{
     align-self: flex-start;
 }
 
-.return-svg{
+.admin-return-svg{
     stroke: white;
 }
 
-.return-button:hover .return-svg{
+.admin-return-button:hover .admin-return-svg{
     stroke: #8fbae4;
     cursor: pointer;
 }
+
+
 
 
 
