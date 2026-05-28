@@ -29,29 +29,65 @@ class ShedCalculatorTest {
     }
 
     @Test
-    void addShedProducts_ShouldAddExpectedEntries() throws CalculatorException {
-
+    void addProductsToListTest() throws CalculatorException {
         Carport carport = new Carport(1,600, 240, 780, 22000, 1, 1, 1);
-        Roof roof = new Roof(0, "Plastmo", "Fladt tag");
-        Shed shed = new Shed(300, 210,
-                "Beklædning: 19x100 mm. trykimp. Brædt", true);
+        Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
+        Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
 
         shedCalculator.addShedProducts(partsList, carport, roof, shed, products);
 
-        // Checks that list is not empty
         assertFalse(partsList.isEmpty());
+    }
 
-        // Checks if door stabilizer has been added
+    @Test
+    void addStabilizerToShedDoorTest() throws CalculatorException {
+        Carport carport = new Carport(1,600, 240, 780, 22000, 1, 1, 1);
+        Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
+        Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
+
+        shedCalculator.addShedProducts(partsList, carport, roof, shed, products);
+
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getProduct().getDescription()
                         .equals("38x73 mm. Lægte ubh. (Lægte til dør)")));
+    }
 
-        // Checks that studs have been added
+    @Test
+    void addShedSidingTest() throws CalculatorException {
+        Carport carport = new Carport(1,600, 240, 780, 22000, 1, 1, 1);
+        Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
+        Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
+
+        shedCalculator.addShedProducts(partsList, carport, roof, shed, products);
+
+        assertTrue(partsList.stream()
+                .anyMatch(e -> e.getPlacementDescription()
+                        .equals("til beklædning af skur")));
+        assertTrue(partsList.stream()
+                .anyMatch(e -> e.getProduct().getDescription()
+                        .equals("Beklædning: 19x100 mm. trykimp. Brædt")));
+    }
+    @Test
+    void addShedStudsTest() throws CalculatorException {
+        Carport carport = new Carport(1,600, 240, 780, 22000, 1, 1, 1);
+        Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
+        Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
+
+        shedCalculator.addShedProducts(partsList, carport, roof, shed, products);
+
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getProduct().getDescription()
                         .equals("45x95 mm. Reglar ub.")));
+    }
 
-        // Checks that quantities is not 0
+    @Test
+    void addQuantitiesToListTest() throws CalculatorException {
+        Carport carport = new Carport(1,600, 240, 780, 22000, 1, 1, 1);
+        Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
+        Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
+
+        shedCalculator.addShedProducts(partsList, carport, roof, shed, products);
+
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getQuantity() > 0));
     }
