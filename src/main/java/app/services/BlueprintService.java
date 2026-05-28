@@ -14,7 +14,7 @@ import app.services.utils.PartsListCalculator;
 
 import java.util.List;
 
-public class BluePrintService {
+public class BlueprintService {
     private Svg svg;
     private Carport carport;
     private Shed shed;
@@ -28,9 +28,9 @@ public class BluePrintService {
     private CarportConverter carportConverter;
     private RoofConverter roofConverter;
     private ShedConverter shedConverter;
+    private ProductMapper productMapper;
 
-    public BluePrintService(ProductMapper productMapper) throws DatabaseException {
-        this.products = productMapper.getAllProducts();
+    public BlueprintService(ProductMapper productMapper) {
         this.carportConverter = new CarportConverter();
         this.roofConverter = new RoofConverter();
         this.shedConverter = new ShedConverter();
@@ -38,9 +38,11 @@ public class BluePrintService {
         this.sideView = new BlueprintSideView();
         this.topView = new BluePrintTopView();
         this.bluePrintMeasure = new BluePrintMeasure();
+        this.productMapper = new ProductMapper();
     }
 
-    public String createBlueprint(CarportRequestDTO carportRequestDTO) throws CalculatorException {
+    public String createBlueprint(CarportRequestDTO carportRequestDTO) throws CalculatorException, DatabaseException {
+        this.products = productMapper.getAllProducts();
         this.carport = carportConverter.covertCarportDTOToEntity(carportRequestDTO);
         this.roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
 

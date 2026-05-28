@@ -7,6 +7,7 @@ import app.dto.responseDTO.UserResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
+import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.List;
@@ -14,14 +15,11 @@ import java.util.List;
 public class OrderController {
 
     public void getRoutes(Javalin app, ServiceFactory serviceFactory) {
-//        app.get("/createOrder", ctx -> createOrder(ctx, serviceFactory));
-//        app.get("/getOrder", ctx -> getOrder(ctx, serviceFactory));
-//        app.get("/getAllOrders", ctx -> getAllOrders(ctx, serviceFactory));
-//        app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
-//        app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
-        app.get("/getOrderCustomer", ctx -> ctx.render("customer-order-details")); /* Test route af AJ*/
-        app.get("/getOrderAdmin", ctx -> ctx.render("admin-order-details")); /* Test route af AJ*/
-
+        app.get("/admin/create/order", ctx -> createOrder(ctx, serviceFactory));
+        app.get("/customer/get/order", ctx -> getOrderCustomer(ctx, serviceFactory));
+        app.get("/admin/get/order", ctx -> getOrderAdmin(ctx, serviceFactory));
+        //app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
+        app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
     }
 
     public void createOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
@@ -42,6 +40,10 @@ public class OrderController {
     }
 
     public void getOrderAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+        if(!UserValidator.isAdmin(ctx)){
+            ctx.redirect("/");
+            return;
+        }
         int orderId = Integer.parseInt(ctx.pathParam("order_id"));
         OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
 
@@ -50,6 +52,10 @@ public class OrderController {
     }
 
     public void getOrderCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+        if(!UserValidator.isCustomer(ctx)){
+            ctx.redirect("/");
+            return;
+        }
         int orderId = Integer.parseInt(ctx.pathParam("order_id"));
         OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
 
@@ -57,26 +63,11 @@ public class OrderController {
         ctx.render("customer-order-details.html");
     }
 
-    public void getAllOrdersCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        UserResponseDTO customerResponseDTO = ctx.sessionAttribute("currentUser");
-        List<OrderResponseDTO> orderResponseDTOS = serviceFactory.getOrderService().getAllOrdersByCustomerId(customerResponseDTO.getId());
-        ctx.attribute("all_orders", orderResponseDTOS);
-        ctx.render("customer-all-orders.html");
-    }
-
-    public void getAllOrdersAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        List<OrderResponseDTO> orderResponseDTOS = serviceFactory.getOrderService().getAllOrders();
-        ctx.attribute("all_orders", orderResponseDTOS);
-        ctx.render("admin-all-orders.html");
-    }
-
-
     public void deleteOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         int orderId = Integer.parseInt(ctx.pathParam("order_id"));
         OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
         serviceFactory.getOrderService().deleteOrder(orderId);
         serviceFactory.getCarportService().deleteCarport(orderResponseDTO.getCarportResponseDTO().getCarportId());
         ctx.render("admin-all-orders.html");
-
     }
 }

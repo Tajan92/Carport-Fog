@@ -1,5 +1,4 @@
 package app.controllers;
-
 import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.dto.requestDTO.users.LoginCustomerRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
@@ -12,19 +11,19 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
 import java.util.List;
 
 public class CustomerController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory){
-        app.get("/register", ctx -> ctx.render("register.html"));
-        app.post("/register", ctx -> createCustomer(ctx, serviceFactory));
+        app.get("/customer/register", ctx -> ctx.render("customer-register.html"));
         app.get("/customer/login", ctx -> ctx.render("customer-login.html"));
+
+        app.get("/customer/my/page", ctx -> customerMyPage(ctx, serviceFactory));
+        app.get("/admin/customer/details/{customer_id}", ctx -> getCustomerDetails(ctx, serviceFactory));
+
+        app.post("/customer/register", ctx -> createCustomer(ctx, serviceFactory));
         app.post("/customer/login", ctx -> customerLogin(ctx, serviceFactory));
-        app.get("/load/customer/profile/page", ctx -> loadCustomerProfilePage(ctx, serviceFactory));
-        app.get("/getAllCustomers", ctx -> loadAllCustomers(ctx, serviceFactory));
-        app.get("/getCustomerById/{customer_id}", ctx -> getCustomerById(ctx, serviceFactory));
         //inquiry, quote, order details page
     }
 
@@ -33,17 +32,20 @@ public class CustomerController {
         String lastName = ctx.formParam("last_name");
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        String passwordCheck = ctx.formParam("password-check");
+        String passwordCheck = ctx.formParam("confirm_password");
         String phoneNumber = ctx.formParam("phone_number");
         String address = ctx.formParam("address");
-        String zip = ctx.formParam("zip");
+        String zip = ctx.formParam("zipcode");
 
         CustomerRequestDTO request = new CustomerRequestDTO(firstName, lastName, email, password, passwordCheck, phoneNumber, address, zip);
 
         try {
             List<String> messages = serviceFactory.getUserService().createCustomer(request);
             if (messages.isEmpty()) {
-                ctx.redirect("/customer/login");
+                LoginCustomerRequestDTO loginRequest = new LoginCustomerRequestDTO(email, password);
+                CustomerResponseDTO response = serviceFactory.getUserService().customerLogin(loginRequest);
+                ctx.sessionAttribute("currentUser", response);
+                ctx.redirect("/");
             } else {
                 StringBuilder messageBuilder = new StringBuilder("| ");
                 for (String errorMsg : messages) {
@@ -52,11 +54,12 @@ public class CustomerController {
                     }
                 }
                 ctx.attribute("errorMessage", messageBuilder.toString());
-                ctx.render("register.html");
+                System.out.println(messageBuilder);
+                ctx.render("customer-register.html");
             }
         } catch (DatabaseException e) {
             ctx.attribute("errorMessage", "Der skete en databasefejl: " + e.getMessage());
-            ctx.render("register.html");
+            ctx.render("customer-register.html");
         }
     }
 
@@ -74,7 +77,7 @@ public class CustomerController {
             }
     }
 
-    public void loadCustomerProfilePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+    public void customerMyPage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         if (!UserValidator.isCustomer(ctx)){
             ctx.redirect("/");
             return;
@@ -82,35 +85,24 @@ public class CustomerController {
 
         CustomerResponseDTO response = ctx.sessionAttribute("currentUser");
         //information about customer
-        ctx.attribute("customer-profile", response);
+        ctx.attribute("customer-my-page", response);
 
         //Inquiries
         List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiriesByCustomerId(response.getId());
-        ctx.attribute("inquiries-profile", inquiries);
+        ctx.attribute("customer-inquiries-my-page", inquiries);
 
         //Received quotes
         List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesByCustomerId(response.getId());
-        ctx.attribute("quotes-profile", quotes);
+        ctx.attribute("customer-quotes-my-page", quotes);
 
         //Orders
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(response.getId());
-        ctx.attribute("orders-profile", orders);
+        ctx.attribute("customer-orders-my-page", orders);
 
-        ctx.render("profile-page.html");
+        ctx.render("customer-my-page.html");
     }
 
-    public void loadAllCustomers(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
-        if (!UserValidator.isAdmin(ctx)){
-            ctx.redirect("/");
-            return;
-        }
-        List<CustomerResponseDTO> customers = serviceFactory.getUserService().getAllCustomers();
-        ctx.attribute("all-customers", customers);
-
-        ctx.render("all-customers.html");
-    }
-
-    public void getCustomerById(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+    public void getCustomerDetails(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         if (!UserValidator.isAdmin(ctx)){
             ctx.redirect("/");
             return;
@@ -132,6 +124,6 @@ public class CustomerController {
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(response.getId());
         ctx.attribute("customer-orders-profile", orders);
 
-        ctx.render("customer-details.html");
+        ctx.render("admin-customer-details.html");
     }
 }

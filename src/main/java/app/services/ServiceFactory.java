@@ -1,5 +1,6 @@
 package app.services;
 
+import app.exceptions.DatabaseException;
 import app.persistence.*;
 import lombok.Getter;
 
@@ -17,7 +18,7 @@ public class ServiceFactory {
     private BlueprintService blueprintService;
     private PriceService priceService;
 
-    public ServiceFactory() {
+    public ServiceFactory()  {
         CarportMapper carportMapper = new CarportMapper();
         CustomerMapper customerMapper = new CustomerMapper();
         InquiryMapper inquiryMapper = new InquiryMapper();
@@ -38,7 +39,7 @@ public class ServiceFactory {
         this.orderService = new OrderService(orderMapper, carportService, userService, partsListService);
         this.shedService = new ShedService(shedMapper);
         this.roofService = new RoofService(roofMapper);
-        this.blueprintService = new BlueprintService();
+        this.blueprintService = new BlueprintService(productMapper);
         this.priceService = new PriceService();
     }
 }

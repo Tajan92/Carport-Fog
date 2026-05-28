@@ -42,3 +42,7 @@
     color: #2783e1; !important;
     text-decoration: underline !important;
 }
+
+.hidden{
+    display: none;
+}
