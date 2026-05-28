@@ -10,7 +10,6 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import java.util.List;
 
 public class InquiryController {
 
@@ -35,26 +34,27 @@ public class InquiryController {
 
         //Shed
         String shedWidth;
+        String shedLength;
         String shedStatus = ctx.formParam("shed_status");
-        String shedLength = ctx.formParam("shed_length");
         String shedSiding = ctx.formParam("shed_siding");
         String floorStatus = ctx.formParam("shed_floor");
-        boolean floor;
+        boolean floor = false;
 
-        if (shedStatus.matches("HALF")){
-            shedWidth = String.valueOf(carportWidth/2);
-        } else if (shedStatus.matches("FULL")){
-            shedWidth = String.valueOf(carportWidth);
-        } else {
-            shedLength = null;
-            shedWidth = null;
-            shedSiding = null;
-            floor = false;
+        //Check for floor
+        if (floorStatus.equals("TRUE")){
+            floor = true;
         }
-        if (floorStatus.matches("TRUE")){
-            floor=true;
-        }else {
-            floor = false;
+        //Check for shed size full, half or none
+        if (shedStatus.matches("HALF")) {
+            shedWidth = String.valueOf(carportWidth / 2);
+            shedLength = String.valueOf(carportLength / 3);
+        } else if (shedStatus.matches("FULL")) {
+            shedWidth = String.valueOf(carportWidth);
+            shedLength = String.valueOf(carportLength / 3);
+        } else {
+            shedWidth = null;
+            shedLength = null;
+            shedSiding = null;
         }
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);

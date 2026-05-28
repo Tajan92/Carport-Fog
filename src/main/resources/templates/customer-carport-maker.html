@@ -15,7 +15,7 @@
             <a class="maker-categories" id="shed-button">Vælg Skur</a>
             <a class="maker-categories" id="shed-addon-button">Vælg skur addons</a>
             <a class="maker-categories" id="roof-addon-button">Vælg tag addons</a>
-            <a class="maker-categories" id="inquiry-button">Send forespørgelse</a>
+            <a class="maker-categories" id="inquiry-button">Send forespørgsel</a>
         </div>
     </div>
     <div class="stage-display">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="roof-boxes" id="high-roof-box">
                     <a>
-                        <p>Skrådt Tag</p>
+                        <p>Højt Tag</p>
                         <svg class="tilted-roof-svg" width="377" height="395" viewBox="0 0 377 395" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path class="svg-color"
@@ -179,8 +179,10 @@
                 <div class="inquiry-form hidden ">
                 <div class="inquiry-submit">
                     <h1>Har du husket det hele?</h1>
-                        <button class="continue" form="customer-carport-form" type="submit">Send forespørgsel </button>
+                    <label for="remarkInput">Remark:</label>
+                    <input type="text" id="remarkInput" name="inquiry-remark" placeholder="Eventuelle bemærkninger?">
                 </div>
+                        <button class="continue" form="customer-carport-form" type="submit">Send forespørgsel </button>
                 </div>
         </form>
 
