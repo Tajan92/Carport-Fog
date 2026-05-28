@@ -5,7 +5,6 @@ import app.exceptions.CalculatorException;
 import app.services.utils.partsListCalculator.RoofCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
