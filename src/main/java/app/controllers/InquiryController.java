@@ -1,5 +1,4 @@
 package app.controllers;
-
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
@@ -21,7 +20,6 @@ public class InquiryController {
         app.post("/deleteInquiry", ctx -> deleteInquiry(ctx, serviceFactory));
         app.get("/getInquiryCustomer", ctx -> ctx.render("customer-inquiry-details")); /* Test route af AJ*/
         app.get("/getInquiryAdmin", ctx -> ctx.render("admin-inquiry-details")); /* Test route af AJ*/
-
     }
 
     public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {

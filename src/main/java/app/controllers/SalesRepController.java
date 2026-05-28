@@ -13,9 +13,10 @@ import java.util.List;
 public class SalesRepController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory){
-        app.get("/loginSalesRepRender", ctx -> ctx.render("salesRepLogin.html"));
-        app.post("/loginSalesRep", ctx -> loginSalesRep(ctx, serviceFactory));
+        app.get("/admin/login", ctx -> ctx.render("admin-login.html"));
+        app.post("/admin/login", ctx -> loginSalesRep(ctx, serviceFactory));
         app.get("/admin/my/page", ctx -> loadAdminMyPage(ctx, serviceFactory));
+        app.get("/admin/carport/maker", ctx -> ctx.render("admin-carport-maker.html"));
     }
 
     public void loginSalesRep(Context ctx, ServiceFactory serviceFactory){
@@ -25,7 +26,7 @@ public class SalesRepController {
         try {
             SalesRepResponseDTO response = serviceFactory.getUserService().adminLogin(request);
             ctx.sessionAttribute("currentUser", response);
-            ctx.redirect("/");
+            ctx.redirect("/admin/my/page");
         } catch (DatabaseException e) {
             ctx.attribute("msg", e.getMessage());
             ctx.render("customer-login.html");
