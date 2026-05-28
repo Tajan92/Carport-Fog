@@ -273,6 +273,16 @@ border:  solid #2783e1;
 }
 
 
+#customer-carport-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    width: 100%;
+    margin-left: 0;
+}
+
+
 @keyframes fadeIn {
     from {
         opacity: 0;

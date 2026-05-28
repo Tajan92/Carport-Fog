@@ -45,10 +45,10 @@ public class SalesRepController {
         List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotes();
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
 
-        ctx.attribute("admin-customers", customers);
-        ctx.attribute("admin-inquiries", inquiries);
-        ctx.attribute("admin-quotes", quotes);
-        ctx.attribute("admin-orders", orders);
+        ctx.attribute("admin_customers", customers);
+        ctx.attribute("admin_inquiries", inquiries);
+        ctx.attribute("admin_quotes", quotes);
+        ctx.attribute("admin_orders", orders);
 
         ctx.render("admin-my-page.html");
     }

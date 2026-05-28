@@ -124,6 +124,6 @@ public class CustomerController {
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(response.getId());
         ctx.attribute("customer-orders-profile", orders);
 
-        ctx.render("customer-details.html");
+        ctx.render("admin-customer-details.html");
     }
 }
