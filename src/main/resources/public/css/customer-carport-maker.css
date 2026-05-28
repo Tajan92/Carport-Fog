@@ -1,5 +1,4 @@
 
-
 .custom-carport-maker-main-grid {
     display: grid;
     grid-template-columns: 20% 80%;
@@ -87,14 +86,20 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
     animation: fadeIn 1s ease;
+}
 
+.chosen-roof-box {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: solid #2783e1;
 }
 
 .roof-boxes:hover {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
 
@@ -103,7 +108,7 @@ border:  solid #2783e1;
     width: 150px;
 }
 
-.svg-color{
+.svg-color {
     fill: white;
 }
 
@@ -137,7 +142,14 @@ border:  solid #2783e1;
     animation: fadeIn 1s ease;
 }
 
-.no-shed-text-button{
+.chosen-shed-box {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: solid #2783e1;
+}
+
+.no-shed-text-button {
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -151,21 +163,21 @@ border:  solid #2783e1;
     justify-content: center;
 }
 
-.no-shed-text-button:hover{
+.no-shed-text-button:hover {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
-#no-shed-text-description{
+#no-shed-text-description {
     color: white;
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     width: 100%;
-    text-align:center;
+    text-align: center;
     font-size: clamp(0.8rem, 2vw, 1.35625rem);
 }
 
@@ -173,7 +185,7 @@ border:  solid #2783e1;
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    border:  solid #2783e1;
+    border: solid #2783e1;
 }
 
 
@@ -182,13 +194,13 @@ border:  solid #2783e1;
     width: 150px;
 }
 
-.svg-color{
+.svg-color {
     fill: white;
 }
 
 
 /*===== CARPORT MEASUREMENTS INPUTS =====*/
-.carport-measurement-box {
+.carport-measurement-box, .carport-shed-addon-box,.carport-roof-addon-box {
     border-radius: 8px;
     border: 1.5px solid #c5d5e8;
     background: #f4f8fd;
@@ -216,7 +228,7 @@ border:  solid #2783e1;
     width: 100%;
 }
 
-.carport-measurement-form {
+.carport-measurement-form, .shed-addon-form, .roof-addon-form  {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px 12px;
@@ -228,16 +240,33 @@ border:  solid #2783e1;
     color: white;
     padding: 25px;
     border-radius: 15px;
-    align-items: end;
+    align-items: center;
     animation: fadeIn 1s ease;
-
 }
+.inquiry-form{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px 12px;
+    height: 60vh;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    justify-items: center;
+    padding: 25px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease;
+}
+
 .continue {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    width: 50%;
+    width: 100%;
     justify-self: center;
     height: clamp(2.2rem, 5vw, 3rem);
     color: #FFF;
@@ -249,17 +278,14 @@ border:  solid #2783e1;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+
 .continue:hover {
     cursor: pointer;
     box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
     transform: translateY(-3px);
 }
+
 /*===== CARPORT MATERIALS INPUTS =====*/
-
-
-
-
-
 
 
 /*=====   ACTIVE CLASSES =====*/
@@ -267,13 +293,13 @@ border:  solid #2783e1;
     display: none;
 }
 
-.chosen-category{
+.chosen-category {
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 
-#customer-carport-form{
+#customer-carport-form {
     display: flex;
     justify-content: center;
     align-items: center;

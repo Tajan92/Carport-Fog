@@ -18,8 +18,7 @@ public class InquiryController {
         app.post("/create/inquiry", ctx -> createInquiry(ctx, serviceFactory));
         app.get("/customer/get/inquiry/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
         app.get("/admin/get/inquiry/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
-        app.post("/getAllInquiries", ctx -> getAllInquiries(ctx, serviceFactory));
-        app.post("/deleteInquiry", ctx -> deleteInquiry(ctx, serviceFactory));
+        app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
     public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
@@ -35,11 +34,28 @@ public class InquiryController {
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         //Shed
-        String shedWidth = ctx.formParam("shed_width");
+        String shedWidth;
+        String shedStatus = ctx.formParam("shed_status");
         String shedLength = ctx.formParam("shed_length");
         String shedSiding = ctx.formParam("shed_siding");
-        boolean floor = Boolean.parseBoolean(ctx.formParam("floor"));
+        String floorStatus = ctx.formParam("shed_floor");
+        boolean floor;
 
+        if (shedStatus.matches("HALF")){
+            shedWidth = String.valueOf(carportWidth/2);
+        } else if (shedStatus.matches("FULL")){
+            shedWidth = String.valueOf(carportWidth);
+        } else {
+            shedLength = null;
+            shedWidth = null;
+            shedSiding = null;
+            floor = false;
+        }
+        if (floorStatus.matches("TRUE")){
+            floor=true;
+        }else {
+            floor = false;
+        }
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
@@ -53,14 +69,14 @@ public class InquiryController {
             ctx.sessionAttribute("pending_roof_slope", ctx.formParam("roof_slope"));
             ctx.sessionAttribute("pending_roof_material", ctx.formParam("roof_material"));
             ctx.sessionAttribute("pending_roof_type", ctx.formParam("roof_type"));
-            ctx.sessionAttribute("pending_shed_width", ctx.formParam("shed_width"));
+            ctx.sessionAttribute("pending_shed_width", ctx.formParam("shed_status"));
             ctx.sessionAttribute("pending_shed_length", ctx.formParam("shed_length"));
             ctx.sessionAttribute("pending_shed_siding", ctx.formParam("shed_siding"));
-            ctx.sessionAttribute("pending_floor", ctx.formParam("floor"));
+            ctx.sessionAttribute("pending_floor", ctx.formParam("shed_floor"));
             ctx.sessionAttribute("pending_remark", ctx.formParam("inquiry_remark"));
             ctx.sessionAttribute("pending_inquiry", true);
 
-            ctx.redirect("/login");
+            ctx.redirect("/customer/login");
             return;
         }
 
@@ -100,13 +116,11 @@ public class InquiryController {
         ctx.render("admin-inquiry-details.html");
     }
 
-    public void getAllInquiries(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
-        List<InquiryResponseDTO> inquiryResponseDTOList = serviceFactory.getInquiryService().getAllInquiries();
-        ctx.attribute("all_inquiries", inquiryResponseDTOList);
-        ctx.render("admin-all-inquiries.html");
-    }
-
-    public void deleteInquiry(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+    public void adminDeleteInquiry(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+        if (!UserValidator.isAdmin(ctx)){
+            ctx.redirect("/");
+            return;
+        }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         serviceFactory.getInquiryService().deleteInquiry(inquiryId);
