@@ -2,11 +2,8 @@ package app.services.utils.partsListCalculator;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import lombok.Getter;
-
 import java.util.List;
 
-@Getter
 
 public class RoofCalculator {
     private double rafterDistance;
@@ -16,12 +13,13 @@ public class RoofCalculator {
     private final String highRoof = "Højt tag";
     private ProductFinder productFinder = new ProductFinder();
 
-    public void addRoofProducts(List<ProductsPartsListEntry> productsPartsListEntries, Roof roof, Carport carport, List<Product> products) throws CalculatorException {
+    public double addRoofProducts(List<ProductsPartsListEntry> productsPartsListEntries, Roof roof, Carport carport, List<Product> products) throws CalculatorException {
         addRoofMaterial(productsPartsListEntries, roof.getRoofType(), roof.getRoofMaterial(), roof.getRoofSlope(), carport.getWidth(), carport.getLength(), products);
         addFasciaCapping(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), carport.getWidth(), carport.getLength(), products);
         addFasciaBoards(productsPartsListEntries,roof.getRoofType(), roof.getRoofSlope(), carport.getWidth(), carport.getLength(), products);
         addTopPlates(productsPartsListEntries, carport.getLength(),  products);
         addRafters(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), carport.getWidth(), carport.getLength(), products);
+    return rafterQuantity;
     }
 
     private void addRoofMaterial(List<ProductsPartsListEntry> productsPartsListEntries, String roofType, String roofMaterial, double roofSlope, double width, double length, List<Product> products) throws CalculatorException {

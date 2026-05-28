@@ -2,11 +2,7 @@ package app.services.utils.partsListCalculator;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import lombok.Getter;
-
 import java.util.List;
-
-@Getter
 
 public class ShedCalculator {
     private double sidingQuantity;
@@ -14,12 +10,13 @@ public class ShedCalculator {
     private final String highRoof = "Højt tag";
     private ProductFinder productFinder = new ProductFinder();
 
-    public void addShedProducts(List<ProductsPartsListEntry> productsPartsListEntries,Carport carport, Roof roof, Shed shed, List<Product> products) throws CalculatorException {
+    public double addShedProducts(List<ProductsPartsListEntry> productsPartsListEntries,Carport carport, Roof roof, Shed shed, List<Product> products) throws CalculatorException {
        if (carport.getShedId() != null){
            addStabilizerToShedDoor(productsPartsListEntries, products);
            addShedSiding(productsPartsListEntries, shed.getSiding(), shed.getWidth(), shed.getLength(), products);
            addShedStuds(productsPartsListEntries, roof.getRoofType(), shed.getWidth(), shed.getLength(), products);
        }
+       return sidingQuantity;
     }
 
     private void addStabilizerToShedDoor(List<ProductsPartsListEntry> productsPartsListEntries, List<Product> products) throws CalculatorException {
