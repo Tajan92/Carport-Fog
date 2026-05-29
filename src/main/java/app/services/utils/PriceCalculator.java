@@ -20,7 +20,7 @@ public class PriceCalculator {
         return roundUpToTwoDecimals(totalCostPrice);
     }
 
-    public static double calculateInquiryRetailPrice(List<ProductsPartsListEntry> productsPartsListEntryList){
+    public static double calculateRetailPrice(List<ProductsPartsListEntry> productsPartsListEntryList){
         double totalRetailPrice = 0;
         for (ProductsPartsListEntry entry : productsPartsListEntryList) {
             totalRetailPrice += entry.getProduct().getRetailPrice() * entry.getQuantity();

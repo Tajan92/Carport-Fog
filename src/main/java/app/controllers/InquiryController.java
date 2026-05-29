@@ -26,9 +26,17 @@ public class InquiryController {
 
     public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
         //Carport
-        double carportWidth = Double.parseDouble(ctx.formParam("carport_width"));
+        String carportWidthResponse = ctx.queryParam("carport_width");
+        String carportLengthResponse = ctx.queryParam("carport_length");
+        double carportWidth = 0.0;
+        double carportLength = 0.0;
+        if (carportWidthResponse != null && !carportWidthResponse.isBlank()){
+            carportWidth = Double.parseDouble(carportWidthResponse);
+        }
+        if (carportLengthResponse != null && !carportLengthResponse.isBlank()){
+            carportLength = Double.parseDouble(carportLengthResponse);
+        }
         double carportHeight = 230;
-        double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
 
         //Roof
         String roofSlopeResponse = ctx.formParam("roof_slope");

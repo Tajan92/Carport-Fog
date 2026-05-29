@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
@@ -9,6 +8,7 @@ import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.entities.ProductsPartsListEntry;
 import app.exceptions.CalculatorException;
+import app.exceptions.UserExperienceException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
@@ -28,7 +28,7 @@ public class QuoteController {
     }
 
     public void loadCreateQuotePage(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isAdmin(ctx)){
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
@@ -41,8 +41,8 @@ public class QuoteController {
         ctx.render("admin-carport-maker.html");
     }
 
-    public void previewQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isAdmin(ctx)){
+    public void previewQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException, UserExperienceException {
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
@@ -61,14 +61,14 @@ public class QuoteController {
         List<ProductsPartsListEntry> allEntries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
 
         String discountResponse = ctx.formParam("discount_quote");
-        double discount    = 0;
-        if (discountResponse != null && !discountResponse.isBlank()){
+        double discount = 0;
+        if (discountResponse != null && !discountResponse.isBlank()) {
             discount = Double.parseDouble(discountResponse);
         }
-        double costPrice   = serviceFactory.getPriceService().getTotalCostPrice(allEntries);
+        double costPrice = serviceFactory.getPriceService().getTotalCostPrice(allEntries);
         double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(allEntries);
-        double serviceFee  = serviceFactory.getPriceService().getServiceFee(allEntries);
-        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
+        double serviceFee = serviceFactory.getPriceService().getServiceFee(allEntries);
+        double revenue = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
         double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
         double grossMargin = serviceFactory.getPriceService().getGrossMarginInPercent(costPrice, retailPrice, serviceFee, discount);
 
@@ -87,30 +87,7 @@ public class QuoteController {
         ctx.render("admin-carport-maker.html");
     }
 
-//    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-//        if (!UserValidator.isAdmin(ctx)){
-//            ctx.redirect("/");
-//            return;
-//        }
-//        UserResponseDTO salesRepResponseDTO = ctx.sessionAttribute("currentUser");
-//        int customerId = Integer.parseInt(ctx.formParam("customer_id"));
-//        double discount = Double.parseDouble(ctx.formParam("discount_quote"));
-//
-//        //Calculate prices again for added security
-//        CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
-//        List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
-//        double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
-//        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
-//        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
-//
-//        int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-//        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, revenue, carportId, salesRepResponseDTO.getId());
-//        serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
-//
-//        ctx.redirect("/admin/my/page");
-//    }
-
-    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException {
         if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
@@ -120,7 +97,7 @@ public class QuoteController {
         int customerId = Integer.parseInt(ctx.formParam("customer_id"));
         String discountResponse = ctx.formParam("discount_quote");
         double discount = 0;
-        if (discountResponse.isEmpty()){
+        if (discountResponse != null && !discountResponse.isBlank()) {
             discount = Double.parseDouble(discountResponse);
         }
 
@@ -130,9 +107,6 @@ public class QuoteController {
         List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
         double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
 
-//        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
-//        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
-
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
         QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRep.getId(), discount);
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
@@ -141,7 +115,7 @@ public class QuoteController {
     }
 
     public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
-        if (!UserValidator.isAdmin(ctx)){
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
@@ -178,34 +152,46 @@ public class QuoteController {
         ctx.redirect("/admin/my/page");
     }
 
-    private CarportRequestDTO buildCarportRequest(Context ctx, ServiceFactory serviceFactory) {
-        double carportWidth  = Double.parseDouble(ctx.formParam("carport_width"));
+    private CarportRequestDTO buildCarportRequest(Context ctx, ServiceFactory serviceFactory) throws UserExperienceException {
+        String carportWidthResponse = ctx.formParam("carport_width");
+        String carportLengthResponse = ctx.formParam("carport_length");
+
+        if (carportWidthResponse == null || carportWidthResponse.isBlank()) {
+            throw new UserExperienceException("Vælg størrelse af carport");
+        }
+        double carportWidth = Double.parseDouble(carportWidthResponse);
+        double carportLength = Double.parseDouble(carportLengthResponse);
+
         double carportHeight = 230;
-        double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
+
         String roofSlopeResponse = ctx.formParam("roof_slope");
         String roofMaterial = ctx.formParam("roof_material");
         String roofType = ctx.formParam("roof_type");
         double roofSlope = 1.7;
-        if (roofType.isEmpty()){
+        if (roofType == null || roofType.isBlank()) {
             roofType = "Fladt tag";
         }
-        if (roofMaterial.isEmpty()){
+        if (roofMaterial == null || roofMaterial.isBlank()) {
             roofMaterial = "Plastmo Ecolite blåtonet";
         }
-        if (!roofSlopeResponse.isEmpty()){
+        if (roofSlopeResponse != null && !roofSlopeResponse.isBlank()) {
             roofSlope = Double.parseDouble((roofSlopeResponse));
         }
 
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
-        String shedStatus  = ctx.formParam("shed_status");
-        String shedSiding  = ctx.formParam("shed_siding");
-        boolean floor      = Boolean.parseBoolean(ctx.formParam("shed_floor"));
+        String shedStatus = ctx.formParam("shed_status");
+        String shedSiding = ctx.formParam("shed_siding");
+        String floorResponse = ctx.formParam("floor");
+        if (floorResponse == null || floorResponse.isBlank()) {
+            throw new UserExperienceException("Til / fra vælg gulv");
+        }
+        boolean floor = Boolean.parseBoolean(ctx.formParam("shed_floor"));
 
-        String shedWidth  = switch (shedStatus != null ? shedStatus : "NONE") {
+        String shedWidth = switch (shedStatus != null ? shedStatus : "NONE") {
             case "HALF" -> String.valueOf(carportWidth / 2);
             case "FULL" -> String.valueOf(carportWidth);
-            default     -> null;
+            default -> null;
         };
         String shedLength = shedWidth != null ? String.valueOf(carportLength / 3) : null;
         if (shedWidth == null) shedSiding = null;

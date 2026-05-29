@@ -3,8 +3,6 @@ import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.QuoteResponseDTO;
-import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.*;
 import app.exceptions.CalculatorException;
@@ -72,7 +70,7 @@ public class InquiryService {
         List<ProductsPartsListEntry> productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
 
         double costPrice = PriceCalculator.calculateInquiryCostPrice(productsPartsListEntries);
-        double retailPrice = PriceCalculator.calculateInquiryRetailPrice(productsPartsListEntries);
+        double retailPrice = PriceCalculator.calculateRetailPrice(productsPartsListEntries);
         double serviceFee = PriceCalculator.calculateServiceFee(productsPartsListEntries);
 
         inquiryResponseDTO.setCostPrice(costPrice);
@@ -99,7 +97,7 @@ public class InquiryService {
             List<ProductsPartsListEntry> entries = partsListService.createProductsPartsListEntries(carportRequestDTO);
 
             double costPrice = PriceCalculator.calculateInquiryCostPrice(entries);
-            double retailPrice = PriceCalculator.calculateInquiryRetailPrice(entries);
+            double retailPrice = PriceCalculator.calculateRetailPrice(entries);
             double serviceFee = PriceCalculator.calculateServiceFee(entries);
 
             InquiryResponseDTO response = inquiryConverter.convertInquiryToDto(allInquiry);

@@ -11,7 +11,7 @@ public class PriceService {
     }
 
     public double getTotalRetailPrice(List<ProductsPartsListEntry> allEntries){
-        return PriceCalculator.calculateInquiryRetailPrice(allEntries);
+        return PriceCalculator.calculateRetailPrice(allEntries);
     }
 
     public double getServiceFee(List<ProductsPartsListEntry> allEntries){
