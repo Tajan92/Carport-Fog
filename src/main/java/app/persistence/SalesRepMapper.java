@@ -19,6 +19,10 @@ public class SalesRepMapper {
         this.connectionPool = ConnectionPool.getInstance();
     }
 
+    public void createSalesRep(SalesRep salesRep) throws DatabaseException {
+
+    }
+
     public SalesRep getSalesRepById(int salesRepId) throws DatabaseException {
 
         String sql = "select email,password,first_name,last_name,phone_number from sales_reps where sales_rep_id = ?";

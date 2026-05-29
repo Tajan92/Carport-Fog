@@ -34,10 +34,16 @@ public class QuoteController {
         }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        ShedResponseDTO shed = null;
+
+        if (inquiryResponseDTO.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
 
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
         ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
+        ctx.attribute("shed", shed);
         ctx.render("admin-carport-maker.html");
     }
 
@@ -53,9 +59,15 @@ public class QuoteController {
 
         // Fetch the full inquiry so the template has the DTOs it needs
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        ShedResponseDTO shed = null;
+
+        if (inquiryResponseDTO.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
         ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
+        ctx.attribute("shed", shed);
 
         CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
         List<ProductsPartsListEntry> allEntries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
@@ -182,7 +194,8 @@ public class QuoteController {
 
         String shedStatus = ctx.formParam("shed_status");
         String shedSiding = ctx.formParam("shed_siding");
-        String floorResponse = ctx.formParam("floor");
+        String floorResponse = ctx.formParam("shed_floor");
+
         if (floorResponse == null || floorResponse.isBlank()) {
             throw new UserExperienceException("Til / fra vælg gulv");
         }

@@ -56,6 +56,9 @@ public class InquiryController {
         if (roofSlopeResponse != null && !roofSlopeResponse.isBlank()) {
             roofSlope = Double.parseDouble(roofSlopeResponse);
         }
+        if (roofType.equals("Fladt tag")) {
+            roofSlope = 1.7;
+        }
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         //Shed
