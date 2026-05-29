@@ -1,7 +1,5 @@
 package app.services.utils;
-
 import app.entities.ProductsPartsListEntry;
-
 import java.util.List;
 
 public class PriceCalculator {

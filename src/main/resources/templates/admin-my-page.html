@@ -35,15 +35,15 @@
                 <div class="my-page-quote-results hidden">
                     <th:block th:each="quote: ${admin_quotes}">
                         <a class="my-page-result-button"
-                           th:href="@{/admin/quote/details/{id}(id=${quote.id})}"
-                           th:text="${'ID: ' + quote.id + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName}"></a>
+                           th:href="@{/admin/quote/details/{id}(id=${quote.quoteId})}"
+                           th:text="${'ID: ' + quote.quoteId + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName}"></a>
                     </th:block>
                 </div>
                 <div class="my-page-order-results hidden">
                     <th:block th:each="order: ${admin_orders}">
                         <a class="my-page-result-button"
-                           th:href="@{/admin/order/details/{id}(id=${order.id})}"
-                           th:text="${'ID: ' + order.id + ' | Kunde: ' + order.customerResponseDTO.firstName + ' ' + order.customerResponseDTO.lastName }"></a>
+                           th:href="@{/admin/order/details/{id}(id=${order.orderId})}"
+                           th:text="${'ID: ' + order.orderId + ' | Kunde: ' + order.customerResponseDTO.firstName + ' ' + order.customerResponseDTO.lastName }"></a>
                     </th:block>
                 </div>
             </div>

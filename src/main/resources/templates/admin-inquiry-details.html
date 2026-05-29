@@ -8,7 +8,7 @@
 <div class="inquiry-details-overview">
     <div class="inquiry-header">
 
-        <a th:href="@{/adminProfilePage}">
+        <a th:href="@{/admin/my/page}">
             <svg class="admin-return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64"
                  viewBox="0 0 64 64"
                  fill="none">
@@ -39,7 +39,16 @@
         <p th:text="${'Længde: ' + carport_quote_preview.length + ' cm'}"></p>
         <p th:text="${'Tagtype: ' + carport_quote_preview.roofResponseDTO.roofType}"></p>
         <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofMaterial}"></p>
-        <p th:text="${'Hvis denne er tom = ingen skur: ' + carport_quote_preview.shedResponseDTO}"></p>
+        <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${shed != null}">
+            <p th:text="${'Siding: ' + shed.siding}"></p>
+            <p th:text="${'Floor: ' + shed.floor}"></p>
+            <p th:text="${'Bredde: ' + shed.width}"></p>
+            <p th:text="${'Længde: ' + shed.length}"></p>
+        </div>
+        <div th:if="${shed == null}">
+            <p>Ingen skur</p>
+        </div>
         <br>
 
         <form th:action="@{/admin/preview/quote}" method="post">
