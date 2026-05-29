@@ -10,7 +10,7 @@
 <div class="inquiry-details-overview">
     <div class="inquiry-header">
 
-        <a th:href="@{/customerProfilePage}">
+        <a th:href="@{/customer/my/page}">
             <svg class="return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
                  fill="none">
                 <path class="return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
@@ -24,8 +24,31 @@
         <h1 class="inquiry-details-title">Forespørgsels oversigt</h1>
     </div>
 
-    <div class="inquiry-details-box"></div>
+    <div class="inquiry-details-box">
+        <h2>Forespørgsel</h2>
+        <p th:text="${'ID: ' + selected_inquiry.inquiryId}"></p>
+        <p th:text="${'Retailpris: ' + selected_inquiry.retailPrice}"></p>
+        <p th:text="${'Bemærkning: ' + selected_inquiry.remark}"></p>
+        <br>
 
+        <p th:text="${'Bredde: ' + selected_carport.width + ' cm'}"></p>
+        <p th:text="${'Længde: ' + selected_carport.length + ' cm'}"></p>
+        <p th:text="${'Tagtype: ' + selected_carport.roofResponseDTO.roofType}"></p>
+        <p th:text="${'Tagmateriale: ' + selected_carport.roofResponseDTO.roofMaterial}"></p>
+        <p th:text="${'Tagmateriale: ' + selected_carport.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${selected_shed != null}">
+            <p th:text="${'Siding: ' + selected_shed.siding}"></p>
+            <p th:text="${'Floor: ' + selected_shed.floor}"></p>
+            <p th:text="${'Bredde: ' + selected_shed.width}"></p>
+            <p th:text="${'Længde: ' + selected_shed.length}"></p>
+        </div>
+        <div th:if="${selected_shed == null}">
+            <p>Ingen skur</p>
+        </div>
+        <br>
+        <a type="submit" class="create-quote-button" th:action="@{/create/order/quote{quote_id}}" >Opret tilbud</a>
+
+    </div>
 
 </div>
 

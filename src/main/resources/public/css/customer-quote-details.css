@@ -25,8 +25,7 @@ body {
     margin-bottom: auto;
     animation: fadeIn 1s ease;
     margin-top: auto;
-    overflow-y: auto;
-    scroll-behavior: smooth;
+
 }
 
 .quote-details-title {
@@ -47,6 +46,9 @@ justify-self: center}
     border-radius: 10px;
     height: 100%;
     margin-bottom: auto;
+    color: white;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .quote-header{
@@ -68,6 +70,25 @@ justify-self: center}
     stroke: #8fbae4;
     cursor: pointer;
 }
+
+
+.accept-quote-button{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    width: 100%;
+    height: clamp(2.8rem, 7vw, 4rem);
+    color: #FFF;
+    font-family: Inter;
+    font-size: clamp(1rem, 2.5vw, 1.76313rem);
+    font-weight: 500;
+    margin-top: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 25px;
+}
+
+
 
 
 

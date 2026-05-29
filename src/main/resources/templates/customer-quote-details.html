@@ -8,7 +8,7 @@
 
 <div class="quote-details-overview">
     <div class="quote-header">
-        <a th:href="@{/customerProfilePage}">
+        <a th:href="@{/customer/my/page}">
             <svg class="return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
                  fill="none">
                 <path class="return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
@@ -22,11 +22,32 @@
         <h1 class="quote-details-title">Tilbuds oversigt</h1>
     </div>
 
-    <div class="quote-details-box"></div>
+    <div class="quote-details-box">
 
+        <h2>Tilbud</h2>
+        <p th:text="${'ID: ' + quote_selected_quote.quoteId}"></p>
+        <p th:text="${'Retailpris: ' + quote_selected_quote.quotePrice}"></p>
+        <p th:text="${'Bredde: ' + quote_selected_carport.width + ' cm'}"></p>
+        <p th:text="${'Længde: ' + quote_selected_carport.length + ' cm'}"></p>
+        <p th:text="${'Tagtype: ' + quote_selected_carport.roofResponseDTO.roofType}"></p>
+        <p th:text="${'Tagmateriale: ' + quote_selected_carport.roofResponseDTO.roofMaterial}"></p>
+        <p th:text="${'Tagmateriale: ' + quote_selected_carport.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${quote_selected_shed != null}">
+            <p th:text="${'Siding: ' + quote_selected_shed.siding}"></p>
+            <p th:text="${'Floor: ' + quote_selected_shed.floor}"></p>
+            <p th:text="${'Bredde: ' + quote_selected_shed.width}"></p>
+            <p th:text="${'Længde: ' + quote_selected_shed.length}"></p>
+        </div>
+        <div th:if="${quote_selected_shed == null}">
+            <p>Ingen skur</p>
+        </div>
+        <form th:action="@{/create/order}" method="post">
+            <input type="hidden" name="quote_id" th:value="${quote_selected_quote.quoteId}">
+            <button type="submit" class="create-quote-button">Accepter tilbud</button>
+        </form>
 
+    </div>
 </div>
-
 <div th:replace="~{fragments :: customerScripts}"></div>
 </body>
 </html>

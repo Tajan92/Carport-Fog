@@ -3,7 +3,11 @@ import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.UserResponseDTO;
+import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -15,8 +19,8 @@ public class InquiryController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/create/inquiry", ctx -> createInquiry(ctx, serviceFactory));
-        app.get("/customer/get/inquiry/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
-        app.get("/admin/get/inquiry/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
+        app.get("/customer/inquiry/details/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
+        app.get("/admin/inquiry/details/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
@@ -96,9 +100,17 @@ public class InquiryController {
         }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+
+        ShedResponseDTO shed = null;
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
 
         ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
+        ctx.attribute("selected_carport", carportResponseDTO);
+        ctx.attribute("selected_shed", shed);
         ctx.render("customer-inquiry-details.html");
     }
 
@@ -111,8 +123,16 @@ public class InquiryController {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
 
-        ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
-        ctx.attribute("selected_inquiry", inquiryResponseDTO);
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+
+        ShedResponseDTO shed = null;
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
+        ctx.attribute("shed", shed);
+        ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
+        ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
+        ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
         ctx.render("admin-inquiry-details.html");
     }
 

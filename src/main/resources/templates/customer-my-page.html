@@ -19,28 +19,25 @@
         <div class="my-page-results">
             <div class="my-page-result-box">
                 <div class="my-page-inquiry-results " >
-                    <a class="my-page-orders" th:href="@{/getInquiryCustomer}">Forespørgelse #1</a>
-                    <a class="my-page-orders">Forespørgelse #2</a>
-                    <a class="my-page-orders">Forespørgelse #3</a>
-                    <a class="my-page-orders">Forespørgelse #4</a>
-                    <a class="my-page-orders">Forespørgelse #5</a>
-                    <a class="my-page-orders">Forespørgelse #6</a>
+                    <th:block th:each="inquiry: ${customer_inquiries}">
+                        <a class="my-page-result-button"
+                           th:href="@{/customer/inquiry/details/{id}(id=${inquiry.inquiryId})}"
+                           th:text="${'ID: ' + inquiry.inquiryId + ' | Kunde: ' + inquiry.customerResponseDTO.firstName +' '+ inquiry.customerResponseDTO.lastName}"></a>
+                    </th:block>
                 </div>
                 <div class="my-page-quote-results hidden">
-                    <a class="my-page-orders" th:href="@{/getQuoteCustomer}">Tilbud #1</a>
-                    <a class="my-page-orders">Tilbud #2</a>
-                    <a class="my-page-orders">Tilbud #3</a>
-                    <a class="my-page-orders">Tilbud #4</a>
-                    <a class="my-page-orders">Tilbud #5</a>
-                    <a class="my-page-orders">Tilbud #6</a>
+                    <th:block th:each="quote: ${customer_quotes}">
+                        <a class="my-page-result-button"
+                           th:href="@{/customer/quote/details/{id}(id=${quote.quoteId})}"
+                           th:text="${'ID: ' + quote.quoteId + ' | Pris: ' + quote.quotePrice}"></a>
+                    </th:block>
                 </div>
                 <div class="my-page-order-results hidden" >
-                    <a class="my-page-orders" th:href="@{/getOrderCustomer}">Ordre #1</a>
-                    <a class="my-page-orders">Ordre #2</a>
-                    <a class="my-page-orders">Ordre #3</a>
-                    <a class="my-page-orders">Ordre #4</a>
-                    <a class="my-page-orders">Ordre #5</a>
-                    <a class="my-page-orders">Ordre #6</a>
+                    <th:block th:each="order: ${customer_orders}">
+                        <a class="my-page-result-button"
+                           th:href="@{/customer/order/details/{id}(id=${order.orderId})}"
+                           th:text="${'ID: ' + order.orderId + ' | Pris: ' + order.orderPrice}"></a>
+                    </th:block>
                 </div>
             </div>
         </div>
