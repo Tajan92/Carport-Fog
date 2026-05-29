@@ -6,6 +6,12 @@
     height: 100%;
 }
 
+.disabled-category {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 .stage-picker {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);

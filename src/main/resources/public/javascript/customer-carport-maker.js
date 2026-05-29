@@ -72,6 +72,7 @@ measurementsBtn.addEventListener("click", () => {
 })
 
 shedAddBtn.addEventListener("click", () => {
+    if (selectedShed === "NONE") return;
     shedAddBtn.classList.add("chosen-category")
 
     roofBoxes.classList.add("hidden")
@@ -93,6 +94,7 @@ shedAddBtn.addEventListener("click", () => {
 })
 
 roofAddBtn.addEventListener("click", () => {
+    if (selectedRoof === "flat") return;
     roofAddBtn.classList.add("chosen-category")
 
     roofBoxes.classList.add("hidden")
@@ -132,6 +134,59 @@ inquiryBtn.addEventListener("click", () => {
     inquiry.classList.remove("hidden")
 })
 
+
+let selectedRoof = null;
+let selectedShed = null;
+
+
+document.querySelector("#flat-roof-box").addEventListener("click", () => {
+    document.querySelector("#flat-roof").checked = true;
+    selectedRoof = "flat";
+    updateTabAvailability();
+});
+
+document.querySelector("#high-roof-box").addEventListener("click", () => {
+    document.querySelector("#high-roof").checked = true;
+    selectedRoof = "high";
+    updateTabAvailability();
+});
+
+
+document.querySelector("#half-shed-box").addEventListener("click", () => {
+    document.querySelector("#half-shed").checked = true;
+    selectedShed = "HALF";
+    updateTabAvailability();
+});
+
+document.querySelector("#full-shed-box").addEventListener("click", () => {
+    document.querySelector("#full-shed").checked = true;
+    selectedShed = "FULL";
+    updateTabAvailability();
+});
+
+document.querySelector("#no-shed-box").addEventListener("click", () => {
+    document.querySelector("#no-shed").checked = true;
+    selectedShed = "NONE";
+    updateTabAvailability();
+});
+
+function updateTabAvailability() {
+    if (selectedRoof === "flat") {
+        roofAddBtn.classList.add("disabled-category");
+        roofAddBtn.disabled = true;
+    } else {
+        roofAddBtn.classList.remove("disabled-category");
+        roofAddBtn.disabled = false;
+    }
+
+    if (selectedShed === "NONE") {
+        shedAddBtn.classList.add("disabled-category");
+        shedAddBtn.disabled = true;
+    } else {
+        shedAddBtn.classList.remove("disabled-category");
+        shedAddBtn.disabled = false;
+    }
+}
 
 
 
