@@ -1,4 +1,5 @@
 package app.controllers;
+
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
@@ -10,6 +11,7 @@ import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
+import app.exceptions.UserExperienceException;
 import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
@@ -24,16 +26,16 @@ public class InquiryController {
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
-    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException {
         //Carport
-        String carportWidthResponse = ctx.queryParam("carport_width");
-        String carportLengthResponse = ctx.queryParam("carport_length");
+        String carportWidthResponse = ctx.formParam("carport_width");
+        String carportLengthResponse = ctx.formParam("carport_length");
         double carportWidth = 0.0;
         double carportLength = 0.0;
-        if (carportWidthResponse != null && !carportWidthResponse.isBlank()){
+        if (carportWidthResponse != null && !carportWidthResponse.isBlank()) {
             carportWidth = Double.parseDouble(carportWidthResponse);
         }
-        if (carportLengthResponse != null && !carportLengthResponse.isBlank()){
+        if (carportLengthResponse != null && !carportLengthResponse.isBlank()) {
             carportLength = Double.parseDouble(carportLengthResponse);
         }
         double carportHeight = 230;
@@ -43,14 +45,16 @@ public class InquiryController {
         String roofMaterial = ctx.formParam("roof_material");
         String roofType = ctx.formParam("roof_type");
         double roofSlope = 1.7;
-        if (roofType.isEmpty()){
+        if (roofType == null || roofType.isBlank()) {
             roofType = "Fladt tag";
         }
-        if (roofMaterial.isEmpty()){
+
+        if (roofMaterial == null || roofMaterial.isBlank()) {
             roofMaterial = "Plastmo Ecolite blåtonet";
         }
-        if (!roofSlopeResponse.isEmpty()){
-            roofSlope = Double.parseDouble((roofSlopeResponse));
+
+        if (roofSlopeResponse != null && !roofSlopeResponse.isBlank()) {
+            roofSlope = Double.parseDouble(roofSlopeResponse);
         }
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
@@ -63,10 +67,16 @@ public class InquiryController {
         boolean floor = false;
 
         //Check for floor
-        if (floorStatus.equals("TRUE")){
+        if (floorStatus == null || floorStatus.isEmpty()) {
+            throw new UserExperienceException("Dit til/fra valg af gulv blev desværre ikke registreret korrekt, prøv igen.");
+        }
+        if (floorStatus.equals("TRUE")) {
             floor = true;
         }
-        //Check for shed size full, half or none
+        //Check for shed size full, half, none or null
+        if (shedStatus == null) {
+            throw new UserExperienceException("Dit til/fra valg af skur blev desværre ikke registreret korrekt, prøv igen.");
+        }
         if (shedStatus.matches("HALF")) {
             shedWidth = String.valueOf(carportWidth / 2);
             shedLength = String.valueOf(carportLength / 3);
@@ -81,8 +91,11 @@ public class InquiryController {
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
 
-        UserResponseDTO userResponseDTO  = ctx.sessionAttribute("currentUser");
+        UserResponseDTO userResponseDTO = ctx.sessionAttribute("currentUser");
         String inquiryRemark = ctx.formParam("inquiry_remark");
+        if (inquiryRemark == null || inquiryRemark.isEmpty()) {
+            inquiryRemark = "";
+        }
 
         if (userResponseDTO == null) {
             // save all form params to session before redirecting
@@ -112,28 +125,35 @@ public class InquiryController {
     }
 
     public void customerGetInquiryDetails(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isCustomer(ctx)){
+        if (!UserValidator.isCustomer(ctx)) {
             ctx.redirect("/");
             return;
         }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
-
+        String floor = "";
         ShedResponseDTO shed = null;
         if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
+            if (shed.isFloor()){
+                floor = "ja";
+            } else  {
+                floor = "nej";
+            }
         }
 
-        ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
+
+        ctx.sessionAttribute("inquiry_responseDTO", inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
         ctx.attribute("selected_carport", carportResponseDTO);
         ctx.attribute("selected_shed", shed);
+        ctx.attribute("selected_floor", floor);
         ctx.render("customer-inquiry-details.html");
     }
 
     public void adminGetInquiryDetails(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isAdmin(ctx)){
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
@@ -155,7 +175,7 @@ public class InquiryController {
     }
 
     public void adminDeleteInquiry(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isAdmin(ctx)){
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
