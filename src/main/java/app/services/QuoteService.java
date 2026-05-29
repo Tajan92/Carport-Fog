@@ -70,6 +70,12 @@ public class QuoteService {
         SalesRepResponseDTO salesRepResponseDTO = userConverter.convertSalesRepToDto(salesRep);
         CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
 
+        double serviceFee = PriceCalculator.calculateServiceFee(quote.getQuotePrice());
+        double totalPrice = PriceCalculator.getRevenue(quoteResponseDTO.getPrice(), quoteResponseDTO.getDiscount(), serviceFee);
+
+        /* Set the Missing variables */
+        quoteResponseDTO.setTotalPrice(totalPrice);
+
         /* Set the new DTOS´s */
         quoteResponseDTO.setCustomerResponseDTO(customerResponseDTO);
         quoteResponseDTO.setSalesRepResponseDTO(salesRepResponseDTO);
@@ -78,7 +84,42 @@ public class QuoteService {
         return quoteResponseDTO;
     }
 
-    public List<QuoteAdminResponseDTO> getAllQuotesAdmin() throws DatabaseException, CalculatorException {
+    public QuoteAdminResponseDTO getQuoteAdmin(int quoteId) throws DatabaseException {
+        Quote quote = quoteMapper.getQuoteById(quoteId);
+        QuoteAdminResponseDTO quoteAdminResponseDTO = (QuoteAdminResponseDTO) quoteConverter.convertQuoteToDto(quote);
+        List<Product> products = productMapper.getAllProducts();
+
+        /* Instantiate DTO´s that cannot be instantiated in the converter */
+        Customer customer = customerMapper.getCustomerById(quote.getCustomerId());
+        SalesRep salesRep = salesRepMapper.getSalesRepById(quote.getSalesRepId());
+
+        CustomerResponseDTO customerResponseDTO = userConverter.convertCustomerToDto(customer);
+        SalesRepResponseDTO salesRepResponseDTO = userConverter.convertSalesRepToDto(salesRep);
+        CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
+
+        double calculatedCostPrice = 0;
+        for (Product product : products) {
+            calculatedCostPrice += product.getCostPrice();
+        }
+
+        double serviceFee = PriceCalculator.calculateServiceFee(quote.getQuotePrice());
+        double totalPrice = PriceCalculator.getRevenue(quote.getQuotePrice(), quote.getQuoteDiscount(), serviceFee);
+        double costPrice = calculatedCostPrice;
+
+        /* Set the Missing variables */
+        quoteAdminResponseDTO.setTotalPrice(totalPrice);
+        quoteAdminResponseDTO.setServiceFee(serviceFee);
+        quoteAdminResponseDTO.setCostPrice(costPrice);
+
+        /* Set the new DTOS´s */
+        quoteAdminResponseDTO.setCustomerResponseDTO(customerResponseDTO);
+        quoteAdminResponseDTO.setSalesRepResponseDTO(salesRepResponseDTO);
+        quoteAdminResponseDTO.setCarportResponseDTO(carportResponseDTO);
+
+        return quoteAdminResponseDTO;
+    }
+
+    public List<QuoteAdminResponseDTO> getAllQuotesAdmin() throws DatabaseException {
         List<Quote> allQuotes = quoteMapper.getAllQuotes();
         List<QuoteAdminResponseDTO> responseDTOS = new ArrayList<>();
         List<Product> products = productMapper.getAllProducts();

@@ -16,10 +16,4 @@ public class QuoteAdminResponseDTO extends QuoteResponseDTO {
         this.costPrice = costPrice;
         this.serviceFee = serviceFee;
     }
-
-    public QuoteAdminResponseDTO(int quoteId, double retailPrice, double discount, double totalPrice, double costPrice, double serviceFee) {
-        super(quoteId, retailPrice, discount, totalPrice);
-        this.costPrice = costPrice;
-        this.serviceFee = serviceFee;
-    }
 }

@@ -89,11 +89,12 @@ public class QuoteController {
         CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
         List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
         double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
-        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
-        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
+
+//        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
+//        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
 
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, revenue, carportId, salesRepResponseDTO.getId(), discount);
+        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRepResponseDTO.getId(), discount);
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
 
         ctx.redirect("/admin/my/page");

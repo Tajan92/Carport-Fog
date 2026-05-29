@@ -1,6 +1,7 @@
 package services;
 
 import app.dto.requestDTO.QuoteRequestDTO;
+import app.dto.responseDTO.QuoteAdminResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
@@ -46,8 +47,8 @@ public class QuoteServiceTest extends MapperTest {
     }
 
     @Test
-    public void getAllQuotesTest() throws CalculatorException, DatabaseException {
-        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesAdmin();
+    public void getAllQuotesTest() throws DatabaseException {
+        List<QuoteAdminResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesAdmin();
         double firstOrderPrice = 24999.00;
 
         //The list shouldn't be null or empty

@@ -18,11 +18,10 @@ public class QuoteResponseDTO {
     private CarportResponseDTO carportResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
 
-    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice, double totalPrice) {
+    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice) {
         this.quoteId = quoteId;
         this.price = retailPrice;
         this.discount = discountPrice;
-        this.totalPrice = totalPrice;
     }
 }
 
