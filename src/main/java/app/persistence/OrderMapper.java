@@ -20,7 +20,7 @@ public class OrderMapper {
 
     public int createOrder(Order order) throws DatabaseException {
 
-        String sql = "insert into orders (customer_id, sales_rep_id, carport_id, order_price) values (?,?,?,?)";
+        String sql = "insert into orders (customer_id, sales_rep_id, carport_id, order_price, order_discount) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -28,6 +28,7 @@ public class OrderMapper {
             preparedStatement.setInt(2, order.getSalesRepId());
             preparedStatement.setInt(3, order.getCarportId());
             preparedStatement.setDouble(4, order.getOrderPrice());
+            preparedStatement.setDouble(5, order.getOrderDiscount());
 
             int rowsAffected = preparedStatement.executeUpdate();
             int orderId = 0;
@@ -62,8 +63,9 @@ public class OrderMapper {
                 int carportId = resultSet.getInt("carport_id");
                 double orderPrice = resultSet.getDouble("order_price");
                 int partsListId = resultSet.getInt("parts_list_id");
+                double orderDiscount = resultSet.getDouble("order_discount");
 
-                return new Order(orderId, customer_id, salesRepId, carportId, orderPrice, partsListId);
+                return new Order(orderId, customer_id, salesRepId, carportId, orderPrice, partsListId, orderDiscount);
             } else
             {
                 throw new DatabaseException("An error occurred, when trying to get order by provided id: " + orderId);
@@ -96,8 +98,9 @@ public class OrderMapper {
                 int carportId = resultSet.getInt("carport_id");
                 double orderPrice = resultSet.getDouble("order_price");
                 int partsListId = resultSet.getInt("parts_list_id");
+                double orderDiscount = resultSet.getDouble("order_discount");
 
-                orders.add(new Order(orderId, customerId, salesRepId, carportId, orderPrice, partsListId));
+                orders.add(new Order(orderId, customerId, salesRepId, carportId, orderPrice, partsListId, orderDiscount));
             }
             return orders;
         } catch (SQLException e) {
@@ -129,8 +132,9 @@ public class OrderMapper {
                 int carportId = resultSet.getInt("carport_id");
                 double orderPrice = resultSet.getDouble("order_price");
                 int partsListId = resultSet.getInt("parts_list_id");
+                double orderDiscount = resultSet.getDouble("order_discount");
 
-                orders.add(new Order(orderId, customerId, salesRepId, carportId, orderPrice, partsListId));
+                orders.add(new Order(orderId, customerId, salesRepId, carportId, orderPrice, partsListId, orderDiscount));
             }
             return orders;
         } catch (SQLException e) {
@@ -141,12 +145,13 @@ public class OrderMapper {
 
     public void updateOrder(Order order) throws DatabaseException {
 
-        String sql = "update orders set order_price = ? where order_id = ?";
+        String sql = "update orders set order_price = ?, order_discount = ? where order_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setDouble(1, order.getOrderPrice());
-            preparedStatement.setInt(2, order.getOrderId());
+            preparedStatement.setDouble(2, order.getOrderDiscount());
+            preparedStatement.setInt(3, order.getOrderId());
 
             int rowsAffected = preparedStatement.executeUpdate();
 

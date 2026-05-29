@@ -16,12 +16,14 @@ public class Order {
     private int carportId;
     private double orderPrice;
     private int partsListId;
+    private double orderDiscount;
 
-    public Order(int customerId, int salesRepId, int carportId, double orderPrice, int partsListId) {
+    public Order(int customerId, int salesRepId, int carportId, double orderPrice, int partsListId, double orderDiscount) {
         this.customerId = customerId;
         this.salesRepId = salesRepId;
         this.carportId = carportId;
         this.orderPrice = orderPrice;
         this.partsListId = partsListId;
+        this.orderDiscount = orderDiscount;
     }
 }

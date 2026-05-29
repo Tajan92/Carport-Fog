@@ -1,10 +1,6 @@
 package services;
 import app.dto.requestDTO.OrderRequestDTO;
-import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.requestDTO.carports.CarportShedRequestDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
-import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -44,7 +40,7 @@ public class OrderServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingOrderPrice, response.getOrderPrice());
+        assertEquals(existingOrderPrice, response.getTotalPrice());
     }
 
     @Test
@@ -66,7 +62,7 @@ public class OrderServiceTest extends MapperTest {
 
         //Check if the first order has correct id = 1 and the price is correct
         assertEquals(1, firstOrder.getOrderId());
-        assertEquals(firstOrderPrice, firstOrder.getOrderPrice());
+        assertEquals(firstOrderPrice, firstOrder.getTotalPrice());
     }
 
     @Test
@@ -105,7 +101,7 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO oldOrder = serviceFactory.getOrderService().getOrder(1);
 
         //Confirm existing orders price
-        assertEquals(existingOrderPrice, oldOrder.getOrderPrice());
+        assertEquals(existingOrderPrice, oldOrder.getTotalPrice());
 
         //Create order with a change in price
         double newOrderPrice = 21999.00;
@@ -117,7 +113,7 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO newOrder = serviceFactory.getOrderService().getOrder(existingOrderId);
 
         //Check the updated order has new price
-        assertEquals(newOrderPrice, newOrder.getOrderPrice());
+        assertEquals(newOrderPrice, newOrder.getTotalPrice());
     }
 
     @Test

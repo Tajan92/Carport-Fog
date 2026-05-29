@@ -10,4 +10,5 @@ public class OrderRequestDTO {
     private int carportId;
     private double orderPrice;
     private int partsListId;
+    private double quoteDiscount;
 }

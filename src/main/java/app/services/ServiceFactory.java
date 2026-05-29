@@ -35,7 +35,7 @@ public class ServiceFactory {
         this.userService = new UserService(loginMapper, customerMapper,salesRepMapper);
         this.inquiryService = new InquiryService(inquiryMapper, carportService, customerMapper, carportMapper, roofMapper, shedMapper, productMapper, userService);
         this.quoteService = new QuoteService(quoteMapper, carportService, customerMapper, salesRepMapper, carportMapper, userService, productMapper);
-        this.orderService = new OrderService(orderMapper, carportService, userService, partsListService);
+        this.orderService = new OrderService(orderMapper, carportService, userService, partsListService, productMapper);
         this.shedService = new ShedService(shedMapper);
         this.roofService = new RoofService(roofMapper);
         this.blueprintService = new BlueprintService(productMapper);
