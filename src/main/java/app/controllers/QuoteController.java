@@ -106,7 +106,7 @@ public class QuoteController {
             return;
         }
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
-        QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
+        QuoteAdminResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
 
         ctx.attribute("selected_quote", quoteResponseDTO);
         ctx.render("admin-quote-details.html");
