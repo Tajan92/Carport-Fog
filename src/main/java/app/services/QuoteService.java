@@ -1,21 +1,14 @@
 package app.services;
 
 import app.dto.requestDTO.QuoteRequestDTO;
-import app.dto.responseDTO.CustomerResponseDTO;
-import app.dto.responseDTO.PartsListResponseDTO;
-import app.dto.responseDTO.QuoteResponseDTO;
-import app.dto.responseDTO.SalesRepResponseDTO;
+import app.dto.responseDTO.*;
 import app.dto.responseDTO.carports.CarportResponseDTO;
-import app.entities.Customer;
-import app.entities.Quote;
-import app.entities.SalesRep;
+import app.entities.*;
+import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.CustomerMapper;
-import app.persistence.QuoteMapper;
-import app.persistence.SalesRepMapper;
-import app.services.converters.QuoteConverter;
-import app.services.converters.UserConverter;
+import app.persistence.*;
+import app.services.converters.*;
+import app.services.utils.PartsListCalculator;
 import app.services.utils.PriceCalculator;
 
 import java.util.ArrayList;
@@ -30,10 +23,12 @@ public class QuoteService {
     private CustomerMapper customerMapper;
     private SalesRepMapper salesRepMapper;
     private CarportMapper carportMapper;
+    private ProductMapper productMapper;
     private UserService userService;
+    PartsListCalculator partsListCalculator;
 
 
-    public QuoteService(QuoteMapper quoteMapper, CarportService carportService, CustomerMapper customerMapper, SalesRepMapper salesRepMapper, CarportMapper carportMapper, UserService userService) {
+    public QuoteService(QuoteMapper quoteMapper, CarportService carportService, CustomerMapper customerMapper, SalesRepMapper salesRepMapper, CarportMapper carportMapper, UserService userService, ProductMapper productMapper) {
         this.userService = userService;
         this.quoteMapper = quoteMapper;
         this.quoteConverter = new QuoteConverter();
@@ -42,6 +37,8 @@ public class QuoteService {
         this.customerMapper = customerMapper;
         this.salesRepMapper = salesRepMapper;
         this.carportMapper = carportMapper;
+        this.partsListCalculator = new PartsListCalculator();
+        this.productMapper = productMapper;
     }
 
     public void createQuote(QuoteRequestDTO quoteRequestDTO) throws DatabaseException {
@@ -56,6 +53,7 @@ public class QuoteService {
         quote.setCustomerId(quoteRequestDTO.getCustomerId());
         quote.setSalesRepId(quoteRequestDTO.getSalesRepId());
         quote.setQuotePrice(quotePrice);
+        quote.setQuoteDiscount(quoteRequestDTO.getQuoteDiscount());
 
         quoteMapper.createQuote(quote);
     }
@@ -80,30 +78,49 @@ public class QuoteService {
         return quoteResponseDTO;
     }
 
-    public List<QuoteResponseDTO> getAllQuotes() throws DatabaseException {
+    public List<QuoteAdminResponseDTO> getAllQuotesAdmin() throws DatabaseException, CalculatorException {
         List<Quote> allQuotes = quoteMapper.getAllQuotes();
-        List<QuoteResponseDTO> responseDTOS = new ArrayList<>();
+        List<QuoteAdminResponseDTO> responseDTOS = new ArrayList<>();
+        List<Product> products = productMapper.getAllProducts();
+
         for (Quote quote : allQuotes) {
             int quoteId = quote.getQuoteId();
-            double quotePrice = quote.getQuotePrice();
             CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
             CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
             SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
-            responseDTOS.add(new QuoteResponseDTO(quoteId, quotePrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
+
+            double calculatedCostPrice = 0;
+            for (Product product : products) {
+                calculatedCostPrice += product.getCostPrice();
+            }
+
+            double retailPrice = quote.getQuotePrice();
+            double discount = quote.getQuoteDiscount();
+            double serviceFee = PriceCalculator.calculateServiceFee(retailPrice);
+            double totalPrice = PriceCalculator.getRevenue(retailPrice, discount, serviceFee);
+            double costPrice = calculatedCostPrice;
+
+            responseDTOS.add(new QuoteAdminResponseDTO(quoteId, retailPrice, discount, totalPrice, costPrice, serviceFee, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return responseDTOS;
     }
 
-    public List<QuoteResponseDTO> getAllQuotesByCustomerId(int customerId) throws DatabaseException{
+    public List<QuoteResponseDTO> getAllQuotesByCustomerId(int customerId) throws DatabaseException {
         List<Quote> quotes = quoteMapper.getAllQuotesByCustomerId(customerId);
         List<QuoteResponseDTO> quoteResponseDTOS = new ArrayList<>();
+
         for (Quote quote : quotes) {
             int quoteId = quote.getQuoteId();
-            double quotePrice = quote.getQuotePrice();
             CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
             CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
             SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
-            quoteResponseDTOS.add(new QuoteResponseDTO(quoteId, quotePrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
+
+            double retailPrice = quote.getQuotePrice();
+            double discount = quote.getQuoteDiscount();
+            double serviceFee = PriceCalculator.calculateServiceFee(retailPrice);
+            double totalPrice = PriceCalculator.getRevenue(retailPrice, discount, serviceFee);
+
+            quoteResponseDTOS.add(new QuoteResponseDTO(quoteId, retailPrice, discount, totalPrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return quoteResponseDTOS;
     }

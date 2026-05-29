@@ -10,8 +10,10 @@ public class QuoteConverter {
     public QuoteResponseDTO convertQuoteToDto(Quote quote) {
         int quoteId = quote.getQuoteId();
         double quotePrice = quote.getQuotePrice();
+        double quoteDiscount = quote.getQuoteDiscount();
+        double totalPrice = quotePrice * (1 - quoteDiscount);
 
-        return new QuoteResponseDTO(quoteId, quotePrice);
+        return new QuoteResponseDTO(quoteId, quotePrice, quoteDiscount, totalPrice);
     }
 
     public Quote convertQuoteDTOtoEntity(QuoteRequestDTO quoteRequestDTO) throws DatabaseException {
@@ -19,8 +21,9 @@ public class QuoteConverter {
         int carportId = quoteRequestDTO.getCarportId();
         double quotePrice = quoteRequestDTO.getQuotePrice();
         int salesRepId = quoteRequestDTO.getSalesRepId();
+        double quoteDiscount = quoteRequestDTO.getQuoteDiscount();
 
-        return new Quote(quotePrice, carportId, customerId, salesRepId);
+        return new Quote(quotePrice, carportId, customerId, salesRepId, quoteDiscount);
     }
 }
 

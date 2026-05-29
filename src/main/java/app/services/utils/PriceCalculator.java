@@ -38,17 +38,21 @@ public class PriceCalculator {
         return roundUpToTwoDecimals(totalServiceFee);
     }
 
+    public static double calculateServiceFee(double retailPrice){
+        return retailPrice * 0.1;
+    }
+
     public static double getRevenue (double retailPrice, double serviceFee, double discount){
-        double rawRevenue = (retailPrice + serviceFee) * (1.0 - discount);
+        double rawRevenue = (retailPrice + serviceFee) - discount;
         return roundUpToTwoDecimals(rawRevenue);
     }
 
     public static double getGrossProfit(double costPrice, double retailPrice, double serviceFee, double discount){
-        return roundUpToTwoDecimals((retailPrice + serviceFee - costPrice) * (1.0 - discount));
+        return roundUpToTwoDecimals((retailPrice + serviceFee - costPrice) - discount);
     }
 
     public static double getGrossMarginInPercent(double costPrice, double retailPrice, double serviceFee, double discount){
-        double revenue = (retailPrice + serviceFee) * (1.0 - discount);
+        double revenue = (retailPrice + serviceFee) - discount;
         if (revenue == 0){
             return 0;
         }

@@ -11,15 +11,18 @@ import lombok.Setter;
 
 public class QuoteResponseDTO {
     private int quoteId;
-    private double quotePrice;
+    private double price;
+    private double discount;
+    private double totalPrice;
     private CustomerResponseDTO customerResponseDTO;
     private CarportResponseDTO carportResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
 
-
-    public QuoteResponseDTO(int quoteId, double quotePrice) {
+    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice, double totalPrice) {
         this.quoteId = quoteId;
-        this.quotePrice = quotePrice;
+        this.price = retailPrice;
+        this.discount = discountPrice;
+        this.totalPrice = totalPrice;
     }
 }
 

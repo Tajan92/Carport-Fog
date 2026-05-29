@@ -42,7 +42,7 @@ public class SalesRepController {
         //Get lists of customers, inquiries, quotes and orders to display
         List<CustomerResponseDTO> customers = serviceFactory.getUserService().getAllCustomers();
         List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiries();
-        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotes();
+        List<QuoteAdminResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesAdmin();
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
 
         ctx.attribute("admin_customers", customers);

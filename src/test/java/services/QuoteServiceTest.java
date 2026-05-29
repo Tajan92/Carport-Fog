@@ -1,8 +1,6 @@
 package services;
 
-import app.dto.requestDTO.OrderRequestDTO;
 import app.dto.requestDTO.QuoteRequestDTO;
-import app.dto.responseDTO.OrderResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
@@ -44,12 +42,12 @@ public class QuoteServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingQuotePrice, response.getQuotePrice());
+        assertEquals(existingQuotePrice, response.getTotalPrice());
     }
 
     @Test
     public void getAllQuotesTest() throws CalculatorException, DatabaseException {
-        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotes();
+        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesAdmin();
         double firstOrderPrice = 24999.00;
 
         //The list shouldn't be null or empty
@@ -63,7 +61,7 @@ public class QuoteServiceTest extends MapperTest {
 
         //Check if the first quote has correct id = 1 and the price is correct
         assertEquals(1, firstQuote.getQuoteId());
-        assertEquals(firstOrderPrice, firstQuote.getQuotePrice());
+        assertEquals(firstOrderPrice, firstQuote.getTotalPrice());
     }
 
     @Test

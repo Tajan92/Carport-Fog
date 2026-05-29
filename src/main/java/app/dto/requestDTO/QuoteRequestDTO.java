@@ -14,4 +14,5 @@ public class QuoteRequestDTO {
     private double quotePrice;
     private int carportId;
     private int salesRepId;
+    private double quoteDiscount;
 }

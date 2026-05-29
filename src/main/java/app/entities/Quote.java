@@ -16,11 +16,13 @@ public class Quote {
     private int carportId;
     private int customerId;
     private int salesRepId;
+    private double quoteDiscount;
 
-    public Quote(double quotePrice, int carportId, int customerId, int salesRepId) {
+    public Quote(double quotePrice, int carportId, int customerId, int salesRepId, double quoteDiscount) {
         this.quotePrice = quotePrice;
         this.carportId = carportId;
         this.customerId = customerId;
         this.salesRepId = salesRepId;
+        this.quoteDiscount = quoteDiscount;
     }
 }
