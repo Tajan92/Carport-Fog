@@ -31,9 +31,19 @@ public class InquiryController {
         double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
 
         //Roof
-        double roofSlope = Double.parseDouble(ctx.formParam("roof_slope"));
+        String roofSlopeResponse = ctx.formParam("roof_slope");
         String roofMaterial = ctx.formParam("roof_material");
         String roofType = ctx.formParam("roof_type");
+        double roofSlope = 1.7;
+        if (roofType.isEmpty()){
+            roofType = "Fladt tag";
+        }
+        if (roofMaterial.isEmpty()){
+            roofMaterial = "Plastmo Ecolite blåtonet";
+        }
+        if (!roofSlopeResponse.isEmpty()){
+            roofSlope = Double.parseDouble((roofSlopeResponse));
+        }
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         //Shed

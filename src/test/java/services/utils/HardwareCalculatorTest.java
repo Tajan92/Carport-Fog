@@ -37,7 +37,7 @@ public class HardwareCalculatorTest {
     }
 
     @Test
-    void addPoleProductsTest() throws CalculatorException {
+    void addHardwareProductsTest() throws CalculatorException {
         Carport carport = new Carport(1, 600, 240, 780, 22000, 1, 1, 1);
         Shed shed = new Shed(300, 210, "Beklædning: 19x100 mm. trykimp. Brædt", true);
         Roof roof = new Roof(0, "Plastmo Ecolite blåtonet", "Fladt tag");
@@ -45,7 +45,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertFalse(partsList.isEmpty());
     }
@@ -59,7 +59,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -79,7 +79,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -98,7 +98,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -127,7 +127,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -146,7 +146,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -165,7 +165,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -187,7 +187,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -212,7 +212,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getPlacementDescription()
@@ -237,7 +237,7 @@ public class HardwareCalculatorTest {
         double poleQuantity = 8;
         double sidingQuantity = 18;
 
-        hardwareCalculator.addPoleProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
+        hardwareCalculator.addHardwareProducts(partsList, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, products);
 
         assertTrue(partsList.stream()
                 .anyMatch(e -> e.getQuantity() > 0));

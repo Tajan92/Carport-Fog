@@ -79,7 +79,7 @@ public class OrderMapper {
     public List<Order> getAllOrders() throws DatabaseException {
         List<Order> orders = new ArrayList<>();
         String sql = """
-                select o.order_id, o.customer_id, o.sales_rep_id, o.carport_id, o.order_price, pl.parts_list_id from orders o
+                select o.order_id, o.customer_id, o.sales_rep_id, o.carport_id, o.order_price, o.order_discount, pl.parts_list_id from orders o
                 left join customers using(customer_id)
                 left join sales_reps using(sales_rep_id)
                 left join carports using(carport_id)
@@ -112,7 +112,7 @@ public class OrderMapper {
     public List<Order> getAllOrdersByCustomerId(int customerId) throws DatabaseException {
         List<Order> orders = new ArrayList<>();
         String sql = """
-                select o.order_id, o.customer_id, o.sales_rep_id, o.carport_id, o.order_price, pl.parts_list_id from orders o
+                select o.order_id, o.customer_id, o.sales_rep_id, o.carport_id, o.order_price, o.order_discount, pl.parts_list_id from orders o
                 left join customers using(customer_id)
                 left join sales_reps using(sales_rep_id)
                 left join carports using(carport_id)

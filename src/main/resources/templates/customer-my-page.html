@@ -29,14 +29,14 @@
                     <th:block th:each="quote: ${customer_quotes}">
                         <a class="my-page-result-button"
                            th:href="@{/customer/quote/details/{id}(id=${quote.quoteId})}"
-                           th:text="${'ID: ' + quote.quoteId + ' | Pris: ' + quote.quotePrice}"></a>
+                           th:text="${'ID: ' + quote.quoteId + ' | Pris: ' + quote.totalPrice}"></a>
                     </th:block>
                 </div>
                 <div class="my-page-order-results hidden" >
                     <th:block th:each="order: ${customer_orders}">
                         <a class="my-page-result-button"
                            th:href="@{/customer/order/details/{id}(id=${order.orderId})}"
-                           th:text="${'ID: ' + order.orderId + ' | Pris: ' + order.orderPrice}"></a>
+                           th:text="${'ID: ' + order.orderId + ' | Pris: ' + order.totalPrice}"></a>
                     </th:block>
                 </div>
             </div>

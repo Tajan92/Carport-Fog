@@ -39,7 +39,7 @@
         <p th:text="${'Længde: ' + carport_quote_preview.length + ' cm'}"></p>
         <p th:text="${'Tagtype: ' + carport_quote_preview.roofResponseDTO.roofType}"></p>
         <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofMaterial}"></p>
-        <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofSlope}"></p>
+        <p th:text="${'Tag-hældning: ' + carport_quote_preview.roofResponseDTO.roofSlope}"></p>
         <div th:if="${shed != null}">
             <p th:text="${'Siding: ' + shed.siding}"></p>
             <p th:text="${'Floor: ' + shed.floor}"></p>

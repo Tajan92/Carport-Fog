@@ -11,9 +11,10 @@ public class HardwareCalculator {
     private final String highRoof = "Højt tag";
     ProductFinder productFinder = new ProductFinder();
 
-    public void addPoleProducts(List<ProductsPartsListEntry> productsPartsListEntries, Roof roof, Shed shed, Carport carport, double rafterQuantity, double poleQuantity, double sidingQuantity, List<Product> products) throws CalculatorException {
-        addScrewsToRoof(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), roof.getRoofMaterial(), carport.getLength(), shed.getLength(), products);
-        addBracingStrap(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), carport.getLength(), shed.getLength(), products);
+    public void addHardwareProducts(List<ProductsPartsListEntry> productsPartsListEntries, Roof roof, Shed shed, Carport carport, double rafterQuantity, double poleQuantity, double sidingQuantity, List<Product> products) throws CalculatorException {
+
+        addScrewsToRoof(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), roof.getRoofMaterial(), carport.getWidth(), carport.getLength(), products);
+        addBracingStrap(productsPartsListEntries, roof.getRoofType(), roof.getRoofSlope(), carport.getWidth(), carport.getLength(), products);
         addUniversalConnectorAndScrews(productsPartsListEntries, rafterQuantity, products);
         addFasciaAndFasciaCappingScrews(productsPartsListEntries, products);
         addBoltsToPoles(productsPartsListEntries, carport.getShedId(), poleQuantity, products);
@@ -71,7 +72,7 @@ public class HardwareCalculator {
         productsPartsListEntries.add(new ProductsPartsListEntry(product, quantity, placementDescription));
     }
 
-    private void addBracingStrap(List<ProductsPartsListEntry> productsPartsListEntries, String roofType, double roofSlope, double width, double length, List<Product> products) throws CalculatorException {
+    private void addBracingStrap(List<ProductsPartsListEntry> productsPartsListEntries, String roofType, double roofSlope, double width, Double length, List<Product> products) throws CalculatorException {
         String placementDescription = "Til vindkryds på spær";
         String productDescription = "hulbånd 1x20 mm. 10 mtr.";
         Product strapRollProduct = productFinder.findProductByDescription(products, productDescription);

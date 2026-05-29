@@ -18,10 +18,8 @@ public class OrderResponseDTO {
     private PartsListResponseDTO partsListResponseDTO;
 
 
-    public OrderResponseDTO(int orderId, double retailPrice, double discountPrice, double totalPrice) {
+    public OrderResponseDTO(int orderId, double retailPrice) {
         this.orderId = orderId;
         this.price = retailPrice;
-        this.discount = discountPrice;
-        this.totalPrice = totalPrice;
     }
 }
