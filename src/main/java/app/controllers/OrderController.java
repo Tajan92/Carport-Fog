@@ -39,9 +39,9 @@ public class OrderController {
         //Gets partslistresponse and collects id directly
         int partsListId = serviceFactory.getPartsListService().getPartsList(carportId).getPartsListId();
         double discount = quoteResponseDTO.getDiscount();
-        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerId, salesRepId, carportId, orderPrice, partsListId, discount));
+        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
 
-        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId));
+        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
         ctx.redirect("/customer/my/page");
     }
 

@@ -12,14 +12,18 @@ public class PoleCalculator {
     private int poleQuantity;
 
     public double addPoleProducts(List<ProductsPartsListEntry> productsPartsListEntries, Shed shed, Carport carport, List<Product> products) throws CalculatorException {
-        addPoles(productsPartsListEntries, carport.getLength(), shed.getLength(), carport.getShedId(), products);
+        Double shedLength = null;
+        if (carport.getShedId()!=null){
+           shedLength = shed.getLength();
+        }
+        addPoles(productsPartsListEntries, carport.getLength(), shedLength, carport.getShedId(), products);
         if (carport.getShedId() != null) {
             addPolesToShed(productsPartsListEntries, products);
         }
         return poleQuantity;
     }
 
-    private void addPoles(List<ProductsPartsListEntry> productsPartsListEntries, double length, double shedLength, Integer shedId, List<Product> products) throws CalculatorException {
+    private void addPoles(List<ProductsPartsListEntry> productsPartsListEntries, double length, Double shedLength, Integer shedId, List<Product> products) throws CalculatorException {
         double marginFront = 100;
         double marginBack = 35;
         double maxPoleDistance = 300;

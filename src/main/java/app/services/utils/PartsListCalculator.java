@@ -28,7 +28,7 @@ public class PartsListCalculator {
         double poleQuantity = poleCalculator.addPoleProducts(productsPartsListEntries, shed, carport, allProducts);
         double rafterQuantity =roofCalculator.addRoofProducts(productsPartsListEntries, roof, carport, allProducts);
         double sidingQuantity = shedCalculator.addShedProducts(productsPartsListEntries, carport, roof, shed, allProducts);
-        hardwareCalculator.addPoleProducts(productsPartsListEntries, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, allProducts);
+        hardwareCalculator.addHardwareProducts(productsPartsListEntries, roof, shed, carport, rafterQuantity, poleQuantity, sidingQuantity, allProducts);
 
         return productsPartsListEntries;
     }

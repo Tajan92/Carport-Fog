@@ -18,6 +18,7 @@ public class OrderConverter {
         int carportId = orderRequestDTO.getCarportId();
         double orderPrice = orderRequestDTO.getOrderPrice();
         int partsListId = orderRequestDTO.getPartsListId();
-        return new Order(customerId,salesRepId, carportId, orderPrice, partsListId);
+        double discount = orderRequestDTO.getOrderDiscount();
+        return new Order(customerId, salesRepId, carportId, orderPrice, partsListId,discount);
     }
 }

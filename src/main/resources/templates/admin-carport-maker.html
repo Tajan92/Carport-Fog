@@ -244,12 +244,12 @@
                             <div class="inquiry-submit">
                               <br>
                                 <!-- Read-only price info -->
-                                <p th:text="${'Kostpris: ' + #numbers.formatDecimal(cost_price_quote, 1, 2) + ' kr.'}"></p>
-                                <p th:text="${'Vejl. udsalgspris: ' + #numbers.formatDecimal(retail_price_quote, 1, 2) + ' kr.'}"></p>
-                                <p th:text="${'Servicegebyr: ' + #numbers.formatDecimal(service_fee_quote, 1, 2) + ' kr.'}"></p>
-                                <p th:text="${'Omsætning: ' + #numbers.formatDecimal(revenue_quote, 1, 2) + ' kr.'}"></p>
-                                <p th:text="${'Bruttofortjeneste: ' + #numbers.formatDecimal(gross_profit_quote, 1, 2) + ' kr.'}"></p>
-                                <p th:text="${'Bruttomargin: ' + #numbers.formatDecimal(gross_margin_quote, 1, 2) + ' %'}"></p>
+                                <p th:text="${'Kostpris: ' + cost_price_quote + ' kr.'}"></p>
+                                <p th:text="${'Vejl. udsalgspris: ' + retail_price_quote + ' kr.'}"></p>
+                                <p th:text="${'Servicegebyr: ' + service_fee_quote + ' kr.'}"></p>
+                                <p th:text="${'Omsætning: ' + revenue_quote + ' kr.'}"></p>
+                                <p th:text="${'Bruttofortjeneste: ' + gross_profit_quote + ' kr.'}"></p>
+                                <p th:text="${'Bruttomargin: ' + gross_margin_quote + ' %'}"></p>
 
                                 <!-- Editable discount — always starts at 0 -->
                                 <label for="discountInput">Rabat:</label>

@@ -60,7 +60,11 @@ public class QuoteController {
         CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
         List<ProductsPartsListEntry> allEntries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
 
+        String discountResponse = ctx.formParam("discount_quote");
         double discount    = 0;
+        if (discountResponse != null && !discountResponse.isBlank()){
+            discount = Double.parseDouble(discountResponse);
+        }
         double costPrice   = serviceFactory.getPriceService().getTotalCostPrice(allEntries);
         double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(allEntries);
         double serviceFee  = serviceFactory.getPriceService().getServiceFee(allEntries);
@@ -114,7 +118,11 @@ public class QuoteController {
 
         UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
         int customerId = Integer.parseInt(ctx.formParam("customer_id"));
-        double discount = Double.parseDouble(ctx.formParam("discount_quote"));
+        String discountResponse = ctx.formParam("discount_quote");
+        double discount = 0;
+        if (discountResponse.isEmpty()){
+            discount = Double.parseDouble(discountResponse);
+        }
 
         CarportRequestDTO carportRequestDTO = buildCarportRequest(ctx, serviceFactory);
 
@@ -174,9 +182,20 @@ public class QuoteController {
         double carportWidth  = Double.parseDouble(ctx.formParam("carport_width"));
         double carportHeight = 230;
         double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
-        double roofSlope     = Double.parseDouble(ctx.formParam("roof_slope"));
-        String roofMaterial  = ctx.formParam("roof_material");
-        String roofType      = ctx.formParam("roof_type");
+        String roofSlopeResponse = ctx.formParam("roof_slope");
+        String roofMaterial = ctx.formParam("roof_material");
+        String roofType = ctx.formParam("roof_type");
+        double roofSlope = 1.7;
+        if (roofType.isEmpty()){
+            roofType = "Fladt tag";
+        }
+        if (roofMaterial.isEmpty()){
+            roofMaterial = "Plastmo Ecolite blåtonet";
+        }
+        if (!roofSlopeResponse.isEmpty()){
+            roofSlope = Double.parseDouble((roofSlopeResponse));
+        }
+
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         String shedStatus  = ctx.formParam("shed_status");
