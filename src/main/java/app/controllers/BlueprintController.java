@@ -11,9 +11,9 @@ public class BlueprintController {
     }
 
     private void showCarportSvg(Context ctx, ServiceFactory serviceFactory){
-        String carportSvg = serviceFactory.getBlueprintService().toString();
+        //String carportSvg = serviceFactory.getBlueprintService();
 
-        ctx.attribute("carportSvg", carportSvg);
+        //ctx.attribute("carportSvg", carportSvg);
         ctx.render("admin-quote-maker");
     }
 }

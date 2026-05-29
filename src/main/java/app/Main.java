@@ -3,6 +3,7 @@ package app;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
 import app.controllers.*;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.ServiceFactory;
 import io.javalin.Javalin;

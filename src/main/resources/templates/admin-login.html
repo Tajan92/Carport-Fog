@@ -4,6 +4,17 @@
 <head th:replace="~{fragments :: head('Customer Login')}"></head>
 
 <body>
+<a th:href="@{/}">
+    <svg class="admin-return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
+         fill="none">
+        <path class="admin-return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
+              stroke-width="9.25"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="admin-return-svg"
+              d="M8 18.6667H38.6587C47.836 18.6667 55.6293 26.16 55.9867 35.3333C56.3653 45.0267 48.356 53.3333 38.6587 53.3333H15.9973"
+              stroke="black" stroke-width="9.25" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</a>
 
 <h1 class="logo">Fog</h1>
 
@@ -11,7 +22,7 @@
     <h1 class="admin-welcome-message">Admin Login</h1>
 
 
-    <form id="admin-login-form" action="/login" method="post">
+    <form id="admin-login-form" th:action="@{/admin/login}" method="post">
         <p class="admin-input-description">EMAIL</p>
         <input class="admin-input-box" type="text" name="email" placeholder="eg. user@example.com..">
         <p class="admin-input-description">KODEORD</p>
@@ -23,7 +34,7 @@
 
     <div class="customer-login">
         <p>Ikke ansat af fog?</p>
-        <a th:href="@{/customerLogin}" class="customer-button-box" type="button" id="customer-login-button" >Log ind her</a>
+        <a th:href="@{/customer/login}" class="customer-button-box" type="button" id="customer-login-button" >Log ind her</a>
     </div>
 
 </div>

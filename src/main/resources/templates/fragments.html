@@ -34,8 +34,9 @@
     <div class="carport-maker-progress">
         <h1 class="progress-steps" id="progress-step-1" th:href="@{/}">FOG</h1>
         <a class="progress-steps" id="progress-step-2" th:href="@{/}">Lav carport</a>
-        <a class="progress-steps" id="progress-step-3" th:href="@{/customerProfilePage}">Min side</a>
-        <a class="progress-steps" id="progress-step-4" th:href="@{/customerLogin}">Log ud</a>
+        <a class="progress-steps hidden" id="progress-step-3" th:href="@{/customer/my/page}">Min side</a>
+        <a class="progress-steps" id="progress-step-4" th:href="@{/customer/login}">Log ind</a>
+        <a class="progress-steps hidden" id="progress-step-out" th:href="@{/customer/login}">Log ud</a>
     </div>
 </header>
 
@@ -43,19 +44,23 @@
     <div class="carport-maker-progress">
         <h1 class="progress-steps" id="progress-step-5" th:href="@{/}">FOG</h1>
         <h1 class="progress-steps" id="progress-step-6" th:href="@{/}">ADMIN</h1>
-        <a class="progress-steps" id="progress-step-7" th:href="@{/}">Lav carport</a>
-        <a class="progress-steps" id="progress-step-8" th:href="@{/adminProfilePage}">Min side</a>
-        <a class="progress-steps" id="progress-step-9" th:href="@{/loginSalesRep}">Log ud</a>
+        <a class="progress-steps" id="progress-step-7" th:href="@{/admin/carport/maker}">Lav carport</a>
+        <a class="progress-steps" id="progress-step-8" th:href="@{/admin/my/page}">Min side</a>
+        <a class="progress-steps" id="progress-step-9" th:href="@{/logout}">Log ud</a>
     </div>
 </header>
-
-
 
 
 <div th:fragment="customerScripts">
     <script th:src="@{/javascript/customer-header-states.js}"></script>
     <script th:src="@{/javascript/customer-carport-maker.js}"></script>
+    <script th:src="@{/javascript/customer-carport-states.js}"></script>
     <script th:src="@{/javascript/customer-my-page.js}"></script>
+    <script th:inline="javascript">
+        const currentUser = /*[[${currentUser}]]*/ null;
+        console.log("Logged in user details:", currentUser);
+    </script>
+    <script th:src="@{/javascript/login-state.js}"></script>
 </div>
 
 <div th:fragment="adminScripts">
