@@ -22,28 +22,28 @@
                     <th:block th:each="customer: ${admin_customers}">
                         <a class="my-page-result-button"
                            th:href="@{/admin/customer/details/{id}(id=${customer.id})}"
-                           th:text="${'ID: ' + customer.id + ' ' + customer.email}"></a>
+                           th:text="${'ID: ' + customer.id + ' | Kunde: ' + customer.firstName + ' ' + customer.lastName}"></a>
                     </th:block>
                 </div>
                 <div class="my-page-inquiry-results hidden ">
                     <th:block th:each="inquiry: ${admin_inquiries}">
                         <a class="my-page-result-button"
-                           th:href="@{/admin/inquiry/details/{id}(id=${inquiry.id})}"
-                           th:text="${'ID: ' + inquiry.id + ' ' + inquiry.price}"></a>
+                           th:href="@{/admin/inquiry/details/{id}(id=${inquiry.inquiryId})}"
+                           th:text="${'ID: ' + inquiry.inquiryId + ' | Kunde: ' + inquiry.customerResponseDTO.firstName +' '+ inquiry.customerResponseDTO.lastName}"></a>
                     </th:block>
                 </div>
                 <div class="my-page-quote-results hidden">
                     <th:block th:each="quote: ${admin_quotes}">
                         <a class="my-page-result-button"
-                           th:href="@{/admin/quote/details/{id}(id=${quote.id})}"
-                           th:text="${'ID: ' + quote.id + ' ' + quote.price}"></a>
+                           th:href="@{/admin/quote/details/{id}(id=${quote.quoteId})}"
+                           th:text="${'ID: ' + quote.quoteId + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName}"></a>
                     </th:block>
                 </div>
                 <div class="my-page-order-results hidden">
                     <th:block th:each="order: ${admin_orders}">
                         <a class="my-page-result-button"
-                           th:href="@{/admin/order/details/{id}(id=${order.id})}"
-                           th:text="${'ID: ' + order.id + ' ' + order.price}"></a>
+                           th:href="@{/admin/order/details/{id}(id=${order.orderId})}"
+                           th:text="${'ID: ' + order.orderId + ' | Kunde: ' + order.customerResponseDTO.firstName + ' ' + order.customerResponseDTO.lastName }"></a>
                     </th:block>
                 </div>
             </div>

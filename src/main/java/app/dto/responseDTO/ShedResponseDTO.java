@@ -12,4 +12,9 @@ public class ShedResponseDTO {
     private double length;
     private String siding;
     private boolean floor;
+
+    @Override
+    public String toString() {
+        return "Sidebeklædning: " + siding + "| Gulv: " + floor;
+    }
 }

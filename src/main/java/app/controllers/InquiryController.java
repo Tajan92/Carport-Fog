@@ -3,21 +3,24 @@ import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.UserResponseDTO;
+import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import java.util.List;
 
 public class InquiryController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/create/inquiry", ctx -> createInquiry(ctx, serviceFactory));
-        app.get("/customer/get/inquiry/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
-        app.get("/admin/get/inquiry/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
+        app.get("/customer/inquiry/details/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
+        app.get("/admin/inquiry/details/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
@@ -35,26 +38,27 @@ public class InquiryController {
 
         //Shed
         String shedWidth;
+        String shedLength;
         String shedStatus = ctx.formParam("shed_status");
-        String shedLength = ctx.formParam("shed_length");
         String shedSiding = ctx.formParam("shed_siding");
         String floorStatus = ctx.formParam("shed_floor");
-        boolean floor;
+        boolean floor = false;
 
-        if (shedStatus.matches("HALF")){
-            shedWidth = String.valueOf(carportWidth/2);
-        } else if (shedStatus.matches("FULL")){
-            shedWidth = String.valueOf(carportWidth);
-        } else {
-            shedLength = null;
-            shedWidth = null;
-            shedSiding = null;
-            floor = false;
+        //Check for floor
+        if (floorStatus.equals("TRUE")){
+            floor = true;
         }
-        if (floorStatus.matches("TRUE")){
-            floor=true;
-        }else {
-            floor = false;
+        //Check for shed size full, half or none
+        if (shedStatus.matches("HALF")) {
+            shedWidth = String.valueOf(carportWidth / 2);
+            shedLength = String.valueOf(carportLength / 3);
+        } else if (shedStatus.matches("FULL")) {
+            shedWidth = String.valueOf(carportWidth);
+            shedLength = String.valueOf(carportLength / 3);
+        } else {
+            shedWidth = null;
+            shedLength = null;
+            shedSiding = null;
         }
 
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().checkShed(shedWidth, shedLength, shedSiding, floor, carportWidth, carportHeight, carportLength, roofRequestDTO);
@@ -96,9 +100,17 @@ public class InquiryController {
         }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+
+        ShedResponseDTO shed = null;
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
 
         ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
+        ctx.attribute("selected_carport", carportResponseDTO);
+        ctx.attribute("selected_shed", shed);
         ctx.render("customer-inquiry-details.html");
     }
 
@@ -111,8 +123,16 @@ public class InquiryController {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
 
-        ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
-        ctx.attribute("selected_inquiry", inquiryResponseDTO);
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+
+        ShedResponseDTO shed = null;
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
+        ctx.attribute("shed", shed);
+        ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
+        ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
+        ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
         ctx.render("admin-inquiry-details.html");
     }
 

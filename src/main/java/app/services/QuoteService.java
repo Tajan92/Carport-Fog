@@ -1,6 +1,8 @@
 package app.services;
-
 import app.dto.requestDTO.QuoteRequestDTO;
+import app.dto.responseDTO.CustomerResponseDTO;
+import app.dto.responseDTO.QuoteResponseDTO;
+import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.*;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.*;
@@ -10,7 +12,6 @@ import app.persistence.*;
 import app.services.converters.*;
 import app.services.utils.PartsListCalculator;
 import app.services.utils.PriceCalculator;
-
 import java.util.ArrayList;
 import java.util.List;
 

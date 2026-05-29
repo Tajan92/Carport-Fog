@@ -47,7 +47,7 @@ public class QuoteMapper {
 
     public Quote getQuoteById(int quoteId) throws DatabaseException {
 
-        String sql = "select quote_price, carport_id, customer_id, sales_rep_id, quote_discount from quotes where carport_id = ?";
+        String sql = "select quote_price, carport_id, customer_id, sales_rep_id, quote_discount from quotes where quote_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

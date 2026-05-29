@@ -49,7 +49,7 @@ public class InquiryServiceTest extends MapperTest {
     }
 
     @Test
-    public void getAllInquiriesTest() throws DatabaseException {
+    public void getAllInquiriesTest() throws DatabaseException, CalculatorException {
         List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiries();
 
         //The list shouldn't be null or empty

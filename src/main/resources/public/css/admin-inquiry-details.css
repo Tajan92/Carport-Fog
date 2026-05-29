@@ -49,6 +49,7 @@ body {
     height: 100%;
     margin-bottom: auto;
     overflow-y: scroll;
+    color: white;
 }
 
 
@@ -72,6 +73,22 @@ body {
 .admin-return-button:hover .admin-return-svg{
     stroke: #8fbae4;
     cursor: pointer;
+}
+
+.create-quote-button{
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    width: 100%;
+    height: clamp(2.8rem, 7vw, 4rem);
+    color: #FFF;
+    font-family: Inter;
+    font-size: clamp(1rem, 2.5vw, 1.76313rem);
+    font-weight: 500;
+    margin-top: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 25px;
 }
 
 
