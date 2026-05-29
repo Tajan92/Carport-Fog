@@ -27,7 +27,7 @@ public class QuoteMapper {
             preparedStatement.setInt(2, quote.getCarportId());
             preparedStatement.setInt(3, quote.getCustomerId());
             preparedStatement.setInt(4, quote.getSalesRepId());
-            preparedStatement.setDouble(5, quote.getQuoteDiscount);
+            preparedStatement.setDouble(5, quote.getQuoteDiscount());
 
             int quoteId = 0;
             int rowsAffected = preparedStatement.executeUpdate();
