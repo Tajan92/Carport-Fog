@@ -15,7 +15,7 @@ public class ServiceFactory {
     private ShedService shedService;
     private RoofService roofService;
     private PartsListService partsListService;
-    private BlueprintService blueprintService;
+    private BluePrintService blueprintService;
     private PriceService priceService;
 
     public ServiceFactory()  {
