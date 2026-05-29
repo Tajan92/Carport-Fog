@@ -16,7 +16,7 @@ public class InquiryController {
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/create/inquiry", ctx -> createInquiry(ctx, serviceFactory));
         app.get("/customer/get/inquiry/{inquiry_id}", ctx -> customerGetInquiryDetails(ctx, serviceFactory));
-        app.get("/admin/get/inquiry/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
+        app.get("/admin/inquiry/details/{inquiry_id}", ctx -> adminGetInquiryDetails(ctx, serviceFactory));
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
@@ -111,8 +111,9 @@ public class InquiryController {
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
 
-        ctx.sessionAttribute("inquiry_responseDTO",inquiryResponseDTO);
-        ctx.attribute("selected_inquiry", inquiryResponseDTO);
+        ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
+        ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
+        ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
         ctx.render("admin-inquiry-details.html");
     }
 
