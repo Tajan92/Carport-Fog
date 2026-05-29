@@ -1,6 +1,8 @@
 package app.controllers;
+
 import app.dto.requestDTO.OrderRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.responseDTO.OrderAdminResponseDTO;
 import app.dto.responseDTO.CustomerResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
@@ -27,34 +29,36 @@ public class OrderController {
         CustomerResponseDTO customerResponseDTO = ctx.sessionAttribute("currentUser");
         int quoteId = Integer.parseInt(ctx.formParam("quote_id"));
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
-        double orderPrice = quoteResponseDTO.getQuotePrice();
+
         int salesRepId = quoteResponseDTO.getSalesRepResponseDTO().getId();
 
         //Gets carport from quote and makes it into a request
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(quoteResponseDTO.getCarportResponseDTO());
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-
+        double orderPrice = quoteResponseDTO.getPrice();
         //Gets partslistresponse and collects id directly
         int partsListId = serviceFactory.getPartsListService().getPartsList(carportId).getPartsListId();
+        double discount = quoteResponseDTO.getDiscount();
+        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerId, salesRepId, carportId, orderPrice, partsListId, discount));
 
         serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId));
         ctx.redirect("/customer/my/page");
     }
 
     public void getOrderAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if(!UserValidator.isAdmin(ctx)){
+        if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
         int orderId = Integer.parseInt(ctx.formParam("order_id"));
-        OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
+        OrderAdminResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrderAdmin(orderId);
 
         ctx.attribute("selected_order", orderResponseDTO);
         ctx.render("admin-order-details.html");
     }
 
     public void getOrderCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if(!UserValidator.isCustomer(ctx)){
+        if (!UserValidator.isCustomer(ctx)) {
             ctx.redirect("/");
             return;
         }

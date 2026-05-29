@@ -42,8 +42,8 @@ public class SalesRepController {
         //Get lists of customers, inquiries, quotes and orders to display
         List<CustomerResponseDTO> customers = serviceFactory.getUserService().getAllCustomers();
         List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiries();
-        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotes();
-        List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
+        List<QuoteAdminResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesAdmin();
+        List<OrderAdminResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
 
         ctx.attribute("admin_customers", customers);
         ctx.attribute("admin_inquiries", inquiries);

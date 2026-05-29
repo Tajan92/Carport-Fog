@@ -19,7 +19,7 @@ public class QuoteMapper {
 
     public int createQuote(Quote quote) throws DatabaseException {
 
-        String sql = "insert into quotes (quote_price, carport_id, customer_id, sales_rep_id) values (?,?,?,?)";
+        String sql = "insert into quotes (quote_price, carport_id, customer_id, sales_rep_id, quote_discount) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -27,6 +27,8 @@ public class QuoteMapper {
             preparedStatement.setInt(2, quote.getCarportId());
             preparedStatement.setInt(3, quote.getCustomerId());
             preparedStatement.setInt(4, quote.getSalesRepId());
+            preparedStatement.setDouble(5, quote.getQuoteDiscount());
+
             int quoteId = 0;
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
@@ -45,7 +47,7 @@ public class QuoteMapper {
 
     public Quote getQuoteById(int quoteId) throws DatabaseException {
 
-        String sql = "select quote_price, carport_id, customer_id, sales_rep_id from quotes where quote_id = ?";
+        String sql = "select quote_price, carport_id, customer_id, sales_rep_id, quote_discount from quotes where quote_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -58,8 +60,9 @@ public class QuoteMapper {
                 int carportId = resultSet.getInt("carport_id");
                 int customerId = resultSet.getInt("customer_id");
                 int salesRepId = resultSet.getInt("sales_rep_id");
+                int quoteDiscount = resultSet.getInt("quote_discount");
 
-                return new Quote(quoteId, quotePrice, carportId, customerId, salesRepId);
+                return new Quote(quoteId, quotePrice, carportId, customerId, salesRepId, quoteDiscount);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get quote by provided id: " + quoteId);
             }
@@ -72,7 +75,7 @@ public class QuoteMapper {
     public List<Quote> getAllQuotes() throws DatabaseException {
         List<Quote> quotes = new ArrayList<>();
         String sql = """
-                select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote\s
+                select quote.quote_id, quote.quote_price, quote.quote_discount, carport.carport_id, customer.customer_id, sales.sales_rep_id from quotes quote\s
                 left join carports carport using(carport_id)\s
                 left join customers customer using(customer_id)\s
                 left join sales_reps sales using(sales_rep_id)
@@ -89,8 +92,9 @@ public class QuoteMapper {
                 int carportId = resultSet.getInt("carport_id");
                 int customerId = resultSet.getInt("customer_id");
                 int salesRepId = resultSet.getInt("sales_rep_id");
+                double quoteDiscount = resultSet.getDouble("quote_discount");
 
-                quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId));
+                quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId, quoteDiscount));
             }
             return quotes;
         } catch (SQLException e) {
@@ -102,7 +106,7 @@ public class QuoteMapper {
     public List<Quote> getAllQuotesByCustomerId(int customerId) throws DatabaseException {
         List<Quote> quotes = new ArrayList<>();
         String sql = """
-        select quote.quote_id, quote.quote_price, carport.carport_id, customer.customer_id, sales.sales_rep_id 
+        select quote.quote_id, quote.quote_price, quote.quote_discount, carport.carport_id, customer.customer_id, sales.sales_rep_id 
         from quotes quote
         left join carports carport using(carport_id)
         left join customers customer using(customer_id)
@@ -121,8 +125,9 @@ public class QuoteMapper {
             double quotePrice = resultSet.getInt("quote_price");
             int carportId = resultSet.getInt("carport_id");
             int salesRepId = resultSet.getInt("sales_rep_id");
+            double quoteDiscount = resultSet.getDouble("quote_discount");
 
-            quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId));
+            quotes.add(new Quote(quoteId, quotePrice, carportId, customerId, salesRepId, quoteDiscount));
         }
         return quotes;
         } catch (SQLException e) {

@@ -1,7 +1,6 @@
 package app.dto.responseDTO;
 
 import app.dto.responseDTO.carports.CarportResponseDTO;
-import app.persistence.SalesRepMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,15 +9,19 @@ import lombok.Getter;
 
 public class OrderResponseDTO {
     private int orderId;
-    private double orderPrice;
+    private double price;
+    private double discount;
+    private double totalPrice;
     private CustomerResponseDTO customerResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
     private CarportResponseDTO carportResponseDTO;
     private PartsListResponseDTO partsListResponseDTO;
 
 
-    public OrderResponseDTO(int orderId, double orderPrice) {
+    public OrderResponseDTO(int orderId, double retailPrice, double discountPrice, double totalPrice) {
         this.orderId = orderId;
-        this.orderPrice = orderPrice;
+        this.price = retailPrice;
+        this.discount = discountPrice;
+        this.totalPrice = totalPrice;
     }
 }

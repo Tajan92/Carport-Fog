@@ -121,12 +121,12 @@ public class QuoteController {
         // Recalculate prices server-side for security
         List<ProductsPartsListEntry> entries = serviceFactory.getPartsListService().createProductsPartsListEntries(carportRequestDTO);
         double retailPrice = serviceFactory.getPriceService().getTotalRetailPrice(entries);
-        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
-        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
+
+//        double serviceFee  = serviceFactory.getPriceService().getServiceFee(entries);
+//        double revenue     = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
 
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-
-        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRep.getId());
+        QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRep.getId(), discount);
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
 
         ctx.redirect("/admin/my/page");
@@ -138,7 +138,7 @@ public class QuoteController {
             return;
         }
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
-        QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
+        QuoteAdminResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
 
         ctx.attribute("quote_admin_preview", quoteResponseDTO);
         ctx.render("admin-quote-details.html");
