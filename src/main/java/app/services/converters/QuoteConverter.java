@@ -1,6 +1,7 @@
 package app.services.converters;
 
 import app.dto.requestDTO.QuoteRequestDTO;
+import app.dto.responseDTO.QuoteAdminResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
 import app.entities.Quote;
 
@@ -13,6 +14,15 @@ public class QuoteConverter {
         boolean isPayed = quote.isPayed();
 
         return new QuoteResponseDTO(quoteId, quotePrice, quoteDiscount, isPayed);
+    }
+
+    public QuoteAdminResponseDTO convertQuoteToAdminDto(Quote quote) {
+        int quoteId = quote.getQuoteId();
+        double quotePrice = quote.getQuotePrice();
+        double quoteDiscount = quote.getQuoteDiscount();
+        boolean isPayed = quote.isPayed();
+
+        return new QuoteAdminResponseDTO(quoteId, quotePrice, quoteDiscount, isPayed);
     }
 
     public Quote convertQuoteDTOtoEntity(QuoteRequestDTO quoteRequestDTO) {

@@ -13,7 +13,7 @@ public class QuoteResponseDTO {
     private int quoteId;
     private double price;
     private double discount;
-    private double totalPrice;
+    private double retailPrice;
     private boolean isPayed;
     private CustomerResponseDTO customerResponseDTO;
     private CarportResponseDTO carportResponseDTO;

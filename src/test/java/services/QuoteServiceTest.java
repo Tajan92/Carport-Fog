@@ -3,7 +3,6 @@ package services;
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.responseDTO.QuoteAdminResponseDTO;
 import app.dto.responseDTO.QuoteResponseDTO;
-import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ public class QuoteServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingQuotePrice, response.getTotalPrice());
+        assertEquals(existingQuotePrice, response.getRetailPrice());
     }
 
     @Test
@@ -62,7 +61,7 @@ public class QuoteServiceTest extends MapperTest {
 
         //Check if the first quote has correct id = 1 and the price is correct
         assertEquals(1, firstQuote.getQuoteId());
-        assertEquals(firstOrderPrice, firstQuote.getTotalPrice());
+        assertEquals(firstOrderPrice, firstQuote.getRetailPrice());
     }
 
     @Test

@@ -23,7 +23,7 @@ public class QuoteController {
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.get("/load/create/quote/{inquiry_id}", ctx -> loadCreateQuotePage(ctx, serviceFactory));
         app.post("/admin/preview/quote", ctx -> previewQuote(ctx, serviceFactory));
-        app.get("/admin/get/quote/{quote_id}", ctx -> getQuoteAdmin(ctx, serviceFactory));
+        app.get("/admin/quote/details/{quote_id}", ctx -> getQuoteAdmin(ctx, serviceFactory));
         app.post("/admin/create/quote", ctx -> createQuote(ctx, serviceFactory));
         app.post("/admin/delete/quote/{quote_id}", ctx -> deleteQuote(ctx, serviceFactory));
         app.get("/customer/quote/details/{quote_id}", ctx -> getQuoteCustomer(ctx, serviceFactory));
@@ -135,16 +135,21 @@ public class QuoteController {
     }
 
     public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
-        if (!UserValidator.isAdmin(ctx)) {
-            ctx.redirect("/");
-            return;
-        }
         UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
         ctx.attribute("currentUser", salesRep);
-        int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
-        QuoteAdminResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
 
-        ctx.attribute("quote_admin_preview", quoteResponseDTO);
+        int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
+        QuoteAdminResponseDTO response = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
+
+        ShedResponseDTO shed = null;
+        if (response.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
+
+        ctx.attribute("quote_admin_preview", response);
+        ctx.attribute("customer_quote_preview", response.getCustomerResponseDTO());
+        ctx.attribute("carport_quote_preview", response.getCarportResponseDTO());
+        ctx.attribute("shed", shed);
         ctx.render("admin-quote-details.html");
     }
 

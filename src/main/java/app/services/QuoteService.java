@@ -6,7 +6,6 @@ import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.*;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.entities.*;
-import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.converters.*;
@@ -72,7 +71,7 @@ public class QuoteService {
         double totalPrice = PriceCalculator.getRevenue(quoteResponseDTO.getPrice(), quoteResponseDTO.getDiscount(), serviceFee);
 
         /* Set the Missing variables */
-        quoteResponseDTO.setTotalPrice(totalPrice);
+        quoteResponseDTO.setRetailPrice(totalPrice);
 
         /* Set the new DTOS´s */
         quoteResponseDTO.setCustomerResponseDTO(customerResponseDTO);
@@ -84,7 +83,7 @@ public class QuoteService {
 
     public QuoteAdminResponseDTO getQuoteAdmin(int quoteId) throws DatabaseException {
         Quote quote = quoteMapper.getQuoteById(quoteId);
-        QuoteAdminResponseDTO quoteAdminResponseDTO = (QuoteAdminResponseDTO) quoteConverter.convertQuoteToDto(quote);
+        QuoteAdminResponseDTO quoteAdminResponseDTO = quoteConverter.convertQuoteToAdminDto(quote);
         List<Product> products = productMapper.getAllProducts();
 
         /* Instantiate DTO´s that cannot be instantiated in the converter */
@@ -105,7 +104,7 @@ public class QuoteService {
         double costPrice = calculatedCostPrice;
 
         /* Set the Missing variables */
-        quoteAdminResponseDTO.setTotalPrice(totalPrice);
+        quoteAdminResponseDTO.setRetailPrice(totalPrice);
         quoteAdminResponseDTO.setServiceFee(serviceFee);
         quoteAdminResponseDTO.setCostPrice(costPrice);
 
