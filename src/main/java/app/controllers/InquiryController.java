@@ -4,6 +4,7 @@ import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.UserResponseDTO;
 import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
@@ -160,6 +161,8 @@ public class InquiryController {
             ctx.redirect("/");
             return;
         }
+        SalesRepResponseDTO admin = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", admin);
 
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
@@ -182,6 +185,9 @@ public class InquiryController {
             ctx.redirect("/");
             return;
         }
+        SalesRepResponseDTO admin = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", admin);
+
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         serviceFactory.getInquiryService().deleteInquiry(inquiryId);

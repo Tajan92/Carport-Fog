@@ -15,15 +15,12 @@ public class Inquiry {
     private int customerId;
     private String remark;
     private int carportId;
+    private boolean quoteSend;
 
     public Inquiry(int customerId, String remark, int carportId) {
         this.customerId = customerId;
         this.remark = remark;
         this.carportId = carportId;
-    }
-
-    public Inquiry(String remark) {
-        this.remark = remark;
     }
 }
 

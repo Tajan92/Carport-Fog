@@ -24,6 +24,7 @@
     <div class="quote-details-box">
         <h2>Tilbud</h2>
         <p th:text="${'ID: ' + quote_admin_preview.quoteId}"></p>
+        <p th:text="${quote_admin_preview.isPayed ? 'Betalt' : 'Ikke betalt'}"></p>
         <p th:text="${'Retailpris: ' + quote_admin_preview.retailPrice}"></p>
         <p th:text="${'Indkøbspris: ' + quote_admin_preview.costPrice}"></p>
         <p th:text="${'Bemærkning: ' + quote_admin_preview.remark}"></p>
@@ -53,13 +54,6 @@
 <!--    <a type="submit" class="create-quote-button" th:action="@{/create/order/quote{quote_id}}" >Opret tilbud</a>-->
 
 </div>
-
-
-
-
-
-
-
 
 <div th:replace="~{fragments :: adminScripts}"></div>
 </body>

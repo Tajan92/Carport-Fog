@@ -14,12 +14,14 @@ public class InquiryResponseDTO {
     private double costPrice;
     private double retailPrice;
     private double serviceFee;
+    private boolean quoteSend;
     private CarportResponseDTO CarportResponseDTO;
     private CustomerResponseDTO customerResponseDTO;
 
-    public InquiryResponseDTO(String remark, int inquiryId) {
+    public InquiryResponseDTO(String remark, int inquiryId, boolean quoteSend) {
         this.remark = remark;
         this.inquiryId = inquiryId;
+        this.quoteSend = quoteSend;
     }
 
     public InquiryResponseDTO(int inquiryId, String remark, CarportResponseDTO carportResponseDTO, CustomerResponseDTO customerResponseDTO) {

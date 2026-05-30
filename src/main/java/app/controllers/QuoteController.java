@@ -14,6 +14,8 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.sql.SQLException;
 import java.util.List;
 
 public class QuoteController {
@@ -99,14 +101,16 @@ public class QuoteController {
         ctx.render("admin-carport-maker.html");
     }
 
-    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException {
+    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, SQLException {
         if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
         }
 
         UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", salesRep);
         int customerId = Integer.parseInt(ctx.formParam("customer_id"));
+        int inquiryId = Integer.parseInt(ctx.formParam("inquiry_id"));
         String discountResponse = ctx.formParam("discount_quote");
         double discount = 0;
         if (discountResponse != null && !discountResponse.isBlank()) {
@@ -122,6 +126,10 @@ public class QuoteController {
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
         QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRep.getId(), discount);
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
+        serviceFactory.getInquiryService().updateInquiryStatus(inquiryId);
+
+        System.out.println("retailPrice: " + retailPrice);
+        System.out.println("discount: " + discount);
 
         ctx.redirect("/admin/my/page");
     }
@@ -131,6 +139,8 @@ public class QuoteController {
             ctx.redirect("/");
             return;
         }
+        UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", salesRep);
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
         QuoteAdminResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
 
@@ -139,6 +149,13 @@ public class QuoteController {
     }
 
     public void getQuoteCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+        if (!UserValidator.isCustomer(ctx)){
+            ctx.redirect("/");
+            return;
+        }
+        CustomerResponseDTO user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", user);
+
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
 
@@ -194,12 +211,15 @@ public class QuoteController {
 
         String shedStatus = ctx.formParam("shed_status");
         String shedSiding = ctx.formParam("shed_siding");
-        String floorResponse = ctx.formParam("shed_floor");
+        boolean floor = false;
 
-        if (floorResponse == null || floorResponse.isBlank()) {
-            throw new UserExperienceException("Til / fra vælg gulv");
+        if (!"NONE".equals(shedStatus) && shedStatus != null) {
+            String floorResponse = ctx.formParam("shed_floor");
+            if (floorResponse == null || floorResponse.isBlank()) {
+                throw new UserExperienceException("Til / fra vælg gulv");
+            }
+            floor = Boolean.parseBoolean(floorResponse);
         }
-        boolean floor = Boolean.parseBoolean(ctx.formParam("shed_floor"));
 
         String shedWidth = switch (shedStatus != null ? shedStatus : "NONE") {
             case "HALF" -> String.valueOf(carportWidth / 2);

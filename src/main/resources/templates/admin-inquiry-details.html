@@ -26,6 +26,7 @@
     <div class="inquiry-details-box">
         <h2>Forespørgsel</h2>
         <p th:text="${'ID: ' + inquiry_quote_preview.inquiryId}"></p>
+        <p th:text="${inquiry_quote_preview.quoteSend ? 'Tilbud sendt' : 'Tilbud ikke sendt'}"></p>
         <p th:text="${'Retailpris: ' + inquiry_quote_preview.retailPrice}"></p>
         <p th:text="${'Indkøbspris: ' + inquiry_quote_preview.costPrice}"></p>
         <p th:text="${'Bemærkning: ' + inquiry_quote_preview.remark}"></p>
@@ -59,11 +60,24 @@
             <input type="hidden" name="roof_type" th:value="${carport_quote_preview.roofResponseDTO.roofType}">
             <input type="hidden" name="roof_material" th:value="${carport_quote_preview.roofResponseDTO.roofMaterial}">
             <input type="hidden" name="roof_slope" th:value="${carport_quote_preview.roofResponseDTO.roofSlope}">
-            <input type="hidden" name="shed_siding" th:value="${shed.siding}">
-            <input type="hidden" name="shed_floor" th:value="${shed.floor}">
-            <input type="hidden" name="shed_width" th:value="${shed.width}">
-            <input type="hidden" name="shed_length" th:value="${shed.length}">
+            <div th:if="${shed != null}">
+                <input type="hidden" name="shed_siding" th:value="${shed.siding}">
+                <input type="hidden" name="shed_floor" th:value="${shed.floor}">
+                <input type="hidden" name="shed_width" th:value="${shed.width}">
+                <input type="hidden" name="shed_length" th:value="${shed.length}">
+            </div>
+            <div th:unless="${shed != null}">
+                <input type="hidden" name="shed_siding" value="">
+                <input type="hidden" name="shed_floor" value="">
+                <input type="hidden" name="shed_width" value="">
+                <input type="hidden" name="shed_length" value="">
+            </div>
+            <div th:if="${!inquiry_quote_preview.quoteSend}">
             <button type="submit" class="create-quote-button">Opret tilbud</button>
+            </div>
+            <div th:unless="${!inquiry_quote_preview.quoteSend}">
+                <p>Der er allerede lavet et tilbud af denne forespørgsel</p>
+            </div>
         </form>
     </div>
 </div>

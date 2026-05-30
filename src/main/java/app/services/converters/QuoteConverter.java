@@ -10,8 +10,9 @@ public class QuoteConverter {
         int quoteId = quote.getQuoteId();
         double quotePrice = quote.getQuotePrice();
         double quoteDiscount = quote.getQuoteDiscount();
+        boolean isPayed = quote.isPayed();
 
-        return new QuoteResponseDTO(quoteId, quotePrice, quoteDiscount);
+        return new QuoteResponseDTO(quoteId, quotePrice, quoteDiscount, isPayed);
     }
 
     public Quote convertQuoteDTOtoEntity(QuoteRequestDTO quoteRequestDTO) {

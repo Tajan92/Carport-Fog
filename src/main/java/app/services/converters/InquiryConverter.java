@@ -9,7 +9,8 @@ public class InquiryConverter {
     public InquiryResponseDTO convertInquiryToDto(Inquiry inquiry) {
         int inquiryId = inquiry.getInquiryId();
         String remark = inquiry.getRemark();
-        return new InquiryResponseDTO(remark,inquiryId);
+        boolean quoteSend = inquiry.isQuoteSend();
+        return new InquiryResponseDTO(remark, inquiryId, quoteSend);
     }
 
     public Inquiry convertInquiryDtoToEntity(InquiryRequestDTO inquiryRequestDTO) {

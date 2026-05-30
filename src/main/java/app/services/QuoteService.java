@@ -12,6 +12,8 @@ import app.persistence.*;
 import app.services.converters.*;
 import app.services.utils.PartsListCalculator;
 import app.services.utils.PriceCalculator;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,13 +138,14 @@ public class QuoteService {
                 calculatedCostPrice += product.getCostPrice();
             }
 
+            boolean isPayed = quote.isPayed();
             double retailPrice = quote.getQuotePrice();
             double discount = quote.getQuoteDiscount();
             double serviceFee = PriceCalculator.calculateServiceFee(retailPrice);
             double totalPrice = PriceCalculator.getRevenue(retailPrice, discount, serviceFee);
             double costPrice = calculatedCostPrice;
 
-            responseDTOS.add(new QuoteAdminResponseDTO(quoteId, retailPrice, discount, totalPrice, costPrice, serviceFee, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
+            responseDTOS.add(new QuoteAdminResponseDTO(quoteId, retailPrice, discount, totalPrice, costPrice, serviceFee, isPayed, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return responseDTOS;
     }
@@ -157,14 +160,19 @@ public class QuoteService {
             CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
             SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
 
+            boolean isPayed = quote.isPayed();
             double retailPrice = quote.getQuotePrice();
             double discount = quote.getQuoteDiscount();
             double serviceFee = PriceCalculator.calculateServiceFee(retailPrice);
             double totalPrice = PriceCalculator.getRevenue(retailPrice, discount, serviceFee);
 
-            quoteResponseDTOS.add(new QuoteResponseDTO(quoteId, retailPrice, discount, totalPrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
+            quoteResponseDTOS.add(new QuoteResponseDTO(quoteId, retailPrice, discount, totalPrice, isPayed, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
         return quoteResponseDTOS;
+    }
+
+    public void updateQuoteStatus(int quoteId) throws SQLException, DatabaseException {
+        quoteMapper.updateQuoteToPayed(quoteId);
     }
 
     public void deleteQuote(int quoteId) throws DatabaseException {

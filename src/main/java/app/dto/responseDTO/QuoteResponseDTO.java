@@ -14,14 +14,16 @@ public class QuoteResponseDTO {
     private double price;
     private double discount;
     private double totalPrice;
+    private boolean isPayed;
     private CustomerResponseDTO customerResponseDTO;
     private CarportResponseDTO carportResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
 
-    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice) {
+    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice, boolean isPayed) {
         this.quoteId = quoteId;
         this.price = retailPrice;
         this.discount = discountPrice;
+        this.isPayed = isPayed;
     }
 }
 

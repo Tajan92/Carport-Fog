@@ -83,18 +83,19 @@ public class CustomerController {
             return;
         }
 
-        CustomerResponseDTO response = ctx.sessionAttribute("currentUser");
+        CustomerResponseDTO user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", user);
 
         //Inquiries
-        List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiriesByCustomerId(response.getId());
+        List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiriesByCustomerId(user.getId());
         ctx.attribute("customer_inquiries", inquiries);
 
         //Received quotes
-        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesByCustomerId(response.getId());
+        List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesByCustomerId(user.getId());
         ctx.attribute("customer_quotes", quotes);
 
         //Orders
-        List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(response.getId());
+        List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(user.getId());
         ctx.attribute("customer_orders", orders);
 
         ctx.render("customer-my-page.html");

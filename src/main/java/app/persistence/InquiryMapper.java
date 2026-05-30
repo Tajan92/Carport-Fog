@@ -20,13 +20,14 @@ public class InquiryMapper {
 
     public int createInquiry(Inquiry inquiry) throws DatabaseException {
 
-        String sql = "insert into inquiries (customer_id, remark, carport_id) values (?,?,?)";
+        String sql = "insert into inquiries (customer_id, remark, carport_id, quote_send) values (?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, inquiry.getCustomerId());
             preparedStatement.setString(2, inquiry.getRemark());
             preparedStatement.setInt(3, inquiry.getCarportId());
+            preparedStatement.setBoolean(4, false);
             int inquiryId = 0;
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 1) {
@@ -57,8 +58,9 @@ public class InquiryMapper {
                 int customerId = resultSet.getInt("customer_id");
                 String remark = resultSet.getString("remark");
                 int carportId = resultSet.getInt("carport_id");
+                boolean quoteSend = resultSet.getBoolean("quote_send");
 
-                return new Inquiry(inquiryId, customerId, remark, carportId);
+                return new Inquiry(inquiryId, customerId, remark, carportId, quoteSend);
             } else {
                 throw new DatabaseException("An error occurred, when trying to get inquiry by provided id: " + inquiryId);
             }
@@ -70,7 +72,7 @@ public class InquiryMapper {
 
     public List<Inquiry> getAllInquiries() throws DatabaseException {
         List<Inquiry> inquiries = new ArrayList<>();
-        String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
+        String sql = "select inquiry.inquiry_id, inquiry.remark, inquiry.quote_send, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
                 "left join customers customer using(customer_id) \n" +
                 "left join carports carport using(carport_id)\n";
 
@@ -84,8 +86,9 @@ public class InquiryMapper {
                 String remark = resultSet.getString("remark");
                 int customerId = resultSet.getInt("customer_id");
                 int carportId = resultSet.getInt("carport_id");
+                boolean quoteSend = resultSet.getBoolean("quote_send");
 
-                inquiries.add(new Inquiry(inquiryId, customerId, remark, carportId));
+                inquiries.add(new Inquiry(inquiryId, customerId, remark, carportId, quoteSend));
             }
             return inquiries;
         } catch (SQLException e) {
@@ -96,7 +99,7 @@ public class InquiryMapper {
 
     public List<Inquiry> getAllInquiriesByCustomerId(int customerId) throws DatabaseException {
         List<Inquiry> inquiries = new ArrayList<>();
-        String sql = "select inquiry.inquiry_id, inquiry.remark, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
+        String sql = "select inquiry.inquiry_id, inquiry.remark, inquiry.quote_send, customer.customer_id, carport.carport_id from inquiries inquiry \n" +
                 "left join customers customer using(customer_id) \n" +
                 "left join carports carport using(carport_id) where customer_id = ?\n";
 
@@ -110,13 +113,32 @@ public class InquiryMapper {
                 int inquiryId = resultSet.getInt("inquiry_id");
                 String remark = resultSet.getString("remark");
                 int carportId = resultSet.getInt("carport_id");
+                boolean quoteSend = resultSet.getBoolean("quote_send");
 
-                inquiries.add(new Inquiry(inquiryId, customerId, remark, carportId));
+                inquiries.add(new Inquiry(inquiryId, customerId, remark, carportId, quoteSend));
             }
             return inquiries;
         } catch (SQLException e) {
             String message = "Fejl ved at hente alle forespørgsler";
             throw new DatabaseException(message, e.getMessage());
+        }
+    }
+
+    public void updateInquiryToQuoteSend(int inquiryId) throws SQLException, DatabaseException {
+        String sql = "update inquiries set quote_send = true where inquiry_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, inquiryId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Could not update inquiry");
+            }
+        } catch (SQLException | DatabaseException e) {
+            String errorMessage = "Fejl ved opdatering af forespørgsel, prøv at genindlæs siden eller kontakt os, hvis problemet stadig er der";
+            throw new DatabaseException(errorMessage, e.getMessage());
         }
     }
 
@@ -136,4 +158,6 @@ public class InquiryMapper {
             throw new DatabaseException(errorMessage, e.getMessage());
         }
     }
+
+
 }
