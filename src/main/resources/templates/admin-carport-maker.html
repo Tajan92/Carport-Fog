@@ -19,250 +19,256 @@
 
     <div class="stage-display">
 
-            <form id="admin-carport-form" th:action="@{/admin/create/quote}" method="post">
+        <form id="admin-carport-form" th:action="@{/admin/create/quote}" method="post">
 
-                <!-- Hidden IDs -->
-                <input type="hidden" name="inquiry_id" th:value="${inquiry_quote_preview.inquiryId}">
-                <input type="hidden" name="customer_id" th:value="${customer_quote_preview.id}">
+            <!-- Hidden IDs -->
+            <input type="hidden" name="inquiry_id" th:value="${inquiry_quote_preview.inquiryId}">
+            <input type="hidden" name="customer_id" th:value="${customer_quote_preview.id}">
 
-                <!-- STEP 1: Measurements -->
-                <div class="carport-measurement-form">
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">BREDDE</p>
-                        <select name="carport_width" class="carport-measurement-box">
-                            <option value="">Vælg bredde</option>
-                            <option value="240" th:selected="${carport_quote_preview.width == 240}">240 cm</option>
-                            <option value="270" th:selected="${carport_quote_preview.width == 270}">270 cm</option>
-                            <option value="300" th:selected="${carport_quote_preview.width == 300}">300 cm</option>
-                            <option value="330" th:selected="${carport_quote_preview.width == 330}">330 cm</option>
-                            <option value="360" th:selected="${carport_quote_preview.width == 360}">360 cm</option>
-                            <option value="390" th:selected="${carport_quote_preview.width == 390}">390 cm</option>
-                            <option value="420" th:selected="${carport_quote_preview.width == 420}">420 cm</option>
-                            <option value="450" th:selected="${carport_quote_preview.width == 450}">450 cm</option>
-                            <option value="480" th:selected="${carport_quote_preview.width == 480}">480 cm</option>
-                            <option value="510" th:selected="${carport_quote_preview.width == 510}">510 cm</option>
-                            <option value="540" th:selected="${carport_quote_preview.width == 540}">540 cm</option>
-                            <option value="570" th:selected="${carport_quote_preview.width == 570}">570 cm</option>
-                            <option value="600" th:selected="${carport_quote_preview.width == 600}">600 cm</option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">LÆNGDE</p>
-                        <select name="carport_length" class="carport-measurement-box">
-                            <option value="">Vælg længde</option>
-                            <option value="240" th:selected="${carport_quote_preview.length == 240}">240 cm</option>
-                            <option value="270" th:selected="${carport_quote_preview.length == 270}">270 cm</option>
-                            <option value="300" th:selected="${carport_quote_preview.length == 300}">300 cm</option>
-                            <option value="330" th:selected="${carport_quote_preview.length == 330}">330 cm</option>
-                            <option value="360" th:selected="${carport_quote_preview.length == 360}">360 cm</option>
-                            <option value="390" th:selected="${carport_quote_preview.length == 390}">390 cm</option>
-                            <option value="420" th:selected="${carport_quote_preview.length == 420}">420 cm</option>
-                            <option value="450" th:selected="${carport_quote_preview.length == 450}">450 cm</option>
-                            <option value="480" th:selected="${carport_quote_preview.length == 480}">480 cm</option>
-                            <option value="510" th:selected="${carport_quote_preview.length == 510}">510 cm</option>
-                            <option value="540" th:selected="${carport_quote_preview.length == 540}">540 cm</option>
-                            <option value="570" th:selected="${carport_quote_preview.length == 570}">570 cm</option>
-                            <option value="600" th:selected="${carport_quote_preview.length == 600}">600 cm</option>
-                            <option value="630" th:selected="${carport_quote_preview.length == 630}">630 cm</option>
-                            <option value="660" th:selected="${carport_quote_preview.length == 660}">660 cm</option>
-                            <option value="690" th:selected="${carport_quote_preview.length == 690}">690 cm</option>
-                            <option value="720" th:selected="${carport_quote_preview.length == 720}">720 cm</option>
-                            <option value="750" th:selected="${carport_quote_preview.length == 750}">750 cm</option>
-                            <option value="780" th:selected="${carport_quote_preview.length == 780}">780 cm</option>
-                        </select>
-                    </div>
+            <!-- STEP 1: Measurements -->
+            <div class="carport-measurement-form">
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">BREDDE</p>
+                    <select name="carport_width" class="carport-measurement-box">
+                        <option value="">Vælg bredde</option>
+                        <option value="240" th:selected="${carport_quote_preview.width == 240}">240 cm</option>
+                        <option value="270" th:selected="${carport_quote_preview.width == 270}">270 cm</option>
+                        <option value="300" th:selected="${carport_quote_preview.width == 300}">300 cm</option>
+                        <option value="330" th:selected="${carport_quote_preview.width == 330}">330 cm</option>
+                        <option value="360" th:selected="${carport_quote_preview.width == 360}">360 cm</option>
+                        <option value="390" th:selected="${carport_quote_preview.width == 390}">390 cm</option>
+                        <option value="420" th:selected="${carport_quote_preview.width == 420}">420 cm</option>
+                        <option value="450" th:selected="${carport_quote_preview.width == 450}">450 cm</option>
+                        <option value="480" th:selected="${carport_quote_preview.width == 480}">480 cm</option>
+                        <option value="510" th:selected="${carport_quote_preview.width == 510}">510 cm</option>
+                        <option value="540" th:selected="${carport_quote_preview.width == 540}">540 cm</option>
+                        <option value="570" th:selected="${carport_quote_preview.width == 570}">570 cm</option>
+                        <option value="600" th:selected="${carport_quote_preview.width == 600}">600 cm</option>
+                    </select>
                 </div>
-
-                <!-- STEP 2: Roof type -->
-                <div class="roof-picker-boxes hidden">
-                    <input type="radio" name="roof_type" id="flat-roof" value="Fladt tag" hidden
-                           th:checked="${carport_quote_preview.roofResponseDTO.roofType == 'Fladt tag'}">
-                    <input type="radio" name="roof_type" id="high-roof" value="Højt tag" hidden
-                           th:checked="${carport_quote_preview.roofResponseDTO.roofType == 'Højt tag'}">
-                    <div class="roof-boxes" id="flat-roof-box">
-                        <p>Fladt Tag</p>
-                        <svg class="flat-roof-svg" width="377" height="377" viewBox="0 0 377 377" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path class="svg-color"
-                                  d="M281.054 204.68C282.739 205.465 284.164 206.717 285.161 208.287C286.157 209.857 286.683 211.68 286.677 213.539V266.696C286.673 269.297 285.637 271.79 283.796 273.628C281.955 275.466 279.46 276.498 276.859 276.498H267.042V291.468C267.025 295.365 265.469 299.098 262.711 301.852C259.954 304.606 256.22 306.159 252.323 306.171H242.49C238.592 306.159 234.858 304.606 232.101 301.852C229.344 299.098 227.787 295.365 227.771 291.468V276.498H149.229V291.201C149.213 295.098 147.656 298.831 144.899 301.585C142.142 304.339 138.408 305.892 134.51 305.904H124.677C120.78 305.892 117.046 304.339 114.289 301.585C111.531 298.831 109.975 295.098 109.958 291.201V276.498H100.141C98.8521 276.5 97.5758 276.248 96.3848 275.756C95.1937 275.265 94.1113 274.543 93.1994 273.633C92.2876 272.722 91.5641 271.641 91.0706 270.451C90.577 269.261 90.3229 267.985 90.3229 266.696V213.539C90.3229 209.753 92.5064 206.298 95.9465 204.68L105.796 200.03C107.093 199.411 108.24 198.517 109.157 197.411C110.074 196.304 110.739 195.011 111.105 193.621L125.808 136.804C126.355 134.696 127.587 132.831 129.31 131.5C131.033 130.169 133.15 129.449 135.327 129.452H241.673C243.85 129.449 245.967 130.169 247.69 131.5C249.413 132.831 250.645 134.696 251.192 136.804L265.895 193.621C266.261 195.011 266.926 196.304 267.843 197.411C268.76 198.517 269.907 199.411 271.204 200.03L281.054 204.68ZM252.323 247.406C254.311 247.498 256.297 247.186 258.161 246.489C260.025 245.791 261.728 244.723 263.167 243.349C264.607 241.974 265.752 240.322 266.535 238.493C267.318 236.663 267.722 234.693 267.722 232.703C267.722 230.713 267.318 228.744 266.535 226.914C265.752 225.084 264.607 223.432 263.167 222.058C261.728 220.684 260.025 219.615 258.161 218.918C256.297 218.221 254.311 217.908 252.323 218C250.335 217.908 248.349 218.221 246.485 218.918C244.621 219.615 242.918 220.684 241.479 222.058C240.039 223.432 238.894 225.084 238.111 226.914C237.328 228.744 236.924 230.713 236.924 232.703C236.924 234.693 237.328 236.663 238.111 238.493C238.894 240.322 240.039 241.974 241.479 243.349C242.918 244.723 244.621 245.791 246.485 246.489C248.349 247.186 250.335 247.498 252.323 247.406ZM208.135 247.406C210.735 247.402 213.228 246.369 215.067 244.532C216.907 242.695 217.945 240.204 217.953 237.604C217.945 235.004 216.907 232.514 215.067 230.677C213.228 228.84 210.735 227.806 208.135 227.802H168.865C166.265 227.806 163.772 228.84 161.933 230.677C160.093 232.514 159.055 235.004 159.047 237.604C159.047 242.992 163.461 247.406 168.865 247.406H208.135ZM124.677 217.953C122.689 217.861 120.703 218.173 118.839 218.871C116.975 219.568 115.272 220.636 113.833 222.011C112.393 223.385 111.248 225.037 110.465 226.867C109.682 228.697 109.279 230.666 109.279 232.656C109.279 234.646 109.682 236.616 110.465 238.445C111.248 240.275 112.393 241.927 113.833 243.301C115.272 244.676 116.975 245.744 118.839 246.441C120.703 247.139 122.689 247.451 124.677 247.359C126.665 247.451 128.651 247.139 130.515 246.441C132.379 245.744 134.082 244.676 135.521 243.301C136.961 241.927 138.106 240.275 138.889 238.445C139.672 236.616 140.076 234.646 140.076 232.656C140.076 230.666 139.672 228.697 138.889 226.867C138.106 225.037 136.961 223.385 135.521 222.011C134.082 220.636 132.379 219.568 130.515 218.871C128.651 218.173 126.665 217.861 124.677 217.953ZM129.955 185.861C128.164 192.097 133.128 198.239 139.946 198.239H237.054C243.872 198.239 248.836 192.097 247.045 185.877L238.61 156.455C237.95 154.332 236.62 152.48 234.819 151.177C233.017 149.874 230.842 149.19 228.619 149.229H148.381C146.158 149.19 143.983 149.874 142.181 151.177C140.38 152.48 139.05 154.332 138.39 156.455L129.955 185.861ZM335.766 70.6875C338.369 70.6875 340.867 71.7219 342.708 73.563C344.549 75.4042 345.583 77.9014 345.583 80.5052V296.495C345.583 299.099 344.549 301.596 342.708 303.437C340.867 305.278 338.369 306.312 335.766 306.312C333.162 306.312 330.665 305.278 328.823 303.437C326.982 301.596 325.948 299.099 325.948 296.495V119.776C325.948 117.172 324.914 114.675 323.072 112.834C321.231 110.993 318.734 109.958 316.13 109.958H60.8698C58.266 109.958 55.7688 110.993 53.9276 112.834C52.0865 114.675 51.0521 117.172 51.0521 119.776V296.495C51.0521 299.099 50.0177 301.596 48.1766 303.437C46.3354 305.278 43.8382 306.312 41.2344 306.312C38.6306 306.312 36.1334 305.278 34.2922 303.437C32.451 301.596 31.4167 299.099 31.4167 296.495V80.5052C31.4167 77.9014 32.451 75.4042 34.2922 73.563C36.1334 71.7219 38.6306 70.6875 41.2344 70.6875H335.766Z"
-                                  fill="black"/>
-                        </svg>
-                    </div>
-                    <div class="roof-boxes" id="high-roof-box">
-                        <p>Højt Tag</p>
-                        <svg class="tilted-roof-svg" width="377" height="395" viewBox="0 0 377 395" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path class="svg-color"
-                                  d="M281.054 222.159C282.739 222.945 284.164 224.197 285.161 225.767C286.157 227.337 286.683 229.159 286.677 231.019V284.176C286.673 286.777 285.637 289.27 283.796 291.108C281.955 292.945 279.46 293.978 276.859 293.977H267.042V308.948C267.025 312.845 265.469 316.577 262.711 319.331C259.954 322.086 256.22 323.638 252.323 323.651H242.49C238.592 323.638 234.858 322.086 232.101 319.331C229.344 316.577 227.787 312.845 227.771 308.948V293.977H149.229V308.681C149.213 312.578 147.656 316.31 144.899 319.064C142.142 321.819 138.408 323.371 134.51 323.384H124.677C120.78 323.371 117.046 321.819 114.289 319.064C111.531 316.31 109.975 312.578 109.958 308.681V293.977H100.141C98.8521 293.98 97.5758 293.728 96.3848 293.236C95.1937 292.744 94.1113 292.023 93.1994 291.112C92.2876 290.202 91.5641 289.12 91.0706 287.93C90.577 286.74 90.3229 285.464 90.3229 284.176V231.019C90.3229 227.233 92.5064 223.777 95.9465 222.159L105.796 217.509C107.093 216.891 108.24 215.997 109.157 214.89C110.074 213.783 110.739 212.49 111.105 211.1L125.808 154.283C126.355 152.176 127.587 150.31 129.31 148.979C131.033 147.648 133.15 146.928 135.327 146.932H241.673C243.85 146.928 245.967 147.648 247.69 148.979C249.413 150.31 250.645 152.176 251.192 154.283L265.895 211.1C266.261 212.49 266.926 213.783 267.843 214.89C268.76 215.997 269.907 216.891 271.204 217.509L281.054 222.159ZM252.323 264.886C254.311 264.978 256.297 264.665 258.161 263.968C260.025 263.271 261.728 262.202 263.167 260.828C264.607 259.454 265.752 257.802 266.535 255.972C267.318 254.142 267.722 252.173 267.722 250.183C267.722 248.193 267.318 246.223 266.535 244.393C265.752 242.564 264.607 240.912 263.167 239.537C261.728 238.163 260.025 237.095 258.161 236.397C256.297 235.7 254.311 235.388 252.323 235.48C250.335 235.388 248.349 235.7 246.485 236.397C244.621 237.095 242.918 238.163 241.479 239.537C240.039 240.912 238.894 242.564 238.111 244.393C237.328 246.223 236.924 248.193 236.924 250.183C236.924 252.173 237.328 254.142 238.111 255.972C238.894 257.802 240.039 259.454 241.479 260.828C242.918 262.202 244.621 263.271 246.485 263.968C248.349 264.665 250.335 264.978 252.323 264.886ZM208.135 264.886C210.735 264.882 213.228 263.848 215.067 262.011C216.907 260.174 217.945 257.684 217.953 255.084C217.945 252.484 216.907 249.993 215.067 248.156C213.228 246.319 210.735 245.286 208.135 245.282H168.865C166.265 245.286 163.772 246.319 161.933 248.156C160.093 249.993 159.055 252.484 159.047 255.084C159.047 260.472 163.461 264.886 168.865 264.886H208.135ZM124.677 235.433C122.689 235.341 120.703 235.653 118.839 236.35C116.975 237.048 115.272 238.116 113.833 239.49C112.393 240.865 111.248 242.517 110.465 244.346C109.682 246.176 109.279 248.145 109.279 250.136C109.279 252.126 109.682 254.095 110.465 255.925C111.248 257.755 112.393 259.407 113.833 260.781C115.272 262.155 116.975 263.223 118.839 263.921C120.703 264.618 122.689 264.93 124.677 264.839C126.665 264.93 128.651 264.618 130.515 263.921C132.379 263.223 134.082 262.155 135.521 260.781C136.961 259.407 138.106 257.755 138.889 255.925C139.672 254.095 140.076 252.126 140.076 250.136C140.076 248.145 139.672 246.176 138.889 244.346C138.106 242.517 136.961 240.865 135.521 239.49C134.082 238.116 132.379 237.048 130.515 236.35C128.651 235.653 126.665 235.341 124.677 235.433ZM129.955 203.34C128.164 209.577 133.128 215.719 139.946 215.719H237.054C243.872 215.719 248.836 209.577 247.045 203.356L238.61 173.934C237.95 171.811 236.62 169.959 234.819 168.656C233.017 167.353 230.842 166.67 228.619 166.709H148.381C146.158 166.67 143.983 167.353 142.181 168.656C140.38 169.959 139.05 171.811 138.39 173.934L129.955 203.34ZM335.766 88.1669C338.369 88.1669 340.867 89.2013 342.708 91.0425C344.549 92.8836 345.583 95.3808 345.583 97.9846V313.974C345.583 316.578 344.549 319.075 342.708 320.916C340.867 322.758 338.369 323.792 335.766 323.792C333.162 323.792 330.665 322.758 328.823 320.916C326.982 319.075 325.948 316.578 325.948 313.974V137.255C325.948 134.652 324.914 132.154 323.072 130.313C321.231 128.472 318.734 127.438 316.13 127.438H60.8698C58.266 127.438 55.7688 128.472 53.9276 130.313C52.0865 132.154 51.0521 134.652 51.0521 137.255V313.974C51.0521 316.578 50.0177 319.075 48.1766 320.916C46.3354 322.758 43.8382 323.792 41.2344 323.792C38.6306 323.792 36.1334 322.758 34.2922 320.916C32.451 319.075 31.4167 316.578 31.4167 313.974V97.9846C31.4167 95.3808 32.451 92.8836 34.2922 91.0425C36.1334 89.2013 38.6306 88.1669 41.2344 88.1669H335.766Z"
-                                  fill="black"/>
-                            <path class="svg-color"
-                                  d="M180.252 2.16677C185.015 -0.71592 190.984 -0.72271 195.754 2.14914L337.739 87.6286C350.762 95.4692 345.204 115.479 330.002 115.479H46.7608C31.5772 115.479 26.0047 95.5071 38.995 87.6462L180.252 2.16677Z"
-                                  fill="black"/>
-                        </svg>
-                    </div>
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">LÆNGDE</p>
+                    <select name="carport_length" class="carport-measurement-box">
+                        <option value="">Vælg længde</option>
+                        <option value="240" th:selected="${carport_quote_preview.length == 240}">240 cm</option>
+                        <option value="270" th:selected="${carport_quote_preview.length == 270}">270 cm</option>
+                        <option value="300" th:selected="${carport_quote_preview.length == 300}">300 cm</option>
+                        <option value="330" th:selected="${carport_quote_preview.length == 330}">330 cm</option>
+                        <option value="360" th:selected="${carport_quote_preview.length == 360}">360 cm</option>
+                        <option value="390" th:selected="${carport_quote_preview.length == 390}">390 cm</option>
+                        <option value="420" th:selected="${carport_quote_preview.length == 420}">420 cm</option>
+                        <option value="450" th:selected="${carport_quote_preview.length == 450}">450 cm</option>
+                        <option value="480" th:selected="${carport_quote_preview.length == 480}">480 cm</option>
+                        <option value="510" th:selected="${carport_quote_preview.length == 510}">510 cm</option>
+                        <option value="540" th:selected="${carport_quote_preview.length == 540}">540 cm</option>
+                        <option value="570" th:selected="${carport_quote_preview.length == 570}">570 cm</option>
+                        <option value="600" th:selected="${carport_quote_preview.length == 600}">600 cm</option>
+                        <option value="630" th:selected="${carport_quote_preview.length == 630}">630 cm</option>
+                        <option value="660" th:selected="${carport_quote_preview.length == 660}">660 cm</option>
+                        <option value="690" th:selected="${carport_quote_preview.length == 690}">690 cm</option>
+                        <option value="720" th:selected="${carport_quote_preview.length == 720}">720 cm</option>
+                        <option value="750" th:selected="${carport_quote_preview.length == 750}">750 cm</option>
+                        <option value="780" th:selected="${carport_quote_preview.length == 780}">780 cm</option>
+                    </select>
                 </div>
+            </div>
 
-                <!-- STEP 3: Shed -->
-                <div class="shed-picker-boxes hidden">
-                    <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden
-                           th:checked="${shed != null && shed.width < carport_quote_preview.width}">
-
-                    <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden
-                           th:checked="${shed != null && shed.width == carport_quote_preview.width}">
-
-                    <input type="radio" name="shed_status" id="no-shed" value="NONE" hidden
-                           th:checked="${shed == null}">
-                    <div class="shed-boxes" id="half-shed-box">
-                        <p>Halvt skur</p>
-                        <svg class="half-shed-svg" width="296" height="306" viewBox="0 0 296 306" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path class="svg-color"
-                                  d="M229.164 190.511L212.842 141.548H173.718V160.851H198.932L200.946 166.894L157.633 198.809V38.175L193.019 19.3021V0L0 102.944V122.245L12.8676 115.382V299.179H157.632V222.783L207.362 186.14L210.842 196.577C176.019 214.85 168.765 263.857 199.71 291.1C233.081 320.477 286.047 302.683 294.821 259.147C302.923 218.946 267.778 184.419 229.164 190.511Z"
-                                  fill="black"/>
-                        </svg>
-                    </div>
-                    <div class="shed-boxes" id="full-shed-box">
-                        <p>Fuldt skur</p>
-                        <svg class="full-shed-svg" width="299" height="280" viewBox="0 0 299 280" fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path class="svg-color"
-                                  d="M149.5 0L299 79.7333V279.067H259.133V99.6667H39.8667V279.067H0V79.7333L149.5 0Z"
-                                  fill="black"/>
-                        </svg>
-                    </div>
-                    <div class="no-shed-text-button" id="no-shed-box">
-                        <a id="no-shed-text-description">Hvis der ikke ønskes skur, klik her</a>
-                    </div>
+            <!-- STEP 2: Roof type -->
+            <div class="roof-picker-boxes hidden">
+                <input type="radio" name="roof_type" id="flat-roof" value="Fladt tag" hidden
+                       th:checked="${carport_quote_preview.roofResponseDTO.roofType == 'Fladt tag'}">
+                <input type="radio" name="roof_type" id="high-roof" value="Højt tag" hidden
+                       th:checked="${carport_quote_preview.roofResponseDTO.roofType == 'Højt tag'}">
+                <div class="roof-boxes" id="flat-roof-box">
+                    <p>Fladt Tag</p>
+                    <svg class="flat-roof-svg" width="377" height="377" viewBox="0 0 377 377" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path class="svg-color"
+                              d="M281.054 204.68C282.739 205.465 284.164 206.717 285.161 208.287C286.157 209.857 286.683 211.68 286.677 213.539V266.696C286.673 269.297 285.637 271.79 283.796 273.628C281.955 275.466 279.46 276.498 276.859 276.498H267.042V291.468C267.025 295.365 265.469 299.098 262.711 301.852C259.954 304.606 256.22 306.159 252.323 306.171H242.49C238.592 306.159 234.858 304.606 232.101 301.852C229.344 299.098 227.787 295.365 227.771 291.468V276.498H149.229V291.201C149.213 295.098 147.656 298.831 144.899 301.585C142.142 304.339 138.408 305.892 134.51 305.904H124.677C120.78 305.892 117.046 304.339 114.289 301.585C111.531 298.831 109.975 295.098 109.958 291.201V276.498H100.141C98.8521 276.5 97.5758 276.248 96.3848 275.756C95.1937 275.265 94.1113 274.543 93.1994 273.633C92.2876 272.722 91.5641 271.641 91.0706 270.451C90.577 269.261 90.3229 267.985 90.3229 266.696V213.539C90.3229 209.753 92.5064 206.298 95.9465 204.68L105.796 200.03C107.093 199.411 108.24 198.517 109.157 197.411C110.074 196.304 110.739 195.011 111.105 193.621L125.808 136.804C126.355 134.696 127.587 132.831 129.31 131.5C131.033 130.169 133.15 129.449 135.327 129.452H241.673C243.85 129.449 245.967 130.169 247.69 131.5C249.413 132.831 250.645 134.696 251.192 136.804L265.895 193.621C266.261 195.011 266.926 196.304 267.843 197.411C268.76 198.517 269.907 199.411 271.204 200.03L281.054 204.68ZM252.323 247.406C254.311 247.498 256.297 247.186 258.161 246.489C260.025 245.791 261.728 244.723 263.167 243.349C264.607 241.974 265.752 240.322 266.535 238.493C267.318 236.663 267.722 234.693 267.722 232.703C267.722 230.713 267.318 228.744 266.535 226.914C265.752 225.084 264.607 223.432 263.167 222.058C261.728 220.684 260.025 219.615 258.161 218.918C256.297 218.221 254.311 217.908 252.323 218C250.335 217.908 248.349 218.221 246.485 218.918C244.621 219.615 242.918 220.684 241.479 222.058C240.039 223.432 238.894 225.084 238.111 226.914C237.328 228.744 236.924 230.713 236.924 232.703C236.924 234.693 237.328 236.663 238.111 238.493C238.894 240.322 240.039 241.974 241.479 243.349C242.918 244.723 244.621 245.791 246.485 246.489C248.349 247.186 250.335 247.498 252.323 247.406ZM208.135 247.406C210.735 247.402 213.228 246.369 215.067 244.532C216.907 242.695 217.945 240.204 217.953 237.604C217.945 235.004 216.907 232.514 215.067 230.677C213.228 228.84 210.735 227.806 208.135 227.802H168.865C166.265 227.806 163.772 228.84 161.933 230.677C160.093 232.514 159.055 235.004 159.047 237.604C159.047 242.992 163.461 247.406 168.865 247.406H208.135ZM124.677 217.953C122.689 217.861 120.703 218.173 118.839 218.871C116.975 219.568 115.272 220.636 113.833 222.011C112.393 223.385 111.248 225.037 110.465 226.867C109.682 228.697 109.279 230.666 109.279 232.656C109.279 234.646 109.682 236.616 110.465 238.445C111.248 240.275 112.393 241.927 113.833 243.301C115.272 244.676 116.975 245.744 118.839 246.441C120.703 247.139 122.689 247.451 124.677 247.359C126.665 247.451 128.651 247.139 130.515 246.441C132.379 245.744 134.082 244.676 135.521 243.301C136.961 241.927 138.106 240.275 138.889 238.445C139.672 236.616 140.076 234.646 140.076 232.656C140.076 230.666 139.672 228.697 138.889 226.867C138.106 225.037 136.961 223.385 135.521 222.011C134.082 220.636 132.379 219.568 130.515 218.871C128.651 218.173 126.665 217.861 124.677 217.953ZM129.955 185.861C128.164 192.097 133.128 198.239 139.946 198.239H237.054C243.872 198.239 248.836 192.097 247.045 185.877L238.61 156.455C237.95 154.332 236.62 152.48 234.819 151.177C233.017 149.874 230.842 149.19 228.619 149.229H148.381C146.158 149.19 143.983 149.874 142.181 151.177C140.38 152.48 139.05 154.332 138.39 156.455L129.955 185.861ZM335.766 70.6875C338.369 70.6875 340.867 71.7219 342.708 73.563C344.549 75.4042 345.583 77.9014 345.583 80.5052V296.495C345.583 299.099 344.549 301.596 342.708 303.437C340.867 305.278 338.369 306.312 335.766 306.312C333.162 306.312 330.665 305.278 328.823 303.437C326.982 301.596 325.948 299.099 325.948 296.495V119.776C325.948 117.172 324.914 114.675 323.072 112.834C321.231 110.993 318.734 109.958 316.13 109.958H60.8698C58.266 109.958 55.7688 110.993 53.9276 112.834C52.0865 114.675 51.0521 117.172 51.0521 119.776V296.495C51.0521 299.099 50.0177 301.596 48.1766 303.437C46.3354 305.278 43.8382 306.312 41.2344 306.312C38.6306 306.312 36.1334 305.278 34.2922 303.437C32.451 301.596 31.4167 299.099 31.4167 296.495V80.5052C31.4167 77.9014 32.451 75.4042 34.2922 73.563C36.1334 71.7219 38.6306 70.6875 41.2344 70.6875H335.766Z"
+                              fill="black"/>
+                    </svg>
                 </div>
-
-                <!-- STEP 4: Shed addons -->
-                <div class="shed-addon-form hidden">
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">Sidebeklædning</p>
-                        <select name="shed_siding" class="carport-shed-addon-box">
-                            <option value="">Vælg beklædning</option>
-                            <option value="Beklædning: 25x150mm Blokhusbrædder ubehandlet"
-                                    th:selected="${shed!= null && shed.siding == 'Beklædning: 25x150mm Blokhusbrædder ubehandlet'}">
-                                Blokhusbrædder ubehandlet
-                            </option>
-                            <option value="Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)"
-                                    th:selected="${shed != null && shed.siding == 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)'}">
-                                Profilbrædt
-                            </option>
-                            <option value="Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)"
-                                    th:selected="${shed!= null && shed.siding == 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)'}">
-                                Krydsfiner m/spor (svalehale)
-                            </option>
-                            <option value="Beklædning: 19x125mm Klinkbeklædning trykimp."
-                                    th:selected="${shed != null && shed.siding == 'Beklædning: 19x125mm Klinkbeklædning trykimp.'}">
-                                Klinkbeklædning trykimp.
-                            </option>
-                            <option value="Beklædning: 19x100 mm. trykimp. Brædt"
-                                    th:selected="${shed != null && shed.siding == 'Beklædning: 19x100 mm. trykimp. Brædt'}">
-                                Trykimp. Træ
-                            </option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">Gulv</p>
-                        <select name="shed_floor" class="carport-shed-addon-box">
-                            <option value="">Vælg gulv</option>
-                            <option value="TRUE"
-                                    th:selected="${shed != null && shed.floor == true}">
-                                Ja
-                            </option>
-                            <option value="FALSE"
-                                    th:selected="${shed != null && shed.floor == false}">
-                                Nej
-                            </option>
-                        </select>
-                    </div>
+                <div class="roof-boxes" id="high-roof-box">
+                    <p>Højt Tag</p>
+                    <svg class="tilted-roof-svg" width="377" height="395" viewBox="0 0 377 395" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path class="svg-color"
+                              d="M281.054 222.159C282.739 222.945 284.164 224.197 285.161 225.767C286.157 227.337 286.683 229.159 286.677 231.019V284.176C286.673 286.777 285.637 289.27 283.796 291.108C281.955 292.945 279.46 293.978 276.859 293.977H267.042V308.948C267.025 312.845 265.469 316.577 262.711 319.331C259.954 322.086 256.22 323.638 252.323 323.651H242.49C238.592 323.638 234.858 322.086 232.101 319.331C229.344 316.577 227.787 312.845 227.771 308.948V293.977H149.229V308.681C149.213 312.578 147.656 316.31 144.899 319.064C142.142 321.819 138.408 323.371 134.51 323.384H124.677C120.78 323.371 117.046 321.819 114.289 319.064C111.531 316.31 109.975 312.578 109.958 308.681V293.977H100.141C98.8521 293.98 97.5758 293.728 96.3848 293.236C95.1937 292.744 94.1113 292.023 93.1994 291.112C92.2876 290.202 91.5641 289.12 91.0706 287.93C90.577 286.74 90.3229 285.464 90.3229 284.176V231.019C90.3229 227.233 92.5064 223.777 95.9465 222.159L105.796 217.509C107.093 216.891 108.24 215.997 109.157 214.89C110.074 213.783 110.739 212.49 111.105 211.1L125.808 154.283C126.355 152.176 127.587 150.31 129.31 148.979C131.033 147.648 133.15 146.928 135.327 146.932H241.673C243.85 146.928 245.967 147.648 247.69 148.979C249.413 150.31 250.645 152.176 251.192 154.283L265.895 211.1C266.261 212.49 266.926 213.783 267.843 214.89C268.76 215.997 269.907 216.891 271.204 217.509L281.054 222.159ZM252.323 264.886C254.311 264.978 256.297 264.665 258.161 263.968C260.025 263.271 261.728 262.202 263.167 260.828C264.607 259.454 265.752 257.802 266.535 255.972C267.318 254.142 267.722 252.173 267.722 250.183C267.722 248.193 267.318 246.223 266.535 244.393C265.752 242.564 264.607 240.912 263.167 239.537C261.728 238.163 260.025 237.095 258.161 236.397C256.297 235.7 254.311 235.388 252.323 235.48C250.335 235.388 248.349 235.7 246.485 236.397C244.621 237.095 242.918 238.163 241.479 239.537C240.039 240.912 238.894 242.564 238.111 244.393C237.328 246.223 236.924 248.193 236.924 250.183C236.924 252.173 237.328 254.142 238.111 255.972C238.894 257.802 240.039 259.454 241.479 260.828C242.918 262.202 244.621 263.271 246.485 263.968C248.349 264.665 250.335 264.978 252.323 264.886ZM208.135 264.886C210.735 264.882 213.228 263.848 215.067 262.011C216.907 260.174 217.945 257.684 217.953 255.084C217.945 252.484 216.907 249.993 215.067 248.156C213.228 246.319 210.735 245.286 208.135 245.282H168.865C166.265 245.286 163.772 246.319 161.933 248.156C160.093 249.993 159.055 252.484 159.047 255.084C159.047 260.472 163.461 264.886 168.865 264.886H208.135ZM124.677 235.433C122.689 235.341 120.703 235.653 118.839 236.35C116.975 237.048 115.272 238.116 113.833 239.49C112.393 240.865 111.248 242.517 110.465 244.346C109.682 246.176 109.279 248.145 109.279 250.136C109.279 252.126 109.682 254.095 110.465 255.925C111.248 257.755 112.393 259.407 113.833 260.781C115.272 262.155 116.975 263.223 118.839 263.921C120.703 264.618 122.689 264.93 124.677 264.839C126.665 264.93 128.651 264.618 130.515 263.921C132.379 263.223 134.082 262.155 135.521 260.781C136.961 259.407 138.106 257.755 138.889 255.925C139.672 254.095 140.076 252.126 140.076 250.136C140.076 248.145 139.672 246.176 138.889 244.346C138.106 242.517 136.961 240.865 135.521 239.49C134.082 238.116 132.379 237.048 130.515 236.35C128.651 235.653 126.665 235.341 124.677 235.433ZM129.955 203.34C128.164 209.577 133.128 215.719 139.946 215.719H237.054C243.872 215.719 248.836 209.577 247.045 203.356L238.61 173.934C237.95 171.811 236.62 169.959 234.819 168.656C233.017 167.353 230.842 166.67 228.619 166.709H148.381C146.158 166.67 143.983 167.353 142.181 168.656C140.38 169.959 139.05 171.811 138.39 173.934L129.955 203.34ZM335.766 88.1669C338.369 88.1669 340.867 89.2013 342.708 91.0425C344.549 92.8836 345.583 95.3808 345.583 97.9846V313.974C345.583 316.578 344.549 319.075 342.708 320.916C340.867 322.758 338.369 323.792 335.766 323.792C333.162 323.792 330.665 322.758 328.823 320.916C326.982 319.075 325.948 316.578 325.948 313.974V137.255C325.948 134.652 324.914 132.154 323.072 130.313C321.231 128.472 318.734 127.438 316.13 127.438H60.8698C58.266 127.438 55.7688 128.472 53.9276 130.313C52.0865 132.154 51.0521 134.652 51.0521 137.255V313.974C51.0521 316.578 50.0177 319.075 48.1766 320.916C46.3354 322.758 43.8382 323.792 41.2344 323.792C38.6306 323.792 36.1334 322.758 34.2922 320.916C32.451 319.075 31.4167 316.578 31.4167 313.974V97.9846C31.4167 95.3808 32.451 92.8836 34.2922 91.0425C36.1334 89.2013 38.6306 88.1669 41.2344 88.1669H335.766Z"
+                              fill="black"/>
+                        <path class="svg-color"
+                              d="M180.252 2.16677C185.015 -0.71592 190.984 -0.72271 195.754 2.14914L337.739 87.6286C350.762 95.4692 345.204 115.479 330.002 115.479H46.7608C31.5772 115.479 26.0047 95.5071 38.995 87.6462L180.252 2.16677Z"
+                              fill="black"/>
+                    </svg>
                 </div>
+            </div>
 
-                <!-- STEP 5: Roof addons -->
-                <div class="roof-addon-form hidden">
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">Tagmateriale</p>
-                        <select name="roof_material" class="carport-roof-addon-box">
-                            <option value="">Vælg type</option>
-                            <option value="Eternittag B6 - sortblå"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B6 - sortblå'}">
-                                Eternittag B6 - sortblå
-                            </option>
-                            <option value="Eternittag B6 - grå"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B6 - grå'}">
-                                Eternittag B6 - grå
-                            </option>
-                            <option value="Betontagsten - sort"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Betontagsten - sort'}">
-                                Betontagsten - sort
-                            </option>
-                            <option value="Betontagsten - koralrød"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Betontagsten - koralrød'}">
-                                Betontagsten - koralrød
-                            </option>
-                            <option value="Eternittag B7 - sortblå"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B7 - sortblå'}">
-                                Eternittag B7 - sortblå
-                            </option>
-                        </select>
-                    </div>
-                    <div class="field-group">
-                        <p class="carport-measurement-input-description">Hældning</p>
-                        <select name="roof_slope" class="carport-roof-addon-box">
-                            <option value="">Vælg hældningsgrad</option>
-                            <option value="15"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 15}">15°
-                            </option>
-                            <option value="20"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 20}">20°
-                            </option>
-                            <option value="25"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 25}">25°
-                            </option>
-                            <option value="30"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 30}">30°
-                            </option>
-                            <option value="35"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 35}">35°
-                            </option>
-                            <option value="40"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 40}">40°
-                            </option>
-                            <option value="45"
-                                    th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 45}">45°
-                            </option>
-                        </select>
-                    </div>
+            <!-- STEP 3: Shed -->
+            <div class="shed-picker-boxes hidden">
+                <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden
+                       th:checked="${shed != null && shed.width < carport_quote_preview.width}">
+
+                <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden
+                       th:checked="${shed != null && shed.width == carport_quote_preview.width}">
+
+                <input type="radio" name="shed_status" id="no-shed" value="NONE" hidden
+                       th:checked="${shed == null}">
+                <div class="shed-boxes" id="half-shed-box">
+                    <p>Halvt skur</p>
+                    <svg class="half-shed-svg" width="296" height="306" viewBox="0 0 296 306" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path class="svg-color"
+                              d="M229.164 190.511L212.842 141.548H173.718V160.851H198.932L200.946 166.894L157.633 198.809V38.175L193.019 19.3021V0L0 102.944V122.245L12.8676 115.382V299.179H157.632V222.783L207.362 186.14L210.842 196.577C176.019 214.85 168.765 263.857 199.71 291.1C233.081 320.477 286.047 302.683 294.821 259.147C302.923 218.946 267.778 184.419 229.164 190.511Z"
+                              fill="black"/>
+                    </svg>
                 </div>
+                <div class="shed-boxes" id="full-shed-box">
+                    <p>Fuldt skur</p>
+                    <svg class="full-shed-svg" width="299" height="280" viewBox="0 0 299 280" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path class="svg-color"
+                              d="M149.5 0L299 79.7333V279.067H259.133V99.6667H39.8667V279.067H0V79.7333L149.5 0Z"
+                              fill="black"/>
+                    </svg>
+                </div>
+                <div class="no-shed-text-button" id="no-shed-box">
+                    <a id="no-shed-text-description">Hvis der ikke ønskes skur, klik her</a>
+                </div>
+            </div>
 
-                <!-- STEP 6: Submit -->
-                <div class="quote-form hidden">
+            <!-- STEP 4: Shed addons -->
+            <div class="shed-addon-form hidden">
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">Sidebeklædning</p>
+                    <select name="shed_siding" class="carport-shed-addon-box">
+                        <option value="">Vælg beklædning</option>
+                        <option value="Beklædning: 25x150mm Blokhusbrædder ubehandlet"
+                                th:selected="${shed!= null && shed.siding == 'Beklædning: 25x150mm Blokhusbrædder ubehandlet'}">
+                            Blokhusbrædder ubehandlet
+                        </option>
+                        <option value="Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)"
+                                th:selected="${shed != null && shed.siding == 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)'}">
+                            Profilbrædt
+                        </option>
+                        <option value="Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)"
+                                th:selected="${shed!= null && shed.siding == 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)'}">
+                            Krydsfiner m/spor (svalehale)
+                        </option>
+                        <option value="Beklædning: 19x125mm Klinkbeklædning trykimp."
+                                th:selected="${shed != null && shed.siding == 'Beklædning: 19x125mm Klinkbeklædning trykimp.'}">
+                            Klinkbeklædning trykimp.
+                        </option>
+                        <option value="Beklædning: 19x100 mm. trykimp. Brædt"
+                                th:selected="${shed != null && shed.siding == 'Beklædning: 19x100 mm. trykimp. Brædt'}">
+                            Trykimp. Træ
+                        </option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">Gulv</p>
+                    <select name="shed_floor" class="carport-shed-addon-box">
+                        <option value="">Vælg gulv</option>
+                        <option value="TRUE"
+                                th:selected="${shed != null && shed.floor == true}">
+                            Ja
+                        </option>
+                        <option value="FALSE"
+                                th:selected="${shed != null && shed.floor == false}">
+                            Nej
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- STEP 5: Roof addons -->
+            <div class="roof-addon-form hidden">
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">Tagmateriale</p>
+                    <select name="roof_material" class="carport-roof-addon-box">
+                        <option value="">Vælg type</option>
+                        <option value="Eternittag B6 - sortblå"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B6 - sortblå'}">
+                            Eternittag B6 - sortblå
+                        </option>
+                        <option value="Eternittag B6 - grå"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B6 - grå'}">
+                            Eternittag B6 - grå
+                        </option>
+                        <option value="Betontagsten - sort"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Betontagsten - sort'}">
+                            Betontagsten - sort
+                        </option>
+                        <option value="Betontagsten - koralrød"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Betontagsten - koralrød'}">
+                            Betontagsten - koralrød
+                        </option>
+                        <option value="Eternittag B7 - sortblå"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofMaterial == 'Eternittag B7 - sortblå'}">
+                            Eternittag B7 - sortblå
+                        </option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <p class="carport-measurement-input-description">Hældning</p>
+                    <select name="roof_slope" class="carport-roof-addon-box">
+                        <option value="">Vælg hældningsgrad</option>
+                        <option value="15"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 15}">15°
+                        </option>
+                        <option value="20"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 20}">20°
+                        </option>
+                        <option value="25"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 25}">25°
+                        </option>
+                        <option value="30"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 30}">30°
+                        </option>
+                        <option value="35"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 35}">35°
+                        </option>
+                        <option value="40"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 40}">40°
+                        </option>
+                        <option value="45"
+                                th:selected="${carport_quote_preview.roofResponseDTO.roofSlope == 45}">45°
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- STEP 6: Submit -->
+            <div class="quote-form hidden">
+                <div class="inquiry-submit">
+                    <h2>Bekræft tilbud</h2>
+                    <p>Gennemse alle valg og send tilbuddet til kunden.</p>
                     <div class="inquiry-submit">
-                        <h2>Bekræft tilbud</h2>
-                        <p>Gennemse alle valg og send tilbuddet til kunden.</p>
-                            <div class="inquiry-submit">
-                              <br>
-                                <!-- Read-only price info -->
-                                <p th:text="${'Kostpris: ' + cost_price_quote + ' kr.'}"></p>
-                                <p th:text="${'Vejl. udsalgspris: ' + retail_price_quote + ' kr.'}"></p>
-                                <p th:text="${'Servicegebyr: ' + service_fee_quote + ' kr.'}"></p>
-                                <p th:text="${'Omsætning: ' + revenue_quote + ' kr.'}"></p>
-                                <p th:text="${'Bruttofortjeneste: ' + gross_profit_quote + ' kr.'}"></p>
-                                <p th:text="${'Bruttomargin: ' + gross_margin_quote + ' %'}"></p>
+                        <br>
+                        <!-- Read-only price info -->
+                        <p th:text="${'Kostpris: ' + cost_price_quote + ' kr.'}"></p>
+                        <p th:text="${'Vejl. udsalgspris: ' + retail_price_quote + ' kr.'}"></p>
+                        <p th:text="${'Servicegebyr: ' + service_fee_quote + ' kr.'}"></p>
+                        <p th:text="${'Omsætning: ' + revenue_quote + ' kr.'}"></p>
+                        <p th:text="${'Bruttofortjeneste: ' + gross_profit_quote + ' kr.'}"></p>
+                        <p th:text="${'Bruttomargin: ' + gross_margin_quote + ' %'}"></p>
+                        <p>==========================================</p>
+                        <p th:text="${'Kundens Pris: ' + customer_price + ' kr'}"></p>
+                        <p>==========================================</p>
 
-                                <!-- Editable discount — always starts at 0 -->
-                                <label for="discountInput">Rabat:</label>
-                                <input type="number" id="discountInput" name="discount_quote"
-                                       th:value="${discount_quote}"
-                                       placeholder="0">
-                            </div>
-                            <button class="continue" form="admin-carport-form" type="submit">Opret tilbud</button>
-                        </div>
+
+                        <!-- Editable discount — always starts at 0 -->
+                        <label for="discountInput">Rabat:</label>
+                        <input type="number" id="discountInput" name="discount_quote"
+                               th:value="${discount_quote}"
+                               placeholder="0" >
+                        <label for="discountInput">kr.</label>
+
                     </div>
-            </form>
-        </div>
+                    <button class="continue" form="admin-carport-form" type="submit">Opret tilbud</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 <div th:replace="~{fragments :: adminScripts}"></div>
 </body>
 </html>

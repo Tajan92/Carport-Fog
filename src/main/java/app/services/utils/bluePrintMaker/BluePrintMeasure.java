@@ -29,11 +29,13 @@ public class BluePrintMeasure {
 
     private void addVerticalArrowsToTopView() {
         double x = BluePrintData.OFFSET_X - BluePrintData.ARROW_OFFSET;
+
         double y1 = BluePrintData.OFFSET_Y_TOP;
         double y2 = BluePrintData.OFFSET_Y_TOP + carport.getWidth();
-        drawVerticalArrow(x, y1 + BluePrintData.POLE_END_GAP, y2 - BluePrintData.POLE_END_GAP, carport.getWidth()-(BluePrintData.POLE_END_GAP * 2));
 
-        drawVerticalArrow(x-20, y1, y2,carport.getWidth());
+        drawVerticalArrow(x, y1 + BluePrintData.POLE_END_GAP, y2 - BluePrintData.POLE_END_GAP, carport.getWidth() - (BluePrintData.POLE_END_GAP * 2));
+
+        drawVerticalArrow(x - 20, y1, y2, carport.getWidth());
     }
 
     private void addHorizontalArrowsToTopView() {
@@ -65,7 +67,7 @@ public class BluePrintMeasure {
         if (roof.getRoofType().contains("Højt tag")) {
             carportWithRoofHeight = BluePrintData.POLE_HEIGHT + calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
         }
-        double verticalStartY = BluePrintData.GROUND_Y - carportWithRoofHeight;
+        double verticalStartY = BluePrintData.OFFSET_Y_SIDE + BluePrintData.GROUND_Y - carportWithRoofHeight;
 
         drawVerticalArrow(verticalStartX - 20, verticalStartY, BluePrintData.GROUND_Y, carportWithRoofHeight);
         drawVerticalArrow(verticalStartX, verticalStartY + BluePrintData.VERTICAL_SIDING_OVERLAP, BluePrintData.GROUND_Y, carportWithRoofHeight - BluePrintData.VERTICAL_SIDING_OVERLAP);
@@ -141,11 +143,7 @@ public class BluePrintMeasure {
     }
 
     private double getQuantityByPlacementDescription(String placementDescription) {
-        return productsPartsListEntries.stream()
-                .filter(x -> x.getPlacementDescription().contains(placementDescription))
-                .map(ProductsPartsListEntry::getQuantity)
-                .findFirst()
-                .orElse(0.0);
+        return productsPartsListEntries.stream().filter(x -> x.getPlacementDescription().contains(placementDescription)).map(ProductsPartsListEntry::getQuantity).findFirst().orElse(0.0);
     }
 
     public double calculateRoofHeight(double width, double roofSlope) {

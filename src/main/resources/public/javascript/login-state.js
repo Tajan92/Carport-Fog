@@ -12,6 +12,7 @@ if (currentUser.role === "CUSTOMER"){
     logInBtn.classList.add("hidden")
     logOutBtn.classList.remove("hidden")
     adminMyPageBtn.classList.remove("hidden")
+    if (adminMyPageBtn) adminMyPageBtn.classList.remove("hidden")
 } else {
     logOutBtn.classList.add("hidden")
 }

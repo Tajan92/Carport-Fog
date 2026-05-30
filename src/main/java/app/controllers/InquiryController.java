@@ -114,6 +114,7 @@ public class InquiryController {
             ctx.sessionAttribute("pending_remark", ctx.formParam("inquiry_remark"));
             ctx.sessionAttribute("pending_inquiry", true);
 
+
             ctx.redirect("/customer/login");
             return;
         }
@@ -124,6 +125,8 @@ public class InquiryController {
         InquiryRequestDTO inquiryRequestDTO = new InquiryRequestDTO(customerId, inquiryRemark, carportId);
         serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
 
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+        ctx.attribute("svg_carport_width", svgCarport);
         ctx.redirect("/customer/my/page");
     }
 
