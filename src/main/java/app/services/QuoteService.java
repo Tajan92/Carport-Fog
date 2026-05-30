@@ -132,17 +132,16 @@ public class QuoteService {
             CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
             CustomerResponseDTO customerResponseDTO = userService.getCustomer(quote.getCustomerId());
             SalesRepResponseDTO salesRepResponseDTO = userService.getSalesRep(quote.getSalesRepId());
+            Carport carport = carportMapper.getCarportById(quote.getCarportId());
 
-            double calculatedCostPrice = 0;
-            for (Product product : products) {
-                calculatedCostPrice += product.getCostPrice();
-            }
+            List<ProductsPartsListEntry> productsPartsListEntries = partsListMapper.getProductsPartsListEntries(carport.getPartsListId());
+            double costPrice = PriceCalculator.calculateInquiryCostPrice(productsPartsListEntries);
+
 
             double retailPrice = quote.getQuotePrice();
             double discount = quote.getQuoteDiscount();
             double serviceFee = PriceCalculator.calculateServiceFee(retailPrice);
             double totalPrice = PriceCalculator.getRevenue(retailPrice, discount, serviceFee);
-            double costPrice = calculatedCostPrice;
 
             responseDTOS.add(new QuoteAdminResponseDTO(quoteId, retailPrice, discount, totalPrice, costPrice, serviceFee, customerResponseDTO, carportResponseDTO, salesRepResponseDTO));
         }
