@@ -6,7 +6,6 @@ import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.UserResponseDTO;
-import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
@@ -113,7 +112,6 @@ public class InquiryController {
             ctx.sessionAttribute("pending_floor", ctx.formParam("shed_floor"));
             ctx.sessionAttribute("pending_remark", ctx.formParam("inquiry_remark"));
             ctx.sessionAttribute("pending_inquiry", true);
-
 
             ctx.redirect("/customer/login");
             return;

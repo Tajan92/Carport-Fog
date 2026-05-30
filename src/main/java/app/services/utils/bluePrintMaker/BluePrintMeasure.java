@@ -42,7 +42,7 @@ public class BluePrintMeasure {
         double horizontalStartX = BluePrintData.OFFSET_X;
         double horizontalStartY = BluePrintData.OFFSET_Y_TOP + carport.getWidth() + BluePrintData.ARROW_OFFSET;
 
-        drawHorizontalArrow(horizontalStartX, horizontalStartX + carport.getLength(), horizontalStartY, carport.getLength(), true);
+        drawHorizontalArrow(horizontalStartX, horizontalStartX + carport.getLength(), horizontalStartY, carport.getLength(), true, "cm");
 
         double rafterQuantity = getQuantityByPlacementDescription("Spær, monteres på rem");
         if (rafterQuantity <= 1) return;
@@ -55,7 +55,7 @@ public class BluePrintMeasure {
         for (int i = 0; i < rafterQuantity - 1; i++) {
             boolean drawTick = (i == rafterQuantity - 2);
 
-            drawHorizontalArrow(x, x2, y, rafterSpacing, drawTick);
+            drawHorizontalArrow(x, x2, y, rafterSpacing, drawTick, "");
             x += rafterSpacing;
             x2 += rafterSpacing;
         }
@@ -63,16 +63,19 @@ public class BluePrintMeasure {
 
     private void addVerticalArrowsToSideView() {
         double verticalStartX = BluePrintData.OFFSET_X - BluePrintData.ARROW_OFFSET;
+        double verticalEndX = BluePrintData.OFFSET_X + carport.getLength() + BluePrintData.ARROW_OFFSET;
         double carportWithRoofHeight = BluePrintData.CARPORT_HEIGHT_FLAT_ROOF;
         if (roof.getRoofType().contains("Højt tag")) {
             carportWithRoofHeight = BluePrintData.POLE_HEIGHT + calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
         }
         double verticalStartY = BluePrintData.OFFSET_Y_SIDE + BluePrintData.GROUND_Y - carportWithRoofHeight;
+        double groundY = BluePrintData.GROUND_Y + BluePrintData.OFFSET_Y_SIDE;
 
-        drawVerticalArrow(verticalStartX - 20, verticalStartY, BluePrintData.GROUND_Y, carportWithRoofHeight);
-        drawVerticalArrow(verticalStartX, verticalStartY + BluePrintData.VERTICAL_SIDING_OVERLAP, BluePrintData.GROUND_Y, carportWithRoofHeight - BluePrintData.VERTICAL_SIDING_OVERLAP);
+        drawVerticalArrow(verticalStartX - 20, verticalStartY, groundY, carportWithRoofHeight);
+        drawVerticalArrow(verticalStartX, verticalStartY + BluePrintData.VERTICAL_SIDING_OVERLAP, groundY, carportWithRoofHeight - BluePrintData.VERTICAL_SIDING_OVERLAP);
+
         if (!roof.getRoofType().contains("Højt tag")) {
-            drawVerticalArrow(verticalStartX + carport.getLength() + BluePrintData.ARROW_OFFSET, verticalStartY - 10, BluePrintData.GROUND_Y, carportWithRoofHeight - 10);
+            drawVerticalArrow(verticalEndX, verticalStartY + 10, groundY, carportWithRoofHeight - 10);
         }
     }
 
@@ -84,7 +87,7 @@ public class BluePrintMeasure {
         int quantityAdjustment = -1;
 
         // Front overhang
-        drawHorizontalArrow(horizontalStartX, horizontalStartX + roofOverhangStart, horizontalStartY, roofOverhangStart, false);
+        drawHorizontalArrow(horizontalStartX, horizontalStartX + roofOverhangStart, horizontalStartY, roofOverhangStart, false, "cm");
         double polesPerSide = getQuantityByPlacementDescription("Stolper nedgraves 90 cm. i jord") / 2;
         double polePlacementWidth = carport.getLength() - roofOverhangStart - roofOverhangEnd;
 
@@ -96,28 +99,28 @@ public class BluePrintMeasure {
         double poleDistanceStartX = horizontalStartX + roofOverhangStart;
 
         for (int i = 0; i < polesPerSide - quantityAdjustment; i++) {
-            drawHorizontalArrow(poleDistanceStartX, poleDistanceStartX + spaceDistance, horizontalStartY, spaceDistance, false);
+            drawHorizontalArrow(poleDistanceStartX, poleDistanceStartX + spaceDistance, horizontalStartY, spaceDistance, false, "cm");
             poleDistanceStartX += spaceDistance;
         }
         // Shed width
         if (shed != null) {
             double shedStartX = horizontalStartX + carport.getLength() - roofOverhangEnd - shed.getLength();
-            drawHorizontalArrow(shedStartX, shedStartX + shed.getLength(), horizontalStartY, shed.getLength(), false);
+            drawHorizontalArrow(shedStartX, shedStartX + shed.getLength(), horizontalStartY, shed.getLength(), false, "cm");
         }
 
         // Rear overhang
         double endArrowStartX = horizontalStartX + carport.getLength() - roofOverhangEnd;
-        drawHorizontalArrow(endArrowStartX, endArrowStartX + roofOverhangEnd, horizontalStartY, roofOverhangEnd, true);
+        drawHorizontalArrow(endArrowStartX, endArrowStartX + roofOverhangEnd, horizontalStartY, roofOverhangEnd, true, "cm");
     }
 
-    private void drawHorizontalArrow(double x1, double x2, double y, double measure, boolean drawEndTick) {
+    private void drawHorizontalArrow(double x1, double x2, double y, double measure, boolean drawEndTick, String text) {
         // Arrow
         svg.addArrow(x1, y, x2, y);
 
         // Text
         double midX = (x1 + x2) / 2;
 
-        svg.addText(midX, y - BluePrintData.TEXT_OFFSET, 0, String.format("%.1f cm", measure));
+        svg.addText(midX, y - BluePrintData.TEXT_OFFSET, 0, String.format("%.1f " + text, measure));
 
         // Start tick
         svg.addLine(x1, y - BluePrintData.HALF_TICK_SIZE, x1, y + BluePrintData.HALF_TICK_SIZE);

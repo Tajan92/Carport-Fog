@@ -22,6 +22,7 @@ public class Svg {
             "              style=\"stroke:#000000; fill: %s\"/>";
 
     private final static String SVG_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke: #000000;\" />";
+    private final static String SVG_WHITE_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" stroke-width=\"1.2\" y2=\"%f\" style=\"stroke: #dddddd;\" />";
 
     private final static String SVG_DASHED_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" style=\"stroke:#000000; stroke-dasharray: 5 5;\" />";
 
@@ -32,10 +33,13 @@ public class Svg {
 
     private final static String SVG_SHED_DASHED_LINE_TEMPLATE = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"12, 4\" />";
     private final static String SVG_SHED_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" stroke-width=\"2\" height=\"%f\" width=\"%f\"\n" +
-            "              style=\"stroke:#000000; fill: #bfbfbf\"/>";
+            "              style=\"stroke:#000000; fill: #756251\"/>";
 
     private final static String SVG_ROOF_RECT_TEMPLATE = "<rect x=\"%f\" y=\"%f\" height=\"%f\" width=\"%f\"\n" +
             "              style=\"fill:url(#high-roof-tiles); stroke:#000000; stroke-width:1.2;\"/>";
+
+    private final static String SVG_ROOF_RECT_COLORING_TEMPLATE = "<rect x=\"%f\" y=\"%f\" height=\"%f\" width=\"%f\"\n" +
+            "              style=\"fill: %s; stroke:#000000; stroke-width:1.2;\"/>";
 
     private final static String SVG_END = "</svg>";
 
@@ -55,6 +59,10 @@ public class Svg {
         svg.append(String.format(SVG_LINE_TEMPLATE, x1, y1, x2, y2));
     }
 
+    public void addWhiteLine(double x1, double y1, double x2, double y2) {
+        svg.append(String.format(SVG_WHITE_LINE_TEMPLATE, x1, y1, x2, y2));
+    }
+
     public void addDashedLine(double x1, double y1, double x2, double y2) {
         svg.append(String.format(SVG_DASHED_LINE_TEMPLATE, x1, y1, x2, y2));
     }
@@ -69,6 +77,10 @@ public class Svg {
 
     public void addRoofRectangle(double x, double y, double height, double width) {
         svg.append(String.format(SVG_ROOF_RECT_TEMPLATE, x, y, height, width));
+    }
+
+    public void addRoofColoringRectangle(double x, double y, double height, double width, String fillColor) {
+        svg.append(String.format(SVG_ROOF_RECT_COLORING_TEMPLATE, x, y, height, width, fillColor));
     }
 
     public void addArrow(double x1, double y1, double x2, double y2) {
