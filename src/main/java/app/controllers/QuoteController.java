@@ -196,15 +196,15 @@ public class QuoteController {
         String roofSlopeResponse = ctx.formParam("roof_slope");
         String roofMaterial = ctx.formParam("roof_material");
         String roofType = ctx.formParam("roof_type");
-        double roofSlope = 1.7;
         if (roofType == null || roofType.isBlank()) {
             roofType = "Fladt tag";
         }
         if (roofMaterial == null || roofMaterial.isBlank()) {
             roofMaterial = "Plastmo Ecolite blåtonet";
         }
-        if (roofSlopeResponse != null && !roofSlopeResponse.isBlank()) {
-            roofSlope = Double.parseDouble((roofSlopeResponse));
+        double roofSlope = 1.7;
+        if (!"Fladt tag".equals(roofType) && roofSlopeResponse != null && !roofSlopeResponse.isBlank()) {
+            roofSlope = Double.parseDouble(roofSlopeResponse);
         }
 
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);

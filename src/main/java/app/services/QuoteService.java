@@ -45,17 +45,12 @@ public class QuoteService {
     }
 
     public void createQuote(QuoteRequestDTO quoteRequestDTO) throws DatabaseException {
-
-        /* Instantiate variables that cannot be instantiated in the converter */
-        double carportPrice = carportMapper.getCarportById(quoteRequestDTO.getCarportId()).getPrice();
-        double quotePrice = PriceCalculator.calculateDiscount(carportPrice, quoteRequestDTO.getQuotePrice());
-
         /* Set the new variables */
         Quote quote = quoteConverter.convertQuoteDTOtoEntity(quoteRequestDTO);
         quote.setCarportId(quoteRequestDTO.getCarportId());
+        quote.setQuotePrice(quoteRequestDTO.getQuotePrice());
         quote.setCustomerId(quoteRequestDTO.getCustomerId());
         quote.setSalesRepId(quoteRequestDTO.getSalesRepId());
-        quote.setQuotePrice(quotePrice);
         quote.setQuoteDiscount(quoteRequestDTO.getQuoteDiscount());
 
         quoteMapper.createQuote(quote);
