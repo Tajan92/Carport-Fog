@@ -31,22 +31,21 @@
         <p th:text="${'Bemærkning: ' + selected_inquiry.remark}"></p>
         <br>
 
-        <p th:text="${'Bredde: ' + selected_carport.width + ' cm'}"></p>
-        <p th:text="${'Længde: ' + selected_carport.length + ' cm'}"></p>
+        <p th:text="${'Carport bredde: ' + selected_carport.width + ' cm'}"></p>
+        <p th:text="${'Carport længde: ' + selected_carport.length + ' cm'}"></p>
         <p th:text="${'Tagtype: ' + selected_carport.roofResponseDTO.roofType}"></p>
         <p th:text="${'Tagmateriale: ' + selected_carport.roofResponseDTO.roofMaterial}"></p>
-        <p th:text="${'Tagmateriale: ' + selected_carport.roofResponseDTO.roofSlope}"></p>
+        <p th:text="${'Taghældning: ' + selected_carport.roofResponseDTO.roofSlope}"></p>
         <div th:if="${selected_shed != null}">
-            <p th:text="${'Siding: ' + selected_shed.siding}"></p>
-            <p th:text="${'Floor: ' + selected_shed.floor}"></p>
-            <p th:text="${'Bredde: ' + selected_shed.width}"></p>
-            <p th:text="${'Længde: ' + selected_shed.length}"></p>
+            <p th:text="${'Beklædning: ' + selected_shed.siding}"></p>
+            <p th:text="${'Gulv: ' + selected_floor}"></p>
+            <p th:text="${'Skur bredde: ' + selected_shed.width}"></p>
+            <p th:text="${'Skur længde: ' + selected_shed.length}"></p>
         </div>
         <div th:if="${selected_shed == null}">
             <p>Ingen skur</p>
         </div>
         <br>
-        <a type="submit" class="create-quote-button" th:action="@{/create/order/quote{quote_id}}" >Opret tilbud</a>
 
     </div>
 

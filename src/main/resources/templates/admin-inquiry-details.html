@@ -35,16 +35,16 @@
         <p th:text="${'Email: ' + customer_quote_preview.email}"></p>
         <p th:text="${'Telefon: ' + customer_quote_preview.phoneNumber}"></p>
         <br>
-        <p th:text="${'Bredde: ' + carport_quote_preview.width + ' cm'}"></p>
-        <p th:text="${'Længde: ' + carport_quote_preview.length + ' cm'}"></p>
+        <p th:text="${'Carport Bredde: ' + carport_quote_preview.width + ' cm'}"></p>
+        <p th:text="${'Carport Længde: ' + carport_quote_preview.length + ' cm'}"></p>
         <p th:text="${'Tagtype: ' + carport_quote_preview.roofResponseDTO.roofType}"></p>
         <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofMaterial}"></p>
         <p th:text="${'Tag-hældning: ' + carport_quote_preview.roofResponseDTO.roofSlope}"></p>
         <div th:if="${shed != null}">
-            <p th:text="${'Siding: ' + shed.siding}"></p>
-            <p th:text="${'Floor: ' + shed.floor}"></p>
-            <p th:text="${'Bredde: ' + shed.width}"></p>
-            <p th:text="${'Længde: ' + shed.length}"></p>
+            <p th:text="${'Belædning: ' + shed.siding}"></p>
+            <p th:text="${'Gulv: ' + shed.floor}"></p>
+            <p th:text="${'Skur Bredde: ' + shed.width}"></p>
+            <p th:text="${'Skur Længde: ' + shed.length}"></p>
         </div>
         <div th:if="${shed == null}">
             <p>Ingen skur</p>
@@ -59,6 +59,10 @@
             <input type="hidden" name="roof_type" th:value="${carport_quote_preview.roofResponseDTO.roofType}">
             <input type="hidden" name="roof_material" th:value="${carport_quote_preview.roofResponseDTO.roofMaterial}">
             <input type="hidden" name="roof_slope" th:value="${carport_quote_preview.roofResponseDTO.roofSlope}">
+            <input type="hidden" name="shed_siding" th:value="${shed.siding}">
+            <input type="hidden" name="shed_floor" th:value="${shed.floor}">
+            <input type="hidden" name="shed_width" th:value="${shed.width}">
+            <input type="hidden" name="shed_length" th:value="${shed.length}">
             <button type="submit" class="create-quote-button">Opret tilbud</button>
         </form>
     </div>

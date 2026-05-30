@@ -21,8 +21,36 @@
         <h1 class="quote-details-title"> Admin Tilbuds oversigt</h1>
     </div>
 
-    <div class="quote-details-box"></div>
+    <div class="quote-details-box">
+        <h2>Tilbud</h2>
+        <p th:text="${'ID: ' + quote_admin_preview.quoteId}"></p>
+        <p th:text="${'Retailpris: ' + quote_admin_preview.retailPrice}"></p>
+        <p th:text="${'Indkøbspris: ' + quote_admin_preview.costPrice}"></p>
+        <p th:text="${'Bemærkning: ' + quote_admin_preview.remark}"></p>
+        <br>
+        <h2>Kunde</h2>
+        <p th:text="${'Navn: ' + customer_quote_preview.firstName + ' ' + customer_quote_preview.lastName}"></p>
+        <p th:text="${'Email: ' + customer_quote_preview.email}"></p>
+        <p th:text="${'Telefon: ' + customer_quote_preview.phoneNumber}"></p>
+        <br>
+        <p th:text="${'Carport Bredde: ' + carport_quote_preview.width + ' cm'}"></p>
+        <p th:text="${'Carport Længde: ' + carport_quote_preview.length + ' cm'}"></p>
+        <p th:text="${'Tagtype: ' + carport_quote_preview.roofResponseDTO.roofType}"></p>
+        <p th:text="${'Tagmateriale: ' + carport_quote_preview.roofResponseDTO.roofMaterial}"></p>
+        <p th:text="${'Tag-hældning: ' + carport_quote_preview.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${shed != null}">
+            <p th:text="${'Belædning: ' + shed.siding}"></p>
+            <p th:text="${'Gulv: ' + shed.floor}"></p>
+            <p th:text="${'Skur Bredde: ' + shed.width}"></p>
+            <p th:text="${'Skur Længde: ' + shed.length}"></p>
+        </div>
+        <div th:if="${shed == null}">
+            <p>Ingen skur</p>
+        </div>
+        <br>
+    </div>
 
+<!--    <a type="submit" class="create-quote-button" th:action="@{/create/order/quote{quote_id}}" >Opret tilbud</a>-->
 
 </div>
 

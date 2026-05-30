@@ -194,6 +194,19 @@
     fill: white;
 }
 
+.chosen-shed-box {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: solid #2783e1;
+}
+.chosen-roof-box {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: solid #2783e1;
+}
+
 
 /*===== CARPORT MEASUREMENTS INPUTS =====*/
 .carport-measurement-box, .carport-shed-addon-box,.carport-roof-addon-box {
