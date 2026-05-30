@@ -54,9 +54,9 @@ public class BlueprintService {
 
         this.productsPartsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, products);
         double roofHeight = RoofHeightCalculator.calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
-        double viewHeight = (carport.getHeight()*2)+ roofHeight + 770;
+        double viewHeight = (carport.getHeight()*2)+ roofHeight + 600;
         double viewWidth = carport.getWidth()+300;
-        svg = new Svg(0, 0, "100%", "auto", "0 -"+roofHeight+ " " + viewWidth + " " + viewHeight, 1);
+        svg = new Svg(0, 0, "100%", "auto", "0 -"+roofHeight+ " " + viewWidth + " " + viewHeight, 0);
 
         // SIDE VIEW
         svg.startGroup(BluePrintData.OFFSET_X, BluePrintData.OFFSET_Y_SIDE);

@@ -25,10 +25,7 @@ let selectedShed = null;
 function updateSVGPreview() {
     const formData = new FormData(form);
 
-    console.log("updateSVGPreview called");
-
     if (!formData.get("carport_width") || !formData.get("carport_length")) return;
-
     if (!formData.get("shed_status")) formData.set("shed_status", "NONE");
     if (!formData.get("shed_floor")) formData.set("shed_floor", "FALSE");
 

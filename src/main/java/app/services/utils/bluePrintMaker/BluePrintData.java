@@ -5,7 +5,7 @@ public class BluePrintData {
     // Positions
     public static final double OFFSET_X = 80;
     public static final double OFFSET_Y_SIDE = 10;
-    public static final double OFFSET_Y_TOP = 580;
+    public static final double OFFSET_Y_TOP = 415;
 
     // Colors
     public static final String FILL_LIGHT_BROWN = "#77695c";
