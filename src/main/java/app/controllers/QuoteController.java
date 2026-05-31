@@ -14,6 +14,7 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
 
 import java.sql.SQLException;
 
@@ -104,7 +105,7 @@ public class QuoteController {
         ctx.render("admin-carport-maker.html");
     }
 
-    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, SQLException {
+    public void createQuote(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, SQLException, MessagingException {
         if (!UserValidator.isAdmin(ctx)) {
             ctx.redirect("/");
             return;
@@ -114,6 +115,7 @@ public class QuoteController {
         ctx.attribute("currentUser", salesRep);
         int customerId = Integer.parseInt(ctx.formParam("customer_id"));
         int inquiryId = Integer.parseInt(ctx.formParam("inquiry_id"));
+        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         String discountResponse = ctx.formParam("discount_quote");
         double discount = 0;
         if (discountResponse != null && !discountResponse.isBlank()) {
@@ -129,6 +131,7 @@ public class QuoteController {
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
         QuoteRequestDTO quoteRequestDTO = new QuoteRequestDTO(customerId, retailPrice, carportId, salesRep.getId(), discount);
         serviceFactory.getQuoteService().createQuote(quoteRequestDTO);
+        serviceFactory.getMailService().sendQuoteNotice(inquiryResponseDTO);
         serviceFactory.getInquiryService().updateInquiryStatus(inquiryId);
 
         ctx.redirect("/admin/my/page");
