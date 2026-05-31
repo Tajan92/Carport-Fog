@@ -53,8 +53,8 @@
 
 <div th:fragment="customerScripts">
     <script th:src="@{/javascript/customer-header-states.js}"></script>
-    <script th:src="@{/javascript/customer-carport-maker.js}"></script>
     <script th:src="@{/javascript/customer-carport-states.js}"></script>
+    <script th:src="@{/javascript/customer-carport-maker.js}"></script>
     <script th:src="@{/javascript/customer-my-page.js}"></script>
     <script th:inline="javascript">
         const currentUser = /*[[${currentUser}]]*/ null;
@@ -70,6 +70,17 @@
     <script th:src="@{/javascript/admin-carport-states.js}"></script>
 </div>
 
+<div th:fragment="carportMakerScripts">
+    <script th:src="@{/javascript/customer-header-states.js}"></script>
+    <script th:src="@{/javascript/customer-carport-states.js}"></script>
+    <script th:src="@{/javascript/customer-carport-maker.js}"></script>
+
+    <script th:inline="javascript">
+        const currentUser = /*[[${currentUser}]]*/ null;
+        console.log("Logged in user details:", currentUser);
+    </script>
+    <script th:src="@{/javascript/login-state.js}"></script>
+</div>
 
 <body>
 

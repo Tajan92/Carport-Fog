@@ -11,11 +11,13 @@ import app.services.ServiceFactory;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
+import java.util.Locale;
+
 public class Main {
 
     public static void main(String[] args) {
         ServiceFactory serviceFactory = new ServiceFactory();
-
+        Locale.setDefault(new Locale("en", "US"));
         // Initializing Javalin and Jetty webserver
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
@@ -30,6 +32,7 @@ public class Main {
         QuoteController quoteController = new QuoteController();
         OrderController orderController = new OrderController();
         InquiryController inquiryController = new InquiryController();
+        BlueprintController blueprintController = new BlueprintController();
 
 
         salesRepController.addRoutes(app,serviceFactory);
@@ -37,6 +40,7 @@ public class Main {
         inquiryController.addRoutes(app,serviceFactory);
         quoteController.addRoutes(app,serviceFactory);
         orderController.getRoutes(app,serviceFactory);
+        blueprintController.addRoutes(app,serviceFactory);
         mainController.addRoutes(app, serviceFactory);
     }
 }

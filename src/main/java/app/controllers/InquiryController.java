@@ -7,7 +7,6 @@ import app.dto.responseDTO.InquiryResponseDTO;
 import app.dto.responseDTO.SalesRepResponseDTO;
 import app.dto.responseDTO.ShedResponseDTO;
 import app.dto.responseDTO.UserResponseDTO;
-import app.dto.responseDTO.carports.CarportNoShedResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
@@ -125,6 +124,8 @@ public class InquiryController {
         InquiryRequestDTO inquiryRequestDTO = new InquiryRequestDTO(customerId, inquiryRemark, carportId);
         serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
 
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+        ctx.attribute("svg_carport_width", svgCarport);
         ctx.redirect("/customer/my/page");
     }
 

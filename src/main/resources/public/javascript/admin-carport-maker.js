@@ -128,7 +128,26 @@ quoteBtn.addEventListener("click", () => {
     console.log("clicking on quoteBTN")
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+    const discountInput = document.getElementById("discountInput");
 
+    if (discountInput) {
+        discountInput.addEventListener("change", () => {
+            const form = document.getElementById("admin-carport-form");
+
+            form.action = "/admin/preview/quote";
+            form.method = "post";
+            form.submit();
+
+        });
+
+
+    }
+    if (discountInput.valueOf() !== 0.0){
+        quoteBtn.click();
+    }
+
+});
 
 
 

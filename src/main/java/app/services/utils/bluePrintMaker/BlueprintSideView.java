@@ -1,6 +1,7 @@
 package app.services.utils.bluePrintMaker;
 
 import app.entities.*;
+
 import java.util.List;
 
 public class BlueprintSideView {
@@ -39,24 +40,24 @@ public class BlueprintSideView {
             availablePoleSpacing -= shed.getLength();
         }
 
-        double poleSpacing = availablePoleSpacing / (polesPerSide - 1);
+        double poleSpacing = availablePoleSpacing / (polesPerSide);
 
-        // Shed
-        if (shed != null) {
-            double shedStartX = carport.getLength() - shed.getLength();
-            double shedEndX = shedStartX + shed.getLength();
-
-            svg.addShedRectangle(shedStartX, topOfPoleY, BluePrintData.POLE_HEIGHT, shed.getLength());
-
-            addShedSiding(shedStartX, shedEndX, topOfPoleY);
-        }
 
         // Poles
         double poleX = BluePrintData.POLE_START_GAP;
 
-        for (int i = 0; i < polesPerSide; i++) {
-            svg.addRectangle(poleX, topOfPoleY, BluePrintData.POLE_HEIGHT, BluePrintData.POLE_SIZE, BluePrintData.FILL_WHITE);
+        for (int i = 0; i < polesPerSide+1; i++) {
+            svg.addRectangle(poleX, topOfPoleY, BluePrintData.POLE_HEIGHT, BluePrintData.POLE_SIZE, BluePrintData.FILL_LIGHTEST_BROWN);
             poleX += poleSpacing;
+        }
+        // Shed
+        if (shed != null) {
+            double shedStartX = carport.getLength() - shed.getLength() - BluePrintData.POLE_END_GAP;
+            double shedEndX = shedStartX + shed.getLength();
+
+            svg.addShedRectangle(shedStartX, topOfPoleY, shed.getLength(), BluePrintData.POLE_HEIGHT);
+
+            addShedSiding(shedStartX, shedEndX, topOfPoleY);
         }
     }
 
@@ -124,30 +125,36 @@ public class BlueprintSideView {
             svg.addLine(leftX, topLeftY, rightX, topRightY);
 
             // Upper fascia
-            svg.addLine(leftX, topLeftY, leftX - BluePrintData.FASCIA_OUTER_OFFSET, topLeftY + BluePrintData.FASCIA_HEIGHT);
-            svg.addLine(leftX - BluePrintData.FASCIA_OUTER_OFFSET, topLeftY + BluePrintData.FASCIA_HEIGHT, rightX - BluePrintData.FASCIA_OUTER_OFFSET, topRightY + BluePrintData.FASCIA_HEIGHT);
-            svg.addLine(rightX - BluePrintData.FASCIA_OUTER_OFFSET, topRightY + BluePrintData.FASCIA_HEIGHT, rightX, topRightY);
+            svg.addLine(leftX, topLeftY, leftX, topLeftY + BluePrintData.FASCIA_HEIGHT);
+            svg.addLine(leftX, topLeftY + BluePrintData.FASCIA_HEIGHT, rightX, topRightY + BluePrintData.FASCIA_HEIGHT);
+            for (int i = 1; i < BluePrintData.FASCIA_HEIGHT-1; i++) {
+                svg.addWhiteLine(leftX, topLeftY + BluePrintData.FASCIA_HEIGHT-i, rightX, topRightY + BluePrintData.FASCIA_HEIGHT-i);
+            }
+            svg.addLine(rightX, topRightY + BluePrintData.FASCIA_HEIGHT, rightX, topRightY);
 
             // Under fascia
-            svg.addLine(leftX - BluePrintData.UNDER_FASCIA_TOP_OFFSET, topLeftY + BluePrintData.FASCIA_HEIGHT, leftX - BluePrintData.UNDER_FASCIA_OFFSET, topLeftY + BluePrintData.UNDER_FASCIA_HEIGHT);
-            svg.addLine(leftX - BluePrintData.UNDER_FASCIA_OFFSET, topLeftY + BluePrintData.UNDER_FASCIA_HEIGHT, rightX - BluePrintData.UNDER_FASCIA_OFFSET, topRightY + BluePrintData.UNDER_FASCIA_HEIGHT);
-            svg.addLine(rightX - BluePrintData.UNDER_FASCIA_OFFSET, topRightY + BluePrintData.UNDER_FASCIA_HEIGHT, rightX - BluePrintData.UNDER_FASCIA_TOP_OFFSET, topRightY + BluePrintData.FASCIA_HEIGHT);
-        } else {
-            double height = calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
-
-            if (height > BluePrintData.HIGH_ROOF_MAX_HEIGHT) {
-                height = BluePrintData.HIGH_ROOF_MAX_HEIGHT;
+            svg.addLine(leftX, topLeftY + BluePrintData.FASCIA_HEIGHT, leftX, topLeftY + BluePrintData.UNDER_FASCIA_HEIGHT);
+            svg.addLine(leftX, topLeftY + BluePrintData.UNDER_FASCIA_HEIGHT, rightX, topRightY + BluePrintData.UNDER_FASCIA_HEIGHT);
+            for (int i = 1; i < BluePrintData.UNDER_FASCIA_HEIGHT - BluePrintData.FASCIA_HEIGHT-1; i++) {
+                svg.addWhiteLine(leftX, topLeftY + BluePrintData.FASCIA_HEIGHT+i, rightX, topRightY + BluePrintData.FASCIA_HEIGHT+i);
             }
-            svg.addRectangle(0, BluePrintData.HIGH_ROOF_BASE_Y, 4, carport.getLength(), BluePrintData.FILL_WHITE);
-            svg.addRoofRectangle(2, BluePrintData.HIGH_ROOF_BASE_Y - height, height, carport.getLength() - 4);
-            svg.addRectangle(4, BluePrintData.HIGH_ROOF_BASE_Y - height - 4, 4, carport.getLength() - 8, BluePrintData.FILL_NONE);
-        }
-    }
+            svg.addLine(rightX, topRightY + BluePrintData.UNDER_FASCIA_HEIGHT, rightX, topRightY + BluePrintData.FASCIA_HEIGHT);
+        } else {
+            double height = RoofHeightCalculator.calculateRoofHeight(carport.getWidth(), roof.getRoofSlope());
 
-    public double calculateRoofHeight(double width, double roofSlope) {
-        double run = width / 2.0;
-        double angleInRadians = Math.toRadians(roofSlope);
-        return run * Math.tan(angleInRadians);
+            String color = "";
+            switch (roof.getRoofMaterial()) {
+                case "Eternittag B6 - sortblå", "Eternittag B7 - sortblå" -> color = "#1A1E28";
+                case "Betontagsten - sort" -> color = "#1A1A1A";
+                case "Betontagsten - koralrød" -> color = "#A55137";
+                case "Eternittag B6 - grå" -> color = "#4A4F54";
+            }
+
+            svg.addRectangle(0, BluePrintData.HIGH_ROOF_BASE_Y, 4, carport.getLength(), BluePrintData.FILL_LIGHT_BROWN);
+            svg.addRoofColoringRectangle(2, BluePrintData.HIGH_ROOF_BASE_Y - height, height, carport.getLength() - 4, color);
+            svg.addRoofRectangle(2, BluePrintData.HIGH_ROOF_BASE_Y - height, height, carport.getLength() - 4);
+            svg.addRectangle(4, BluePrintData.HIGH_ROOF_BASE_Y - height - 4, 4, carport.getLength() - 8, BluePrintData.FILL_LIGHT_BROWN);
+        }
     }
 
     private double getQuantityByPlacementDescription(String placementDescription) {

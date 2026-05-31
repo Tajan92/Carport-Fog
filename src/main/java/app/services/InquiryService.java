@@ -78,7 +78,6 @@ public class InquiryService {
         inquiryResponseDTO.setRetailPrice(retailPrice);
         inquiryResponseDTO.setServiceFee(serviceFee);
         /* Instantiate variables that cannot be instantiated in the converter */
-        Customer customer = customerMapper.getCustomerById(inquiry.getCustomerId());
 
         /* Set the new DTO´s */
         inquiryResponseDTO.setCustomerResponseDTO(customerResponseDTO);

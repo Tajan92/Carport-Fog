@@ -5,10 +5,11 @@ public class BluePrintData {
     // Positions
     public static final double OFFSET_X = 80;
     public static final double OFFSET_Y_SIDE = 10;
-    public static final double OFFSET_Y_TOP = 580;
+    public static final double OFFSET_Y_TOP = 415;
 
     // Colors
-    public static final String FILL_WHITE = "#ffffff";
+    public static final String FILL_LIGHT_BROWN = "#77695c";
+    public static final String FILL_LIGHTEST_BROWN = "#9f9187";
     public static final String FILL_GREY = "#a6a5a5";
     public static final String FILL_NONE = "none";
 
@@ -41,13 +42,13 @@ public class BluePrintData {
     public static final double HIGH_ROOF_MAX_HEIGHT = 85.0;
 
     // SHED
-    public static final double VERTICAL_SIDING_BOARD_WIDTH = 100.0;
+    public static final double VERTICAL_SIDING_BOARD_WIDTH = 15.0;
     public static final double VERTICAL_SIDING_OVERLAP = 20.0;
     public static final double PLYWOOD_SIDING_WIDTH = 122.0;
     public static final double HORIZONTAL_SIDING_BOARD_HEIGHT = 13.5;
 
     // Arrows
-    public static final double TEXT_OFFSET = 10.0;
+    public static final double TEXT_OFFSET = 5.0;
     public static final double HALF_TICK_SIZE = 10.0;
     public static final double ARROW_OFFSET = 30.0;
 }
