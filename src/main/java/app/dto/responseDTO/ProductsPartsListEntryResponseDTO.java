@@ -13,9 +13,6 @@ public class ProductsPartsListEntryResponseDTO {
     private String placementDescription;
     private double quantity;
 
-    public ProductsPartsListEntryResponseDTO(Product product, double quantity) {
-        this.product = product;
-        this.quantity = quantity;
-    }
+
 }
 

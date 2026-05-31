@@ -9,7 +9,7 @@
 
     <div class="order-header">
 
-        <a th:href="@{/adminProfilePage}">
+        <a th:href="@{/admin/my/page}">
             <svg class="admin-return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
                  fill="none">
                 <path class="admin-return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
@@ -24,21 +24,34 @@
     </div>
 
     <div class="order-details-box">
-        <h1 class="order-detail-info-box">Ordre ID: 2</h1>
-        <h1 class="order-detail-info-box">Kunde: Jens Jensen</h1>
-        <h1 class="order-detail-info-box">Sælger: Erik Eriksen</h1>
-        <h1 class="order-detail-info-box">Carport ID: 1</h1>
-        <h1 class="order-detail-info-box">Stykliste ID: 19</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-
-
+        <p th:text="${'ID: ' + order_admin_preview.orderId}"></p>
+        <p th:text="${'Retailpris: ' + order_admin_preview.retailPrice}"></p>
+        <p th:text="${'Indkøbspris: ' + order_admin_preview.costPrice}"></p>
+        <br>
+        <h2>Kunde</h2>
+        <p th:text="${'Navn: ' + customer_order_preview.firstName + ' ' + customer_order_preview.lastName}"></p>
+        <p th:text="${'Email: ' + customer_order_preview.email}"></p>
+        <p th:text="${'Telefon: ' + customer_order_preview.phoneNumber}"></p>
+        <br>
+        <p th:text="${'Carport Bredde: ' + carport_order_preview.width + ' cm'}"></p>
+        <p th:text="${'Carport Længde: ' + carport_order_preview.length + ' cm'}"></p>
+        <p th:text="${'Tagtype: ' + carport_order_preview.roofResponseDTO.roofType}"></p>
+        <p th:text="${'Tagmateriale: ' + carport_order_preview.roofResponseDTO.roofMaterial}"></p>
+        <p th:text="${'Tag-hældning: ' + carport_order_preview.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${order_selected_shed != null}">
+            <p th:text="${'Belædning: ' + order_selected_shed.siding}"></p>
+            <p th:text="${'Gulv: ' + order_selected_shed.floor}"></p>
+            <p th:text="${'Skur Bredde: ' + order_selected_shed.width}"></p>
+            <p th:text="${'Skur Længde: ' + order_selected_shed.length}"></p>
+        </div>
+        <div th:if="${shed == null}">
+            <p>Ingen skur</p>
+        </div>
+        <br>
+        <div class="order-details-svg">
+            <th:block th:utext="${svg_carport_details}"></th:block>
+        </div>
+        <br>
     </div>
 
 

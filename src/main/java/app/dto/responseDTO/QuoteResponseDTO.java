@@ -11,7 +11,7 @@ import lombok.Setter;
 
 public class QuoteResponseDTO {
     private int quoteId;
-    private double price;
+    private double totalPrice;
     private double discount;
     private double retailPrice;
     private boolean isPayed;
@@ -19,9 +19,9 @@ public class QuoteResponseDTO {
     private CarportResponseDTO carportResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
 
-    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice, boolean isPayed) {
+    public QuoteResponseDTO(int quoteId, double totalPrice, double discountPrice, boolean isPayed) {
         this.quoteId = quoteId;
-        this.price = retailPrice;
+        this.totalPrice = totalPrice;
         this.discount = discountPrice;
         this.isPayed = isPayed;
     }

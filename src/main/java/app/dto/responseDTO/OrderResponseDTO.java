@@ -9,7 +9,7 @@ import lombok.Getter;
 
 public class OrderResponseDTO {
     private int orderId;
-    private double price;
+    private double retailPrice;
     private double discount;
     private double totalPrice;
     private CustomerResponseDTO customerResponseDTO;
@@ -20,6 +20,6 @@ public class OrderResponseDTO {
 
     public OrderResponseDTO(int orderId, double retailPrice) {
         this.orderId = orderId;
-        this.price = retailPrice;
+        this.retailPrice = retailPrice;
     }
 }

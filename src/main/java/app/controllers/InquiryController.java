@@ -3,10 +3,7 @@ package app.controllers;
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.SalesRepResponseDTO;
-import app.dto.responseDTO.ShedResponseDTO;
-import app.dto.responseDTO.UserResponseDTO;
+import app.dto.responseDTO.*;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
@@ -134,6 +131,8 @@ public class InquiryController {
             ctx.redirect("/");
             return;
         }
+        CustomerResponseDTO user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", user);
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
@@ -147,8 +146,10 @@ public class InquiryController {
                 floor = "nej";
             }
         }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
 
-
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.sessionAttribute("inquiry_responseDTO", inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
         ctx.attribute("selected_carport", carportResponseDTO);
@@ -174,6 +175,10 @@ public class InquiryController {
         if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
         }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
+
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("shed", shed);
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());

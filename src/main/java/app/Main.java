@@ -34,13 +34,12 @@ public class Main {
         InquiryController inquiryController = new InquiryController();
         BlueprintController blueprintController = new BlueprintController();
 
-
+        blueprintController.addRoutes(app,serviceFactory);
         salesRepController.addRoutes(app,serviceFactory);
         customerController.addRoutes(app, serviceFactory);
         inquiryController.addRoutes(app,serviceFactory);
         quoteController.addRoutes(app,serviceFactory);
         orderController.getRoutes(app,serviceFactory);
-        blueprintController.addRoutes(app,serviceFactory);
         mainController.addRoutes(app, serviceFactory);
     }
 }

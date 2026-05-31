@@ -1,4 +1,5 @@
 package app.services;
+
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.PartsListResponseDTO;
@@ -12,7 +13,10 @@ import app.services.converters.PartsListConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PartsListService {
     private PartsListMapper partsListMapper;
@@ -26,7 +30,7 @@ public class PartsListService {
     PartsListConverter partsListConverter = new PartsListConverter();
     PartsListCalculator partsListCalculator = new PartsListCalculator();
 
-    public PartsListService (PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper){
+    public PartsListService(PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper) {
         this.partsListMapper = partsListMapper;
         this.shedMapper = shedMapper;
         this.roofMapper = roofMapper;
@@ -36,6 +40,7 @@ public class PartsListService {
         this.shedConverter = new ShedConverter();
         this.roofConverter = new RoofConverter();
     }
+
     public int createPartsListId() throws DatabaseException {
         return partsListMapper.createPartListId();
     }
@@ -46,9 +51,9 @@ public class PartsListService {
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
         Shed shed;
 
-        if (carportRequestDTO instanceof CarportShedRequestDTO withShed){
+        if (carportRequestDTO instanceof CarportShedRequestDTO withShed) {
             shed = shedConverter.convertShedDTOtoEntity(withShed.getShedRequestDTO());
-        }else {
+        } else {
             shed = null;
         }
         int partsListId = createPartsListId();
@@ -65,7 +70,7 @@ public class PartsListService {
         Roof roof = roofMapper.getRoofById(carport.getRoofId());
         Shed shed;
 
-        if (carport.getShedId() != null){
+        if (carport.getShedId() != null) {
             shed = shedMapper.getShedById(carport.getShedId());
         } else {
             shed = null;
@@ -74,7 +79,35 @@ public class PartsListService {
         List<ProductsPartsListEntry> partsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, allProducts);
         List<ProductsPartsListEntryResponseDTO> productsPartsListEntriesWithDescription = partsListConverter.convertProductsPartsListToDTO(partsListEntries);
 
+
         return new PartsListResponseDTO(carport.getPartsListId(), productsPartsListEntriesWithDescription);
+    }
+
+    public List<ProductsPartsListEntryResponseDTO> getWoodAndRoofEntryList(int carportId) throws DatabaseException, CalculatorException {
+        PartsListResponseDTO partsListResponseDTO = getPartsList(carportId);
+
+        List<ProductsPartsListEntryResponseDTO> entries = partsListResponseDTO.getPartsListEntries();
+        List<ProductsPartsListEntryResponseDTO> woodAndRoofEntries = entries.stream()
+                // 1. Filter by matching the specific ProductGroup description string
+                .filter(entry -> entry.getProduct()
+                        .getProductGroup()
+                        .equals("Træ & Tagplader"))
+                .toList();
+        return woodAndRoofEntries;
+    }
+
+    public List<ProductsPartsListEntryResponseDTO> getHardwareEntryList(int carportId) throws DatabaseException, CalculatorException {
+        PartsListResponseDTO partsListResponseDTO = getPartsList(carportId);
+
+        List<ProductsPartsListEntryResponseDTO> entries = partsListResponseDTO.getPartsListEntries();
+        List<ProductsPartsListEntryResponseDTO> hardware = entries.stream()
+                // 1. Filter by matching the specific ProductGroup description string
+                .filter(c -> c.getProduct()
+                        .getProductGroup()
+                        .equals("Beslag & Skruer"))
+                .toList();
+
+        return hardware;
     }
 
 }

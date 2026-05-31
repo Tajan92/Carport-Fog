@@ -134,18 +134,22 @@ public class QuoteController {
         ctx.redirect("/admin/my/page");
     }
 
-    public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
+    public void getQuoteAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
         UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
         ctx.attribute("currentUser", salesRep);
 
         int quoteId = Integer.parseInt(ctx.pathParam("quote_id"));
         QuoteAdminResponseDTO response = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
-
+        QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuoteAdmin(quoteId);
         ShedResponseDTO shed = null;
         if (response.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
         }
+        CarportResponseDTO carportResponseDTO = quoteResponseDTO.getCarportResponseDTO();
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
 
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("quote_admin_preview", response);
         ctx.attribute("customer_quote_preview", response.getCustomerResponseDTO());
         ctx.attribute("carport_quote_preview", response.getCarportResponseDTO());
@@ -153,8 +157,8 @@ public class QuoteController {
         ctx.render("admin-quote-details.html");
     }
 
-    public void getQuoteCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
-        if (!UserValidator.isCustomer(ctx)){
+    public void getQuoteCustomer(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+        if (!UserValidator.isCustomer(ctx)) {
             ctx.redirect("/");
             return;
         }
@@ -171,6 +175,10 @@ public class QuoteController {
         if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
         }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
+
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("quote_selected_quote", quoteResponseDTO);
         ctx.attribute("quote_selected_sales_rep", salesRepResponseDTO);
         ctx.attribute("quote_selected_carport", carportResponseDTO);

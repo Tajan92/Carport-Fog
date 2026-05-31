@@ -2,6 +2,9 @@ package app.controllers;
 
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.entities.Carport;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -11,10 +14,10 @@ import io.javalin.http.Context;
 public class BlueprintController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
-        app.post("/blueprint/preview", ctx -> showCarportSvg(ctx, serviceFactory));
+        app.post("/blueprint/preview", ctx -> previewCarportSvg(ctx, serviceFactory));
     }
 
-    private void showCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+    private void previewCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
         double carportWidth = Double.parseDouble(ctx.formParam("carport_width"));
         double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
         double carportHeight = 230; // preset height
