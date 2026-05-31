@@ -88,7 +88,13 @@ body {
     color: white;
     font-weight: 600;
 }
-
+.order-details-svg{
+    width: 100%;
+    height: auto;
+}
+.order-details-svg text{
+    font-size: 14px;
+}
 
 
 

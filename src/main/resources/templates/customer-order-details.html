@@ -9,7 +9,7 @@
 <div class="order-details-overview">
     <div class="order-header">
 
-        <a th:href="@{/customerProfilePage}">
+        <a th:href="@{/customer/my/page}">
             <svg class="return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
                  fill="none">
                 <path class="return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
@@ -22,24 +22,81 @@
         </a>
         <h1 class="order-details-title">Ordre oversigt</h1>
     </div>
-
     <div class="order-details-box">
-        <h1 class="order-detail-info-box">Ordre ID: 2</h1>
-        <h1 class="order-detail-info-box">Kunde: Jens Jensen</h1>
-        <h1 class="order-detail-info-box">Sælger: Erik Eriksen</h1>
-        <h1 class="order-detail-info-box">Carport ID: 1</h1>
-        <h1 class="order-detail-info-box">Stykliste ID: 19</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="order-detail-info-box">Dato: 15-09-2026</h1>
+        <p th:text="${'ID: ' + order_selected_order.orderId}"></p>
+        <p th:text="${'Retailpris: ' + order_selected_order.totalPrice}"></p>
+        <p th:text="${'Bredde: ' + order_selected_carport.width + ' cm'}"></p>
+        <p th:text="${'Længde: ' + order_selected_carport.length + ' cm'}"></p>
+        <p th:text="${'Tagtype: ' + order_selected_carport.roofResponseDTO.roofType}"></p>
+        <p th:text="${'Tagmateriale: ' + order_selected_carport.roofResponseDTO.roofMaterial}"></p>
+        <p th:text="${'Tagmateriale: ' + order_selected_carport.roofResponseDTO.roofSlope}"></p>
+        <div th:if="${order_selected_shed != null}">
+            <p th:text="${'Siding: ' + order_selected_shed.siding}"></p>
+            <p th:text="${'Floor: ' + order_selected_shed.floor}"></p>
+            <p th:text="${'Bredde: ' + order_selected_shed.width}"></p>
+            <p th:text="${'Længde: ' + order_selected_shed.length}"></p>
+        </div>
+        <div th:if="${order_selected_shed == null}">
+            <p>Ingen skur</p>
+        </div>
+        <br>
+        <table>
+            <tr>
+                <td colspan="5"><strong>Træ &amp; Tagplader</strong></td>
+            </tr>
+            <tr>
+                <th>Beskrivelse</th>
+                <th>Længde</th>
+                <th>Antal</th>
+                <th>Enhed</th>
+                <th>Beskrivelse</th>
+            </tr>
+            <tbody>
+            <!-- Træ & Tagplader section -->
+            <th:block th:each="entry : ${parts_list_wood}">
+                <tr>
+                    <td th:text="${entry.product.description}"></td>
+                    <td th:text="${entry.product.length}"></td>
+                    <td th:text="${entry.quantity}"></td>
+                    <td th:text="${entry.product.unit}"></td>
+                    <td th:text="${entry.placementDescription}"></td>
+                </tr>
 
+            </th:block>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td colspan="5"><strong>Beslag &amp; Skruer</strong></td>
+            </tr>
+            <tr>
+                <th>Beskrivelse</th>
+                <th>Længde</th>
+                <th>Antal</th>
+                <th>Enhed</th>
+                <th>Beskrivelse</th>
+            </tr>
+            <tbody>
+            <!-- Hardware section -->
 
+            <th:block th:each="entry : ${parts_list_hardware}">
+                <tr>
+                    <td th:text="${entry.product.description}"></td>
+                    <td th:text="${entry.product.length}"></td>
+                    <td th:text="${entry.quantity}"></td>
+                    <td th:text="${entry.product.unit}"></td>
+                    <td th:text="${entry.placementDescription}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div class="order-details-svg">
+            <th:block th:utext="${svg_carport_details}"></th:block>
+        </div>
+        <br>
     </div>
+
 
 </div>
 <div th:replace="~{fragments :: customerScripts}"></div>

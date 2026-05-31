@@ -16,6 +16,7 @@ import app.services.utils.PartsListCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PartsListService {
     private PartsListMapper partsListMapper;
@@ -78,7 +79,35 @@ public class PartsListService {
         List<ProductsPartsListEntry> partsListEntries = partsListCalculator.createProductsPartsList(carport, shed, roof, allProducts);
         List<ProductsPartsListEntryResponseDTO> productsPartsListEntriesWithDescription = partsListConverter.convertProductsPartsListToDTO(partsListEntries);
 
+
         return new PartsListResponseDTO(carport.getPartsListId(), productsPartsListEntriesWithDescription);
+    }
+
+    public List<ProductsPartsListEntryResponseDTO> getWoodAndRoofEntryList(int carportId) throws DatabaseException, CalculatorException {
+        PartsListResponseDTO partsListResponseDTO = getPartsList(carportId);
+
+        List<ProductsPartsListEntryResponseDTO> entries = partsListResponseDTO.getPartsListEntries();
+        List<ProductsPartsListEntryResponseDTO> woodAndRoofEntries = entries.stream()
+                // 1. Filter by matching the specific ProductGroup description string
+                .filter(entry -> entry.getProduct()
+                        .getProductGroup()
+                        .equals("Træ & Tagplader"))
+                .toList();
+        return woodAndRoofEntries;
+    }
+
+    public List<ProductsPartsListEntryResponseDTO> getHardwareEntryList(int carportId) throws DatabaseException, CalculatorException {
+        PartsListResponseDTO partsListResponseDTO = getPartsList(carportId);
+
+        List<ProductsPartsListEntryResponseDTO> entries = partsListResponseDTO.getPartsListEntries();
+        List<ProductsPartsListEntryResponseDTO> hardware = entries.stream()
+                // 1. Filter by matching the specific ProductGroup description string
+                .filter(c -> c.getProduct()
+                        .getProductGroup()
+                        .equals("Beslag & Skruer"))
+                .toList();
+
+        return hardware;
     }
 
 }

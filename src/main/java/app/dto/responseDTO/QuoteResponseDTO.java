@@ -19,7 +19,7 @@ public class QuoteResponseDTO {
     private CarportResponseDTO carportResponseDTO;
     private SalesRepResponseDTO salesRepResponseDTO;
 
-    public QuoteResponseDTO(int quoteId, double retailPrice, double discountPrice, boolean isPayed) {
+    public QuoteResponseDTO(int quoteId, double totalPrice, double discountPrice, boolean isPayed) {
         this.quoteId = quoteId;
         this.totalPrice = totalPrice;
         this.discount = discountPrice;

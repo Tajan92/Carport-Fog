@@ -19,8 +19,8 @@ public class OrderController {
 
     public void getRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/create/order", ctx -> createOrder(ctx, serviceFactory));
-        app.get("/customer/get/order", ctx -> getOrderCustomer(ctx, serviceFactory));
-        app.get("/admin/get/order", ctx -> getOrderAdmin(ctx, serviceFactory));
+        app.get("/customer/order/details/{order_id}", ctx -> getOrderCustomer(ctx, serviceFactory));
+        app.get("/admin/order/details/{order_id}", ctx -> getOrderAdmin(ctx, serviceFactory));
         //app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
         app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
     }
@@ -40,23 +40,38 @@ public class OrderController {
         int partsListId = serviceFactory.getPartsListService().getPartsList(carportId).getPartsListId();
         double discount = quoteResponseDTO.getDiscount();
 
-        //Create order first, then set status to payed
+        //Create order first, then set status to paid
         serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
         serviceFactory.getQuoteService().updateQuoteStatus(quoteId);
 
-        serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
         ctx.redirect("/customer/my/page");
     }
 
     public void getOrderAdmin(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
-        if (!UserValidator.isAdmin(ctx)) {
-            ctx.redirect("/");
-            return;
-        }
-        int orderId = Integer.parseInt(ctx.formParam("order_id"));
-        OrderAdminResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrderAdmin(orderId);
+        UserResponseDTO salesRep = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", salesRep);
 
-        ctx.attribute("selected_order", orderResponseDTO);
+        int orderId = Integer.parseInt(ctx.pathParam("order_id"));
+        OrderAdminResponseDTO orderResponse = serviceFactory.getOrderService().getOrderAdmin(orderId);
+        CarportResponseDTO carportResponseDTO = orderResponse.getCarportResponseDTO();
+
+        ShedResponseDTO shed = null;
+        if (orderResponse.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
+        List<ProductsPartsListEntryResponseDTO> woodAndRoof = serviceFactory.getPartsListService().getWoodAndRoofEntryList(carportResponseDTO.getCarportId());
+        List<ProductsPartsListEntryResponseDTO> hardware = serviceFactory.getPartsListService().getHardwareEntryList(carportResponseDTO.getCarportId());
+
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+
+        ctx.attribute("svg_carport_details", svgCarport);
+        ctx.attribute("parts_list_wood", woodAndRoof);
+        ctx.attribute("parts_list_hardware", hardware);
+        ctx.attribute("order_admin_preview", orderResponse);
+        ctx.attribute("customer_order_preview", orderResponse.getCustomerResponseDTO());
+        ctx.attribute("carport_order_preview", orderResponse.getCarportResponseDTO());
+        ctx.attribute("shed", shed);
         ctx.render("admin-order-details.html");
     }
 
@@ -65,10 +80,33 @@ public class OrderController {
             ctx.redirect("/");
             return;
         }
-        int orderId = Integer.parseInt(ctx.formParam("order_id"));
-        OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
+        CustomerResponseDTO user = ctx.sessionAttribute("currentUser");
+        ctx.attribute("currentUser", user);
 
-        ctx.attribute("selected_order", orderResponseDTO);
+        int orderId = Integer.parseInt(ctx.pathParam("order_id"));
+        OrderResponseDTO orderResponse = serviceFactory.getOrderService().getOrder(orderId);
+        CarportResponseDTO carportResponseDTO = orderResponse.getCarportResponseDTO();
+        SalesRepResponseDTO salesRepResponseDTO = orderResponse.getSalesRepResponseDTO();
+
+        //One list for each of the product groups for partslist
+        List<ProductsPartsListEntryResponseDTO> woodAndRoof = serviceFactory.getPartsListService().getWoodAndRoofEntryList(carportResponseDTO.getCarportId());
+        List<ProductsPartsListEntryResponseDTO> hardware = serviceFactory.getPartsListService().getHardwareEntryList(carportResponseDTO.getCarportId());
+
+        ShedResponseDTO shed = null;
+        if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
+            shed = withShed.getShedResponseDTO();
+        }
+
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+
+        ctx.attribute("svg_carport_details", svgCarport);
+        ctx.attribute("order_selected_order", orderResponse);
+        ctx.attribute("order_selected_sales_rep", salesRepResponseDTO);
+        ctx.attribute("order_selected_carport", carportResponseDTO);
+        ctx.attribute("order_selected_shed", shed);
+        ctx.attribute("parts_list_wood", woodAndRoof);
+        ctx.attribute("parts_list_hardware", hardware);
         ctx.render("customer-order-details.html");
     }
 
