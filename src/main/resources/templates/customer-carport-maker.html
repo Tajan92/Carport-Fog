@@ -19,7 +19,6 @@
     </div>
     <div class="stage-display">
         <form id="customer-carport-form" th:action="@{/create/inquiry}" method="post">
-
             <div class="roof-picker-boxes hidden">
                 <input type="radio" name="roof_type" id="high-roof" value="Højt tag" hidden>
                 <input type="radio" name="roof_type" id="flat-roof" value="Fladt tag" hidden>
@@ -47,8 +46,6 @@
                     </a>
                 </div>
             </div>
-
-
             <div class="shed-picker-boxes hidden">
                 <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden>
                 <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden>
@@ -75,8 +72,6 @@
                     <div id="no-shed-text-description">Hvis der ikke ønskes skur, klik her</div>
                 </div>
             </div>
-
-
             <div class="carport-measurement-form">
                 <div class="field-group">
                     <p class="carport-measurement-input-description">Vælg Bredde</p>
@@ -96,7 +91,6 @@
                         <option value="600">600 cm</option>
                     </select>
                 </div>
-
                 <div class="field-group">
                     <p class="carport-measurement-input-description">Vælg Længde</p>
                     <select name="carport_length" class="carport-measurement-box">
@@ -122,7 +116,6 @@
                     </select>
                 </div>
             </div>
-
                 <div class="shed-addon-form hidden">
                     <div class="field-group">
                         <p class="carport-measurement-input-description">Sidebeklædning</p>
@@ -143,7 +136,6 @@
                         </select>
                     </div>
                     </div>
-
                     <div class="roof-addon-form hidden">
                         <div class="field-group">
                             <p class="carport-measurement-input-description">Materialer</p>
@@ -169,8 +161,6 @@
                             </select>
                         </div>
                     </div>
-
-
                 <div class="inquiry-form hidden ">
                 <div class="inquiry-submit">
                     <h1>Har du husket det hele?</h1>
@@ -185,9 +175,7 @@
                     </div>
                     <button class="continue" form="customer-carport-form" type="submit">Send forespørgsel </button>
                 </div>
-
         </form>
-
     </div>
 </div>
 

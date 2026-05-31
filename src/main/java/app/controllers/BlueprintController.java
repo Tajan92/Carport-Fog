@@ -2,9 +2,6 @@ package app.controllers;
 
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.carports.CarportResponseDTO;
-import app.entities.Carport;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;

@@ -1,7 +1,6 @@
 package app.controllers;
 
 import app.dto.responseDTO.carports.CarportResponseDTO;
-import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import io.javalin.Javalin;
@@ -13,15 +12,10 @@ public class CarportController {
         app.get("/getCarport/{carport_id}", ctx -> getCarport(ctx, serviceFactory));
     }
 
-    public void getCarport(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+    public void getCarport(Context ctx, ServiceFactory serviceFactory) throws DatabaseException {
        int carportId = Integer.parseInt(ctx.pathParam("carport_id"));
        CarportResponseDTO carportResponseDTO = serviceFactory.getCarportService().getCarport(carportId);
        ctx.attribute("getCarport", carportResponseDTO);
        ctx.render("admin-quote-maker");
     }
-
-
-
-
-
 }
