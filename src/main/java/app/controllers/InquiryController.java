@@ -13,6 +13,7 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
 
 public class InquiryController {
 
@@ -23,7 +24,7 @@ public class InquiryController {
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
-    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException {
+    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, MessagingException {
         //Carport
         String carportWidthResponse = ctx.formParam("carport_width");
         String carportLengthResponse = ctx.formParam("carport_length");
@@ -119,7 +120,9 @@ public class InquiryController {
         int customerId = userResponseDTO.getId();
 
         InquiryRequestDTO inquiryRequestDTO = new InquiryRequestDTO(customerId, inquiryRemark, carportId);
-        serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
+        int inquiryId = serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
+        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        serviceFactory.getMailService().sendInquiryNotice(inquiryResponseDTO);
 
         String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
         ctx.attribute("svg_carport_width", svgCarport);

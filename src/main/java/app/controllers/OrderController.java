@@ -43,11 +43,13 @@ public class OrderController {
 
         //Create order first, then set status to paid
         int orderId = serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
+        OrderResponseDTO orderResponseDTO = serviceFactory.getOrderService().getOrder(orderId);
         serviceFactory.getQuoteService().updateQuoteStatus(quoteId);
 
         //Send partslist to customer mail
         List<ProductsPartsListEntryResponseDTO> woodAndRoof = serviceFactory.getPartsListService().getWoodAndRoofEntryList(carportId);
         List<ProductsPartsListEntryResponseDTO> hardware = serviceFactory.getPartsListService().getHardwareEntryList(carportId);
+        serviceFactory.getMailService().sendOrderConfirmation(orderResponseDTO);
         serviceFactory.getMailService().sendPartsList(customerResponseDTO.getEmail(), orderId, woodAndRoof, hardware);
 
         ctx.redirect("/customer/my/page");
