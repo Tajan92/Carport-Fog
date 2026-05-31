@@ -14,6 +14,7 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
 import java.util.List;
 
 public class QuoteController {
@@ -83,7 +84,9 @@ public class QuoteController {
         double revenue = serviceFactory.getPriceService().getRevenue(retailPrice, serviceFee, discount);
         double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
         double grossMargin = serviceFactory.getPriceService().getGrossMarginInPercent(costPrice, retailPrice, serviceFee, discount);
+        double customerPrice = retailPrice - discount;
 
+        ctx.attribute("customer_price", customerPrice);
         ctx.attribute("inquiry_id", inquiryId);
         ctx.attribute("sales_rep_id", salesRepResponseDTO.getId());
         ctx.attribute("customer_id", customerId);

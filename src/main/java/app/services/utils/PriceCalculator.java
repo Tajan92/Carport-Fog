@@ -31,7 +31,7 @@ public class PriceCalculator {
     public static double calculateServiceFee(List<ProductsPartsListEntry> productsPartsListEntries){
         double totalServiceFee = 0;
         for (ProductsPartsListEntry entry : productsPartsListEntries) {
-            totalServiceFee += (entry.getProduct().getCostPrice() * entry.getQuantity()) * 0.1;
+            totalServiceFee += (entry.getProduct().getRetailPrice() * entry.getQuantity()) * 0.1;
         }
         return roundUpToTwoDecimals(totalServiceFee);
     }

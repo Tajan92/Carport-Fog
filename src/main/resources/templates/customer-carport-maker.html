@@ -6,7 +6,6 @@
 <body>
 <div th:replace="~{fragments :: customerHeader('customer header')}"></div>
 
-
 <div class="custom-carport-maker-main-grid">
     <div class="stage-picker">
         <div class="stage-picker-categories">
@@ -176,15 +175,20 @@
                 <div class="inquiry-submit">
                     <h1>Har du husket det hele?</h1>
                     <label for="remarkInput">Remark:</label>
-                    <input type="text" id="remarkInput" name="inquiry-remark" placeholder="Eventuelle bemærkninger?">
+                    <input type="text" id="remarkInput" name="inquiry_remark" placeholder="Eventuelle bemærkninger?">
                 </div>
-                        <button class="continue" form="customer-carport-form" type="submit">Send forespørgsel </button>
+                    <div class="blueprint-preview-panel">
+                        <div id="blueprint-preview-container">
+                            <p style="color: gray;">Vælg specifikationer for at se tegning...</p>
+                        </div>
+                    </div>
+                    <button class="continue" form="customer-carport-form" type="submit">Send forespørgsel </button>
                 </div>
+
         </form>
 
     </div>
 </div>
 
-<div th:replace="~{fragments :: customerScripts}"></div>
-</body>
+<div th:replace="~{fragments :: carportMakerScripts}"></div></body>
 </html>
