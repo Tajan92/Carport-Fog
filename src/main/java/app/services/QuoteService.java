@@ -95,6 +95,7 @@ public class QuoteService {
         /* Instantiate DTO´s that cannot be instantiated in the converter */
         Customer customer = customerMapper.getCustomerById(quote.getCustomerId());
         SalesRep salesRep = salesRepMapper.getSalesRepById(quote.getSalesRepId());
+        Carport carport = carportMapper.getCarportById(quote.getCarportId());
 
         CustomerResponseDTO customerResponseDTO = userConverter.convertCustomerToDto(customer);
         SalesRepResponseDTO salesRepResponseDTO = userConverter.convertSalesRepToDto(salesRep);
