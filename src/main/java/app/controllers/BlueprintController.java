@@ -2,6 +2,9 @@ package app.controllers;
 
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
+import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.entities.Carport;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -11,10 +14,11 @@ import io.javalin.http.Context;
 public class BlueprintController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
-        app.post("/blueprint/preview", ctx -> showCarportSvg(ctx, serviceFactory));
+        app.post("/blueprint/preview", ctx -> previewCarportSvg(ctx, serviceFactory));
+        app.post("/customer/inquiry/details/{inquiry_id}", ctx -> showCarportSVG(ctx, serviceFactory));
     }
 
-    private void showCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+    private void previewCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
         double carportWidth = Double.parseDouble(ctx.formParam("carport_width"));
         double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
         double carportHeight = 230; // preset height
@@ -58,5 +62,17 @@ public class BlueprintController {
         String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
 
         ctx.result(svgCarport);
+    }
+
+    private void showCarportSVG(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
+        int inquiryId = Integer.parseInt(ctx.formParam("inquiry_id"));
+
+        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+
+        ctx.attribute("svg-carport-details", svgCarport);
+        ctx.redirect("customer-inquiry-details.html");
     }
 }
