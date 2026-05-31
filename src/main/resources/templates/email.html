@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+<h1>Din Stykliste</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Beskrivelse</th>
+        <th>Længde</th>
+        <th>Antal</th>
+        <th>Enhed</th>
+        <th>Placering</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="5"><strong>Træ &amp; Tagplader</strong></td>
+    </tr>
+    <th:block th:each="entry : ${parts_list_wood}">
+        <tr>
+            <td th:text="${entry.product.description}"></td>
+            <td th:text="${entry.product.length}"></td>
+            <td th:text="${entry.quantity}"></td>
+            <td th:text="${entry.product.unit}"></td>
+            <td th:text="${entry.placementDescription}"></td>
+        </tr>
+    </th:block>
+
+    <tr>
+        <td colspan="5"><strong>Beslag &amp; Skruer</strong></td>
+    </tr>
+    <th:block th:each="entry : ${parts_list_hardware}">
+        <tr>
+            <td th:text="${entry.product.description}"></td>
+            <td th:text="${entry.product.length}"></td>
+            <td th:text="${entry.quantity}"></td>
+            <td th:text="${entry.product.unit}"></td>
+            <td th:text="${entry.placementDescription}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+</body>
+</html>
