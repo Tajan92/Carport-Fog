@@ -13,6 +13,7 @@ import app.services.converters.UserConverter;
 import app.services.utils.PartsListCalculator;
 import app.services.utils.PriceCalculator;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class InquiryService {
         CarportResponseDTO carportResponseDTO = carportService.getCarport(inquiry.getCarportId());
         CustomerResponseDTO customerResponseDTO = userService.getCustomer(inquiry.getCustomerId());
 
-        Carport carport = carportMapper.getCarportById(inquiry.getInquiryId());
+        Carport carport = carportMapper.getCarportById(inquiry.getCarportId());
         Roof roof = roofMapper.getRoofById(carport.getRoofId());
         Shed shed;
         if (carport.getShedId()!=null) {
@@ -123,6 +124,10 @@ public class InquiryService {
             responseDTOS.add(inquiryResponseDTO);
         }
         return responseDTOS;
+    }
+
+    public void updateInquiryStatus(int inquiryId) throws SQLException, DatabaseException {
+        inquiryMapper.updateInquiryToQuoteSend(inquiryId);
     }
 
     public void deleteInquiry(int inquiryId) throws DatabaseException {

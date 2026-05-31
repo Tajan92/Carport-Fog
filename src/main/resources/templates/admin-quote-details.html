@@ -7,7 +7,7 @@
 
 <div class="quote-details-overview">
     <div class="quote-header">
-        <a th:href="@{/adminProfilePage}">
+        <a th:href="@{/admin/my/page}">
             <svg class="admin-return-button" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"
                  fill="none">
                 <path class="admin-return-svg" d="M17.3333 10.6667L8 18.6667L17.3333 28" stroke="black"
@@ -24,9 +24,9 @@
     <div class="quote-details-box">
         <h2>Tilbud</h2>
         <p th:text="${'ID: ' + quote_admin_preview.quoteId}"></p>
+        <p th:text="${quote_admin_preview.isPayed ? 'Betalt' : 'Ikke betalt'}"></p>
         <p th:text="${'Retailpris: ' + quote_admin_preview.retailPrice}"></p>
         <p th:text="${'Indkøbspris: ' + quote_admin_preview.costPrice}"></p>
-        <p th:text="${'Bemærkning: ' + quote_admin_preview.remark}"></p>
         <br>
         <h2>Kunde</h2>
         <p th:text="${'Navn: ' + customer_quote_preview.firstName + ' ' + customer_quote_preview.lastName}"></p>
@@ -53,13 +53,6 @@
 <!--    <a type="submit" class="create-quote-button" th:action="@{/create/order/quote{quote_id}}" >Opret tilbud</a>-->
 
 </div>
-
-
-
-
-
-
-
 
 <div th:replace="~{fragments :: adminScripts}"></div>
 </body>

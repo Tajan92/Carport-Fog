@@ -13,6 +13,8 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrderController {
@@ -25,7 +27,7 @@ public class OrderController {
         app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
     }
 
-    public void createOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException {
+    public void createOrder(Context ctx, ServiceFactory serviceFactory) throws DatabaseException, CalculatorException, SQLException {
         CustomerResponseDTO customerResponseDTO = ctx.sessionAttribute("currentUser");
         int quoteId = Integer.parseInt(ctx.formParam("quote_id"));
         QuoteResponseDTO quoteResponseDTO = serviceFactory.getQuoteService().getQuote(quoteId);
@@ -39,7 +41,10 @@ public class OrderController {
         //Gets partslistresponse and collects id directly
         int partsListId = serviceFactory.getPartsListService().getPartsList(carportId).getPartsListId();
         double discount = quoteResponseDTO.getDiscount();
+
+        //Create order first, then set status to payed
         serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
+        serviceFactory.getQuoteService().updateQuoteStatus(quoteId);
 
         serviceFactory.getOrderService().createOrder(new OrderRequestDTO(customerResponseDTO.getId(), salesRepId, carportId, orderPrice, partsListId, discount));
         ctx.redirect("/customer/my/page");
