@@ -17,6 +17,7 @@ public class Quote {
     private int customerId;
     private int salesRepId;
     private double quoteDiscount;
+    private boolean isPayed;
 
     public Quote(double quotePrice, int carportId, int customerId, int salesRepId, double quoteDiscount) {
         this.quotePrice = quotePrice;

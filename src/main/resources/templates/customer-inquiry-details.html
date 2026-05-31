@@ -27,6 +27,7 @@
     <div class="inquiry-details-box">
         <h2>Forespørgsel</h2>
         <p th:text="${'ID: ' + selected_inquiry.inquiryId}"></p>
+        <p th:text="${selected_inquiry.quoteSend ? 'Du har modtaget et tilbud' : 'Vores sælgere vil snart sende et tilbud'}"></p>
         <p th:text="${'Retailpris: ' + selected_inquiry.retailPrice}"></p>
         <p th:text="${'Bemærkning: ' + selected_inquiry.remark}"></p>
         <br>

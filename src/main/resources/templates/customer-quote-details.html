@@ -41,10 +41,16 @@
         <div th:if="${quote_selected_shed == null}">
             <p>Ingen skur</p>
         </div>
-        <form th:action="@{/create/order}" method="post">
-            <input type="hidden" name="quote_id" th:value="${quote_selected_quote.quoteId}">
-            <button type="submit" class="create-quote-button">Accepter tilbud</button>
-        </form>
+        <div th:if="${!quote_selected_quote.isPayed}">
+            <form th:action="@{/create/order}" method="post">
+                <input type="hidden" name="quote_id" th:value="${quote_selected_quote.quoteId}">
+                <button type="submit" class="create-quote-button">Accepter tilbud</button>
+            </form>
+        </div>
+
+        <div th:unless="${!quote_selected_quote.isPayed}">
+            <p>Din carport er betalt og er på vej</p>
+        </div>
 
     </div>
 </div>

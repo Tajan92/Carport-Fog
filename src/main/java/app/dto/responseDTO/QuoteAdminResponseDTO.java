@@ -11,9 +11,13 @@ public class QuoteAdminResponseDTO extends QuoteResponseDTO {
     private double serviceFee;
     private double costPrice;
 
-    public QuoteAdminResponseDTO(int quoteId, double retailPrice, double discount, double totalPrice, double costPrice, double serviceFee, CustomerResponseDTO customerResponseDTO, CarportResponseDTO carportResponseDTO, SalesRepResponseDTO salesRepResponseDTO) {
-        super(quoteId, retailPrice, discount, totalPrice, customerResponseDTO, carportResponseDTO, salesRepResponseDTO);
+    public QuoteAdminResponseDTO(int quoteId, double retailPrice, double discount, double totalPrice, double costPrice, double serviceFee, boolean isPayed, CustomerResponseDTO customerResponseDTO, CarportResponseDTO carportResponseDTO, SalesRepResponseDTO salesRepResponseDTO) {
+        super(quoteId, retailPrice, discount, totalPrice, isPayed, customerResponseDTO, carportResponseDTO, salesRepResponseDTO);
         this.costPrice = costPrice;
         this.serviceFee = serviceFee;
+    }
+
+    public QuoteAdminResponseDTO(int quoteId, double retailPrice, double discountPrice, boolean isPayed) {
+        super(quoteId, retailPrice, discountPrice, isPayed);
     }
 }
