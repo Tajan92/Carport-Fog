@@ -163,6 +163,8 @@ body {
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 
 .my-page-quote-results{
@@ -178,6 +180,8 @@ body {
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 
 .my-page-order-results{
@@ -193,6 +197,8 @@ body {
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 .my-page-customer-results{
     font-size: clamp(1.2rem, 1.8vw, 2rem);

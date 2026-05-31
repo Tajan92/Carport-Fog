@@ -39,6 +39,7 @@ body {
 justify-self: center}
 
 .quote-details-box{
+    color: white;
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -46,9 +47,12 @@ justify-self: center}
     border-radius: 10px;
     height: 100%;
     margin-bottom: auto;
-    color: white;
     overflow-y: auto;
     scroll-behavior: smooth;
+}
+
+.quote-details-box p,h2 {
+margin-left: 20px;
 }
 
 .quote-header{
@@ -77,15 +81,20 @@ justify-self: center}
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    width: 100%;
+    width: 50%;
     height: clamp(2.8rem, 7vw, 4rem);
     color: #FFF;
     font-family: Inter;
     font-size: clamp(1rem, 2.5vw, 1.76313rem);
     font-weight: 500;
-    margin-top: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 25px;
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+.accept-quote-button:hover {
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
+    transform: translateY(-3px);
 }
 
 
