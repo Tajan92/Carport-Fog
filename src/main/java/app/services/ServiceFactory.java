@@ -1,6 +1,8 @@
 package app.services;
 
 import app.persistence.*;
+import app.services.utils.GmailEmailSender;
+import app.services.utils.GmailEmailSenderHTML;
 import lombok.Getter;
 
 @Getter
@@ -16,6 +18,7 @@ public class ServiceFactory {
     private PartsListService partsListService;
     private BlueprintService blueprintService;
     private PriceService priceService;
+    private MailService mailService;
 
     public ServiceFactory()  {
         CarportMapper carportMapper = new CarportMapper();
@@ -29,6 +32,8 @@ public class ServiceFactory {
         RoofMapper roofMapper = new RoofMapper();
         SalesRepMapper salesRepMapper = new SalesRepMapper();
         ShedMapper shedMapper = new ShedMapper();
+        GmailEmailSender gmailEmailSender = new GmailEmailSender();
+        GmailEmailSenderHTML gmailEmailSenderHTML = new GmailEmailSenderHTML();
 
         this.partsListService = new PartsListService(partsListMapper,shedMapper, roofMapper, productMapper, carportMapper);
         this.carportService = new CarportService(partsListService, partsListMapper, carportMapper, roofMapper, shedMapper);
@@ -40,5 +45,6 @@ public class ServiceFactory {
         this.roofService = new RoofService(roofMapper);
         this.blueprintService = new BlueprintService(productMapper);
         this.priceService = new PriceService();
+        this.mailService = new MailService(gmailEmailSender, gmailEmailSenderHTML);
     }
 }

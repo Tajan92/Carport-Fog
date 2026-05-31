@@ -46,9 +46,9 @@ public class InquiryService {
         this.partsListService = partsListService;
     }
 
-    public void createInquiry(InquiryRequestDTO inquiryRequestDTO) throws DatabaseException {
+    public int createInquiry(InquiryRequestDTO inquiryRequestDTO) throws DatabaseException {
         Inquiry inquiry = inquiryConverter.convertInquiryDtoToEntity(inquiryRequestDTO);
-        inquiryMapper.createInquiry(inquiry);
+        return inquiryMapper.createInquiry(inquiry);
     }
 
     public InquiryResponseDTO getInquiry(int inquiryId) throws DatabaseException, CalculatorException {

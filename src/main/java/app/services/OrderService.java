@@ -38,9 +38,9 @@ public class OrderService {
         this.productMapper = productMapper;
     }
 
-    public void createOrder(OrderRequestDTO orderRequestDTO) throws DatabaseException {
+    public int createOrder(OrderRequestDTO orderRequestDTO) throws DatabaseException {
         Order order = orderConverter.convertOrderToEntity(orderRequestDTO);
-        orderMapper.createOrder(order);
+        return orderMapper.createOrder(order);
     }
 
     public OrderResponseDTO getOrder(int orderId) throws DatabaseException, CalculatorException {

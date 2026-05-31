@@ -29,7 +29,7 @@ public class SalesRepController {
             ctx.redirect("/admin/my/page");
         } catch (DatabaseException e) {
             ctx.attribute("msg", e.getMessage());
-            ctx.render("customer-login.html");
+            ctx.render("admin-login.html");
         }
     }
 
