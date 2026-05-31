@@ -1,4 +1,5 @@
 package app.services;
+
 import app.dto.requestDTO.carports.CarportRequestDTO;
 import app.dto.requestDTO.carports.CarportShedRequestDTO;
 import app.dto.responseDTO.PartsListResponseDTO;
@@ -12,6 +13,8 @@ import app.services.converters.PartsListConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
 import app.services.utils.PartsListCalculator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartsListService {
@@ -26,7 +29,7 @@ public class PartsListService {
     PartsListConverter partsListConverter = new PartsListConverter();
     PartsListCalculator partsListCalculator = new PartsListCalculator();
 
-    public PartsListService (PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper){
+    public PartsListService(PartsListMapper partsListMapper, ShedMapper shedMapper, RoofMapper roofMapper, ProductMapper productMapper, CarportMapper carportMapper) {
         this.partsListMapper = partsListMapper;
         this.shedMapper = shedMapper;
         this.roofMapper = roofMapper;
@@ -36,6 +39,7 @@ public class PartsListService {
         this.shedConverter = new ShedConverter();
         this.roofConverter = new RoofConverter();
     }
+
     public int createPartsListId() throws DatabaseException {
         return partsListMapper.createPartListId();
     }
@@ -46,9 +50,9 @@ public class PartsListService {
         Roof roof = roofConverter.convertRoofDTOtoEntity(carportRequestDTO.getRoofRequestDTO());
         Shed shed;
 
-        if (carportRequestDTO instanceof CarportShedRequestDTO withShed){
+        if (carportRequestDTO instanceof CarportShedRequestDTO withShed) {
             shed = shedConverter.convertShedDTOtoEntity(withShed.getShedRequestDTO());
-        }else {
+        } else {
             shed = null;
         }
         int partsListId = createPartsListId();
@@ -65,7 +69,7 @@ public class PartsListService {
         Roof roof = roofMapper.getRoofById(carport.getRoofId());
         Shed shed;
 
-        if (carport.getShedId() != null){
+        if (carport.getShedId() != null) {
             shed = shedMapper.getShedById(carport.getShedId());
         } else {
             shed = null;

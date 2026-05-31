@@ -16,7 +16,6 @@ import app.services.utils.PriceCalculator;
 
 import java.sql.SQLException;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class QuoteService {
         CarportResponseDTO carportResponseDTO = carportService.getCarport(quote.getCarportId());
 
         double serviceFee = PriceCalculator.calculateServiceFee(quote.getQuotePrice());
-        double totalPrice = PriceCalculator.getRevenue(quoteResponseDTO.getPrice(), quoteResponseDTO.getDiscount(), serviceFee);
+        double totalPrice = PriceCalculator.getRevenue(quoteResponseDTO.getTotalPrice(), quoteResponseDTO.getDiscount(), serviceFee);
 
         /* Set the Missing variables */
         quoteResponseDTO.setRetailPrice(totalPrice);

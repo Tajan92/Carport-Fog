@@ -2,11 +2,9 @@ package app.controllers;
 
 import app.dto.requestDTO.OrderRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.responseDTO.OrderAdminResponseDTO;
-import app.dto.responseDTO.CustomerResponseDTO;
-import app.dto.responseDTO.OrderResponseDTO;
-import app.dto.responseDTO.QuoteResponseDTO;
-import app.dto.responseDTO.UserResponseDTO;
+import app.dto.responseDTO.*;
+import app.dto.responseDTO.carports.CarportResponseDTO;
+import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -37,7 +35,7 @@ public class OrderController {
         //Gets carport from quote and makes it into a request
         CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(quoteResponseDTO.getCarportResponseDTO());
         int carportId = serviceFactory.getCarportService().createCarport(carportRequestDTO);
-        double orderPrice = quoteResponseDTO.getPrice();
+        double orderPrice = quoteResponseDTO.getTotalPrice();
         //Gets partslistresponse and collects id directly
         int partsListId = serviceFactory.getPartsListService().getPartsList(carportId).getPartsListId();
         double discount = quoteResponseDTO.getDiscount();

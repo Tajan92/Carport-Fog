@@ -15,7 +15,6 @@ public class BlueprintController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/blueprint/preview", ctx -> previewCarportSvg(ctx, serviceFactory));
-        app.post("/customer/inquiry/details/{inquiry_id}", ctx -> showCarportSVG(ctx, serviceFactory));
     }
 
     private void previewCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
@@ -62,17 +61,5 @@ public class BlueprintController {
         String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
 
         ctx.result(svgCarport);
-    }
-
-    private void showCarportSVG(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
-        int inquiryId = Integer.parseInt(ctx.formParam("inquiry_id"));
-
-        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
-        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
-        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
-        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
-
-        ctx.attribute("svg-carport-details", svgCarport);
-        ctx.redirect("customer-inquiry-details.html");
     }
 }

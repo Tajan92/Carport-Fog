@@ -147,8 +147,10 @@ public class InquiryController {
                 floor = "nej";
             }
         }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
 
-
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.sessionAttribute("inquiry_responseDTO", inquiryResponseDTO);
         ctx.attribute("selected_inquiry", inquiryResponseDTO);
         ctx.attribute("selected_carport", carportResponseDTO);
@@ -174,6 +176,10 @@ public class InquiryController {
         if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
         }
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
+
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("shed", shed);
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
