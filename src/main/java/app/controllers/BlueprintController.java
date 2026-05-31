@@ -12,6 +12,7 @@ public class BlueprintController {
 
     public void addRoutes(Javalin app, ServiceFactory serviceFactory) {
         app.post("/blueprint/preview", ctx -> previewCarportSvg(ctx, serviceFactory));
+        app.post("/blueprint/preview/admin", ctx -> previewCarportSvg(ctx, serviceFactory));
     }
 
     private void previewCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
