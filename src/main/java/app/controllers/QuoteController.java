@@ -43,7 +43,11 @@ public class QuoteController {
         if (inquiryResponseDTO.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
         }
+        CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();
+        CarportRequestDTO carportRequestDTO = serviceFactory.getCarportService().convertCarportResponseToRequest(carportResponseDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
 
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("inquiry_quote_preview", inquiryResponseDTO);
         ctx.attribute("carport_quote_preview", inquiryResponseDTO.getCarportResponseDTO());
         ctx.attribute("customer_quote_preview", inquiryResponseDTO.getCustomerResponseDTO());
@@ -88,7 +92,9 @@ public class QuoteController {
         double grossProfit = serviceFactory.getPriceService().getGrossProfit(costPrice, retailPrice, serviceFee, discount);
         double grossMargin = serviceFactory.getPriceService().getGrossMarginInPercent(costPrice, retailPrice, serviceFee, discount);
         double customerPrice = retailPrice - discount;
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
 
+        ctx.attribute("svg_carport_details", svgCarport);
         ctx.attribute("customer_price", customerPrice);
         ctx.attribute("inquiry_id", inquiryId);
         ctx.attribute("sales_rep_id", salesRepResponseDTO.getId());

@@ -66,7 +66,6 @@
 }
 
 
-
 /*===== ROOF BOXES =====*/
 
 .roof-picker-boxes {
@@ -200,6 +199,7 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     border: solid #2783e1;
 }
+
 .chosen-roof-box {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.25);
@@ -209,7 +209,7 @@
 
 
 /*===== CARPORT MEASUREMENTS INPUTS =====*/
-.carport-measurement-box, .carport-shed-addon-box,.carport-roof-addon-box {
+.carport-measurement-box, .carport-shed-addon-box, .carport-roof-addon-box {
     border-radius: 8px;
     border: 1.5px solid #c5d5e8;
     background: #f4f8fd;
@@ -236,7 +236,8 @@
     margin-bottom: 5px;
     width: 100%;
 }
-.quote-form{
+
+.quote-form {
     display: grid;
     grid-template-columns: 1fr;
     gap: 4px 12px;
@@ -254,7 +255,7 @@
     animation: fadeIn 1s ease;
 }
 
-.carport-measurement-form, .shed-addon-form, .roof-addon-form{
+.carport-measurement-form, .shed-addon-form, .roof-addon-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px 12px;
@@ -293,9 +294,8 @@
     transform: translateY(-3px);
 }
 
+
 /*===== CARPORT MATERIALS INPUTS =====*/
-
-
 
 
 .chosen-category {
@@ -328,10 +328,10 @@
 
     .custom-carport-maker-main-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;  /* top bar takes what it needs, rest fills remaining */
+        grid-template-rows: auto 1fr; /* top bar takes what it needs, rest fills remaining */
         width: 100vw;
         max-width: 100vw;
-        height: 100vh;                 /* full screen height */
+        height: 100vh; /* full screen height */
         overflow: hidden;
     }
 
@@ -343,7 +343,7 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         padding: 12px;
         box-sizing: border-box;
-        flex-shrink: 0;                /* never shrink, always stays same size */
+        flex-shrink: 0; /* never shrink, always stays same size */
     }
 
 
@@ -364,7 +364,6 @@
         box-sizing: border-box;
         width: 100%;
     }
-
 
 
     /* ---- Stage display ---- */
@@ -477,6 +476,7 @@
         height: clamp(2.2rem, 9vw, 3rem);
     }
 }
+
 /*=====   ACTIVE CLASSES =====*/
 .hidden {
     display: none;
