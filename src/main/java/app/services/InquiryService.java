@@ -10,7 +10,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.converters.InquiryConverter;
 import app.services.converters.UserConverter;
-import app.services.utils.PartsListCalculator;
+import app.services.utils.partsListCalculator.PartsListCalculator;
 import app.services.utils.PriceCalculator;
 
 import java.sql.SQLException;
@@ -20,8 +20,6 @@ import java.util.List;
 public class InquiryService {
     private InquiryMapper inquiryMapper;
     private InquiryConverter inquiryConverter;
-    private CustomerMapper customerMapper;
-    private UserConverter userConverter;
     private CarportService carportService;
     private CarportMapper carportMapper;
     private RoofMapper roofMapper;
@@ -31,11 +29,9 @@ public class InquiryService {
     private PartsListCalculator partsListCalculator;
     private PartsListService partsListService;
 
-    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CustomerMapper customerMapper, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper, ProductMapper productMapper, UserService userService, PartsListService partsListService) {
+    public InquiryService(InquiryMapper inquiryMapper, CarportService carportService, CarportMapper carportMapper, RoofMapper roofMapper, ShedMapper shedMapper, ProductMapper productMapper, UserService userService, PartsListService partsListService) {
         this.inquiryMapper = inquiryMapper;
         this.inquiryConverter = new InquiryConverter();
-        this.customerMapper = customerMapper;
-        this.userConverter = new UserConverter();
         this.carportService = carportService;
         this.carportMapper = carportMapper;
         this.roofMapper = roofMapper;

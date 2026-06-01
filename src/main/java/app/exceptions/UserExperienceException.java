@@ -6,11 +6,4 @@ public class UserExperienceException extends Exception {
         super(userMessage);
         System.out.println("userMessage: " + userMessage);
     }
-
-    public UserExperienceException(String userMessage, String systemMessage)
-    {
-        super(userMessage);
-        System.out.println("userMessage: " + userMessage);
-        System.out.println("errorMessage: " + systemMessage);
-    }
 }

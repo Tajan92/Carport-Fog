@@ -5,6 +5,7 @@ import app.dto.responseDTO.*;
 import app.services.utils.GmailEmailSender;
 import app.services.utils.GmailEmailSenderHTML;
 import jakarta.mail.MessagingException;
+import org.thymeleaf.TemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,9 @@ public class MailService {
     private GmailEmailSender gmailEmailSender;
     private GmailEmailSenderHTML gmailEmailSenderHTML;
 
-    public MailService(GmailEmailSender gmailEmailSender, GmailEmailSenderHTML gmailEmailSenderHTML){
-        this.gmailEmailSender = gmailEmailSender;
-        this.gmailEmailSenderHTML = gmailEmailSenderHTML;
+    public MailService(TemplateEngine templateEngine) {
+        this.gmailEmailSender = new GmailEmailSender();
+        this.gmailEmailSenderHTML = new GmailEmailSenderHTML(templateEngine);
     }
 
     public void sendInquiryNotice(InquiryResponseDTO inquiryResponseDTO) throws MessagingException {

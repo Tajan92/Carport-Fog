@@ -16,7 +16,7 @@ import java.util.Locale;
 public class Main {
 
     public static void main(String[] args) {
-        ServiceFactory serviceFactory = new ServiceFactory();
+        ServiceFactory serviceFactory = new ServiceFactory(ThymeleafConfig.templateEngine());
         Locale.setDefault(new Locale("en", "US"));
         // Initializing Javalin and Jetty webserver
         Javalin app = Javalin.create(config -> {

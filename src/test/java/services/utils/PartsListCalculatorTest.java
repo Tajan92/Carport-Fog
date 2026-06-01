@@ -2,8 +2,7 @@ package services.utils;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import app.exceptions.DatabaseException;
-import app.services.utils.PartsListCalculator;
+import app.services.utils.partsListCalculator.PartsListCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

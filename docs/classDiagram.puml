@@ -1,0 +1,198 @@
+@startuml
+'https://plantuml.com/object-diagram
+!pragma layout smetana
+
+object Main
+package app{
+package config{
+object SessionConfig
+object ThymeleafConfig
+}
+
+package controllers{
+object BlueprintController
+object CustomerController
+object InquiryController
+object MainController
+object OrderController
+object QuoteController
+object SalesRepController
+}
+
+
+
+package exceptions{
+object CalculatorException
+object DatabaseException
+object UserExperienceException
+}
+
+package persistence{
+object CarportMapper
+object ConnectionPool
+object CustomerMapper
+object InquiryMapper
+object LoginMapper
+object OrderMapper
+object PartsListMapper
+object ProductMapper
+object QuoteMapper
+object RoofMapper
+object SalesRepMapper
+object ShedMapper
+}
+
+package services{
+package converters{
+object CarportConverter
+object InquiryConverter
+object OrderConverter
+object PartsListConverter
+object ProductConverter
+object QuoteConverter
+object RoofConverter
+object ShedConverter
+object UserConverter
+}
+
+package utils{
+package bluePrintMaker{
+object BluePrintData
+object BluePrintMeasure
+object BluePrintSideView
+object BluePrintTopView
+object RoofHeightCalculator
+object Svg
+}
+
+package partsListCalculator{
+object HardwareCalculator
+object PartsListCalculator
+object PoleCalculator
+object ProductFinder
+object RoofCalculator
+object ShedCalculator
+}
+object GmailEmailSender
+object GmailEmailSenderHTML
+object PasswordUtil
+object PriceCalculator
+object UserValidator
+}
+
+object BlueprintService
+object CarportService
+object InquiryService
+object MailService
+object OrderService
+object PartsListService
+object PriceService
+object QuoteService
+object ServiceFactory
+object UserService
+}
+}
+
+
+Main ---- BlueprintController
+Main ---- CustomerController
+Main ---- InquiryController
+Main ---- MainController
+Main ---- OrderController
+Main ---- QuoteController
+Main ---- SalesRepController
+Main -- SessionConfig
+Main -- ThymeleafConfig
+
+BlueprintController --- ServiceFactory
+CustomerController --- ServiceFactory
+InquiryController --- ServiceFactory
+MainController --- ServiceFactory
+OrderController --- ServiceFactory
+QuoteController --- ServiceFactory
+SalesRepController --- ServiceFactory
+
+ServiceFactory ---- BlueprintService
+ServiceFactory ---- CarportService
+ServiceFactory ---- InquiryService
+ServiceFactory ---- MailService
+ServiceFactory ---- OrderService
+ServiceFactory ---- PartsListService
+ServiceFactory ---- PriceService
+ServiceFactory ---- QuoteService
+ServiceFactory ---- UserService
+
+BlueprintService ---- CarportConverter
+BlueprintService ---- RoofConverter
+BlueprintService ---- ShedConverter
+BlueprintService ---- PartsListCalculator
+BlueprintService ---- BluePrintSideView
+BlueprintService ---- BluePrintTopView
+BlueprintService ---- BluePrintMeasure
+
+CarportService ---- CarportConverter
+CarportService ---- ShedConverter
+CarportService ---- RoofConverter
+
+InquiryService ---- InquiryConverter
+InquiryService ---- PartsListCalculator
+
+OrderService ---- OrderConverter
+
+PartsListService ---- CarportConverter
+PartsListService ---- ShedConverter
+PartsListService ---- RoofConverter
+
+QuoteService ---- QuoteConverter
+QuoteService ---- UserConverter
+QuoteService ---- PartsListCalculator
+
+UserService ---- UserConverter
+
+ServiceFactory ----- CarportMapper
+ServiceFactory ----- ConnectionPool
+ServiceFactory ----- CustomerMapper
+ServiceFactory ----- InquiryMapper
+ServiceFactory ----- LoginMapper
+ServiceFactory ----- OrderMapper
+ServiceFactory ----- PartsListMapper
+ServiceFactory ----- ProductMapper
+ServiceFactory ----- QuoteMapper
+ServiceFactory ----- RoofMapper
+ServiceFactory ----- SalesRepMapper
+ServiceFactory ----- ShedMapper
+
+DatabaseException ---- CarportMapper
+DatabaseException ---- ConnectionPool
+DatabaseException ---- CustomerMapper
+DatabaseException ---- InquiryMapper
+DatabaseException ---- LoginMapper
+DatabaseException ---- OrderMapper
+DatabaseException ---- PartsListMapper
+DatabaseException ---- ProductMapper
+DatabaseException ---- QuoteMapper
+DatabaseException ---- RoofMapper
+DatabaseException ---- SalesRepMapper
+DatabaseException ---- ShedMapper
+
+UserExperienceException ---- QuoteController
+UserExperienceException ---- InquiryController
+
+CalculatorException ---- HardwareCalculator
+CalculatorException ---- PartsListCalculator
+CalculatorException ---- ProductFinder
+CalculatorException ---- RoofCalculator
+CalculatorException ---- ShedCalculator
+
+UserService --- PasswordUtil
+BlueprintService --- Svg
+BlueprintService --- BluePrintData
+BluePrintSideView --- BluePrintData
+BluePrintSideView --- RoofHeightCalculator
+BluePrintTopView --- BluePrintData
+BluePrintMeasure --- BluePrintData
+
+MailService ---- GmailEmailSender
+MailService ---- GmailEmailSenderHTML
+}
+@enduml

@@ -12,11 +12,9 @@ import app.services.converters.CarportConverter;
 import app.services.converters.PartsListConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
-import app.services.utils.PartsListCalculator;
+import app.services.utils.partsListCalculator.PartsListCalculator;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PartsListService {
     private PartsListMapper partsListMapper;
