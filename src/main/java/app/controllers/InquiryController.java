@@ -3,7 +3,10 @@ package app.controllers;
 import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
-import app.dto.responseDTO.*;
+import app.dto.responseDTO.InquiryResponseDTO;
+import app.dto.responseDTO.SalesRepResponseDTO;
+import app.dto.responseDTO.ShedResponseDTO;
+import app.dto.responseDTO.UserResponseDTO;
 import app.dto.responseDTO.carports.CarportResponseDTO;
 import app.dto.responseDTO.carports.CarportShedResponseDTO;
 import app.exceptions.CalculatorException;
@@ -13,6 +16,7 @@ import app.services.ServiceFactory;
 import app.services.utils.UserValidator;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
 
 public class InquiryController {
 
@@ -23,7 +27,7 @@ public class InquiryController {
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
-    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException {
+    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, MessagingException {
         //Carport
         String carportWidthResponse = ctx.formParam("carport_width");
         String carportLengthResponse = ctx.formParam("carport_length");
@@ -119,7 +123,9 @@ public class InquiryController {
         int customerId = userResponseDTO.getId();
 
         InquiryRequestDTO inquiryRequestDTO = new InquiryRequestDTO(customerId, inquiryRemark, carportId);
-        serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
+        int inquiryId = serviceFactory.getInquiryService().createInquiry(inquiryRequestDTO);
+        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+        serviceFactory.getMailService().sendInquiryNotice(inquiryResponseDTO);
 
         String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
         ctx.attribute("svg_carport_width", svgCarport);
@@ -131,8 +137,6 @@ public class InquiryController {
             ctx.redirect("/");
             return;
         }
-        CustomerResponseDTO user = ctx.sessionAttribute("currentUser");
-        ctx.attribute("currentUser", user);
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         CarportResponseDTO carportResponseDTO = inquiryResponseDTO.getCarportResponseDTO();

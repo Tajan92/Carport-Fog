@@ -13,9 +13,6 @@ const shedAddonForm = document.querySelector(".shed-addon-form");
 const roofAddonForm = document.querySelector(".roof-addon-form");
 const quoteForm = document.querySelector(".quote-form");
 
-
-
-
 roofBtn.addEventListener("click", () => {
     roofBtn.classList.add("chosen-category")
 

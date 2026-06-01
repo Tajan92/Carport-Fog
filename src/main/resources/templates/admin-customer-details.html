@@ -24,25 +24,28 @@
     </div>
 
     <div class="order-details-box">
-        <h1 class="customer-detail-info-box">Ordre ID: 2</h1>
-        <h1 class="customer-detail-info-box">Kunde: Jens Jensen</h1>
-        <h1 class="customer-detail-info-box">Sælger: Erik Eriksen</h1>
-        <h1 class="customer-detail-info-box">Carport ID: 1</h1>
-        <h1 class="customer-detail-info-box">Stykliste ID: 19</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
-        <h1 class="customer-detail-info-box">Dato: 15-09-2026</h1>
+        <p th:text="${'ID: ' + customer_overview.id}"></p>
+        <p th:text="${'Navn: ' + customer_overview.firstName + ' ' + customer_overview.lastName}"></p>
+        <p th:text="${'Mail: ' + customer_overview.email}"></p>
+        <p th:text="${'Tlf.: ' + customer_overview.phoneNumber}"></p>
+        <p th:text="${'Addresse: ' + customer_overview.phoneNumber}"></p>
+        <p th:text="${'Postnummer: ' + customer_overview.zipCode}"></p>
+        <br>
+        <p>Forespørgsler</p>
+        <th:block th:each="inquiry: ${customer_inquiries_overview}">
+            <span th:text="${'ID: ' + inquiry.inquiryId + ' | Kunde: ' + inquiry.customerResponseDTO.firstName + ' ' + inquiry.customerResponseDTO.lastName + ' | Status: ' + (inquiry.quoteSend ? 'Tilbud sendt' : 'Tilbud ikke sendt')}"></span>
+        </th:block>
 
+        <p>Tilbud</p>
+        <th:block th:each="quote: ${customer_quotes_overview}">
+            <span th:text="${'ID: ' + quote.quoteId + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName + ' | Status: ' + (quote.isPayed ? 'Betalt' : 'Ikke betalt')}"></span>
+        </th:block>
 
+        <p>Ordrer</p>
+        <th:block th:each="order: ${customer_orders_overview}">
+            <span th:text="${'ID: ' + order.orderId + ' | Kunde: ' + order.customerResponseDTO.firstName + ' ' + order.customerResponseDTO.lastName + ' | Pris: ' + order.totalPrice}"></span>
+        </th:block>
     </div>
-
-
-</div>
 
 
 <div th:replace="~{fragments :: adminScripts}"></div>

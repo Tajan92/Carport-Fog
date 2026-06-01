@@ -27,16 +27,29 @@
                 </div>
                 <div class="my-page-inquiry-results hidden ">
                     <th:block th:each="inquiry: ${admin_inquiries}">
-                        <a class="my-page-result-button"
-                           th:href="@{/admin/inquiry/details/{id}(id=${inquiry.inquiryId})}"
-                           th:text="${'ID: ' + inquiry.inquiryId + ' | Kunde: ' + inquiry.customerResponseDTO.firstName +' '+ inquiry.customerResponseDTO.lastName}"></a>
+                        <a class="my-page-result-button" th:href="@{/admin/inquiry/details/{id}(id=${inquiry.inquiryId})}">
+
+                            <span th:text="${'ID: ' + inquiry.inquiryId + ' | Kunde: ' + inquiry.customerResponseDTO.firstName + ' ' + inquiry.customerResponseDTO.lastName}"></span>
+
+                            <span th:text="${inquiry.quoteSend ? 'Tilbud sendt' : ''}"
+                                  th:style="${inquiry.quoteSend} ? 'color: #2e7d32; font-weight: bold;' : 'color: #d32f2f; font-weight: bold;'">
+                            </span>
+
+                        </a>
                     </th:block>
                 </div>
                 <div class="my-page-quote-results hidden">
                     <th:block th:each="quote: ${admin_quotes}">
                         <a class="my-page-result-button"
                            th:href="@{/admin/quote/details/{id}(id=${quote.quoteId})}"
-                           th:text="${'ID: ' + quote.quoteId + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName}"></a>
+                           style="text-decoration: none;">
+
+                            <span th:text="${'ID: ' + quote.quoteId + ' | Kunde: ' + quote.customerResponseDTO.firstName + ' ' + quote.customerResponseDTO.lastName}"></span>
+
+                            <span th:text="${quote.isPayed ? 'Betalt' : ''}"
+                                  th:style="${quote.isPayed} ? 'color: #2e7d32; font-weight: bold;' : 'color: #d32f2f; font-weight: bold;'">
+                            </span>
+                        </a>
                     </th:block>
                 </div>
                 <div class="my-page-order-results hidden">

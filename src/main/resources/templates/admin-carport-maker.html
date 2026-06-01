@@ -249,15 +249,28 @@
                         <p>==========================================</p>
                         <p th:text="${'Kundens Pris: ' + customer_price + ' kr'}"></p>
                         <p>==========================================</p>
+                        <div class="inquiry-submit">
+                            <h2>Bekræft tilbud</h2>
+                            <p>Gennemse alle valg og send tilbuddet til kunden.</p>
+                            <br>
+                            <!-- Read-only price info -->
+                            <p th:text="${'Kostpris: ' + cost_price_quote + ' kr.'}"></p>
+                            <p th:text="${'Vejl. udsalgspris: ' + retail_price_quote + ' kr.'}"></p>
+                            <p th:text="${'Servicegebyr: ' + service_fee_quote + ' kr.'}"></p>
+                            <p th:text="${'Omsætning: ' + revenue_quote + ' kr.'}"></p>
+                            <p th:text="${'Bruttofortjeneste: ' + gross_profit_quote + ' kr.'}"></p>
+                            <p th:text="${'Bruttomargin: ' + gross_margin_quote + ' %'}"></p>
+                            <p>=====================================</p>
+                            <p th:text="${'Kundens Pris: ' + customer_price + ' kr'}"></p>
+                            <p>=====================================</p>
 
 
-                        <!-- Editable discount — always starts at 0 -->
-                        <label for="discountInput">Rabat:</label>
-                        <input type="number" id="discountInput" name="discount_quote"
-                               th:value="${discount_quote}"
-                               placeholder="0">
-                        <label for="discountInput">kr.</label>
-
+                            <!-- Editable discount — always starts at 0 -->
+                            <label for="discountInput">Rabat:</label>
+                            <input type="number" id="discountInput" name="discount_quote"
+                                   th:value="${discount_quote}"
+                                   placeholder="0">
+                            <label for="discountInput">kr.</label>
                     </div>
                     <button class="continue" form="admin-carport-form" type="submit">Opret tilbud</button>
                 </div>

@@ -6,7 +6,9 @@ body {
     align-items: center;
     justify-content: center;
 }
-
+a{
+    text-decoration: none;
+}
 .my-page-overview {
     display: flex;
     flex-direction: row;
