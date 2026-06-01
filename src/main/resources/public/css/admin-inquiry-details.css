@@ -8,8 +8,6 @@ body {
     justify-content: center;
 }
 
-
-
 .inquiry-details-overview {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
@@ -29,7 +27,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Title becomes white to show on dark glass */
 .inquiry-details-title {
     color: white;
     font-family: "Playfair Display";
@@ -41,6 +38,7 @@ body {
 }
 
 .inquiry-details-box{
+    color: white;
     font-size: clamp(1.2rem, 1.8vw, 2rem);
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -49,7 +47,10 @@ body {
     height: 100%;
     margin-bottom: auto;
     overflow-y: scroll;
-    color: white;
+}
+
+.inquiry-details-box p, h2{
+    margin-left: 20px;
 }
 
 
@@ -80,15 +81,20 @@ body {
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    width: 100%;
+    width: 50%;
     height: clamp(2.8rem, 7vw, 4rem);
     color: #FFF;
     font-family: Inter;
     font-size: clamp(1rem, 2.5vw, 1.76313rem);
     font-weight: 500;
-    margin-top: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 25px;
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+.create-quote-button:hover {
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(1, 61, 122, 0.4);
+    transform: translateY(-3px);
 }
 
 

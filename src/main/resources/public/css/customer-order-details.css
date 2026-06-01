@@ -72,6 +72,11 @@ body {
     grid-auto-flow: row;
     overflow-x: auto;
     justify-content: left;
+    color: white;
+}
+
+.order-details-box p,h2 {
+    margin-left: 20px;
 }
 
 .order-detail-info-box {
