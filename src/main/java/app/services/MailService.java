@@ -1,6 +1,5 @@
 package app.services;
 
-import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.responseDTO.*;
 import app.services.utils.GmailEmailSender;
 import app.services.utils.GmailEmailSenderHTML;
