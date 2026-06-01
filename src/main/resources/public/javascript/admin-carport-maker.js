@@ -137,13 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
             form.submit();
 
         });
-
-
     }
-    if (discountInput.valueOf() !== 0.0){
+    if (discountInput.valueOf() !== 0.0) {
         quoteBtn.click();
     }
-
 });
 
 

@@ -1,11 +1,7 @@
-package app.services.utils;
+package app.services.utils.partsListCalculator;
 
 import app.entities.*;
 import app.exceptions.CalculatorException;
-import app.services.utils.partsListCalculator.HardwareCalculator;
-import app.services.utils.partsListCalculator.PoleCalculator;
-import app.services.utils.partsListCalculator.RoofCalculator;
-import app.services.utils.partsListCalculator.ShedCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
