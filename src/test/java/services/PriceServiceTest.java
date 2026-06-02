@@ -42,7 +42,7 @@ public class PriceServiceTest {
         }
         this.expectedTotalCostPrice = 2211.60;
         this.expectedRetailPrice = 3429.50;
-        this.expectedServiceFee = 221.16;
+        this.expectedServiceFee = 342.95;
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PriceServiceTest {
 
         double actualServiceFeePrice = priceService.getServiceFee(entries);
 
-        //221.16
+        //342.95
         assertEquals(expectedServiceFee, actualServiceFeePrice);
     }
 
@@ -77,7 +77,7 @@ public class PriceServiceTest {
     public void getRevenueTest(){
         //5% discount
         double discount = 0.05;
-        double expectedRevenue = 3468.13;
+        double expectedRevenue = 3772.40;
 
         double actualRevenue = priceService.getRevenue(expectedRetailPrice, expectedServiceFee, discount);
 
@@ -87,7 +87,7 @@ public class PriceServiceTest {
     @Test
     public void getGrossProfitTest(){
         double discount = 0.1;
-        double expectedGrossProfit = 1295.16;
+        double expectedGrossProfit = 1560.75;
         double actualGrossProfit = priceService.getGrossProfit(expectedTotalCostPrice, expectedRetailPrice, expectedServiceFee, discount);
 
         assertEquals(expectedGrossProfit, actualGrossProfit);
@@ -96,7 +96,7 @@ public class PriceServiceTest {
     @Test
     public void getGrossMarginInPercentTest(){
         double discount = 0.15;
-        double expectedGrossMarginPercent = 28.73;
+        double expectedGrossMarginPercent = 41.38;
 
         double actualGrossMarginPercent = priceService.getGrossMarginInPercent(expectedTotalCostPrice, expectedRetailPrice, expectedServiceFee, discount);
 

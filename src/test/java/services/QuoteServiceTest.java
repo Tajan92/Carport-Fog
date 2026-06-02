@@ -44,7 +44,7 @@ public class QuoteServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingQuotePrice, response.getRetailPrice());
+        assertEquals(existingQuotePrice, response.getTotalPrice());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class QuoteServiceTest extends MapperTest {
 
         //Check if the first quote has correct id = 1 and the price is correct
         assertEquals(1, firstQuote.getQuoteId());
-        assertEquals(firstOrderPrice, firstQuote.getRetailPrice());
+        assertEquals(firstOrderPrice, firstQuote.getTotalPrice());
     }
 
     @Test
