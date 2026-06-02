@@ -250,6 +250,12 @@
     align-items: center;
     animation: fadeIn 1s ease;
 }
+
+
+
+
+
+
 .inquiry-form{
     display: flex;
     flex-direction: column;
@@ -293,6 +299,7 @@
     margin-top: auto;
     grid-column: 1 / -1;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 20px;
 }
 #remarkInput {
     color: #FFFFFF;
@@ -308,7 +315,7 @@
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    width: 100%;
+    width: 30%;
     justify-self: center;
     height: clamp(2.2rem, 5vw, 3rem);
     color: #FFF;
@@ -498,7 +505,7 @@
         font-size: clamp(0.75rem, 3vw, 1rem);
     }
 
-    .carport-measurement-form {
+    .carport-measurement-form, .shed-addon-form, .roof-addon-form  {
         grid-template-columns: 1fr;
         width: 100%;
         max-width: 100%;
@@ -507,7 +514,7 @@
         padding: clamp(12px, 4vw, 20px);
     }
 
-    .carport-measurement-box {
+    .carport-measurement-box, .carport-shed-addon-box,.carport-roof-addon-box {
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;

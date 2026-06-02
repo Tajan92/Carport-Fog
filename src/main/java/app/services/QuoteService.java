@@ -10,7 +10,7 @@ import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.converters.*;
-import app.services.utils.PartsListCalculator;
+import app.services.utils.partsListCalculator.PartsListCalculator;
 import app.services.utils.PriceCalculator;
 
 

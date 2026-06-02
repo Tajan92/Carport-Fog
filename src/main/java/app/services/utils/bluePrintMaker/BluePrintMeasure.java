@@ -4,8 +4,6 @@ import app.entities.Carport;
 import app.entities.ProductsPartsListEntry;
 import app.entities.Roof;
 import app.entities.Shed;
-import app.exceptions.CalculatorException;
-
 import java.util.List;
 
 public class BluePrintMeasure {
@@ -15,7 +13,7 @@ public class BluePrintMeasure {
     private List<ProductsPartsListEntry> productsPartsListEntries;
     private Svg svg;
 
-    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) throws CalculatorException {
+    public void addDrawing(Svg svg, Carport carport, Shed shed, Roof roof, List<ProductsPartsListEntry> productsPartsListEntries) {
         this.svg = svg;
         this.carport = carport;
         this.shed = shed;

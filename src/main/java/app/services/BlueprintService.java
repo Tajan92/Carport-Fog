@@ -10,7 +10,7 @@ import app.services.utils.bluePrintMaker.*;
 import app.services.converters.CarportConverter;
 import app.services.converters.RoofConverter;
 import app.services.converters.ShedConverter;
-import app.services.utils.PartsListCalculator;
+import app.services.utils.partsListCalculator.PartsListCalculator;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class BlueprintService {
         this.sideView = new BlueprintSideView();
         this.topView = new BluePrintTopView();
         this.bluePrintMeasure = new BluePrintMeasure();
-        this.productMapper = new ProductMapper();
+        this.productMapper = productMapper;
     }
 
     public String createBlueprint(CarportRequestDTO carportRequestDTO) throws CalculatorException, DatabaseException {

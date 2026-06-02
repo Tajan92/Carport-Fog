@@ -241,7 +241,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 4px 12px;
-    height: 60vh;
+    height: 70vh;
     width: 70%;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
@@ -276,17 +276,26 @@
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 15px;
-    width: 50%;
+
+    width: 30%;
     justify-self: center;
-    height: clamp(2.2rem, 5vw, 3rem);
+
+    min-height: 3.5rem;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     color: #FFF;
     font-family: Inter;
     font-size: clamp(0.9rem, 2vw, 1.2rem);
     font-weight: 500;
+
     margin-top: 12px;
     grid-column: 1 / -1;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 
 .continue:hover {
     cursor: pointer;
@@ -313,6 +322,35 @@
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.inquiry-submit {
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 20px;
+    width: 85%;
+    height: 90%;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    align-items: center;
+}
+
+
+#discountInput {
+    border-radius: 8px;
+    border: 1.5px solid #c5d5e8;
+    background: #f4f8fd;
+    width: 20%;
+    height: clamp(2.5rem, 6vw, 2.5rem);
+    padding: 0 12px;
 }
 
 
@@ -475,6 +513,12 @@
         font-size: clamp(0.85rem, 3.5vw, 1.2rem);
         height: clamp(2.2rem, 9vw, 3rem);
     }
+
+
+   .inquiry-submit p{
+       margin-left: 50px;
+   }
+
 }
 
 /*=====   ACTIVE CLASSES =====*/

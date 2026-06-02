@@ -51,7 +51,9 @@ body {
     color: white;
 }
 
-
+.inquiry-details-box p,h2 {
+    margin-left: 20px;
+}
 
 
 .inquiry-header{

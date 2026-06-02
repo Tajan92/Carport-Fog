@@ -1,10 +1,7 @@
 package app.controllers;
 import app.dto.requestDTO.users.CustomerRequestDTO;
 import app.dto.requestDTO.users.LoginCustomerRequestDTO;
-import app.dto.responseDTO.CustomerResponseDTO;
-import app.dto.responseDTO.InquiryResponseDTO;
-import app.dto.responseDTO.OrderResponseDTO;
-import app.dto.responseDTO.QuoteResponseDTO;
+import app.dto.responseDTO.*;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
@@ -106,22 +103,25 @@ public class CustomerController {
             ctx.redirect("/");
             return;
         }
+        SalesRepResponseDTO admin = ctx.sessionAttribute("currentUser");
+
+
         int customerId = Integer.parseInt(ctx.pathParam("customer_id"));
 
         CustomerResponseDTO response = serviceFactory.getUserService().getCustomer(customerId);
-        ctx.attribute("customer-overview", response);
+        ctx.attribute("customer_overview", response);
 
         //Inquiries
         List<InquiryResponseDTO> inquiries = serviceFactory.getInquiryService().getAllInquiriesByCustomerId(response.getId());
-        ctx.attribute("customer-inquiries-overview", inquiries);
+        ctx.attribute("customer_inquiries_overview", inquiries);
 
         //Received quotes
         List<QuoteResponseDTO> quotes = serviceFactory.getQuoteService().getAllQuotesByCustomerId(response.getId());
-        ctx.attribute("customer-quotes-profile", quotes);
+        ctx.attribute("customer_quotes_overview", quotes);
 
         //Orders
         List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrdersByCustomerId(response.getId());
-        ctx.attribute("customer-orders-profile", orders);
+        ctx.attribute("customer_orders_overview", orders);
 
         ctx.render("admin-customer-details.html");
     }

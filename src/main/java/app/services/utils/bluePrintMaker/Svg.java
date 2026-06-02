@@ -1,6 +1,7 @@
 package app.services.utils.bluePrintMaker;
 
-public class Svg {
+public class
+Svg {
     private final static String SVG_START_TEMPLATE = "<svg x=\"%d\" y=\"%d\" width=\"%s\" height=\"%s\" viewBox=\"%s\" style=\"border: %dpx solid #ccc; \" preserveAspectRatio=\"xMinYMin\">";
     private final static String SVG_ARROW_DEFS_TEMPLATE = "<defs>\n" +
             "        <marker id=\"beginArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"0\" refY=\"6\" orient=\"auto\">\n" +

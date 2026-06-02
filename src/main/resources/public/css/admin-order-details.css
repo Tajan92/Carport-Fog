@@ -72,12 +72,26 @@ body {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
     border-radius: 10px;
     height: 100%;
     display: grid;
     grid-auto-flow: row;
     overflow-x: auto;
     justify-content: left;
+}
+
+.order-details-box p, h2{
+    margin-left: 20px;
+}
+
+
+.order-details-svg{
+    width: 100%;
+    height: auto;
+}
+.order-details-svg text{
+    font-size: 14px;
 }
 
 .order-detail-info-box{
@@ -87,13 +101,6 @@ body {
     text-align: left;
     color: white;
     font-weight: 600;
-}
-.order-details-svg{
-    width: 100%;
-    height: auto;
-}
-.order-details-svg text{
-    font-size: 14px;
 }
 
 

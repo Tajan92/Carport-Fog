@@ -26,7 +26,6 @@ public class OrderService {
     private CarportService carportService;
     private UserService userService;
     private PartsListService partsListService;
-    private CarportConverter carportConverter;
 
     public OrderService(OrderMapper orderMapper, CarportService carportService, UserService userService, PartsListService partsListService, ProductMapper productMapper) {
         this.orderMapper = orderMapper;
@@ -34,7 +33,6 @@ public class OrderService {
         this.userService = userService;
         this.partsListService = partsListService;
         this.orderConverter = new OrderConverter();
-        this.carportConverter = new CarportConverter();
         this.productMapper = productMapper;
     }
 

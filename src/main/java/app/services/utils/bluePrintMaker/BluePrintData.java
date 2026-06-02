@@ -33,13 +33,9 @@ public class BluePrintData {
     public static final double FLAT_ROOF_TOP_RIGHT_Y = 80.0;
     public static final double FASCIA_HEIGHT = 20.0;
     public static final double UNDER_FASCIA_HEIGHT = 35.0;
-    public static final double FASCIA_OUTER_OFFSET = 2.0;
-    public static final double UNDER_FASCIA_OFFSET = 3.0;
-    public static final double UNDER_FASCIA_TOP_OFFSET = 1.0;
 
     // High roof
     public static final double HIGH_ROOF_BASE_Y = 90.0;
-    public static final double HIGH_ROOF_MAX_HEIGHT = 85.0;
 
     // SHED
     public static final double VERTICAL_SIDING_BOARD_WIDTH = 15.0;

@@ -16,7 +16,7 @@ public class GmailEmailSenderHTML {
     private final String password;
     private final TemplateEngine templateEngine;
 
-    public GmailEmailSenderHTML() {
+    public GmailEmailSenderHTML(TemplateEngine templateEngine) {
         // Hent login fra miljøvariabler
         this.username = System.getenv("MAIL_USERNAME");
         this.password = System.getenv("MAIL_PASSWORD");
@@ -26,7 +26,7 @@ public class GmailEmailSenderHTML {
         }
 
         // Genbrug konfiguration fra ThymeleafConfig
-        this.templateEngine = ThymeleafConfig.templateEngine();
+        this.templateEngine = templateEngine;
     }
 
     public String renderTemplate(String templateName, Map<String, Object> variables) {

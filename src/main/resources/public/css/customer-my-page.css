@@ -164,6 +164,8 @@ a{
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 
 .my-page-quote-results {
@@ -179,6 +181,8 @@ a{
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 
 .my-page-order-results {
@@ -194,6 +198,8 @@ a{
     overflow-y: auto;
     scroll-behavior: smooth;
     align-items: center;
+    animation: fadeIn 1s ease;
+
 }
 
 .hidden {

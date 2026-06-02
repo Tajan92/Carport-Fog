@@ -44,7 +44,7 @@
         <div th:if="${!quote_selected_quote.isPayed}">
             <form th:action="@{/create/order}" method="post">
                 <input type="hidden" name="quote_id" th:value="${quote_selected_quote.quoteId}">
-                <button type="submit" class="create-quote-button">Accepter tilbud</button>
+                <button type="submit" class="accept-quote-button">Accepter tilbud</button>
             </form>
         </div>
 
