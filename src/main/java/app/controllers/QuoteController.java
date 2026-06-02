@@ -1,5 +1,4 @@
 package app.controllers;
-
 import app.dto.requestDTO.QuoteRequestDTO;
 import app.dto.requestDTO.RoofRequestDTO;
 import app.dto.requestDTO.carports.CarportRequestDTO;
@@ -37,7 +36,7 @@ public class QuoteController {
             return;
         }
         int inquiryId = Integer.parseInt(ctx.pathParam("inquiry_id"));
-        InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
+            InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         ShedResponseDTO shed = null;
 
         if (inquiryResponseDTO.getCarportResponseDTO() instanceof CarportShedResponseDTO withShed) {

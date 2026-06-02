@@ -31,7 +31,7 @@ public class RoofMapperTest extends MapperTest {
 
         RoofMapper roofMapper = new RoofMapper();
 
-        Roof expectedRoof = new Roof(1,15,"Betontagsten","Rejsning");
+        Roof expectedRoof = new Roof(1,15,"Betontagsten - sort","Højt tag");
 
         Roof actualRoof = roofMapper.getRoofById(1);
 
@@ -43,8 +43,8 @@ public class RoofMapperTest extends MapperTest {
         RoofMapper roofMapper = new RoofMapper();
         int size = roofMapper.getAllRoofs().size();
 
-        // There is 4 roofs
-        assertEquals(4, size);
+        // There is 6 roofs
+        assertEquals(6, size);
     }
 
     @Test

@@ -8,12 +8,14 @@ import app.dto.responseDTO.SalesRepResponseDTO;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void adminLoginTest() throws DatabaseException {
