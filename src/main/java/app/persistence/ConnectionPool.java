@@ -13,9 +13,9 @@ import java.util.logging.Logger;
  */
 public class ConnectionPool {
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
-    private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
+    private static final String USER = null;
+    private static final String PASSWORD = null;
+    private static final String URL = "jdbc:postgresql://db:5432/%s?currentSchema=public";
     private static final String DB = "carport_db";
 
     private static volatile ConnectionPool instance = null;
