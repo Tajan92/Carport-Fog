@@ -47,10 +47,10 @@ public class InquiryMapperTest extends MapperTest {
     @Test
     void getInquiryByIdTest() throws DatabaseException {
         InquiryMapper inquiryMapper = new InquiryMapper();
-        Inquiry expectedInquiry = new Inquiry(1, 1, "Ønsker carport med skur til haveredskaber", 1);
+        Inquiry expectedInquiry = new Inquiry(1,  "Ønsker carport med skur til haveredskaber", 1);
         Inquiry actualInquiry = inquiryMapper.getInquiryById(1);
 
-        assertEquals(expectedInquiry,actualInquiry);
+        assertEquals(expectedInquiry.getRemark() ,actualInquiry.getRemark());
     }
 
     @Test

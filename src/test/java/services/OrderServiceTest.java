@@ -1,10 +1,12 @@
 package services;
 import app.dto.requestDTO.OrderRequestDTO;
+import app.dto.responseDTO.OrderAdminResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import java.util.List;
@@ -12,11 +14,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    private ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void createOrderTest() throws DatabaseException {
-        OrderRequestDTO request = new OrderRequestDTO(1, 1, 3, 25000.00, 3);
+        OrderRequestDTO request = new OrderRequestDTO(1, 1, 3, 25000.00, 3, 0);
 
         //Creating order should not give exception if successful
         assertDoesNotThrow(() -> serviceFactory.getOrderService().createOrder(request));
@@ -40,12 +43,12 @@ public class OrderServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingOrderPrice, response.getTotalPrice());
+        assertEquals(existingOrderPrice, response.getRetailPrice());
     }
 
     @Test
     public void getAllOrdersTest() throws CalculatorException, DatabaseException {
-        List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
+        List<OrderAdminResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
         double firstOrderPrice = 23500.00;
 
         //The list shouldn't be null or empty
@@ -62,7 +65,7 @@ public class OrderServiceTest extends MapperTest {
 
         //Check if the first order has correct id = 1 and the price is correct
         assertEquals(1, firstOrder.getOrderId());
-        assertEquals(firstOrderPrice, firstOrder.getTotalPrice());
+        assertEquals(firstOrderPrice, firstOrder.getRetailPrice());
     }
 
     @Test
@@ -101,11 +104,11 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO oldOrder = serviceFactory.getOrderService().getOrder(1);
 
         //Confirm existing orders price
-        assertEquals(existingOrderPrice, oldOrder.getTotalPrice());
+        assertEquals(existingOrderPrice, oldOrder.getRetailPrice());
 
         //Create order with a change in price
         double newOrderPrice = 21999.00;
-        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(existingCustomerId, existingSalesRepId, existingCarportId, newOrderPrice, existingPartsListId);
+        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(existingCustomerId, existingSalesRepId, existingCarportId, newOrderPrice, existingPartsListId, 0);
 
         serviceFactory.getOrderService().updateOrder(orderRequestDTO, existingOrderId);
 
@@ -113,7 +116,7 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO newOrder = serviceFactory.getOrderService().getOrder(existingOrderId);
 
         //Check the updated order has new price
-        assertEquals(newOrderPrice, newOrder.getTotalPrice());
+        assertEquals(newOrderPrice, newOrder.getRetailPrice());
     }
 
     @Test

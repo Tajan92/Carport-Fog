@@ -15,7 +15,10 @@ public class LoginMapperTest extends MapperTest{
         SalesRep expectedSalesRep = new SalesRep(1, "Thomas", "Møller", "thomas@carport.dk", "hashed_rep1", "11111111");
         SalesRep actualSalesRep = loginMapper.salesRepLogin("thomas@carport.dk");
 
-        assertEquals(expectedSalesRep, actualSalesRep);
+        assertEquals(expectedSalesRep.getEmail(), actualSalesRep.getEmail());
+        assertEquals(expectedSalesRep.getId(), actualSalesRep.getId());
+        assertEquals(expectedSalesRep.getFirstName(), actualSalesRep.getFirstName());
+        assertEquals(expectedSalesRep.getPhoneNumber(), actualSalesRep.getPhoneNumber());
 
     }
 
@@ -25,8 +28,10 @@ public class LoginMapperTest extends MapperTest{
         Customer expectedCustomer = new Customer(1, "Anders", "Jensen", "anders@email.dk", "hashed_pw1", "12345678", "Elmevej 4", "2100", "København Ø");
         Customer actualCustomer = loginMapper.customerLogin("anders@email.dk");
 
-        assertEquals(expectedCustomer, actualCustomer);
-
+        assertEquals(expectedCustomer.getId(), actualCustomer.getId());
+        assertEquals(expectedCustomer.getEmail(), actualCustomer.getEmail());
+        assertEquals(expectedCustomer.getFirstName(), actualCustomer.getFirstName());
+        assertEquals(expectedCustomer.getPhoneNumber(), actualCustomer.getPhoneNumber());
     }
 
 

@@ -8,12 +8,17 @@ import app.dto.responseDTO.SalesRepResponseDTO;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void adminLoginTest() throws DatabaseException {
@@ -76,6 +81,9 @@ public class UserServiceTest extends MapperTest {
 
     @Test
     public void createCustomerTest() throws DatabaseException {
+        List<String> error = new ArrayList<>();
+        error.add("Adgangskoder skal være ens");
+
         CustomerRequestDTO badCustomerInput = new CustomerRequestDTO(
                 "Jens",
                 "Hansen",
@@ -97,8 +105,8 @@ public class UserServiceTest extends MapperTest {
                 "4760"
         );
 
-        //Password and passwordcheck doesn't match so should throw exception
-        assertThrows(Exception.class, () -> serviceFactory.getUserService().createCustomer(badCustomerInput));
+        //Password and passwordcheck doesn't match so Uservalidator should return errormessage from arraylist
+        assertEquals(error, serviceFactory.getUserService().createCustomer(badCustomerInput));
 
         //Good input should work without issues
         assertDoesNotThrow(() -> serviceFactory.getUserService().createCustomer(goodCustomerInput));

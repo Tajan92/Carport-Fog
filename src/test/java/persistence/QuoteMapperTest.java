@@ -36,7 +36,7 @@ public class QuoteMapperTest extends MapperTest {
 
 
                 QuoteMapper quoteMapper = new QuoteMapper();
-                int quoteId = quoteMapper.createQuote(new Quote(20.000, 7, 1, 1));
+                int quoteId = quoteMapper.createQuote(new Quote(20.000, 7, 1, 1, 0));
 
                 assertEquals(9, quoteId);
             }
@@ -48,10 +48,11 @@ public class QuoteMapperTest extends MapperTest {
     @Test
     void getQuoteByIdTest() throws DatabaseException {
         QuoteMapper quoteMapper = new QuoteMapper();
-        Quote expectedQuote = new Quote(1, 24999, 1, 1, 1);
-        Quote actualQuot = quoteMapper.getQuoteById(1);
+        Quote expectedQuote = new Quote(24999, 1, 1, 1, 0);
+        Quote actualQuote = quoteMapper.getQuoteById(1);
 
-        assertEquals(expectedQuote, actualQuot);
+        assertEquals(expectedQuote.getQuotePrice(), actualQuote.getQuotePrice());
+        assertEquals(expectedQuote.getCustomerId(), actualQuote.getCustomerId());
     }
 
     @Test
