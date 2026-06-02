@@ -123,8 +123,8 @@ public class CarportServiceTest extends MapperTest {
         double cpWidth = 450;
         double cpLength = 780;
         //Roof
-        double roofSlope = 20;
-        String roofMaterial = "Betontagsten - sort";
+        double roofSlope = 25;
+        String roofMaterial = "Eternittag B6 - sortblå";
         String roofType = "Højt tag";
 
         CarportResponseDTO actual = serviceFactory.getCarportService().getCarport(3);
