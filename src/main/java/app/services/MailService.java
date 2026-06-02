@@ -1,6 +1,5 @@
 package app.services;
 
-import app.dto.requestDTO.InquiryRequestDTO;
 import app.dto.responseDTO.*;
 import app.services.utils.GmailEmailSender;
 import app.services.utils.GmailEmailSenderHTML;
@@ -71,11 +70,12 @@ public class MailService {
         gmailEmailSender.sendPlainTextEmail(receiver, subject, body);
     }
 
-    public void sendPartsList(String toEmail, int orderId, List<ProductsPartsListEntryResponseDTO> partsListWood, List<ProductsPartsListEntryResponseDTO> partsListHardware) throws MessagingException {
+    public void sendPartsList(String toEmail, int orderId, List<ProductsPartsListEntryResponseDTO> partsListWood, List<ProductsPartsListEntryResponseDTO> partsListHardware, String svg) throws MessagingException {
         String subject = "Din stykliste til din nye carport vedrørende ordrenummer: " + orderId;
         Map<String, Object> variables = new HashMap<>();
         variables.put("parts_list_wood", partsListWood);
         variables.put("parts_list_hardware", partsListHardware);
+        variables.put("svg_carport_details", svg);
         String htmlBody = gmailEmailSenderHTML.renderTemplate("email", variables);
 
         gmailEmailSenderHTML.sendHtmlEmail(toEmail, subject , htmlBody);

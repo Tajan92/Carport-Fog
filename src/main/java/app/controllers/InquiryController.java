@@ -63,8 +63,8 @@ public class InquiryController {
         RoofRequestDTO roofRequestDTO = new RoofRequestDTO(roofSlope, roofMaterial, roofType);
 
         //Shed
-        String shedWidth;
-        String shedLength;
+        String shedWidth = "";
+        String shedLength = "";
         String shedStatus = ctx.formParam("shed_status");
         String shedSiding = ctx.formParam("shed_siding");
         String floorStatus = ctx.formParam("shed_floor");
@@ -79,9 +79,8 @@ public class InquiryController {
         }
         //Check for shed size full, half, none or null
         if (shedStatus == null) {
-            throw new UserExperienceException("Dit til/fra valg af skur blev desværre ikke registreret korrekt, prøv igen.");
-        }
-        if (shedStatus.matches("HALF")) {
+            ctx.redirect("/");
+        }else if (shedStatus.matches("HALF")) {
             shedWidth = String.valueOf(carportWidth / 2);
             shedLength = String.valueOf(carportLength / 3);
         } else if (shedStatus.matches("FULL")) {
@@ -108,7 +107,7 @@ public class InquiryController {
             ctx.sessionAttribute("pending_roof_slope", ctx.formParam("roof_slope"));
             ctx.sessionAttribute("pending_roof_material", ctx.formParam("roof_material"));
             ctx.sessionAttribute("pending_roof_type", ctx.formParam("roof_type"));
-            ctx.sessionAttribute("pending_shed_width", ctx.formParam("shed_status"));
+            ctx.sessionAttribute("pending_shed_status", ctx.formParam("shed_status"));
             ctx.sessionAttribute("pending_shed_length", ctx.formParam("shed_length"));
             ctx.sessionAttribute("pending_shed_siding", ctx.formParam("shed_siding"));
             ctx.sessionAttribute("pending_floor", ctx.formParam("shed_floor"));
@@ -144,9 +143,9 @@ public class InquiryController {
         ShedResponseDTO shed = null;
         if (carportResponseDTO instanceof CarportShedResponseDTO withShed) {
             shed = withShed.getShedResponseDTO();
-            if (shed.isFloor()){
+            if (shed.isFloor()) {
                 floor = "ja";
-            } else  {
+            } else {
                 floor = "nej";
             }
         }

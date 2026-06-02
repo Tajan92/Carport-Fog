@@ -22,7 +22,6 @@ public class OrderController {
         app.post("/create/order", ctx -> createOrder(ctx, serviceFactory));
         app.get("/customer/order/details/{order_id}", ctx -> getOrderCustomer(ctx, serviceFactory));
         app.get("/admin/order/details/{order_id}", ctx -> getOrderAdmin(ctx, serviceFactory));
-        //app.post("/updateOrder", ctx -> updateOrder(ctx, serviceFactory));
         app.post("/deleteOrder", ctx -> deleteOrder(ctx, serviceFactory));
     }
 
@@ -49,8 +48,10 @@ public class OrderController {
         //Send partslist to customer mail
         List<ProductsPartsListEntryResponseDTO> woodAndRoof = serviceFactory.getPartsListService().getWoodAndRoofEntryList(carportId);
         List<ProductsPartsListEntryResponseDTO> hardware = serviceFactory.getPartsListService().getHardwareEntryList(carportId);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+
         serviceFactory.getMailService().sendOrderConfirmation(orderResponseDTO);
-        serviceFactory.getMailService().sendPartsList(customerResponseDTO.getEmail(), orderId, woodAndRoof, hardware);
+        serviceFactory.getMailService().sendPartsList(customerResponseDTO.getEmail(), orderId, woodAndRoof, hardware, svgCarport);
 
         ctx.redirect("/customer/my/page");
     }
