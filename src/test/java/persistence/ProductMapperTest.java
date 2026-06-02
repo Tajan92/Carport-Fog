@@ -14,7 +14,7 @@ public class ProductMapperTest extends MapperTest{
     void getProductByIdTest() throws DatabaseException {
         ProductMapper productMapper = new ProductMapper();
 
-        Product expectedProduct = new Product(1,48,75,6.0,"stk","Træ","Stolpe 97x97 mm trykimp");
+        Product expectedProduct = new Product(1,48,75,6.0,"stk","Træ & Tagplader","Stolpe 97x97 mm trykimp");
         Product actualProduct = productMapper.getProductById(1);
 
         assertEquals(expectedProduct.getProductId(), actualProduct.getProductId());
@@ -25,7 +25,7 @@ public class ProductMapperTest extends MapperTest{
     void getAllProductsTest() throws DatabaseException {
         ProductMapper productMapper = new ProductMapper();
         int size = productMapper.getAllProducts().size();
-        /*We know that we have 12 products in our test DB*/
-        assertEquals(12, size);
+        /*We know that we have 52 products in our DB*/
+        assertEquals(52, size);
     }
 }

@@ -9,6 +9,7 @@ import app.entities.ProductsPartsListEntry;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PartsListServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void createPartsListIdTest() throws DatabaseException {

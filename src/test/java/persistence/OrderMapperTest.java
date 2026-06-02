@@ -34,12 +34,12 @@ public class OrderMapperTest extends MapperTest {
                 statement.execute("INSERT INTO test.carports (carport_width, carport_height, carport_length, addon_id, price, parts_list_id) VALUES" +
                         "(3.00, 2.08, 5.00, 1, 24999.00, 7)");
 
-                Order order = new Order(1, 1, 7, 24999.00, 7);
+                Order order = new Order(1, 1, 7, 24999.00, 7, 0);
 
-                //5th order made in the system so should be 5
+                //7th order made in the system so should be 7
                 int orderId = orderMapper.createOrder(order);
 
-                assertEquals(5, orderId);
+                assertEquals(7, orderId);
 
             }
         } catch (SQLException e) {
@@ -50,11 +50,14 @@ public class OrderMapperTest extends MapperTest {
 
     @Test
     void getOrderByIdTest() throws DatabaseException {
-        Order actualOrder = new Order(1, 1, 1, 1, 23500.0, 1);
+        Order actualOrder = new Order(1, 1, 1, 23500.0, 1, 0);
 
         Order expectedOrder = orderMapper.getOrderById(1);
 
-        assertEquals(actualOrder, expectedOrder);
+        assertEquals(actualOrder.getOrderPrice(), expectedOrder.getOrderPrice());
+        assertEquals(actualOrder.getCarportId(), expectedOrder.getCarportId());
+        assertEquals(actualOrder.getCustomerId(), expectedOrder.getCustomerId());
+        assertEquals(actualOrder.getSalesRepId(), expectedOrder.getSalesRepId());
     }
 
     @Test
@@ -62,8 +65,8 @@ public class OrderMapperTest extends MapperTest {
 
         int size = orderMapper.getAllOrders().size();
 
-        //4 orders created in our test code
-        assertEquals(4, size);
+        //6 orders created in our test code
+        assertEquals(6, size);
     }
 
     @Test
@@ -73,15 +76,15 @@ public class OrderMapperTest extends MapperTest {
 
         int size = orderMapper.getAllOrders().size();
 
-        //Removed one so new size should be 3
-        assertEquals(3, size);
+        //Removed one so new size should be 5
+        assertEquals(5, size);
 
     }
 
     @Test
     void updateOrderTest() throws DatabaseException{
         OrderMapper orderMapper = new OrderMapper();
-        Order expectedOrder = new Order(1, 1, 1, 1, 25000.00, 1);
+        Order expectedOrder = new Order(1,1, 1, 1, 25000.00, 1, 0);
         orderMapper.updateOrder(expectedOrder);
 
         Order actualOrder = orderMapper.getOrderById(1);

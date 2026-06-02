@@ -23,7 +23,7 @@ public class ShedMapperTest extends MapperTest{
 
     @Test
     void getShedById() throws DatabaseException {
-        Shed expectedShed = new Shed(1,2.40, 3.00, "Trykimp. bræddebeklædning", true);
+        Shed expectedShed = new Shed(1,240, 300, "Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)", true);
 
         Shed actualShed = shedMapper.getShedById(1);
 

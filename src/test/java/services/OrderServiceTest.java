@@ -1,10 +1,12 @@
 package services;
 import app.dto.requestDTO.OrderRequestDTO;
+import app.dto.responseDTO.OrderAdminResponseDTO;
 import app.dto.responseDTO.OrderResponseDTO;
 import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import java.util.List;
@@ -12,11 +14,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    private ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void createOrderTest() throws DatabaseException {
-        OrderRequestDTO request = new OrderRequestDTO(1, 1, 3, 25000.00, 3);
+        OrderRequestDTO request = new OrderRequestDTO(1, 1, 3, 25000.00, 3, 0);
 
         //Creating order should not give exception if successful
         assertDoesNotThrow(() -> serviceFactory.getOrderService().createOrder(request));
@@ -45,7 +48,7 @@ public class OrderServiceTest extends MapperTest {
 
     @Test
     public void getAllOrdersTest() throws CalculatorException, DatabaseException {
-        List<OrderResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
+        List<OrderAdminResponseDTO> orders = serviceFactory.getOrderService().getAllOrders();
         double firstOrderPrice = 23500.00;
 
         //The list shouldn't be null or empty
@@ -105,7 +108,7 @@ public class OrderServiceTest extends MapperTest {
 
         //Create order with a change in price
         double newOrderPrice = 21999.00;
-        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(existingCustomerId, existingSalesRepId, existingCarportId, newOrderPrice, existingPartsListId);
+        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(existingCustomerId, existingSalesRepId, existingCarportId, newOrderPrice, existingPartsListId, 0);
 
         serviceFactory.getOrderService().updateOrder(orderRequestDTO, existingOrderId);
 

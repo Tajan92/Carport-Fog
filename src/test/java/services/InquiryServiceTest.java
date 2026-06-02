@@ -5,6 +5,7 @@ import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InquiryServiceTest extends MapperTest {
 
-    private ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    private ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void createInquiryTest() throws DatabaseException {

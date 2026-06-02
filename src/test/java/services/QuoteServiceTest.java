@@ -6,6 +6,7 @@ import app.dto.responseDTO.QuoteResponseDTO;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import java.util.List;
@@ -14,11 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QuoteServiceTest extends MapperTest {
-    ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
 
     @Test
     public void createQuoteTest(){
-        QuoteRequestDTO request = new QuoteRequestDTO(1, 250000.00, 3, 3);
+        QuoteRequestDTO request = new QuoteRequestDTO(1, 250000.00, 3, 3, 0);
 
         //Creating order should not give exception if successful
         assertDoesNotThrow(() -> serviceFactory.getQuoteService().createQuote(request));

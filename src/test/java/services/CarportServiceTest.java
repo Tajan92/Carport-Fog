@@ -11,12 +11,14 @@ import app.exceptions.CalculatorException;
 import app.exceptions.DatabaseException;
 import app.services.ServiceFactory;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.TemplateEngine;
 import persistence.MapperTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarportServiceTest extends MapperTest {
-    private ServiceFactory serviceFactory = new ServiceFactory();
+    TemplateEngine templateEngine = new TemplateEngine();
+    private ServiceFactory serviceFactory = new ServiceFactory(templateEngine);
     ShedRequestDTO shedRequestDTO = new ShedRequestDTO(400, 350, "Birketræ", true);
     RoofRequestDTO roofRequestDTO = new RoofRequestDTO(25, "Eternittag B6 - sortblå", "Højt tag");
     CarportRequestDTO carportRequestDTO = new CarportShedRequestDTO(600, 230, 650, roofRequestDTO, shedRequestDTO);
