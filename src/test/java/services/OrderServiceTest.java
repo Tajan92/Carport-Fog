@@ -43,7 +43,7 @@ public class OrderServiceTest extends MapperTest {
         assertEquals(existingCustomerId, response.getCustomerResponseDTO().getId());
         assertEquals(existingCarportId, response.getCarportResponseDTO().getCarportId());
         assertEquals(existingSalesRepId, response.getSalesRepResponseDTO().getId());
-        assertEquals(existingOrderPrice, response.getTotalPrice());
+        assertEquals(existingOrderPrice, response.getRetailPrice());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class OrderServiceTest extends MapperTest {
 
         //Check if the first order has correct id = 1 and the price is correct
         assertEquals(1, firstOrder.getOrderId());
-        assertEquals(firstOrderPrice, firstOrder.getTotalPrice());
+        assertEquals(firstOrderPrice, firstOrder.getRetailPrice());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO oldOrder = serviceFactory.getOrderService().getOrder(1);
 
         //Confirm existing orders price
-        assertEquals(existingOrderPrice, oldOrder.getTotalPrice());
+        assertEquals(existingOrderPrice, oldOrder.getRetailPrice());
 
         //Create order with a change in price
         double newOrderPrice = 21999.00;
@@ -116,7 +116,7 @@ public class OrderServiceTest extends MapperTest {
         OrderResponseDTO newOrder = serviceFactory.getOrderService().getOrder(existingOrderId);
 
         //Check the updated order has new price
-        assertEquals(newOrderPrice, newOrder.getTotalPrice());
+        assertEquals(newOrderPrice, newOrder.getRetailPrice());
     }
 
     @Test
