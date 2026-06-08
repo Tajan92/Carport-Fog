@@ -16,8 +16,17 @@ public class BlueprintController {
     }
 
     private void previewCarportSvg(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException {
-        double carportWidth = Double.parseDouble(ctx.formParam("carport_width"));
-        double carportLength = Double.parseDouble(ctx.formParam("carport_length"));
+        String widthParam = ctx.formParam("carport_width");
+        String lengthParam = ctx.formParam("carport_length");
+
+        if (widthParam == null || widthParam.isBlank() ||
+                lengthParam == null || lengthParam.isBlank() ) {
+            ctx.result("");
+            return;
+        }
+
+        double carportWidth = Double.parseDouble(widthParam);
+        double carportLength = Double.parseDouble(lengthParam);
         double carportHeight = 230; // preset height
 
         String roofType = ctx.formParam("roof_type");
@@ -26,7 +35,7 @@ public class BlueprintController {
         }
 
         double roofSlope = 1.7;
-        if (!roofType.equals("Fladt tag") && ctx.formParam("roof_slope") != null) {
+        if (!roofType.equals("Fladt tag") && ctx.formParam("roof_slope") != null && !ctx.formParam("roof_slope").isBlank()) {
             roofSlope = Double.parseDouble(ctx.formParam("roof_slope"));
         }
         String roofMaterial = ctx.formParam("roof_material");

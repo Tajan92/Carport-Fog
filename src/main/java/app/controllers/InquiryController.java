@@ -104,9 +104,9 @@ public class InquiryController {
             // save all form params to session before redirecting
             ctx.sessionAttribute("pending_carport_width", ctx.formParam("carport_width"));
             ctx.sessionAttribute("pending_carport_length", ctx.formParam("carport_length"));
-            ctx.sessionAttribute("pending_roof_slope", ctx.formParam("roof_slope"));
             ctx.sessionAttribute("pending_roof_material", ctx.formParam("roof_material"));
             ctx.sessionAttribute("pending_roof_type", ctx.formParam("roof_type"));
+            ctx.sessionAttribute("pending_roof_slope", ctx.formParam("roof_slope"));
             ctx.sessionAttribute("pending_shed_status", ctx.formParam("shed_status"));
             ctx.sessionAttribute("pending_shed_length", ctx.formParam("shed_length"));
             ctx.sessionAttribute("pending_shed_siding", ctx.formParam("shed_siding"));

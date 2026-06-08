@@ -20,8 +20,10 @@
     <div class="stage-display">
         <form id="customer-carport-form" th:action="@{/create/inquiry}" method="post">
             <div class="roof-picker-boxes hidden">
-                <input type="radio" name="roof_type" id="high-roof" value="Højt tag" hidden>
-                <input type="radio" name="roof_type" id="flat-roof" value="Fladt tag" hidden>
+                <input type="radio" name="roof_type" id="flat-roof" value="Fladt tag" hidden
+                       th:checked="${roof_type == 'Fladt tag'}">
+                <input type="radio" name="roof_type" id="high-roof" value="Højt tag" hidden
+                       th:checked="${roof_type == 'Højt tag'}">
                 <div class="roof-boxes" id="flat-roof-box">
                         <p>Flat Tag</p>
                         <svg class="flat-roof-svg" width="377" height="377" viewBox="0 0 377 377" fill="none"
@@ -47,9 +49,14 @@
                 </div>
             </div>
             <div class="shed-picker-boxes hidden">
-                <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden>
-                <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden>
-                <input type="radio" name="shed_status" id="no-shed" value="NONE" hidden>
+                <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden
+                       th:checked="${shed_status != null && shed_status != 'NONE' && shed_width != null && carport_width != null && shed_width < carport_width}">
+
+                <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden
+                       th:checked="${shed_status != null && shed_status != 'NONE' && shed_width != null && carport_width != null && shed_width == carport_width}">
+
+                <input type="radio" name="shed_status" id="no-shed" value="NONE" hidden
+                       th:checked="${shed_status == null || shed_status == 'NONE'}">
                 <div class="shed-boxes" id="half-shed-box">
                     <p>Halvt skur</p>
                     <svg class="half-shed-svg" width="296" height="306" viewBox="0 0 296 306" fill="none"
@@ -76,43 +83,45 @@
                 <div class="field-group">
                     <p class="carport-measurement-input-description">Vælg Bredde</p>
                     <select name="carport_width" class="carport-measurement-box">
-                        <option value="240">240 cm</option>
-                        <option value="270">270 cm</option>
-                        <option value="300">300 cm</option>
-                        <option value="330">330 cm</option>
-                        <option value="360">360 cm</option>
-                        <option value="390">390 cm</option>
-                        <option value="420">420 cm</option>
-                        <option value="450" selected>450 cm</option>
-                        <option value="480">480 cm</option>
-                        <option value="510">510 cm</option>
-                        <option value="540">540 cm</option>
-                        <option value="570">570 cm</option>
-                        <option value="600">600 cm</option>
+                    <option value="">Vælg bredde</option>
+                    <option value="240" th:selected="${carport_width == 240}">240 cm</option>
+                    <option value="270" th:selected="${carport_width == 270}">270 cm</option>
+                    <option value="300" th:selected="${carport_width == 300}">300 cm</option>
+                    <option value="330" th:selected="${carport_width == 330}">330 cm</option>
+                    <option value="360" th:selected="${carport_width == 360}">360 cm</option>
+                    <option value="390" th:selected="${carport_width == 390}">390 cm</option>
+                    <option value="420" th:selected="${carport_width == 420}">420 cm</option>
+                    <option value="450" th:selected="${carport_width == 450}">450 cm</option>
+                    <option value="480" th:selected="${carport_width == 480}">480 cm</option>
+                    <option value="510" th:selected="${carport_width == 510}">510 cm</option>
+                    <option value="540" th:selected="${carport_width == 540}">540 cm</option>
+                    <option value="570" th:selected="${carport_width == 570}">570 cm</option>
+                    <option value="600" th:selected="${carport_width == 600}">600 cm</option>
                     </select>
                 </div>
                 <div class="field-group">
                     <p class="carport-measurement-input-description">Vælg Længde</p>
                     <select name="carport_length" class="carport-measurement-box">
-                        <option value="240">240 cm</option>
-                        <option value="270">270 cm</option>
-                        <option value="300">300 cm</option>
-                        <option value="330">330 cm</option>
-                        <option value="360">360 cm</option>
-                        <option value="390">390 cm</option>
-                        <option value="420">420 cm</option>
-                        <option value="450">450 cm</option>
-                        <option value="480">480 cm</option>
-                        <option value="510">510 cm</option>
-                        <option value="540">540 cm</option>
-                        <option value="570">570 cm</option>
-                        <option value="600" selected>600 cm</option>
-                        <option value="630">630 cm</option>
-                        <option value="660">660 cm</option>
-                        <option value="690">690 cm</option>
-                        <option value="720">720 cm</option>
-                        <option value="750">750 cm</option>
-                        <option value="780">780 cm</option>
+                        <option value="">Vælg længde</option>
+                        <option value="240" th:selected="${carport_length == 240}">240 cm</option>
+                        <option value="270" th:selected="${carport_length == 270}">270 cm</option>
+                        <option value="300" th:selected="${carport_length == 300}">300 cm</option>
+                        <option value="330" th:selected="${carport_length == 330}">330 cm</option>
+                        <option value="360" th:selected="${carport_length == 360}">360 cm</option>
+                        <option value="390" th:selected="${carport_length == 390}">390 cm</option>
+                        <option value="420" th:selected="${carport_length == 420}">420 cm</option>
+                        <option value="450" th:selected="${carport_length == 450}">450 cm</option>
+                        <option value="480" th:selected="${carport_length == 480}">480 cm</option>
+                        <option value="510" th:selected="${carport_length == 510}">510 cm</option>
+                        <option value="540" th:selected="${carport_length == 540}">540 cm</option>
+                        <option value="570" th:selected="${carport_length == 570}">570 cm</option>
+                        <option value="600" th:selected="${carport_length == 600}">600 cm</option>
+                        <option value="630" th:selected="${carport_length == 630}">630 cm</option>
+                        <option value="660" th:selected="${carport_length == 660}">660 cm</option>
+                        <option value="690" th:selected="${carport_length == 690}">690 cm</option>
+                        <option value="720" th:selected="${carport_length == 720}">720 cm</option>
+                        <option value="750" th:selected="${carport_length == 750}">750 cm</option>
+                        <option value="780" th:selected="${carport_length == 780}">780 cm</option>
                     </select>
                 </div>
             </div>
@@ -120,19 +129,20 @@
                     <div class="field-group">
                         <p class="carport-measurement-input-description">Sidebeklædning</p>
                         <select name="shed_siding" class="carport-shed-addon-box">
-                            <option value="">Vælg Beklædning</option>
-                            <option value="Beklædning: 25x150mm Blokhusbrædder ubehandlet">Blokshusbrædder ubehandlet</option>
-                            <option value="Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)">Profilbrædt</option>
-                            <option value="Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)">Krydsfiner m/spor(svalehale)</option>
-                            <option value="Beklædning: 19x125mm Klinkbeklædning trykimp.">Klinkbeklædning trykimp.</option>
-                            <option value="Beklædning: 19x100 mm. trykimp. Brædt">Trykimp. Træ</option>
+                            <option value="">Vælg beklædning</option>
+                            <option value="Beklædning: 25x150mm Blokhusbrædder ubehandlet" th:selected="${shed_status != 'NONE' && shed_siding == 'Beklædning: 25x150mm Blokhusbrædder ubehandlet'}">Blokhusbrædder ubehandlet</option>
+                            <option value="Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)" th:selected="${shed_status != 'NONE' && shed_siding == 'Beklædning: 19x100mm Profilbrædt (1 på 2 beklædning)'}">Profilbrædt</option>
+                            <option value="Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)" th:selected="${shed_status != 'NONE' && shed_siding == 'Beklædning: 9x1220x2440mm Krydsfiner m/spor (Svalehale)'}">Krydsfiner m/spor (svalehale)</option>
+                            <option value="Beklædning: 19x125mm Klinkbeklædning trykimp." th:selected="${shed_status != 'NONE' && shed_siding == 'Beklædning: 19x125mm Klinkbeklædning trykimp.'}">Klinkbeklædning trykimp.</option>
+                            <option value="Beklædning: 19x100 mm. trykimp. Brædt" th:selected="${shed_status != 'NONE' && shed_siding == 'Beklædning: 19x100 mm. trykimp. Brædt'}">Trykimp. Træ</option>
                         </select>
                     </div>
                     <div class="field-group">
                         <p class="carport-measurement-input-description">Gulv</p>
                         <select name="shed_floor" class="carport-shed-addon-box">
-                            <option value="TRUE">Ja</option>
-                            <option value="FALSE" selected>Nej</option>
+                            <option value="">Vælg gulv</option>
+                            <option value="TRUE" th:selected="${shed_status != 'NONE' && floor == true}">Ja</option>
+                            <option value="FALSE" th:selected="${shed_status != 'NONE' && floor == false}">Nej</option>
                         </select>
                     </div>
                     </div>
@@ -141,30 +151,31 @@
                             <p class="carport-measurement-input-description">Materialer</p>
                             <select name="roof_material" class="carport-roof-addon-box">
                                 <option value="">Vælg type</option>
-                                <option value="Eternittag B6 - sortblå">Eternittag B6 - sortblå</option>
-                                <option value="Eternittag B6 - grå">Eternittag B6 - grå</option>
-                                <option value="Betontagsten - sort">Betontagsten - sort</option>
-                                <option value="Betontagsten - koralrød">Betontagsten - koralrød</option>
-                                <option value="Eternittag B7 - sortblå">Eternittag B7 - sortblå</option>
+                                <option value="Eternittag B6 - sortblå" th:selected="${roof_material == 'Eternittag B6 - sortblå'}">Eternittag B6 - sortblå</option>
+                                <option value="Eternittag B6 - grå" th:selected="${roof_material == 'Eternittag B6 - grå'}">Eternittag B6 - grå</option>
+                                <option value="Betontagsten - sort" th:selected="${roof_material == 'Betontagsten - sort'}">Betontagsten - sort</option>
+                                <option value="Betontagsten - koralrød" th:selected="${roof_material == 'Betontagsten - koralrød'}">Betontagsten - koralrød</option>
+                                <option value="Eternittag B7 - sortblå" th:selected="${roof_material == 'Eternittag B7 - sortblå'}">Eternittag B7 - sortblå</option>
                             </select>
                         </div>
                         <div class="field-group">
-                            <p class="carport-measurement-input-description">Vælg hældningsgrad</p>
+                            <p class="carport-measurement-input-description"></p>
                             <select name="roof_slope" class="carport-roof-addon-box">
-                                <option value="15" selected>15 grader</option>
-                                <option value="20">20 grader</option>
-                                <option value="25">25 grader</option>
-                                <option value="30">30 grader</option>
-                                <option value="35">35 grader</option>
-                                <option value="40">40 grader</option>
-                                <option value="45">45 grader</option>
+                                <option value="">Vælg hældningsgrad</option>
+                                <option value="15" th:selected="${roof_slope == 15}">15°</option>
+                                <option value="20" th:selected="${roof_slope == 20}">20°</option>
+                                <option value="25" th:selected="${roof_slope == 25}">25°</option>
+                                <option value="30" th:selected="${roof_slope == 30}">30°</option>
+                                <option value="35" th:selected="${roof_slope == 35}">35°</option>
+                                <option value="40" th:selected="${roof_slope == 40}">40°</option>
+                                <option value="45" th:selected="${roof_slope == 45}">45°</option>
                             </select>
                         </div>
                     </div>
                 <div class="inquiry-form hidden ">
                 <div class="inquiry-submit">
                     <h1>Har du husket det hele?</h1>
-                    <input class="remark" type="text" id="remarkInput" name="inquiry_remark" placeholder="Eventuelle bemærkninger?">
+                    <input th:value="${remark}" class="remark" type="text" id="remarkInput" name="inquiry_remark" placeholder="Eventuelle bemærkninger?">
                 </div>
                     <div class="blueprint-container">
                     <div class="blueprint-preview-panel">
