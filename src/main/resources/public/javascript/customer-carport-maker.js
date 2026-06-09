@@ -143,6 +143,8 @@ inquiryBtn.addEventListener("click", () => {
 document.querySelector("#flat-roof-box").addEventListener("click", () => {
     document.querySelector("#flat-roof").checked = true;
     selectedRoof = "flat";
+    document.querySelector("#flat-roof-box").classList.add("chosen-roof-box");
+    document.querySelector("#high-roof-box").classList.remove("chosen-roof-box");
     updateTabAvailability();
     setTimeout(updateSVGPreview, 50);
 });
@@ -150,6 +152,8 @@ document.querySelector("#flat-roof-box").addEventListener("click", () => {
 document.querySelector("#high-roof-box").addEventListener("click", () => {
     document.querySelector("#high-roof").checked = true;
     selectedRoof = "high";
+    document.querySelector("#high-roof-box").classList.add("chosen-roof-box");
+    document.querySelector("#flat-roof-box").classList.remove("chosen-roof-box");
     updateTabAvailability();
     setTimeout(updateSVGPreview, 50);
 });
@@ -157,6 +161,9 @@ document.querySelector("#high-roof-box").addEventListener("click", () => {
 document.querySelector("#half-shed-box").addEventListener("click", () => {
     document.querySelector("#half-shed").checked = true;
     selectedShed = "HALF";
+    document.querySelector("#half-shed-box").classList.add("chosen-shed-box");
+    document.querySelector("#full-shed-box").classList.remove("chosen-shed-box");
+    document.querySelector("#no-shed-box").classList.remove("chosen-shed-box");
     updateTabAvailability();
     setTimeout(updateSVGPreview, 50);
 });
@@ -164,6 +171,9 @@ document.querySelector("#half-shed-box").addEventListener("click", () => {
 document.querySelector("#full-shed-box").addEventListener("click", () => {
     document.querySelector("#full-shed").checked = true;
     selectedShed = "FULL";
+    document.querySelector("#full-shed-box").classList.add("chosen-shed-box");
+    document.querySelector("#half-shed-box").classList.remove("chosen-shed-box");
+    document.querySelector("#no-shed-box").classList.remove("chosen-shed-box");
     updateTabAvailability();
     setTimeout(updateSVGPreview, 50);
 });
@@ -171,6 +181,9 @@ document.querySelector("#full-shed-box").addEventListener("click", () => {
 document.querySelector("#no-shed-box").addEventListener("click", () => {
     document.querySelector("#no-shed").checked = true;
     selectedShed = "NONE";
+    document.querySelector("#no-shed-box").classList.add("chosen-shed-box");
+    document.querySelector("#half-shed-box").classList.remove("chosen-shed-box");
+    document.querySelector("#full-shed-box").classList.remove("chosen-shed-box");
     updateTabAvailability();
     setTimeout(updateSVGPreview, 50);
 });
@@ -192,4 +205,25 @@ function updateTabAvailability() {
     }
 }
 
+if (document.querySelector("#flat-roof").checked) {
+    selectedRoof = "flat";
+    document.querySelector("#flat-roof-box").classList.add("chosen-roof-box");
+}
+if (document.querySelector("#high-roof").checked) {
+    selectedRoof = "high";
+    document.querySelector("#high-roof-box").classList.add("chosen-roof-box");
+}
+if (document.querySelector("#half-shed").checked) {
+    selectedShed = "HALF";
+    document.querySelector("#half-shed-box").classList.add("chosen-shed-box");
+}
+if (document.querySelector("#full-shed").checked) {
+    selectedShed = "FULL";
+    document.querySelector("#full-shed-box").classList.add("chosen-shed-box");
+}
+if (document.querySelector("#no-shed").checked) {
+    selectedShed = "NONE";
+    document.querySelector("#no-shed-box").classList.add("chosen-shed-box");
+}
+updateTabAvailability();
 updateSVGPreview();

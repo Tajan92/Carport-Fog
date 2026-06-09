@@ -50,13 +50,13 @@
             </div>
             <div class="shed-picker-boxes hidden">
                 <input type="radio" name="shed_status" id="half-shed" value="HALF" hidden
-                       th:checked="${shed_status != null && shed_status != 'NONE' && shed_width != null && carport_width != null && shed_width < carport_width}">
+                       th:checked="${shed_status != null && shed_status == 'HALF'}">
 
                 <input type="radio" name="shed_status" id="full-shed" value="FULL" hidden
-                       th:checked="${shed_status != null && shed_status != 'NONE' && shed_width != null && carport_width != null && shed_width == carport_width}">
+                       th:checked="${shed_status != null && shed_status == 'FULL'}">
 
                 <input type="radio" name="shed_status" id="no-shed" value="NONE" hidden
-                       th:checked="${shed_status == null || shed_status == 'NONE'}">
+                       th:checked="${shed_status != null && shed_status == 'NONE'}">
                 <div class="shed-boxes" id="half-shed-box">
                     <p>Halvt skur</p>
                     <svg class="half-shed-svg" width="296" height="306" viewBox="0 0 296 306" fill="none"
