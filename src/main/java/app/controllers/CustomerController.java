@@ -130,6 +130,11 @@ public class CustomerController {
     }
 
     public void loadCarportMaker(Context ctx) {
+        UserResponseDTO userResponseDTO = ctx.sessionAttribute("currentUser");
+        if (userResponseDTO != null){
+            ctx.attribute("currentUser", userResponseDTO);
+        }
+
         Boolean inquiryPending = ctx.sessionAttribute("pending_inquiry");
         if (Boolean.TRUE.equals(inquiryPending)) {
             ctx.attribute("carport_width", Double.parseDouble(ctx.sessionAttribute("pending_carport_width")));
