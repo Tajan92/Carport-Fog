@@ -70,10 +70,7 @@ public class InquiryController {
         String floorStatus = ctx.formParam("shed_floor");
         boolean floor = false;
 
-        //Check for floor
-        if (floorStatus == null || floorStatus.isEmpty()) {
-            throw new UserExperienceException("Dit til/fra valg af gulv blev desværre ikke registreret korrekt, prøv igen.");
-        }
+
         if (floorStatus.equals("TRUE")) {
             floor = true;
         }
@@ -126,7 +123,7 @@ public class InquiryController {
         InquiryResponseDTO inquiryResponseDTO = serviceFactory.getInquiryService().getInquiry(inquiryId);
         serviceFactory.getMailService().sendInquiryNotice(inquiryResponseDTO);
 
-        String svgCarport = serviceFactory.getBlueprintService().createBlueprint(carportRequestDTO);
+        String svgCarport = serviceFactory.getBlueprintService().createBlueprintNoMeasures(carportRequestDTO);
         ctx.attribute("svg_carport_width", svgCarport);
         ctx.redirect("/customer/my/page");
     }

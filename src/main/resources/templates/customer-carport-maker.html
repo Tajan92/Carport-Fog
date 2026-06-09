@@ -142,7 +142,7 @@
                         <select name="shed_floor" class="carport-shed-addon-box">
                             <option value="">Vælg gulv</option>
                             <option value="TRUE" th:selected="${shed_status != 'NONE' && floor == true}">Ja</option>
-                            <option value="FALSE" th:selected="${shed_status != 'NONE' && floor == false}">Nej</option>
+                            <option value="FALSE" selected th:selected="${shed_status != 'NONE' && floor == false}">Nej</option>
                         </select>
                     </div>
                     </div>
@@ -162,7 +162,7 @@
                             <p class="carport-measurement-input-description"></p>
                             <select name="roof_slope" class="carport-roof-addon-box">
                                 <option value="">Vælg hældningsgrad</option>
-                                <option value="15" th:selected="${roof_slope == 15}">15°</option>
+                                <option value="15" selected th:selected="${roof_slope == 15}">15°</option>
                                 <option value="20" th:selected="${roof_slope == 20}">20°</option>
                                 <option value="25" th:selected="${roof_slope == 25}">25°</option>
                                 <option value="30" th:selected="${roof_slope == 30}">30°</option>
