@@ -27,7 +27,7 @@ public class InquiryController {
         app.post("/admin/delete/inquiry", ctx -> adminDeleteInquiry(ctx, serviceFactory));
     }
 
-    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, UserExperienceException, MessagingException {
+    public void createInquiry(Context ctx, ServiceFactory serviceFactory) throws CalculatorException, DatabaseException, MessagingException {
         //Carport
         String carportWidthResponse = ctx.formParam("carport_width");
         String carportLengthResponse = ctx.formParam("carport_length");
@@ -99,7 +99,7 @@ public class InquiryController {
 
         if (userResponseDTO == null) {
             // save all form params to session before redirecting
-            ctx.sessionAttribute("pending_carport_width", ctx.formParam("carport_width"));
+            ctx.sessionAttribute(\"pending_carport_width", ctx.formParam("carport_width"));
             ctx.sessionAttribute("pending_carport_length", ctx.formParam("carport_length"));
             ctx.sessionAttribute("pending_roof_material", ctx.formParam("roof_material"));
             ctx.sessionAttribute("pending_roof_type", ctx.formParam("roof_type"));
